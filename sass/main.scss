@@ -1,0 +1,47 @@
+$slate: rgb(40, 44, 55);
+$antislate: rgb(216, 218, 233);
+$accent: #4685ff;
+html {
+    margin: 0;
+    padding: 0;
+    body{
+        font-size: 1.4em;
+        font-family: "Fira Code";
+        margin: 0;
+        padding: 0;
+        .open{
+            text-align: center;
+            background-color: $slate;
+            img {
+                height: 500px;
+
+            }
+        }
+
+        .intro, .description, .projects {
+            padding: 2em 20em;
+            h1 {
+                padding: 1em 0;
+            }
+        }
+
+        .description {
+            background-color: $slate;
+            color: $antislate;
+        }
+
+        .projects {
+            .project {
+                background-color: $slate;
+                color: $antislate;
+                padding: 1em 2em;
+                margin: 2em 1em;
+
+                h2 {
+                    font-weight: normal;
+                    color: $accent;
+                }
+            }
+        }
+    }
+}
