@@ -4,10 +4,11 @@
         <meta charset="utf-8">
         <title>@xypnox</title>
         <link rel="stylesheet" href="css/main.css">
+        <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
     </head>
     <body>
         <div class="open">
-            <img src="main.svg" alt="">
+            <img src="main.svg" data-aos="zoom-in" data-aos-delay="1000" data-aos-duration="2000" alt="">
         </div>
         <div class="page">
 
@@ -24,17 +25,17 @@
             <div class="projects">
                 <h1>Projects</h1>
 
-                <div class="project">
+                <div class="project" data-aos="fade-up-right" data-aos-duration="1000">
                     <h2> gmunc-iitkgp/website </h2>
                     <p>The GMUNC website</p>
                 </div>
 
-                <div class="project">
+                <div class="project" data-aos="fade-up-left" data-aos-duration="1000">
                     <h2>calcx</h2>
                     <p>A command line calculator with history and advanced options</p>
                 </div>
 
-                <div class="project">
+                <div class="project" data-aos="fade-up-right" data-aos-duration="1000">
                     <h2> vertex-ui </h2>
                     <p>A dark slim UI for Atom</p>
                 </div>
@@ -46,5 +47,9 @@
 
             </div>
         </div>
+        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>
