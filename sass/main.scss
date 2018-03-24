@@ -1,6 +1,11 @@
 $slate: rgb(40, 44, 55);
 $antislate: rgb(216, 218, 233);
 $accent: #4685ff;
+
+
+$mobile: "(orientation: portrait)";
+$desktop: "(orientation: landscape)";
+
 html {
     margin: 0;
     padding: 0;
@@ -13,15 +18,30 @@ html {
             text-align: center;
             background-color: $slate;
             img {
-                height: 500px;
-
+                height: 100%;
+                @media #{$mobile} {
+                    width: 60%;
+                }
             }
         }
 
         .intro, .description, .projects {
-            padding: 2em 20em;
+            padding: 2em 30%;
             h1 {
                 padding: 1em 0;
+            }
+        }
+        @media #{$mobile} {
+            .intro, .description{
+                padding: 1em 5%;
+            }
+
+            .projects {
+                padding: 1em 10%;
+            }
+
+            .open {
+                height: 60%;
             }
         }
 
@@ -40,6 +60,16 @@ html {
                 h2 {
                     font-weight: normal;
                     color: $accent;
+                }
+
+            }
+            @media #{$mobile} {
+                .project{
+                    margin: 1em 0em;
+                    padding: 1em;
+                    h2, p{
+                        font-size: 0.9em;
+                    }
                 }
             }
         }
