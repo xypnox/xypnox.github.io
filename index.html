@@ -4,44 +4,47 @@
         <meta charset="utf-8">
         <title>@xypnox</title>
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="fontello/css/xypnoxgithubio.css">
         <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700" rel="stylesheet">
-
+        <script type="text/javascript" src="rellax.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     </head>
     <body>
-        <div class="open">
-            <img src="main.png" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="1000" alt="">
+        <div class="open" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="1000">
+            <img src="main.png"  alt="" class="main-img">
         </div>
         <div class="page">
 
-            <div class="intro">
+            <div class="intro contents">
                 <h1 data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1000">Hi, I am @xypnox</h1>
                 <p data-aos="zoom-in" data-aos-delay="100" data-aos-duration="700">I am a Physics undergraduate student at IIT Kharagpur. I have interest in Programming, Space, Open Source, Cosmos and the Universe.</p>
-            </div>
-
-            <div class="description">
-
                 <p data-aos="zoom-in" data-aos-delay="100" data-aos-duration="700">I am introvert, Lazy, procrastinator, music lover, sub-geek, fantasy lover, and some other socially awkward stuff that I can't remember right now.</p>
             </div>
 
-            <div class="projects">
+            <div class="projects contents">
                 <h1>Projects</h1>
 
                 <div class="project" data-aos="fade-up" data-aos-duration="1000">
                     <h2> gmunc website </h2>
+                    <a href="#" class="github-link"> <i class="icon-github"></i> </a>
                     <p>The GMUNC website</p>
                 </div>
 
+
                 <div class="project" data-aos="fade-up" data-aos-duration="1000">
                     <h2>calcx</h2>
+                    <a href="#" class="github-link"> <i class="icon-github"></i> </a>
                     <p>A command line calculator with history and advanced options</p>
                 </div>
 
+
                 <div class="project" data-aos="fade-up" data-aos-duration="1000">
                     <h2> vertex-ui </h2>
+                    <a href="#" class="github-link"> <i class="icon-github"></i> </a>
                     <p>A dark slim UI for Atom</p>
+
                 </div>
 
                 <!-- <div class="project">
@@ -50,10 +53,76 @@
                 </div> -->
 
             </div>
+
+            <div class="experience contents">
+                <h1>Experience</h1>
+                <div class="grid-exp">
+                    <div class="language" data-aos="fade-up" data-aos-duration="1000">
+                        C and C++
+                    </div>
+
+                    <div class="language" data-aos="fade-up" data-aos-duration="1000">
+                        Python
+                    </div>
+
+                    <div class="language" data-aos="fade-up" data-aos-duration="1000">
+                        HTML5 and CSS3
+                    </div>
+
+                    <div class="language" data-aos="fade-up" data-aos-duration="1000">
+                        Sass
+                    </div>
+
+                    <div class="language" data-aos="fade-up" data-aos-duration="1000">
+                        Rust
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="footer">Don't forget to check</h2>
+            <div class="blag" data-aos="fade-down" data-aos-duration="1500">
+                <a href="https://xypnox.github.io/blag/" >The Blag</a>
+            </div>
+
         </div>
+
+        <div class="hover-grid-right rellax">
+            <div class="hover-right github">
+                <a href="https://github.com/xypnox"> <i class="icon-github"></i></a>
+            </div>
+            <div class="hover-right facebook">
+                <a href="https://www.facebook.com/xypnox"><i class="icon-facebook-rect"></i></a>
+            </div>
+            <div class="hover-right instagram">
+                <a href="#"><i class="icon-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="hover-grid-left rellax">
+            <div class="hover-left twitter">
+                <a href="https://twitter.com/xypnox"><i class="icon-twitter-bird"></i></a>
+            </div>
+            <div class="hover-left telegram">
+                <a href="https://t.me/xypnox"><i class="icon-telegram"></i></a>
+            </div>
+        </div>
+
+
         <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
         <script>
             AOS.init();
+              // Also can pass in optional settings block
+              var rellax = new Rellax('.rellax', {
+                speed: -8,
+                center: false,
+                round: true,
+                vertical: true,
+                horizontal: false
+              });
+              var rellax = new Rellax('.main-img', {
+                speed: 4
+              });
         </script>
     </body>
 </html>

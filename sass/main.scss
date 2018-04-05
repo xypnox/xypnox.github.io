@@ -1,10 +1,14 @@
 $slate: rgb(40, 44, 55);
 $antislate: rgb(216, 218, 233);
 $accent: #4685ff;
-
+$shadow-medium: 0px 10px 20px rgba(0, 0, 0, 0.38);
 
 $mobile: "(orientation: portrait)";
 $desktop: "(orientation: landscape)";
+
+i.ficon {
+    font-family: "xypnoxgithubio";
+}
 
 html {
     margin: 0;
@@ -19,35 +23,34 @@ html {
             background-color: $slate;
             img {
                 height: 100%;
+                z-index: -100;
                 @media #{$mobile} {
                     width: 60%;
                 }
             }
+
         }
 
-        .intro, .description, .projects {
+        .contents {
+            z-index: 100;
+            background-color: #fff;
             padding: 2em 30%;
             h1 {
                 padding: 1em 0;
             }
         }
         @media #{$mobile} {
-            .intro, .description{
-                padding: 1em 5%;
-            }
 
-            .projects {
+            .contents {
                 padding: 1em 10%;
+            }
+            .intro {
+                padding: 1em 5%;
             }
 
             .open {
                 height: 60%;
             }
-        }
-
-        .description {
-            background-color: $slate;
-            color: $antislate;
         }
 
         .projects {
@@ -56,10 +59,18 @@ html {
                 color: $antislate;
                 padding: 1em 2em;
                 margin: 2em 1em;
+                border-radius: 10px;
+                box-shadow: $shadow-medium;
 
                 h2 {
                     font-weight: normal;
                     color: $accent;
+                }
+                .github-link {
+                    text-decoration: none;
+
+                    color: $antislate;
+                    float: right;
                 }
 
             }
@@ -70,8 +81,135 @@ html {
                     h2, p{
                         font-size: 0.9em;
                     }
+
                 }
             }
         }
+        .experience {
+
+            .language {
+                background-color: $slate;
+                color: $antislate;
+                padding: 1em;
+                margin: 1em 2em;
+                border-radius: 10px;
+                box-shadow: $shadow-medium;
+                font-size: 1.5em;
+                text-align: center;
+            }
+            @media #{$mobile} {
+                .language{
+                    margin: 1em 0em;
+                    padding: 1em;
+                    font-size: 1em;
+                }
+            }
+            .hover-left {
+                grid-column: 1 3;
+            }
+            .hover-right {
+                grid-column: 4 6;
+            }
+        }
+
+        .footer {
+            margin: 2em;
+            text-align: center;
+        }
+
+        .blag {
+            margin: 6em;
+            text-align: center;
+
+            a {
+                text-decoration: none;
+                font-size: 1.5em;
+                padding: 1em 2em;
+                border-radius: 1em;
+                color: #fff;
+                background: linear-gradient(rgb(0, 255, 183), rgb(0, 174, 255));
+                box-shadow: $shadow-medium;
+
+            }
+            @media #{$mobile} {
+                margin: 3em 1em;
+                margin-bottom: 6em;
+                a{
+                    padding: 0.5em 1em;
+                }
+            }
+        }
+
+        .hover-grid-left {
+            padding: 2em;
+            top: 0;
+            float: left;
+            position: absolute;
+            margin-left: 15%;
+            margin-top: 20em;
+            .hover-left {
+                // float: left;
+                border-radius: 1em;
+                box-shadow: $shadow-medium;
+                font-size: 2em;
+                padding: 1em;
+                margin-top: 16em;
+                background-color: $antislate;
+
+                a{
+                    text-decoration: none;
+                    color: rgb(255, 255, 255);
+                }
+            }
+        }
+
+        .hover-grid-right{
+            padding: 2em;
+            position: absolute;
+            top: 5em;
+            float: right;
+            margin-left: 70%;
+            .hover-right {
+                // float: right;
+                border-radius: 1em;
+                box-shadow: $shadow-medium;
+                font-size: 2em;
+                padding: 1em;
+                margin-top: 16em;
+                background-color: $antislate;
+
+                a{
+                    text-decoration: none;
+                    color: rgb(255, 255, 255);
+                }
+            }
+
+        }
+
+        @media #{$mobile} {
+            .hover-grid-left, .hover-grid-right {
+                display: none;
+            }
+        }
+
+        .facebook {
+            background: linear-gradient(60deg, #3b5998, #487ef0);
+        }
+        .twitter {
+            background: linear-gradient(60deg, #6798ff, #2ba5ee);
+        }
+        .github {
+            background: linear-gradient(60deg, #181a1f, #404859);
+        }
+        .telegram {
+            background: linear-gradient(60deg, #3b5998, #d748f0);
+        }
+        .instagram {
+            background: linear-gradient(60deg, #fa3378, #f59817);
+        }
+
+
+
+
     }
 }
