@@ -63,6 +63,9 @@ html {
         }
 
         .page {
+            @media #{$mobile} {
+                padding-bottom: 4rem;
+            }
             h1 {
                 padding: 1em 0;
             }
@@ -176,6 +179,9 @@ html {
         .footer {
             margin: 2em;
             text-align: center;
+            @media #{$mobile} {
+                margin: 0.5rem;
+            }
         }
 
         .blag {
@@ -199,8 +205,8 @@ html {
 
             }
             @media #{$mobile} {
-                margin: 3em 1em;
-                margin-bottom: 6em;
+                margin: 3em 1em 8rem;
+                // margin-bottom: 6em;
                 a{
                     padding: 0.5em 1em;
                 }
