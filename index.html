@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="fontello/css/xypnoxgithubio.css">
         <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700|Satisfy" rel="stylesheet">
+        <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
 
         <script type="text/javascript" src="rellax.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +28,7 @@
             <div class="logo">
                 <img src="main.svg"  alt="" class="main-img">
             </div>
-            <h1 data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1000">Hi, I am xypnox</h1>
+            <h1 data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1000">Hi, I am <span class="xypnoxname">xypnox</span></h1>
         </div>
         <div class="page">
 
@@ -48,6 +48,16 @@
 
             <div class="projects contents">
                 <h1>Projects</h1>
+
+                <div class="project" data-aos="fade-up" data-aos-duration="1000" onclick="location.href='http://www.gymkhana.iitkgp.ac.in/';">
+                    <h2> TSG Website </h2>
+                    <p>Website for Technology Student's Gymkhana, IIT Kharagpur.</p>
+                </div>
+
+                <div class="project" data-aos="fade-up" data-aos-duration="1000" onclick="location.href='https://kwoc.kossiitkgp.org/';">
+                    <h2> KWoC </h2>
+                    <p>Website for Kharagpur Winter of Code.</p>
+                </div>
                 
                 <div class="project" data-aos="fade-up" data-aos-duration="1000" onclick="location.href='https://github.com/xypnox/todxpy/';">
                     <h2> todxpy </h2>
@@ -98,7 +108,7 @@
                     </div>
 
                     <div class="language" data-aos="fade-up" data-aos-duration="1000">
-                        Rust
+                        JavaScript
                     </div>
                 </div>
 
@@ -136,17 +146,16 @@
         <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
         <script>
             AOS.init();
-              // Also can pass in optional settings block
-              var rellax = new Rellax('.rellax', {
+            var rellax = new Rellax('.rellax', {
                 speed: -8,
                 center: false,
                 round: true,
                 vertical: true,
                 horizontal: false
-              });
-              var rellax = new Rellax('.main-img', {
+            });
+            var rellax = new Rellax('.main-img', {
                 speed: 8
-              });
+            });
         </script>
     </body>
 </html>

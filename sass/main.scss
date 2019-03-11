@@ -1,8 +1,8 @@
 $slate: rgb(40, 44, 55);
 $antislate: rgb(216, 218, 233);
 $accent: #4685ff;
-$shadow-medium: 0px 10px 20px rgba(0, 0, 0, 0.25);
-$shadow-far: 0px 10px 40px rgba(0, 0, 0, 0.2);
+$shadow-medium: 0px 10px 20px rgba(0, 0, 0, 0.3);
+$shadow-far: 0px 10px 40px rgba(0, 0, 0, 0.25);
 
 $mobile: "(orientation: portrait)";
 $desktop: "(orientation: landscape)";
@@ -17,7 +17,7 @@ html {
     height: 100%;
     body{
         font-size: 1.6em;
-        font-family: 'Fira Sans', monospace;;
+        font-family: 'Jost*', monospace;;
         margin: 0;
         height: 100%;
         padding: 0;
@@ -41,12 +41,15 @@ html {
             }
 
             h1 {
-                font-family: "Satisfy", cursive;
                 font-weight: normal;
                 font-size: 4rem;
                 // padding: 1em 0;
                 @media #{$mobile} {
                     margin: 0 1em;
+                }
+                .xypnoxname {
+                    font-size: 4.5rem;
+                    font-weight: 400;
                 }
             }
 
@@ -129,12 +132,13 @@ html {
                 box-shadow: $shadow-medium;
                 text-decoration: none;
                 cursor: pointer;
+                transition: 0.5s;
 
                 h2 {
-                    font-weight: normal;
                     color: $accent;
                 }
                 &:hover{
+                    box-shadow: $shadow-far;
                     transform: scale(1.05);
                 }
             }
