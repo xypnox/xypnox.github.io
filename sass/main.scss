@@ -28,7 +28,8 @@ html {
             .logo {
                 height: 66%;
                 @media #{$mobile} {
-                    height: 60%;
+                    margin-top: 20%;
+                    height: auto;
                 }
             }
             img {
@@ -39,7 +40,7 @@ html {
 
                 visibility: hidden;
                 @media #{$mobile} {
-                    height: 33rem;
+                    height: 50rem;
                     width: 100%;
                 }
             }
@@ -214,7 +215,7 @@ html {
                 margin-bottom: 3rem;
                 transition: all 0.5s;
                 @media #{$mobile} {
-                    width: 80%;
+                    width: 100%;
                 }
                 .icon {
                     float: left;
