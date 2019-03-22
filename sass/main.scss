@@ -27,6 +27,9 @@ html {
             height: 100%;
             .logo {
                 height: 66%;
+                @media #{$mobile} {
+                    height: 60%;
+                }
             }
             img {
                 height: 40rem;
@@ -36,6 +39,7 @@ html {
 
                 visibility: hidden;
                 @media #{$mobile} {
+                    height: 33rem;
                     width: 100%;
                 }
             }
@@ -180,6 +184,48 @@ html {
             }
         }
 
+        .social {
+            margin: 2em 20%;
+            
+            @media #{$mobile} {
+                margin: 2em 10%;
+            }
+            
+            .social-links {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            h1 {
+                text-align: center;
+            }
+            
+            a {
+                border-radius: 1.5em;
+                box-shadow: $shadow-medium;
+                font-size: 1.5em;
+                padding: .5em .75em;
+                min-width: 15rem;
+                background-color: $antislate;
+                text-decoration: none;
+                color: rgb(255, 255, 255);
+                text-align: center;
+                margin-bottom: 3rem;
+                transition: all 0.5s;
+                @media #{$mobile} {
+                    width: 80%;
+                }
+                .icon {
+                    float: left;
+                }
+                &:hover{
+                    box-shadow: $shadow-far;
+                    transform: scale(1.15);
+                }
+            }
+        }
+
         .footer {
             margin: 2em;
             text-align: center;
@@ -217,66 +263,17 @@ html {
             }
         }
 
-        .hover-grid-left {
-            padding: 2em;
-            top: 0;
-            float: left;
-            position: absolute;
-            margin-left: 15%;
-            margin-top: 20em;
-            .hover-left {
-                // float: left;
-                border-radius: 1em;
-                box-shadow: $shadow-medium;
-                font-size: 2em;
-                padding: 1em;
-                margin-top: 16em;
-                background-color: $antislate;
-
-                a{
-                    text-decoration: none;
-                    color: rgb(255, 255, 255);
-                }
-            }
-        }
-
-        .hover-grid-right{
-            padding: 2em;
-            position: absolute;
-            top: 5em;
-            float: right;
-            margin-left: 70%;
-            .hover-right {
-                // float: right;
-                border-radius: 1em;
-                box-shadow: $shadow-medium;
-                font-size: 2em;
-                padding: 1em;
-                margin-top: 16em;
-                background-color: $antislate;
-
-                a{
-                    text-decoration: none;
-                    color: rgb(255, 255, 255);
-                }
-            }
-
-        }
-
-        @media #{$mobile} {
-            .hover-grid-left, .hover-grid-right {
-                display: none;
-            }
-        }
-
         .facebook {
             background: linear-gradient(60deg, #3b5998, #487ef0);
         }
         .twitter {
-            background: linear-gradient(60deg, #6798ff, #2ba5ee);
+            background: linear-gradient(60deg, #6798ff, #2beecd);
         }
         .github {
             background: linear-gradient(60deg, #181a1f, #404859);
+        }
+        .behance {
+            background: linear-gradient(60deg, #f51761, #152fa3);
         }
         .telegram {
             background: linear-gradient(60deg, #3b5998, #d748f0);
