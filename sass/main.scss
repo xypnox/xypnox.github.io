@@ -1,6 +1,14 @@
 $slate: rgb(40, 44, 55);
 $antislate: rgb(216, 218, 233);
 $accent: #4685ff;
+
+$background: #0f111a;
+$color: #8f93a2;
+
+$pink: #de0061ff;
+$red: #de392bff;
+$gold: #ff9612ff;
+
 $shadow-medium: 0px 10px 20px rgba(0, 0, 0, 0.3);
 $shadow-far: 0px 10px 40px rgba(0, 0, 0, 0.25);
 
@@ -15,6 +23,9 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: $background;
+  color: $color;
+
   body {
     font-size: 1.6em;
     font-family: 'Jost', 'Josefin Sans', 'Segoe UI', Tahoma, Geneva, Verdana,
@@ -22,7 +33,6 @@ html {
     margin: 0;
     height: 100%;
     padding: 0;
-    color: #333741;
     .open {
       text-align: center;
       height: 100%;
@@ -49,7 +59,6 @@ html {
       h1 {
         font-weight: normal;
         font-size: 4rem;
-        // padding: 1em 0;
         @media #{$mobile} {
           margin: 0 1em;
         }
@@ -81,9 +90,14 @@ html {
 
     .contents {
       z-index: 100;
-      background-color: #fff;
       padding: 2em 30%;
 
+      .text-grad {
+        background: -webkit-linear-gradient(45deg, $gold, $pink);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
       .resume {
         text-align: center;
         margin-top: 7rem;
@@ -93,18 +107,12 @@ html {
           font-size: 1.5em;
           padding: 0.9em 1.8em;
           border-radius: 1em;
-          color: #fff;
-          background: linear-gradient(
-            120deg,
-            rgb(0, 99, 255),
-            rgb(255, 0, 128)
-          );
-          box-shadow: $shadow-medium;
+          background: rgba(#000, 0.15);
+
           transition: 0.3s;
 
           &:hover {
             padding: 1em 2em;
-            box-shadow: $shadow-far;
           }
         }
         @media #{$mobile} {
@@ -131,21 +139,19 @@ html {
 
     .projects {
       .project {
-        background-color: $slate;
-        color: $antislate;
+        background-color: rgba(#000, 0.15);
+        color: $color;
         padding: 1em 2em;
         margin: 2em 1em;
         border-radius: 10px;
-        box-shadow: $shadow-medium;
         text-decoration: none;
         cursor: pointer;
         transition: 0.5s;
 
         h2 {
-          color: $accent;
+          color: $red;
         }
         &:hover {
-          box-shadow: $shadow-far;
           transform: scale(1.05);
         }
       }
@@ -162,12 +168,11 @@ html {
     }
     .experience {
       .language {
-        background-color: $slate;
-        color: $antislate;
+        background-color: rgba(#000, 0.25);
+        color: $color;
         padding: 1em;
         margin: 1em 2em;
         border-radius: 10px;
-        box-shadow: $shadow-medium;
         font-size: 1.5em;
         text-align: center;
       }
@@ -205,11 +210,9 @@ html {
 
       a {
         border-radius: 1.5em;
-        box-shadow: $shadow-medium;
         font-size: 1.5em;
-        padding: 0.5em 0.75em;
-        min-width: 15rem;
-        background-color: $antislate;
+        padding: 0.5em;
+        background-color: $color;
         text-decoration: none;
         color: rgb(255, 255, 255);
         text-align: center;
@@ -223,7 +226,10 @@ html {
         }
         &:hover {
           box-shadow: $shadow-far;
-          transform: scale(1.15);
+          transform: scale(1.5);
+        }
+        &:active {
+          transform: scale(1.25);
         }
       }
     }
@@ -246,8 +252,7 @@ html {
         padding: 0.9em 1.8em;
         border-radius: 1em;
         color: #fff;
-        background: linear-gradient(120deg, rgb(0, 99, 255), rgb(255, 0, 128));
-        box-shadow: $shadow-medium;
+        background: linear-gradient(120deg, $gold, $red, $pink);
         transition: 0.3s;
 
         &:hover {
