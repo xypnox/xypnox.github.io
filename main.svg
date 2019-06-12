@@ -16,8 +16,8 @@
    version="1.1"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    viewBox="0 0 64 64"
-   sodipodi:docname="xypnox-new.svg"
-   inkscape:export-filename="/home/xypnox/Projects/personal/design/logo/xypnox-wireframe-diff.png"
+   sodipodi:docname="main.svg"
+   inkscape:export-filename="/home/xypnox/Projects/self/xypnox.github.io/main.png"
    inkscape:export-xdpi="1800"
    inkscape:export-ydpi="1800">
   <defs
@@ -180,16 +180,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="8"
-     inkscape:cx="32.422836"
-     inkscape:cy="30.302488"
-     inkscape:current-layer="layer1"
+     inkscape:cx="22.231623"
+     inkscape:cy="28.249221"
+     inkscape:current-layer="g4778"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
-     inkscape:window-width="1532"
-     inkscape:window-height="1007"
-     inkscape:window-x="24"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:snap-global="true"
      inkscape:snap-page="true"
@@ -231,7 +231,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
