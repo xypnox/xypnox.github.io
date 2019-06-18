@@ -128,7 +128,7 @@ html {
     }
     @media #{$mobile} {
       .contents {
-        padding: 1em 10%;
+        padding: 1em 5%;
       }
       .intro {
         padding: 1em 5%;
@@ -164,7 +164,7 @@ html {
       @media #{$mobile} {
         .project {
           margin: 1em 0em;
-          padding: 1em;
+          padding: 0.5em 1em;
         }
       }
     }
@@ -205,6 +205,14 @@ html {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
+
+        @media #{$mobile} {
+          margin: 1rem;
+          .links:nth-child(3n) {
+            page-break-after: always; /* CSS 2.1 syntax */
+            break-after: always; /* New syntax */
+          }
+        }
       }
       h1 {
         text-align: center;
