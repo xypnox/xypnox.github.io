@@ -31,54 +31,11 @@ html {
       sans-serif;
     margin: 0;
     padding: 0;
-    .open-wrapper {
-      overflow: hidden;
-    }
-    .open {
-      overflow: hidden;
-      margin: 0;
+    .hero {
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      img {
-        width: 66vh;
-        animation: 1.5s fadeIn;
-        animation-fill-mode: forwards;
-
-        visibility: hidden;
-        @media #{$mobile} {
-          height: 50vh;
-        }
-      }
-
-      h1 {
-        font-weight: normal;
-        font-size: 4rem;
-        text-align: center;
-        @media #{$mobile} {
-          margin: 0 1em;
-        }
-        .xypnoxname {
-          font-size: 4.5rem;
-          font-weight: 500;
-          background: -webkit-linear-gradient(45deg, $pink, $red, $gold);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      }
-
-      @keyframes fadeIn {
-        25% {
-          opacity: 0;
-        }
-        100% {
-          visibility: visible;
-          opacity: 1;
-        }
-      }
+      justify-content: center;
     }
 
     .page {
@@ -90,9 +47,8 @@ html {
       }
     }
 
-    .contents {
+    section {
       margin: auto;
-      max-width: 800px;
       padding: 2em 1em;
 
       .text-grad {
