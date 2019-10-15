@@ -46,40 +46,48 @@ html {
         padding: 1em 0;
       }
     }
+    .text-grad {
+      background: -webkit-linear-gradient($gold, $pink);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     section {
       margin: auto;
       padding: 2em 1em;
 
-      .text-grad {
-        background: -webkit-linear-gradient(45deg, $gold, $pink);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      h1 {
+        font-weight: 400;
       }
-      .resume {
-        text-align: center;
-        margin-top: 7rem;
+    }
 
-        a {
-          text-decoration: none;
-          font-size: 1.5em;
-          padding: 0.9em 1.8em;
-          border-radius: 1em;
-          background: rgba(#000, 0.15);
+    .intro {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-          transition: 0.3s;
+    .resume {
+      margin-top: 7rem;
 
-          &:hover {
-            padding: 1em 2em;
-          }
+      a {
+        text-decoration: none;
+        font-size: 1.5em;
+        padding: 0.9em 1.8em;
+        border-radius: 1em;
+        background: rgba(#000, 0.15);
+
+        transition: 0.3s;
+
+        &:hover {
+          padding: 1em 2em;
         }
-        @media #{$mobile} {
-          margin: 3em 1em;
-          margin-bottom: 6em;
-          a {
-            padding: 0.5em 1em;
-          }
+      }
+      @media #{$mobile} {
+        margin: 3em 1em;
+        margin-bottom: 6em;
+        a {
+          padding: 0.5em 1em;
         }
       }
     }
