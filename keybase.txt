@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/xypnox
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://xypnox.com
+  * I am xypnox (https://keybase.io/xypnox) on keybase.
+  * I have a public key ASAJxN1EdigyMwF7qW4LVNSjpYaIelBk502RLYFnIpdjHQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012009c4dd4476283233017ba96e0b54d4a3a586887a5064e74d912d81672297631d0a",
+      "host": "keybase.io",
+      "kid": "012009c4dd4476283233017ba96e0b54d4a3a586887a5064e74d912d81672297631d0a",
+      "uid": "ed82fda7e7d49ead6af0a5119abc2319",
+      "username": "xypnox"
+    },
+    "merkle_root": {
+      "ctime": 1626364990,
+      "hash": "1cf0c15b1948096465d61f962539c9dba858e71f230c1d972522f93a35fad3bd5f14d24b470b94693fb421d8786f943ba9cb16426bca7cdfa235db338794cd78",
+      "hash_meta": "2a7e0810d85f130f9a7370892e2439bf1dbc34051a3aaa114d6340c7a7a80c3f",
+      "seqno": 20383031
+    }
+    "service": {
+      "entropy": "dzuSij36VQiwJIGikKosxirX",
+      "hostname": "xypnox.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.7.0"
+  },
+  "ctime": 1626365048,
+  "expire_in": 504576000,
+  "prev": "929b43d80caa9cb4759df9a7dd71aedffd2241a5e8a075365ed0379abb28bff7",
+  "seqno": 6,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgCcTdRHYoMjMBe6luC1TUo6WGiHpQZOdNkS2BZyKXYx0Kp3BheWxvYWTESpcCBsQgkptD2AyqnLR1nfmn3XGu3/0iQaXooHU2XtA3mrsov/fEILKEY7qhBbNEeTu8cQMAfVroL09wzCAVwRJXc0ipzYnNAgHCo3NpZ8RA+cT5TEU+P6gkktK2EegoHTIRFLaBBSKd/q/Ktilg6Tk+OFJUtnFwdig7buONCYdLJGyMNDOsI5TrLe+pTwTyD6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEINCYor8XYwnXWA8D/VUaqOtOtUlnOreu7d+Qzbp4dxwXo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/xypnox
+
+==================================================================
