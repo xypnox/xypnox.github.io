@@ -1,0 +1,52 @@
+---
+import { links } from "../content/links";
+import { Icon } from "astro-icon";
+---
+
+<div class="links">
+  {
+    links.map((link) => (
+      <a class="link" href={link.url}>
+        <Icon name={link.icon} />
+        <span>
+        {link.name}
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 12px;
+    transition: color 0.5s ease;
+  }
+  .link:hover {
+    color: var(--primary);
+  }
+  .link svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .link span {
+    color: var(--fadeText);
+    transition: color 0.5s ease;
+  }
+  .link:hover span {
+    color: var(--primary);
+  }
+</style>
