@@ -7,11 +7,10 @@ import Links from "../components/profileLinks.astro";
 <Layout title="xypnox">
   <main>
     <HoverLogo client:load />
-    <div>
-      <p>Hi, I am xypnox!</p>
-      <p>I like to code, design, write, sometimes poetry.</p>
-      <p>I love music, books, art, space and nature.</p>
-      <p>I prefer to listen and think, watch and learn.</p>
+    <div class="introduction">
+      <h1>Hi, I am xypnox!</h1>
+      <p>I like to code, design, write.</p>
+      <p>This here is my personal website.</p>
     </div>
     <Links />
   </main>
@@ -25,7 +24,20 @@ import Links from "../components/profileLinks.astro";
     align-items: center;
     gap: 4rem;
     padding: 1.5rem;
-    max-width: 60ch;
+    max-width: 80ch;
     margin-top: 4rem;
   }
+
+  .introduction {
+    font-size: 2rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .introduction h1 {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: normal;
+  }
+
 </style>

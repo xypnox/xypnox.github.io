@@ -3,7 +3,8 @@ export const themeVars = {
   primaryContrast: '#0f111a',
 
   background: '#0f111a',
-  surface: '#2E386620',
+  surface: '#131622BD',
+  hoverSurface: '#2E386620',
 
   border: '#202037',
 

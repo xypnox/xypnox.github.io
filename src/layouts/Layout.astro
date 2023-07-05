@@ -1,7 +1,11 @@
 ---
-import { themeVars } from '../theme'
+import { themeVars } from "../theme";
+import Navbar from "../components/navbar.astro";
+
+import "../styles.css";
+
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -9,22 +13,30 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <Navbar />
+  </body>
 </html>
 <style is:global define:vars={themeVars}>
-	html {
-		font-family: system-ui, sans-serif;
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    font-family: Jost;
     color: var(--text);
-		background-color: var(--background);
-	}
+    background-color: var(--background);
+  }
+  body {
+    margin: 0;
+    margin-bottom: 8rem;
+  }
 </style>
