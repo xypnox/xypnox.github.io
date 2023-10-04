@@ -22,7 +22,7 @@ I never had a unified place to store notes earlier. I usually just remembered im
 
 - Supports multiple devices (Using a single device for note taking is just plain stupid)
 
-## Backstory
+# Backstory
 
 > This is a backstory covering ll the apps I used before turning to Github. Feel free to skip this section.
 
@@ -46,7 +46,7 @@ I also used [iAWriter](https://play.google.com/store/apps/details?id=net.ia.iawr
 
 I moved on again. And I finally have setup a workflow for storing notes that I can see myself use in the near future. Although, like always, I will switch to the next hot thing :wink:.
 
-## The setup
+# The setup
 
 I use [Typora](https://typora.io/) to write notes on Laptop. It is a brilliant markdown editor and one of the primary reasons I prefer the current setup. Typora is built on electron but since I do not use an ancient PC anymore, I do not need to worry about electron apps taking too much RAM on my laptop. Typora is currently in beta and is available for free. Similar text editors exist and you can use those as well. But having tried a few, I find typora very polished and reliable. I use it even to write my blog posts. In fact, this very blog post was written on Typora.
 
@@ -54,7 +54,7 @@ It has all the basics right. A minimal interface, themeable, relatively fast, di
 
 On the Android side, I have gone completely sadistic. I use Keep to store the quick thoughts that I come across and since keep is very usable and quick, I do not need a completely overpowered app for android.
 
-## Sync
+# Sync
 
 > "But they are two completely different applications, How do you sync them?"
 

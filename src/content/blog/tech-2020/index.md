@@ -15,7 +15,7 @@ When someone starts writing a post about a tech product, it ends up being one of
 
 Most of this post discusses smartphones and what I think of them. Later on, there are a few other accessories discussed as well. Also, I will keep this post clear of the standard ramblings and thoughts of these products as I am sure you can find those on the internet anywhere.
 
-## Phone: Pixel 4a
+# Phone: Pixel 4a
 
 [Ref: Pixel 4a (flipkart)](https://www.flipkart.com/google-pixel-4a-just-black-128-gb/p/itm023b9677aa45d)
 
@@ -73,7 +73,7 @@ What I dislike:
 - Battery - but only slightly, esp. because I use it as a hotspot all the time.
 - Any other custom launcher makes the animations a little janky and that is why I stick with the default launcher.
 
-## Mouse: Logitech G102 lightsync
+# Mouse: Logitech G102 lightsync
 
 [Ref: Logitech G102 lightsync (amazon)](https://www.amazon.in/gp/product/B08LT9BMPP/)
 
@@ -89,7 +89,7 @@ What I dislike:
 
 - Configurability on Linux is a little broken, Pipper detects three LEDs as a single one.
 
-## Earphones: KZ ZST
+# Earphones: KZ ZST
 
 [Ref: KZ ZST (amazon)](https://www.amazon.in/gp/product/B01N5CPXLU/)
 
@@ -109,7 +109,7 @@ What I dislike:
 
 - None till now!
 
-## Monitor: Dell P Series 24-inch
+# Monitor: Dell P Series 24-inch
 
 [Ref: Dell P Series 24-inch (amazon)](https://www.amazon.in/gp/product/B07F8XZN69/)
 

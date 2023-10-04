@@ -12,7 +12,7 @@ coverAlt: "Tips on design"
 
 Hi, I have been practicing the art of designing web pages for a long time (a few years at least). And I have made some (objective term) progress. Here I would present some resources that you can go through to help in designing websites. Also, I would recommend a few tips which would help you boost your design.
 
-## Observation
+# Observation
 
 The first good skill that you need to obtain to start designing is Observation. Look and Observe how others have designed their websites. Also, do not limit yourself to a standard site such as Google or Facebook for design inspiration. You can browse these sites for a taste of what good design looks like:
 
@@ -23,7 +23,7 @@ The first good skill that you need to obtain to start designing is Observation. 
 
 Another amazing tool to help you in the task of observation is **Developer Tools**. These are available in all major browsers. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) and [Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools). A cool tip to note: you can add new styles in DevTools and see them updated live on the webpage, Awesome for testing different colors padding etc to see what fits right. (Note that changing code in DevTools does not change it in your files)
 
-## Understanding color
+# Understanding color
 
 ![Color](./Designer-joke-color.jpg)
 
@@ -43,7 +43,7 @@ Enough about theory what about Tools?
 - [Adobe Color CC](https://color.adobe.com/create/color-wheel/) - Don't Worry it's free! It's also amazing, especially for extracting color from images.
 - [GPick](http://www.gpick.org/) - I use this tool a lot to collect the colors I love. It's available in Ubuntu repos as `gpick`
 
-## Using Fonts
+# Using Fonts
 
 ![Font](./Designer-joke-font.jpg)
 
@@ -59,9 +59,9 @@ There are a few other sites that provide free fonts but most of them either are 
 
 I also compiled a set of great fonts available on Google fonts when I created the [FontStaller](https://github.com/xypnox/fontstaller/) script. You can find them [here](https://github.com/xypnox/fontstaller/releases/download/v1.0.0/fonts.zip).
 
-### Tips n Tricks
+# Tips n Tricks
 
-#### Minimalism is the way to go
+## Minimalism is the way to go
 
 > Minimalism is not a lack of something. It’s simply the perfect amount of something. — Nicholas Burroughs
 
@@ -75,17 +75,17 @@ But don't remove everything. As once a great man said:
 
 > Everything should be made as simple as possible, but not simpler. - Albert Einstein
 
-#### Test different screen sizes
+## Test different screen sizes
 
 ![Responsive](./responsive-design.png)
 
 I know it is hard to design for your own screen size, much harder to design for several. But that is what makes or breaks a design. People would not just be browsing your website from your specific machine. They might use a phone a tablet or unfortunately a smart-TV. Make your website at least a little mobile friendly by adding a few media tags.
 
-#### Advance stuff : Sass
+## Advance stuff : Sass
 
 Ever since I learned about [Sass](http://sass-lang.com/), I have used it everywhere. It is a CSS preprocessor. By that I mean, it is a language that compiles to generate CSS. But why would we need something else? Because it simplifies things. Here is the [official guide](http://sass-lang.com/guide) if you are feeling curious.
 
-#### Use some extensions
+## Use some extensions
 
 I know editing CSS files is not that hard, you don't need extra debugging stuff and linters. But a few extensions do make the job easier. These are a few extensions that I use in [Atom](https://atom.io/):
 

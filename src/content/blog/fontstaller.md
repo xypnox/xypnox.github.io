@@ -16,7 +16,7 @@ The main problem that I was facing was that while many sites offered fonts for f
 
 So I searched some more and stumbled upon the fact that python comes preloaded with a zip archive reading library named `zipfile`. And I could use it to spin up a small python script to make the extraction process "smart". By smart, I mean that the program could differentiate between a directory containing fonts and archives containing fonts. It can also work with nested directory structure and even detect whether a font has been preinstalled or not.
 
-## The program itself: FontStaller
+# The program itself: FontStaller
 
 ![Logo](https://raw.githubusercontent.com/xypnox/fontstaller/master/fontstaller-logo.png)
 
@@ -41,11 +41,11 @@ If you are interested in the fonts I was installing, check this [archived zip](h
 
 ---
 
-## Tricks
+# Tricks
 
 I learned a few new tricks about python scripting that I would share here.
 
-### Splitting and slicing simultaneously
+## Splitting and slicing simultaneously
 
 You split and slice simultaneously by just splicing the output of Splitting command. For example, the line in my code that uses it is :
 
@@ -55,7 +55,7 @@ idir = args.idir + '/' + zfile.split('/')[-1][:-4]
 
 Here I needed only the name of the archive without the `.zip` extension. So I first split the string using `/` then slice the last element till the fifth last character. Pretty neat.
 
-### Parsing command-line parameters in python
+## Parsing command-line parameters in python
 
 I know its quite dumb to say it's a trick but it took me several readings of Manual and a few different command line parsing methods to flat this one out. I finally ended up using the `argparse` package which is a little hard, to begin with, but offers a great amount of flexibility and nice user experience such as auto-generated `help` command!
 

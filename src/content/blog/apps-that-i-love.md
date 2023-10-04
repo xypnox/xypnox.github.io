@@ -14,6 +14,8 @@ Photo by Amith Nair on Unsplash
 
 Maybe you may already know some of them but perhaps the reasons why I like them would differ from yours, so read on!
 
+# Apps
+
 ## VS Code
 
 ![My VSCode setup](/blag/images/apps-i-love/vscode.png)

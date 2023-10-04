@@ -69,6 +69,8 @@ xypnox
 
 This was a while back. And if you don't want to read everything then the message is enough. But if you have not satisfied your hunger, carry on!
 
+# Guide
+
 ## To Develop a _sense_ of Design
 
 ### Observe Good Design

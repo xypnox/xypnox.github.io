@@ -14,7 +14,7 @@ So, I have been working this past few weeks on a todo application using commandl
 
 > The project's source code is available at [GitHub](https://github.com/xypnox/todxpy/)
 
-## Backstory
+# Backstory
 
 I recently switched to i3 windows manager just to try it out. And I loved it. I have now become used to living in the terminal. Most of the work except web browsing can be done through the terminal in an efficient way. But i3 is a topic for another post.
 
@@ -26,7 +26,7 @@ Hence I set forth to make one of my own which centered on speed, ease of use, sy
 
 > Sync doesn't work yet
 
-## Installation
+# Installation
 
 > Command enetered in terminal have a `$` before them. The output of the terminal doesn't have the `$`.
 
@@ -54,7 +54,7 @@ $ todx --version
 
 It should return something like `TodX v0.1.2`. If it shows any error message file an Issue in the [github repo](https://github.com/xypnox/todxpy/issues).
 
-## Usage
+# Usage
 
 You can view your todos using the simple command:
 
@@ -121,13 +121,13 @@ This much is everything you need for a simple basic commandline todo app.
 
 TodX is simple yes, but not basic.
 
-## Advanced commands
+# Advanced commands
 
 You mave have noted the absence of quotes while using the `todx add` command. You can definetly do `todx add "Some todo"` but it takes time to add those quotes and it doesn't feel elegant. Hence todx is designed in a way to eliminate the need for the quotes. You can always use quotes if you want to be more pragmatic.
 
 You can use `-a` instead of `add` and `-m` instead of `mark`.
 
-### Tags
+## Tags
 
 Let us say you want to organize your todos. Say that you want to sepearate your homework todos from your personal projects. It would be nice to have two different todo lists for both. But maybe you might have two lists of _holiday_ and _thing to buy_, now if you want to add a todo _Buy a swimsuit_ You may want to add it to both of your lists, but this will introduce redundancy.
 
@@ -168,21 +168,21 @@ $ todx view +project
 ☐  Make science project
 ```
 
-### Sync
+## Sync
 
 All the data of todx is stored in a single `data.json` file (in linux located at `~/.local/share/todx/data.json`). Since this file is a json, it can be easily synced with a remote server and can be used in any other app that might support the json format. Android and Web apps can de made that use this extendability.
 
-### Customizability
+## Customizability
 
 Currently things like done markers that define which status elements are marked as done and unicode charecter replacements (`☐`, `☑` etc) are stored in `settings.py` in the main code. I intend to make a `settings.json` file similar to `data.json` to add user customizability.
 
-## The Bash setup
+# The Bash setup
 
 Since `todx` is commandline tool we can easily mix and match it with other commandline tools to create beautiful things. I created a simple script to run everytime I start my terminal telling me the current weather, a smal quote and my todos. Here is a screenshot:
 
 ![](/blag/images/todx-setup-bash.png)
 
-## What I learnt
+# What I learnt
 
 It was and is an exhilarating project. I leant a lot of new stuff and revised old python skills in the process. Firstly I got to finally and successfully save and load data from json files into userdefined python objects.
 
@@ -192,7 +192,7 @@ I also learnt how to process command line parameters and install the package as 
 
 And finally I got to learn about the python packaging tools. I learnt how to make a package and how to publish it to pypi. Fun fact : TodX is listed in the [pypi](https://pypi.org/project/todx/). Making a python package takes some getting used to and can be daunting for many beginners. I almost quit my plan putting the package on pypi in the process. Perhaps I would make a blogpost describing the process.
 
-## The Future?
+# The Future?
 
 Indeed this is just the beginning of TodX. I have several plans about todx which I would like to implement as soon as I get time to work on it. Some of them include:
 

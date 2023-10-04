@@ -1,0 +1,308 @@
+---
+title: "XKCD"
+date: 2023-03-04
+
+categories: ["comic"]
+tags: ["comic", "fun", "xkcd"]
+---
+
+# This is a sample blog
+
+# Detailed Spec
+
+# h1 Heading 8-)
+
+Paragraphs. Lorizzle ipsizzle dang ass izzle, the bizzle adipiscing elit. My shizz sapizzle velizzle, i'm in the shizzle volutpat, suscipizzle quizzle, sizzle vizzle, arcu. Sure crackalackin tortor. Sed erizzle. Mammasay mammasa mamma oo sa izzle dolor dawg tempizzle shiznit. Own yo' pellentesque fizzle shizznit turpis. Fo shizzle my nizzle in fo shizzle. Daahng dawg sheezy rhoncus nisi. Da bomb hac ass platea away. dapibizzle. Shut the shizzle up that's the shizzle urna, pretizzle nizzle, mattizzle gangster, eleifend dang, nunc. Its fo rizzle suscipizzle. Integizzle semper nizzle sed purus.
+
+**Bold**
+
+## h2 Heading
+
+Etiam laorizzle urna shut the shizzle up mammasay mammasa mamma oo sa. Bizzle quizzle get down get down. Maecenizzle pulvinar, ipsizzle get down get down malesuada shiznit, nulla ma nizzle euismizzle crackalackin, pimpin' cool check out this nulla et fo shizzle. Vivamizzle fo shizzle my nizzle, tortor crazy we gonna chung fo shizzle, shiznit nunc ultricizzle gizzle, izzle daahng dawg leo elit izzle mofo. Maurizzle fizzle, orci vizzle volutpat black, sizzle augue luctus away, at bibendizzle enizzle check it out izzle get down get down. Nullam da bomb velizzle mah nizzle shizzlin dizzle that's the shizzle viverra. Phasellus nizzle black. Curabitizzle pimpin' my shizz vel pede yo facilisizzle.
+
+### h3 Heading
+
+Crunk yo tortizzle in mofo yo mamma consequizzle. Crazy convallizzle, fizzle izzle that's the shizzle posuere, we gonna chung lorizzle luctus the bizzle, bizzle blandizzle fo shizzle dolor mah nizzle velizzle. Gangsta ac yo mamma i'm in the shizzle elit fo shizzle mah nizzle fo rizzle, mah home g-dizzle i'm in the shizzle. Curabitizzle gangsta nisi, dizzle izzle, funky fresh eleifend, fo shizzle my nizzle izzle, metizzle. Nunc dope neque. Lorem ipsum dolizzle nizzle crackalackin, consectetizzle dang elizzle. Maecenas izzle elit. Fo shizzle nizzle. Vestibulum ac erat shiz velizzle shit dictizzle. Gangsta break it down mammasay mammasa mamma oo sa sizzle amizzle nibh. Cras own yo'.
+
+#### h4 Heading
+
+##### h5 Heading
+
+###### h6 Heading
+
+Lorizzle ipsizzle dang ass izzle, the bizzle adipiscing elit. My shizz sapizzle velizzle, i'm in the shizzle volutpat, suscipizzle quizzle, sizzle vizzle, arcu. Sure crackalackin tortor. Sed erizzle. Mammasay mammasa mamma oo sa izzle dolor dawg tempizzle shiznit. Own yo' pellentesque fizzle shizznit turpis. Fo shizzle my nizzle in fo shizzle. Daahng dawg sheezy rhoncus nisi. Da bomb hac ass platea away. dapibizzle. Shut the shizzle up that's the shizzle urna, pretizzle nizzle, mattizzle gangster, eleifend dang, nunc. Its fo rizzle suscipizzle. Integizzle semper nizzle sed purus.
+
+## Horizontal Rules
+
+---
+
+---
+
+---
+
+## Typographic replacements
+
+Enable typographer option to see result.
+
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+
+!!!!!! ???? ,, -- ---
+
+"Smartypants, double quotes" and 'single quotes'
+
+## Emphasis
+
+**This is bold text**
+
+_This is italic text_
+
+~~Strikethrough~~
+
+## Blockquotes
+
+> Blockquotes can also be nested...
+>
+> > ...by using additional greater-than signs right next to each other...
+> >
+> > > ...or with spaces between arrows.
+
+## Lists
+
+Unordered
+
+- Create a list by starting a line with `+`, `-`, or `*`
+- Sub-lists are made by indenting 2 spaces:
+  - Marker character change forces new list start:
+    - Ac tristique libero volutpat at
+    * Facilisis in pretium nisl aliquet
+    - Nulla volutpat aliquam velit
+- Very easy!
+
+Ordered
+
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+
+4. You can use sequential numbers...
+5. ...or keep all the numbers as `1.`
+
+Start numbering with offset:
+
+57. foo
+1. bar
+
+## Code
+
+Inline `code`
+
+Indented code
+
+    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+
+Block code "fences"
+
+```
+Sample text here...
+```
+
+Syntax highlighting
+
+```js
+var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+```
+
+## Tables
+
+| Option | Description                                                               |
+| ------ | ------------------------------------------------------------------------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default.    |
+| ext    | extension to be used for dest files.                                      |
+
+Right aligned columns
+
+| Option |                                                               Description |
+| -----: | ------------------------------------------------------------------------: |
+|   data | path to data files to supply the data that will be passed into templates. |
+| engine |    engine to be used for processing templates. Handlebars is the default. |
+|    ext |                                      extension to be used for dest files. |
+
+## Links
+
+[link text](http://dev.nodeca.com)
+
+[link with title](http://nodeca.github.io/pica/demo/ 'title text!')
+
+Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
+
+## Images
+
+![Minion](https://octodex.github.com/images/minion.png)
+![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg 'The Stormtroopocat')
+
+Like links, Images also have a footnote style syntax
+
+![Alt text][id]
+
+With a reference later in the document defining the URL location:
+
+[id]: https://octodex.github.com/images/dojocat.jpg 'The Dojocat'
+
+## Plugins
+
+The killer feature of `markdown-it` is very effective support of
+[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+
+### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
+
+> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
+>
+> Shortcuts (emoticons): :-) :-( 8-) ;)
+
+see [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.
+
+### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)
+
+- 19^th^
+- H~2~O
+
+### [mark](https://github.com/markdown-it/markdown-it-mark)
+
+==Marked text==
+
+### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
+
+Footnote 1 link[^first].
+
+Footnote 2 link[^second].
+
+Inline footnote^[Text of inline footnote] definition.
+
+Duplicated footnote reference[^second].
+
+[^first]: Footnote **can have markup**
+
+    and multiple paragraphs.
+
+[^second]: Footnote text.
+
+### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)
+
+Term 1
+
+: Definition 1
+with lazy continuation.
+
+Term 2 with _inline markup_
+
+: Definition 2
+`{ some code, part of Definition 2 }`
+
+_Compact style:_
+
+Term 1
+~ Definition 1
+
+Term 2
+~ Definition 2a
+~ Definition 2b
+
+### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
+
+This is HTML abbreviation example.
+
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+
+\*[HTML]: Hyper Text Markup Language
+
+---
+
+# Title
+
+Some sample text, with **bold** and *italic* and [link](https://example.com).
+
+An internal link would do [[no.harm]]
+
+And some inline code \`const a = 1;\`
+
+## Heading 2
+
+A long paragraph of text that will wrap and probably end up. Lorem ipsum. 
+lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+A proper long link:
+
+https://example.com/this/is/a/very/long/link/that/will/likely/need/to/be/wrapped/to/multiple/lines
+
+## Quotes and Blocks
+
+A regular blockquote:
+
+> This is a blockquote
+> inside a list item.
+
+A Code block
+
+```js
+const a = 1;
+const b = 2;
+```
+
+Some hard core math:
+
+$$
+f(x)\relax{x} = \int_{-\infty}^\infty
+    \hat f(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi
+$$
+
+And some inline math: $$f(x) = x^2$$
+
+
+A Table 
+
+| Syntax      | Description | Test Text   |
+| ----------- | ----------- | ----------- |
+| Header      | Title       | Here's this |
+| Paragraph   | Text        | And more    |
+| Table       | Data        | Here's this |
+
+## Tasks and lists
+
+A list
+
+- A list item
+- Another list item
+- A third list item
+  - A nested list item
+  - Another nested list item
+
+1. A numbered list.
+2. With multiple paragraphs.
+
+    A second paragraph in the list item. Make sure there is a blank line between paragraphs in the list item.
+
+A bunch of Todos
+
+- [ ] A todo
+- [x] A completed todo
+- [ ] Another todo
+  - [ ] A nested todo
+  - [ ] Another nested todo
+
+
+## Special Syntax
+
+- [-] A cancelled todo
+- [a] A archived todo
+- [b] A backlog todo

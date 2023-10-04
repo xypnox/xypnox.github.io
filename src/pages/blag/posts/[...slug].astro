@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/BaseLayout.astro";
+import Toc from "../../../components/Toc.astro";
 
 interface Props {
   entry: CollectionEntry<"blog">;
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
 
 // 2. When it's time to render, you can get the entry directly from the prop
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 
 // console.log("In Blog post EntryList", {
 //   entry,
@@ -72,6 +73,7 @@ const dateFormatOption = {
       </div>
     )
   }
+  <Toc headings={headings} />
   <div class="content">
     <Content />
     <script
