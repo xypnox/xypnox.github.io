@@ -1,0 +1,55 @@
+---
+---
+
+<nav class="navbar">
+  <img class="navLogo" src="/logo.svg" alt="Logo" />
+  <div class="navlinks">
+    <a href="/">Home</a>
+    <a href="/blag">Blag</a>
+    <a href="/design">Design</a>
+  </div>
+</nav>
+
+<style>
+  nav.navbar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--surface);
+    width: max-content;
+    margin: 0 auto;
+    gap: 1rem;
+    border-radius: 1rem; 
+    backdrop-filter: blur(1rem);
+    transition: all 0.2s ease-in-out;
+  }
+
+  nav.navbar:hover {
+    padding: 2rem;
+    transform: translateY(-1rem);
+  }
+
+  .navbar .navlinks {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .navlinks a {
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .navlinks a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+  }
+
+  .navLogo {
+    width: 2rem;
+    height: 2rem;
+  }
+</style>

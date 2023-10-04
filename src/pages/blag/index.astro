@@ -1,0 +1,213 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/BaseLayout.astro";
+
+const blogEntriesAll = await getCollection("blog");
+
+const blogEntries = blogEntriesAll.sort((a, b) => {
+  return b.data.date - a.data.date;
+}).filter((blogPostEntry) => {
+  return blogPostEntry.slug.split("/").length === 1;
+})
+
+blogEntries.forEach((blogPostEntry) => {
+  console.log({ blogPostEntry });
+});
+
+const allTags = blogEntriesAll
+  .map((blogPostEntry) => blogPostEntry.data.tags)
+  .flat();
+
+const dateFormatOption = {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+};
+---
+
+<Layout title="Blog">
+  <main class="blog-index">
+    <h1>Blog</h1>
+
+    <div class="blog-wrapper">
+      <div class="blog-list">
+        {
+          blogEntries.map((blogPostEntry) => (
+            <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
+              <h2>{blogPostEntry.data.title}</h2>
+              <p class="description">{blogPostEntry.data.description}</p>
+              <div class="details">
+                <div>
+                  <time datetime={blogPostEntry.data.date.toISOString()}>
+                    {blogPostEntry.data.date.toLocaleDateString(
+                      "en-US",
+                      dateFormatOption
+                    )}
+                  </time>
+                  {blogPostEntry.data.tags && (
+                    <>
+                      <span class="separator">•</span>
+                      <div class="tags">
+                        {blogPostEntry.data.tags.map((tag: string) => (
+                          <span class="tag">#{tag}</span>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+      <div class="tags-list">
+        <h3>Tags</h3>
+        <ul>
+          {
+            [...new Set(allTags)].map((tag) => (
+              <li>
+                <a href={`/blog/tags/${tag}`}>#{tag}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .blog-index {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    flex-grow: 1;
+  }
+
+  .blog-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .blog-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .description {
+    color: var(--text-semi-fade);
+  }
+
+  .blog-entry h2,
+  .blog-entry p {
+    margin: 0;
+  }
+
+  .blog-entry .details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-fade);
+    gap: 1rem;
+  }
+
+  .blog-entry .details .author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-semi-fade);
+  }
+
+  .author-icon {
+    border-radius: 50%;
+  }
+
+  .blog-entry .details div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .blog-entry .details time {
+    font-size: 0.9rem;
+  }
+
+  .blog-entry:hover {
+    color: var(--primary);
+  }
+
+  .blog-entry .tags {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .tags-list {
+    max-width: 10rem;
+  }
+
+  .tags-list ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+  }
+  .tags-list li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    color: var(--text);
+    text-decoration: none;
+    background-color: var(--cardBackground);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .tags-list li a:hover {
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    .blog-wrapper {
+      flex-direction: column;
+    }
+    .blog-list {
+      flex-direction: column;
+    }
+    .tags-list {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .blog-entry .details {
+      gap: 0.5rem;
+    }
+    .blog-entry .details div {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      gap: 0.5rem;
+    }
+    .separator {
+      display: none;
+    }
+    .blog-entry .details time {
+      font-size: 0.8rem;
+    }
+  }
+</style>

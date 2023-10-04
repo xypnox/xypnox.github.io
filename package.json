@@ -10,10 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^2.2.0",
+    "@astrojs/mdx": "^1.1.0",
+    "@astrojs/solid-js": "^3.0.1",
     "@solid-primitives/mouse": "^2.0.14",
-    "astro": "^2.7.2",
+    "astro": "^3.2.2",
     "astro-icon": "^0.8.1",
-    "solid-js": "^1.4.3"
+    "solid-js": "^1.7.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }

@@ -8,7 +8,6 @@ export const HoverLogo = () => {
 
 
   // Tilts on hover
-
   const hoverTransform = () => {
     if (!imageElement) return '';
     const imageCenter = {
@@ -35,9 +34,9 @@ export const HoverLogo = () => {
   return (
     <div class="hoverLogo">
       <img
-        // @ts-ignore
-        ref={imageElement}
-        style={{ transform: hoverTransform() }} src="/logo.svg" alt="Logo" />
+        ref={imageElement!}
+        style={{ transform: hoverTransform() }} src="/logo.svg" alt="Logo"
+      />
     </div>
   );
 }

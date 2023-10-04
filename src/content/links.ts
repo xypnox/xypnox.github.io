@@ -15,9 +15,19 @@ export const links: Link[] = [
     icon: 'bi:mastodon',
   },
   {
-    name: 'Studio',
-    url: 'https://xypnox.studio',
-    icon: 'bi:palette',
+    name: 'Email',
+    url: 'mailto:xypnox+emailOnWebsite@gmail.com',
+    icon: 'ph:envelope-duotone',
+  },
+  {
+    name: 'Telegram',
+    url: 'https://t.me/xypnox',
+    icon: 'ph:envelope-duotone',
+  },
+  {
+    name: 'Goodreads',
+    url: 'https://goodreads.com/xypnox',
+    icon: 'ph:envelope-duotone',
   },
 ]
 

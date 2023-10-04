@@ -1,6 +1,11 @@
 export const themeVars = {
-  primary: '#ff5370',
-  primaryContrast: '#0f111a',
+  font: {
+    family: 'Jost, sans-serif',
+  },
+  primary: {
+    color: '#ff5370',
+    contrast: '#0f111a',
+  },
 
   background: '#0f111a',
   surface: '#2E386620',

@@ -1,0 +1,145 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/BaseLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+  entryList: {
+    slug: string;
+    data: any;
+  }[];
+}
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+
+  const entryList = blogEntries.map((entry) => ({
+    slug: entry.slug,
+    data: entry.data,
+  }));
+
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry, entryList },
+  }));
+}
+// 2. When it's time to render, you can get the entry directly from the prop
+const { entry, entryList } = Astro.props;
+const { Content } = await entry.render();
+
+console.log("In Blog post EntryList", {
+  entry,
+});
+
+const dateFormatOption = {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+};
+---
+
+<Layout title={entry.data.title}>
+  <h1>{entry.data.title}</h1>
+  <div class="details">
+    <time datetime={entry.data.date.toISOString()}>
+      {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
+    </time>
+    {
+      entry.data.tags && (
+        <>
+          <span class="separator">•</span>
+          <div class="tags">
+            {entry.data.tags.map((tag: string) => (
+              <a href={`/blog/tags/${tag}`}>#{tag}</a>
+            ))}
+          </div>
+        </>
+      )
+    }
+  </div>
+  <div class="coverImage">
+    {
+      entry.data.coverImage && (
+        <Image
+          alt={entry.data.coverAlt ?? "Cover Image"}
+          src={entry.data.coverImage}
+        />
+      )
+    }
+  </div>
+  <div class="content">
+    <Content />
+  </div>
+
+  <style>
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
+    .details {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      color: var(--text-fade);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .details .author {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-semi-fade);
+    }
+
+    .details .author img {
+      margin: 0;
+    }
+
+    .author-icon {
+      border-radius: 50%;
+    }
+
+    .relatedPosts {
+      display: flex;
+      margin-top: 2rem;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+
+    .relatedPost {
+      width: 45%;
+      flex-shrink: 0;
+      background-color: var(--cardBackground);
+      padding: 1rem;
+      margin-right: 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .relatedPost h2 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    @media (max-width: 390px) {
+      .details {
+        flex-wrap: wrap;
+      }
+
+      .separator {
+        display: none;
+      }
+    }
+  </style>
+</Layout>
