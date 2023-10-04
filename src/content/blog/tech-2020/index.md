@@ -6,14 +6,12 @@ date : 2020-12-26
 categories : ["tech"]
 tags : ["tech", "blog", "phone"]
 
-metadata_image : "/posts/tech-2020/social.png"
+coverImage: "./social.png"
+coverAlt: "My year in Tech - 2020. There will be a different post for culture 2020 as well."
 ---
 
-{% cover(src="cover.png") %}
-My year in Tech - 2020.
 
-There will be a different post for culture 2020 as well.
-{% end %}
+
 
 When someone starts writing a post about a tech product, it ends up being one of two things: Either an unbiased review or a very biased piece highlighting how the thing is "the best thing ever" / "the worst thing ever". And I promise you I will try my best not to do any of those in this post.
 
@@ -51,10 +49,10 @@ And I rock it naked. Without a cover or a screen protector. I accept the risk in
 
 The camera is a joy to use. Here are a few shots I took and edited on the phone itself:\
 
-![Pixel photo 1](p1.jpeg)
-![Pixel photo 2](p2.jpeg)
-![Pixel photo 3](p3.jpeg)
-![Pixel photo 4](p4.jpeg)
+![Pixel photo 1](./p1.jpeg)
+![Pixel photo 2](./p2.jpeg)
+![Pixel photo 3](./p3.jpeg)
+![Pixel photo 4](./p4.jpeg)
 
 These aren't the photos a normal person would take, but these are the ones I enjoy because of their aesthetic.
 

@@ -11,6 +11,7 @@ interface Props {
     data: any;
   }[];
 }
+
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");
@@ -25,6 +26,7 @@ export async function getStaticPaths() {
     props: { entry, entryList },
   }));
 }
+
 // 2. When it's time to render, you can get the entry directly from the prop
 const { entry, entryList } = Astro.props;
 const { Content } = await entry.render();
@@ -59,16 +61,17 @@ const dateFormatOption = {
       )
     }
   </div>
-  <div class="coverImage">
-    {
-      entry.data.coverImage && (
+  {
+    entry.data.coverImage && (
+      <div class="coverImage">
         <Image
           alt={entry.data.coverAlt ?? "Cover Image"}
           src={entry.data.coverImage}
         />
-      )
-    }
-  </div>
+        {entry.data.coverAlt && <p>{entry.data.coverAlt}</p>}
+      </div>
+    )
+  }
   <div class="content">
     <Content />
   </div>

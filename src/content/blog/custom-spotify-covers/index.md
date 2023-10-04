@@ -48,25 +48,25 @@ This whole exercise from choosing a theme to a final cover image usually takes m
 
 ## CoronaX3
 
-![CoronaX3](CoronaX3.png)
+![CoronaX3](./CoronaX3.png)
 
 We start our journey with X3, the first custom cover I made that wasn't just an image. I found the image on Unsplash, with the difference that it has the X3. Specifying that it is the cover of the CoronaX3 playlist. The background image is self-explanatory!
 
 ## CoronaX4
 
-![CoronaX4](CoronaX4.png)
+![CoronaX4](./CoronaX4.png)
 
 _A bit more hopeful, a bit too complex._ When I made this cover, I was viewing it in Figma, full-on zoomed to a large proportion. Thus, I used detail that was illegible at the size it was going to be displayed on Spotify, a meager 220px square. That is why the highlighted text visible at a large size is unreadable on Spotify. This was a guiding lesson and other covers were made with the actual size in mind.
 
 ## Ghazals
 
-![Ghazals](Ghazals.png)
+![Ghazals](./Ghazals.png)
 
 In between the quarantine, a friend of mine shared with me a long YouTube playlist of Ghazals. I took some of what I heard there and some that I had listened to earlier and put them into this playlist. For the visuals, I looked for something that resonated with _sufi, elegant, peaceful._ The playful notch of Z adds a little style to the rather simple typography.
 
 ## CoronaX5
 
-![CoronaX5](CoronaX5.png)
+![CoronaX5](./CoronaX5.png)
 
 This heart-shaped image caught my eye as soon as I saw it. This image was crying out to be a cover for a playlist and it became the cover of CoronaX5. If you asked an English teacher to write out the meaning of this image, you will get perhaps a trilogy of thick novels.
 
@@ -74,13 +74,13 @@ The truth is simpler, it's just a paper heart tearing itself apart.
 
 ## Classical Melodies
 
-![Classical Melodies](Classical_Melodies.png)
+![Classical Melodies](./Classical_Melodies.png)
 
 When I was a kid, with barely any sense of the world, my parents owned a cassette player and I heard most of the Hindi Classics on that player. Which is why the cover of this playlist is a cassette.
 
 ## Broken
 
-![Broken](Broken.png)
+![Broken](./Broken.png)
 
 Just a playlist that is broken.
 
@@ -88,37 +88,37 @@ The vinyl is an image and the shadow is added in Figma. The fonts just match the
 
 ## CoronaX6
 
-![CoronaX6](CoronaX6.png)
+![CoronaX6](./CoronaX6.png)
 
 Depicting the extended usage of screens and social media, this cover consists of the typical quarantining human of that time. Also, the way 6 fits in the curve of the neck is just beautiful.
 
 ## CoronaX7
 
-![CoronaX7](CoronaX7.png)
+![CoronaX7](./CoronaX7.png)
 
 Ah, this was made during the part of my internship where I worked from 9 in the morning till about 9 in the night. And all of it was mostly code. That is why it is all code and evokes the same overwhelming feeling that you get with a similar schedule.
 
 ## Farmhouse
 
-![Farmhouse](Farmhouse.png)
+![Farmhouse](./Farmhouse.png)
 
 A playlist for the songs that give you the old country feeling, even though I have never experienced it first hand. The background image was colorful but de-saturating it gave it a more peaceful look.
 
 ## CoronaX8
 
-![CoronaX8](CoronaX8.png)
+![CoronaX8](./CoronaX8.png)
 
 Confusion with the world and with myself in general. _Why is the world whizzing by and I am stuck at a standstill?_ The image has been given a green tint to get the matrix look. The font is also monospace for a similar feel.
 
 ## CoronaX9
 
-![CoronaX9](CoronaX9.png)
+![CoronaX9](./CoronaX9.png)
 
 A peaceful paradise. A calm beach and timeless lighthouse (_kinda_). Pastel colors, thin font. Relates to a few songs on the playlist and a liberated mood of that time.
 
 ## Nightsky
 
-![Nightsky](Nightsky.png)
+![Nightsky](./Nightsky.png)
 
 > Wait for the night, then find the open sky, put this on and enjoy!
 
@@ -126,31 +126,31 @@ A set of songs that are meant to be heard on an open sky of stars, gazing into t
 
 ## CoronaX10
 
-![CoronaX10](CoronaX10.png)
+![CoronaX10](./CoronaX10.png)
 
 I was looking for something else but when I saw the Jellyfish, I couldn't resist. And looking at the cover, it does look dope, even though it doesn't relate specifically to anything in the playlist. But who cares, my playlists, my choice!
 
 ## CoronaX11
 
-![CoronaX11](CoronaX11.png)
+![CoronaX11](./CoronaX11.png)
 
 I said _enough with the images_, What can you do with just Figma? And the smooth gradients with an infinite mirror text was the response!
 
 ## Beats
 
-![Beats](Beats.png)
+![Beats](./Beats.png)
 
 A playlist of beats, a long long list of songs to jam to without any emotional overhead. The guitar was fiery red in the start but with a few gradients, it really shined in the blue-green tone. The only shame is that the details of the flame are not as visible on Spotify.
 
 ## CoronaX12
 
-![CoronaX12](CoronaX12.png)
+![CoronaX12](./CoronaX12.png)
 
 _How do you do, fellow kids?_ A weak attempt at a hip-hoppy downtown cover. Graffiti on the wall, night lights of the cars, brown alleys. Just a cover that could as well have been a cover of a rap album.
 
 ## CoronaX13
 
-![CoronaX13](CoronaX13.png)
+![CoronaX13](./CoronaX13.png)
 
 The philosopher. My favorite cover so far. The theme is philosophy as I was reading and watching a lot of content related to philosophy at that time. In the beginning, the cover was meant to be a head of Socrates with Blue and Red copies slightly shifted to give the effect of a printing error and introduce intrigue.
 
@@ -158,13 +158,13 @@ The final result is even better, a few images of a philosopher deep in thought, 
 
 ## CoronaX14
 
-![CoronaX14](Coronax14.png)
+![CoronaX14](./Coronax14.png)
 
 The Office. The show I binged as if I would die tomorrow. It's an amazing show, highly recommended! and it becomes the theme of this cover. Also because a few songs from the soundtrack make it to the playlist.
 
 ## CoronaX15
 
-![CoronaX15](CoronaX15.png)
+![CoronaX15](./CoronaX15.png)
 
 New phone, no image challenge.
 
@@ -172,7 +172,7 @@ Now again, this cover doesn't use any images, rather it uses the vector capabili
 
 ## CoronaX16
 
-![CoronaX16](CoronaX16.png)
+![CoronaX16](./CoronaX16.png)
 
 Tired! Tired of all the assignments and tests and what-nots!
 
