@@ -11,13 +11,13 @@ coverAlt: "My year in Tech - 2020. There will be a different post for culture 20
 ---
 
 
-
-
 When someone starts writing a post about a tech product, it ends up being one of two things: Either an unbiased review or a very biased piece highlighting how the thing is "the best thing ever" / "the worst thing ever". And I promise you I will try my best not to do any of those in this post.
 
 Most of this post discusses smartphones and what I think of them. Later on, there are a few other accessories discussed as well. Also, I will keep this post clear of the standard ramblings and thoughts of these products as I am sure you can find those on the internet anywhere.
 
-## Phone: [Pixel 4a](https://www.flipkart.com/google-pixel-4a-just-black-128-gb/p/itm023b9677aa45d)
+## Phone: Pixel 4a
+
+[Ref: Pixel 4a (flipkart)](https://www.flipkart.com/google-pixel-4a-just-black-128-gb/p/itm023b9677aa45d)
 
 The best phone is the one in your hands. The numbers, the specs, they don't matter. Because the only phone you can use is the one you have. You can fight with other people on which phone is better but if you lose, you aren't going to buy the other's phone, and neither will your opponent.
 
@@ -73,7 +73,9 @@ What I dislike:
 - Battery - but only slightly, esp. because I use it as a hotspot all the time.
 - Any other custom launcher makes the animations a little janky and that is why I stick with the default launcher.
 
-## Mouse: [Logitech G102 lightsync](https://www.amazon.in/gp/product/B08LT9BMPP/)
+## Mouse: Logitech G102 lightsync
+
+[Ref: Logitech G102 lightsync (amazon)](https://www.amazon.in/gp/product/B08LT9BMPP/)
 
 A decent mouse so far! I didn't plan on getting a new one but after a few furious sessions of Krunker my old mouse started to show its age. Hence, I had to shell out for yhis one.
 
@@ -87,7 +89,9 @@ What I dislike:
 
 - Configurability on Linux is a little broken, Pipper detects three LEDs as a single one.
 
-## Earphones: [KZ ZST](https://www.amazon.in/gp/product/B01N5CPXLU/)
+## Earphones: KZ ZST
+
+[Ref: KZ ZST (amazon)](https://www.amazon.in/gp/product/B01N5CPXLU/)
 
 Ah if there was a heaven, it would probably sound like this.
 
@@ -105,7 +109,9 @@ What I dislike:
 
 - None till now!
 
-## Monitor: [Dell P Series 24-inch](https://www.amazon.in/gp/product/B07F8XZN69/)
+## Monitor: Dell P Series 24-inch
+
+[Ref: Dell P Series 24-inch (amazon)](https://www.amazon.in/gp/product/B07F8XZN69/)
 
 Because of the pandemic I had to leave this at college and it has been ~6 months since I last used it. And therefore my views of this monitor have dulled with time and I don't seem to value it as much as I did when I used to use it.
 

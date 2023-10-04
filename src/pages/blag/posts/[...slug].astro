@@ -28,12 +28,12 @@ export async function getStaticPaths() {
 }
 
 // 2. When it's time to render, you can get the entry directly from the prop
-const { entry, entryList } = Astro.props;
+const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-console.log("In Blog post EntryList", {
-  entry,
-});
+// console.log("In Blog post EntryList", {
+//   entry,
+// });
 
 const dateFormatOption = {
   day: "numeric",
@@ -74,75 +74,85 @@ const dateFormatOption = {
   }
   <div class="content">
     <Content />
+    <script
+      is:inline
+      src="https://utteranc.es/client.js"
+      repo="xypnox/blag"
+      issue-term="pathname"
+      label="comments"
+      theme="photon-dark"
+      crossorigin="anonymous"
+      async
+    ></script>
   </div>
-
-  <style>
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-    }
-    .details {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      color: var(--text-fade);
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .details .author {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--text-semi-fade);
-    }
-
-    .details .author img {
-      margin: 0;
-    }
-
-    .author-icon {
-      border-radius: 50%;
-    }
-
-    .relatedPosts {
-      display: flex;
-      margin-top: 2rem;
-      overflow-x: auto;
-      margin-bottom: 2rem;
-    }
-
-    .relatedPost {
-      width: 45%;
-      flex-shrink: 0;
-      background-color: var(--cardBackground);
-      padding: 1rem;
-      margin-right: 1rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .relatedPost h2 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
-    @media (max-width: 390px) {
-      .details {
-        flex-wrap: wrap;
-      }
-
-      .separator {
-        display: none;
-      }
-    }
-  </style>
 </Layout>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+  .details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--text-fade);
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .details .author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-semi-fade);
+  }
+
+  .details .author img {
+    margin: 0;
+  }
+
+  .author-icon {
+    border-radius: 50%;
+  }
+
+  .relatedPosts {
+    display: flex;
+    margin-top: 2rem;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+  }
+
+  .relatedPost {
+    width: 45%;
+    flex-shrink: 0;
+    background-color: var(--cardBackground);
+    padding: 1rem;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .relatedPost h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  @media (max-width: 390px) {
+    .details {
+      flex-wrap: wrap;
+    }
+
+    .separator {
+      display: none;
+    }
+  }
+</style>
