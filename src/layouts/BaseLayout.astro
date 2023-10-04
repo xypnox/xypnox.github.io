@@ -50,4 +50,25 @@ const themeCssVars = flattenObject(themeVars, (keys, value) => [
   a {
     color: var(--primary-color);
   }
+
+  .content img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  pre.astro-code {
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: var(--surface) !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 1rem 0;
+  }
 </style>

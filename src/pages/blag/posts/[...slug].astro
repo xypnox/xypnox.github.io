@@ -44,23 +44,25 @@ const dateFormatOption = {
 ---
 
 <Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-  <div class="details">
-    <time datetime={entry.data.date.toISOString()}>
-      {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
-    </time>
-    {
-      entry.data.tags && (
-        <>
-          <span class="separator">•</span>
-          <div class="tags">
-            {entry.data.tags.map((tag: string) => (
-              <a href={`/blog/tags/${tag}`}>#{tag}</a>
-            ))}
-          </div>
-        </>
-      )
-    }
+  <div class="postHeading">
+    <h1>{entry.data.title}</h1>
+    <div class="details">
+      <time datetime={entry.data.date.toISOString()}>
+        {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
+      </time>
+      {
+        entry.data.tags && (
+          <>
+            <span class="separator">•</span>
+            <div class="tags">
+              {entry.data.tags.map((tag: string) => (
+                <a href={`/blog/tags/${tag}`}>#{tag}</a>
+              ))}
+            </div>
+          </>
+        )
+      }
+    </div>
   </div>
   {
     entry.data.coverImage && (
@@ -96,10 +98,24 @@ const dateFormatOption = {
     gap: 0.5rem;
   }
 
+  .postHeading {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+  }
+
+
   .content {
     display: flex;
     flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
   }
+
   .details {
     display: flex;
     flex-direction: row;
@@ -107,45 +123,17 @@ const dateFormatOption = {
     justify-content: flex-start;
     color: var(--text-fade);
     gap: 1rem;
-    margin: 1rem 0;
   }
 
-  .details .author {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-semi-fade);
+  .coverImage {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
   }
 
-  .details .author img {
-    margin: 0;
-  }
-
-  .author-icon {
-    border-radius: 50%;
-  }
-
-  .relatedPosts {
-    display: flex;
-    margin-top: 2rem;
-    overflow-x: auto;
-    margin-bottom: 2rem;
-  }
-
-  .relatedPost {
-    width: 45%;
-    flex-shrink: 0;
-    background-color: var(--cardBackground);
-    padding: 1rem;
-    margin-right: 1rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .relatedPost h2 {
-    font-size: 1.5rem;
-    margin: 0;
+  .coverImage img {
+    width: 100%;
+    height: auto;
   }
 
   @media (max-width: 390px) {
