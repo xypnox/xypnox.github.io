@@ -37,10 +37,14 @@ const themeCssVars = flattenObject(themeVars, (keys, value) => [
   </body>
 </html>
 <style is:global define:vars={themeCssVars}>
+  * {
+    box-sizing: border-box;
+  }
   html {
     font-family: var(--font-family);
     color: var(--text);
     background-color: var(--background);
+    padding-bottom: 8rem;
   }
 
   body {

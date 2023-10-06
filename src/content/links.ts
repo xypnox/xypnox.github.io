@@ -1,3 +1,5 @@
+import { icons } from "./icons";
+
 interface Link {
   name: string;
   url: string;
@@ -7,27 +9,27 @@ export const links: Link[] = [
   {
     name: 'GitHub',
     url: 'https://github.com/xypnox',
-    icon: 'bi:github',
+    icon: icons.github,
   },
   {
     name: 'Mastodon',
     url: 'https://fosstodon.org/@xypnox',
-    icon: 'bi:mastodon',
+    icon: icons.mastodon,
   },
   {
     name: 'Email',
     url: 'mailto:xypnox+emailOnWebsite@gmail.com',
-    icon: 'ph:envelope-duotone',
+    icon: icons.email,
   },
   {
     name: 'Telegram',
     url: 'https://t.me/xypnox',
-    icon: 'ph:envelope-duotone',
+    icon: icons.telegram,
   },
   {
     name: 'Goodreads',
     url: 'https://goodreads.com/xypnox',
-    icon: 'ph:envelope-duotone',
+    icon: icons.goodreads,
   },
 ]
 

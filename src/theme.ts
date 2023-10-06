@@ -7,10 +7,14 @@ export const themeVars = {
     contrast: '#0f111a',
   },
 
+  secondary: {
+    color: '#CCA685',
+  },
+
   background: '#0f111a',
   surface: '#2E386620',
 
-  border: '#202037',
+  border: '#ffffff10',
 
   heading: '#CCA685',
   text: '#919DCF',

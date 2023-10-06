@@ -3,11 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .hoverLogo img {
   border-radius: 50%;
   transition: all 0.5s ease;
+  width: 30dvh;
+  height: auto;
 }
 
 .hoverLogo img:hover {

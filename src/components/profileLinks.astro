@@ -20,8 +20,10 @@ import { Icon } from "astro-icon";
   .links {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
     gap: 1rem;
+    width: 100%;
   }
   .link {
     display: flex;
@@ -30,15 +32,16 @@ import { Icon } from "astro-icon";
     gap: 0.5rem;
     text-decoration: none;
     color: var(--text);
-    font-size: 12px;
+    font-size: 1rem;
     transition: color 0.5s ease;
+    width: max-content;
   }
   .link:hover {
-    color: var(--primary);
+    color: var(--primary-color);
   }
   .link svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
     flex-shrink: 0;
   }
 
@@ -47,6 +50,6 @@ import { Icon } from "astro-icon";
     transition: color 0.5s ease;
   }
   .link:hover span {
-    color: var(--primary);
+    color: var(--primary-color);
   }
 </style>
