@@ -1,7 +1,116 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
+import { Covers } from "../../content/coverData";
+
+const covers = Covers.map((coverCollection) => ({
+  ...coverCollection,
+  slug: coverCollection.name.toLowerCase().replace(" ", "-"),
+  covers: coverCollection.covers.map((cover) => ({
+    name: cover.replace(".webp", ""),
+    thumbName: `/covers/thumbnails/${cover}`,
+    path: `/covers/${cover}`,
+  })),
+}));
 ---
 
 <Layout title="Covers">
-  <h1>Covers</h1>
+  <h1 class="page-title">Covers</h1>
+  <nav class="covers-nav">
+    {
+      covers.map((col) => (
+        <a href={`#${col.slug}`}>
+          {col.name} - {col.covers.length}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="cover-collections">
+    {
+      covers.map((col) => (
+        <div class="cover-collection">
+          <h2 id={col.slug}>{col.name}</h2>
+          {col.description && <p>{col.description}</p>}
+          <div class="cover-collection-grid">
+            {col.covers.map((cover) => (
+              <div class="coverGridItem">
+                <a href={cover.path} target="_blank" rel="noopener noreferrer">
+                  <img src={cover.thumbName} loading="lazy" alt={cover.name} />
+                </a>
+                <p class="cover-name">{cover.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
 </Layout>
+
+<style>
+  .page-title {
+    text-align: center;
+  }
+  .covers-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cover-collections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+  }
+  .cover-collection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem;
+  }
+  .cover-collection h2 {
+    font-size: var(--font-size-xl);
+    color: var(--secondary-color);
+    margin: 0;
+  }
+  .cover-collection p {
+    font-size: var(--font-size-base);
+    color: var(--fadeText);
+    margin: 0;
+  }
+  .cover-collection p.cover-name {
+    color: var(--text);
+    margin: 0;
+  }
+  .cover-collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 4rem;
+    width: 100%;
+  }
+  .coverGridItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .coverGridItem img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .cover-collection-grid {
+      grid-template-columns: 1fr;
+      grid-gap: 1rem;
+    }
+    .cover-collection,
+    .cover-collections {
+      padding: 1rem;
+    }
+  }
+</style>

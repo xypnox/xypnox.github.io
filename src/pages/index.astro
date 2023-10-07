@@ -3,7 +3,7 @@ import Layout from "../layouts/BaseLayout.astro";
 import { HoverLogo } from "../components/hoverLogo";
 import Links from "../components/profileLinks.astro";
 import Container from "../components/container.astro";
-import {icons} from "../content/icons";
+import { icons } from "../content/icons";
 ---
 
 <Layout title="xypnox">
@@ -35,6 +35,14 @@ import {icons} from "../content/icons";
     <Container title="Links" icon={icons.links}>
       <Links />
     </Container>
+
+    <Container title="Collab?" icon={icons.links}>
+      <div>
+        <p>So you wanna collab?</p>
+        <p>Drop me a mail</p>
+        <a href="mailto:collab@gmail.com">collab@xypnox.com</a>
+      </div>
+    </Container>
   </main>
 </Layout>
 
@@ -64,7 +72,6 @@ import {icons} from "../content/icons";
     text-align: center;
     font-size: 2rem;
   }
-
 
   main a {
     display: flex;

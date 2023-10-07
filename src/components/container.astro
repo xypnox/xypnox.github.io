@@ -13,6 +13,7 @@ const { title, icon } = Astro.props;
     {icon && <Icon name={icon} />}
     {title}
   </h1>
+  <slot name="description" />
   <div class="container-content">
     <slot />
   </div>
@@ -27,6 +28,7 @@ const { title, icon } = Astro.props;
     padding: 1rem;
     background-color: var(--surface);
     backdrop-filter: blur(1rem);
+    -webkit-backdrop-filter: blur(1rem);
     border-radius: 1rem;
   }
   h1 {
