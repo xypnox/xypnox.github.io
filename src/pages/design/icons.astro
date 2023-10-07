@@ -1,23 +1,23 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
-import { Covers } from "../../content/coverData";
+import { iconsData } from "../../content/iconsData";
+import { capitalize } from "../../lib/text";
 
-const covers = Covers.map((coverCollection) => ({
-  ...coverCollection,
-  slug: coverCollection.name.toLowerCase().replace(" ", "-"),
-  covers: coverCollection.covers.map((cover) => ({
-    name: cover.replace(".webp", ""),
-    thumbName: `/covers/thumbnails/${cover}`,
-    path: `/covers/${cover}`,
+const icons = iconsData.map((iconCol) => ({
+  ...iconCol,
+  slug: iconCol.name.toLowerCase().replace(" ", "-"),
+  covers: iconCol.icons.map((icon) => ({
+    name: icon.replace(".svg", ""),
+    path: `/icons/${icon}`,
   })),
 }));
 ---
 
-<Layout title="Covers">
-  <h1 class="page-title">Covers</h1>
-  <nav class="covers-nav">
+<Layout title="Icons">
+  <h1 class="page-title">Icons</h1>
+  <nav class="icons-nav">
     {
-      covers.map((col) => (
+      icons.map((col) => (
         <a href={`#${col.slug}`}>
           {col.name} - {col.covers.length}
         </a>
@@ -26,18 +26,17 @@ const covers = Covers.map((coverCollection) => ({
   </nav>
   <div class="cover-collections">
     {
-      covers.map((col) => (
+      icons.map((col) => (
         <div class="cover-collection">
           <h2 id={col.slug}>{col.name}</h2>
           {col.description && <p>{col.description}</p>}
           <div class="cover-collection-grid">
-            {col.covers.map((cover) => (
+            {col.covers.map((icon) => (
               <div class="coverGridItem">
-                <a href={cover.path} target="_blank" rel="noopener noreferrer">
-                  <img src={cover.thumbName} loading="lazy" alt={cover.name} />
+                <a href={icon.path} target="_blank" rel="noopener noreferrer">
+                  <img src={icon.path} loading="lazy" alt={icon.name} />
                 </a>
-                {/* Capitalize the name */}
-                <p class="cover-name">{cover.name}</p>
+                <p class="cover-name">{capitalize(icon.name)}</p>
               </div>
             ))}
           </div>
@@ -51,7 +50,7 @@ const covers = Covers.map((coverCollection) => ({
   .page-title {
     text-align: center;
   }
-  .covers-nav {
+  .icons-nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
