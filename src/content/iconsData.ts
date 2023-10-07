@@ -5,11 +5,11 @@ export const iconsData: IconCollection[] = [
     name: "Companies",
     description: "Logos of companies I've designed or tweaked",
     icons: [
-      "Workduck.svg",
       "Calry.svg",
       "Nirah.svg",
       "Fifthtry.svg",
       "finbox.svg",
+      "Workduck.svg",
     ]
   },
 
