@@ -100,6 +100,7 @@ const dateFormatOption = {
   .blog-index header {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
     margin: 4rem 0;
   }
 
@@ -107,6 +108,11 @@ const dateFormatOption = {
     width: 100%;
     max-width: 400px;
     height: auto;
+  }
+
+  .blog-index header p {
+    margin: 0;
+    font-size: var(--font-size-md);
   }
 
   .blog-list {
@@ -173,7 +179,7 @@ const dateFormatOption = {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-semi-fade);
+    color: var(--fadeText);
   }
 
   .author-icon {
@@ -192,7 +198,7 @@ const dateFormatOption = {
   }
 
   .blog-entry:hover {
-    color: var(--primary);
+    color: var(--primary-color);
   }
 
   .blog-entry .tags {
@@ -220,13 +226,13 @@ const dateFormatOption = {
     width: max-content;
     color: var(--text);
     text-decoration: none;
-    background-color: var(--cardBackground);
+    background-color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
   }
 
   .tags-list li a:hover {
-    color: var(--primary);
+    color: var(--primary-color);
   }
 
   @media (max-width: 768px) {

@@ -1,9 +1,12 @@
 ---
-title: "XKCD"
+title: "Sample Blog"
+description: "A sample post with tons of elements to test the styles and layout"
 date: 2023-03-04
 
-categories: ["comic"]
-tags: ["comic", "fun", "xkcd"]
+coverImage: "./cover-intro.png"
+coverAlt: "Some text for describing the cover image"
+categories: ["sample"]
+tags: ["sample", "fun"]
 ---
 
 # This is a sample blog

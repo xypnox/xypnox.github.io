@@ -6,13 +6,11 @@ date : 2021-01-02
 categories : ["literature"]
 tags : ["culture", "review", "book", "music"]
 
-metadata_image : "/posts/culture-2020/social.png"
+coverImage: "./social.png"
+coverAlt: "My year in Culture - 2020."
 ---
 
 
-{% cover(src="cover.png") %}
-My year in Culture - 2020.
-{% end %}
 
 This year I have read several books, watched some movies, and listened to a lot of songs; here is a roundup of my favorite ones.
 

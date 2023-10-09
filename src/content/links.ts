@@ -7,11 +7,6 @@ interface Link {
 }
 export const links: Link[] = [
   {
-    name: 'GitHub',
-    url: 'https://github.com/xypnox',
-    icon: icons.github,
-  },
-  {
     name: 'Mastodon',
     url: 'https://fosstodon.org/@xypnox',
     icon: icons.mastodon,
@@ -20,6 +15,11 @@ export const links: Link[] = [
     name: 'Email',
     url: 'mailto:xypnox+emailOnWebsite@gmail.com',
     icon: icons.email,
+  },
+  {
+    name: 'GitHub',
+    url: 'https://github.com/xypnox',
+    icon: icons.github,
   },
   {
     name: 'Telegram',

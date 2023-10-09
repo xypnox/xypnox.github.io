@@ -46,23 +46,28 @@ const dateFormatOption = {
 <Layout title={entry.data.title}>
   <div class="postHeading">
     <h1>{entry.data.title}</h1>
-    <div class="details">
-      <time datetime={entry.data.date.toISOString()}>
-        {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
-      </time>
-      {
-        entry.data.tags && (
-          <>
-            <span class="separator">•</span>
-            <div class="tags">
-              {entry.data.tags.map((tag: string) => (
-                <a href={`/blog/tags/${tag}`}>#{tag}</a>
-              ))}
-            </div>
-          </>
-        )
-      }
-    </div>
+    {
+      entry.data.description && (
+        <>
+          <p class="description">{entry.data.description}</p>
+          <div class="details">
+            <time datetime={entry.data.date.toISOString()}>
+              {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
+            </time>
+            {entry.data.tags && (
+              <>
+                <span class="separator">•</span>
+                <div class="tags">
+                  {entry.data.tags.map((tag: string) => (
+                    <a href={`/blog/tags/${tag}`}>#{tag}</a>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      )
+    }
   </div>
   {
     entry.data.coverImage && (
@@ -75,24 +80,32 @@ const dateFormatOption = {
       </div>
     )
   }
-  <Toc headings={headings} />
-  <div class="content">
-    <Content />
-    <script
-      is:inline
-      src="https://utteranc.es/client.js"
-      repo="xypnox/blag"
-      issue-term="pathname"
-      label="comments"
-      theme="photon-dark"
-      crossorigin="anonymous"
-      async
-    ></script>
+  <div class="content-wrapper">
+    <div class="content">
+      <Content />
+      <script
+        is:inline
+        src="https://utteranc.es/client.js"
+        repo="xypnox/blag"
+        issue-term="pathname"
+        label="comments"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async
+      ></script>
+    </div>
+    {
+      headings.length > 0 && (
+        <div class="content-toc">
+          <Toc headings={headings} />
+        </div>
+      )
+    }
   </div>
 </Layout>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap");
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -109,14 +122,50 @@ const dateFormatOption = {
     margin-bottom: 2rem;
   }
 
+  .postHeading h1,
+  .postHeading p {
+    margin: 0;
+  }
+  .postHeading h1 {
+    font-family: "Jost", sans-serif;
+    font-size: var(--font-size-xxl);
+    color: var(--heading);
+  }
+
+  .postHeading .description {
+    font-family: "Jost", sans-serif;
+    font-size: var(--font-size-md);
+    color: var(--text);
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-toc {
+    position: sticky;
+    top: 4rem;
+    height: max-content;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 10px var(--shadow);
+  }
 
   .content {
     display: flex;
     flex-direction: column;
     max-width: 800px;
+    width: 100%;
     margin: 0 auto;
     line-height: 1.5;
-    font-family: 'Crimson Text', serif;
+    font-family: "Crimson Text", serif;
     font-size: 1.2rem;
   }
 
@@ -129,7 +178,7 @@ const dateFormatOption = {
     margin-top: 2rem;
     margin-bottom: 1rem;
     color: var(--heading);
-    font-family: 'Jost', serif;
+    font-family: "Jost", serif;
   }
 
   .content :global(blockquote) {
@@ -140,16 +189,6 @@ const dateFormatOption = {
     border-left: 0.25rem solid var(--primary-color);
   }
 
-  .content :global(hr) {
-    border: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--fadeText);
-    margin: 3rem 0;
-    border: none;
-    opacity: 0.5;
-  }
-
   .content :global(table) {
     border-collapse: collapse;
     width: 100%;
@@ -157,7 +196,7 @@ const dateFormatOption = {
   }
 
   .content :global(table) :global(th) {
-    font-family: 'Jost', serif;
+    font-family: "Jost", serif;
     border: 1px solid var(--border);
     border-bottom: 2px solid var(--heading);
     background-color: var(--surface);
@@ -193,6 +232,18 @@ const dateFormatOption = {
   .coverImage p {
     text-align: center;
     color: var(--fadeText);
+  }
+
+  @media (max-width: 1200px) {
+    .content-wrapper {
+      flex-direction: column-reverse;
+    }
+    .content-toc {
+      width: 100%;
+      max-width: 800px;
+      position: relative;
+      margin-bottom: 2rem;
+    }
   }
 
   @media (max-width: 390px) {

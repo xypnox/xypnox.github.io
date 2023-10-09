@@ -46,6 +46,7 @@ const themeCssVars = flattenObject(themeVars, (keys, value) => [
     background-color: var(--background);
     font-size: var(--font-size-base);
     min-height: 100vh;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -79,5 +80,15 @@ const themeCssVars = flattenObject(themeVars, (keys, value) => [
   h5,
   h6 {
     margin: 1rem 0;
+  }
+
+  hr {
+    border: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--fadeText);
+    margin: 3rem 0;
+    border: none;
+    opacity: 0.5;
   }
 </style>
