@@ -7,11 +7,9 @@ categories : ["tech"]
 tags : ["tech", "blog", "notes", "dendron"]
 
 coverImage: "./cover-intro.png"
+coverAlt: "An introduction to a Journey in note taking."
 ---
 
-{% cover(src="cover-intro.png") %}
-An introduction to a Journey in note taking.
-{% end %}
 
 Once when I was foolish and clever, I thought I would never need to write anything down. That I will remember everything forever. I lived with this assumption till I came to my senses.
 

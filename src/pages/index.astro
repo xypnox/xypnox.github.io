@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
-import { HoverLogo } from "../components/hoverLogo";
 import Links from "../components/profileLinks.astro";
 import Container from "../components/container.astro";
 import { icons } from "../content/icons";
@@ -8,8 +7,8 @@ import { icons } from "../content/icons";
 
 <Layout title="xypnox">
   <main>
-    <HoverLogo client:load />
     <div class="intro">
+      <img src="/xypnox-logo.svg" alt="xypnox" />
       <p>Hi, I am xypnox!</p>
       <p>Following are things I do.</p>
     </div>
@@ -38,6 +37,7 @@ import { icons } from "../content/icons";
     </Container>
 
     <Container title="Collab?" icon={icons.links}>
+      <a href="/services/">Services</a>
       <div>
         <p>So you wanna collab?</p>
         <p>Drop me a mail</p>
@@ -74,6 +74,15 @@ import { icons } from "../content/icons";
     font-size: 2rem;
   }
 
+  .intro img {
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 4px dashed var(--border);
+  }
+
   main a {
     display: flex;
     padding: 0.5rem;
@@ -84,6 +93,7 @@ import { icons } from "../content/icons";
     background: var(--surface);
     font-size: 1.5rem;
     border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   main a:hover {
     color: var(--primary-color);

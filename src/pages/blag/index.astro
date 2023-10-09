@@ -1,18 +1,19 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import Blag from "../../vectors/blag.astro";
 
 const blogEntriesAll = await getCollection("blog");
 
-const blogEntries = blogEntriesAll.sort((a, b) => {
-  return b.data.date - a.data.date;
-}).filter((blogPostEntry) => {
-  return blogPostEntry.slug.split("/").length === 1;
-})
-
-blogEntries.forEach((blogPostEntry) => {
-  console.log({ blogPostEntry });
-});
+const blogEntries = blogEntriesAll
+  .sort((a, b) => {
+    const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
+    return bDateNum - aDateNum;
+  })
+  .filter((blogPostEntry) => {
+    return blogPostEntry.slug.split("/").length === 1;
+  });
 
 const allTags = blogEntriesAll
   .map((blogPostEntry) => blogPostEntry.data.tags)
@@ -22,20 +23,35 @@ const dateFormatOption = {
   day: "numeric",
   month: "long",
   year: "numeric",
-};
+} as const;
 ---
 
 <Layout title="Blog">
   <main class="blog-index">
-    <h1>Blog</h1>
+    <header>
+      <Blag />
+      <p>
+        I write about things I learn, things I make, and things I think about.
+      </p>
+    </header>
 
     <div class="blog-wrapper">
       <div class="blog-list">
         {
           blogEntries.map((blogPostEntry) => (
             <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
+              {blogPostEntry.data.coverImage && (
+                <div class="coverImage">
+                  <Image
+                    alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
+                    src={blogPostEntry.data.coverImage}
+                  />
+                </div>
+              )}
               <h2>{blogPostEntry.data.title}</h2>
-              <p class="description">{blogPostEntry.data.description}</p>
+              {blogPostEntry.data.description && (
+                <p class="description">{blogPostEntry.data.description}</p>
+              )}
               <div class="details">
                 <div>
                   <time datetime={blogPostEntry.data.date.toISOString()}>
@@ -81,11 +97,24 @@ const dateFormatOption = {
     max-width: 1000px;
     margin: 0 auto;
   }
+  .blog-index header {
+    display: flex;
+    flex-direction: column;
+    margin: 4rem 0;
+  }
+
+  .blog-index header :global(svg) {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+
   .blog-list {
     display: flex;
     flex-direction: column;
     gap: 3rem;
     flex-grow: 1;
+    width: 100%;
   }
 
   .blog-wrapper {
@@ -100,10 +129,26 @@ const dateFormatOption = {
     gap: 0.5rem;
     text-decoration: none;
     color: var(--text);
+    width: 100%;
+  }
+
+  .blog-entry .coverImage {
+    display: flex;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .blog-entry .coverImage img {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    object-position: left;
+    border-radius: 0.5rem;
   }
 
   .description {
-    color: var(--text-semi-fade);
+    color: var(--text);
   }
 
   .blog-entry h2,
@@ -111,12 +156,16 @@ const dateFormatOption = {
     margin: 0;
   }
 
+  .blog-entry h2 {
+    color: var(--heading);
+  }
+
   .blog-entry .details {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    color: var(--text-fade);
+    color: var(--fadeText);
     gap: 1rem;
   }
 

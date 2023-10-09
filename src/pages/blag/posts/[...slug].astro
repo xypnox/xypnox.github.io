@@ -92,6 +92,7 @@ const dateFormatOption = {
 </Layout>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -114,6 +115,59 @@ const dateFormatOption = {
     flex-direction: column;
     max-width: 800px;
     margin: 0 auto;
+    line-height: 1.5;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.2rem;
+  }
+
+  .content :global(h1),
+  .content :global(h2),
+  .content :global(h3),
+  .content :global(h4),
+  .content :global(h5),
+  .content :global(h6) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--heading);
+    font-family: 'Jost', serif;
+  }
+
+  .content :global(blockquote) {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1rem;
+    background-color: var(--surface);
+    border-left: 0.25rem solid var(--primary-color);
+  }
+
+  .content :global(hr) {
+    border: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--fadeText);
+    margin: 3rem 0;
+    border: none;
+    opacity: 0.5;
+  }
+
+  .content :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+  .content :global(table) :global(th) {
+    font-family: 'Jost', serif;
+    border: 1px solid var(--border);
+    border-bottom: 2px solid var(--heading);
+    background-color: var(--surface);
+    padding: 0.5rem;
+    color: var(--heading);
+  }
+
+  .content :global(table) :global(td) {
+    border: 1px solid var(--border);
+    padding: 0.5rem;
   }
 
   .details {
@@ -121,7 +175,7 @@ const dateFormatOption = {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    color: var(--text-fade);
+    color: var(--fadeText);
     gap: 1rem;
   }
 
@@ -134,6 +188,11 @@ const dateFormatOption = {
   .coverImage img {
     width: 100%;
     height: auto;
+  }
+
+  .coverImage p {
+    text-align: center;
+    color: var(--fadeText);
   }
 
   @media (max-width: 390px) {

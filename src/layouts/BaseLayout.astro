@@ -44,13 +44,16 @@ const themeCssVars = flattenObject(themeVars, (keys, value) => [
     font-family: var(--font-family);
     color: var(--text);
     background-color: var(--background);
-    padding-bottom: 8rem;
     font-size: var(--font-size-base);
+    min-height: 100vh;
   }
 
   body {
     margin: 0;
     padding: 1rem;
+    padding-bottom: 8rem;
+    background-image: url("/nnnoise.svg");
+    min-height: 100vh;
   }
 
   a {

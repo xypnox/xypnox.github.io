@@ -1,0 +1,36 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import type { MarkdownLayoutProps } from "astro";
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+  description?: string;
+}>;
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title}>
+  <main>
+    <header>
+      <h1>{frontmatter.title}</h1>
+      {frontmatter.description && <p>{frontmatter.description}</p>}
+    </header>
+    <slot />
+  </main>
+</BaseLayout>
+
+<style>
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: var(--font-size-xl);
+  }
+  main {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>
