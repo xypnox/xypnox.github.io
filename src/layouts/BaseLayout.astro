@@ -1,6 +1,5 @@
 ---
-import { themeVars } from "../theme";
-import { flattenObject } from "../lib/objects";
+import { themeVars, themeCssVars } from "../theme";
 import Navbar from "../components/Navbar.astro";
 
 export interface Props {
@@ -9,10 +8,6 @@ export interface Props {
 
 const { title } = Astro.props;
 
-const themeCssVars = flattenObject(themeVars, (keys, value) => [
-  `${keys.join("-")}`,
-  value,
-]);
 ---
 
 <!DOCTYPE html>

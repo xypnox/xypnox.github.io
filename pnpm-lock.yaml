@@ -32,6 +32,9 @@ dependencies:
   solid-js:
     specifier: ^1.7.7
     version: 1.7.7
+  solid-styled-components:
+    specifier: ^0.28.5
+    version: 0.28.5(solid-js@1.7.7)
 
 devDependencies:
   typescript:
@@ -2140,6 +2143,14 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /goober@2.1.13(csstype@3.1.2):
+    resolution: {integrity: sha512-jFj3BQeleOoy7t93E9rZ2de+ScC4lQICLwiAQmKMg9F6roKGaLSHoCDYKkWlSafg138jejvq/mTdvmnwDQgqoQ==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.2
+    dev: false
+
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
     dev: false
@@ -3824,6 +3835,16 @@ packages:
       '@babel/generator': 7.23.0
       '@babel/helper-module-imports': 7.22.15
       '@babel/types': 7.23.0
+      solid-js: 1.7.7
+    dev: false
+
+  /solid-styled-components@0.28.5(solid-js@1.7.7):
+    resolution: {integrity: sha512-vwTcdp76wZNnESIzB6rRZ3U55NgcSAQXCiiRIiEFhxTFqT0bEh/warNT1qaRZu4OkAzrBkViOngF35ktI8sc4A==}
+    peerDependencies:
+      solid-js: ^1.4.4
+    dependencies:
+      csstype: 3.1.2
+      goober: 2.1.13(csstype@3.1.2)
       solid-js: 1.7.7
     dev: false
 

@@ -1,3 +1,5 @@
+import { flattenObject, forObjectReplace } from "./lib/objects";
+
 export const themeVars = {
   font: {
     family: 'Jost, sans-serif',
@@ -35,3 +37,10 @@ export const themeVars = {
 }
 
 export type ThemeVars = typeof themeVars
+
+export const themeCssVars = flattenObject(themeVars, (keys, value) => [
+  `${keys.join("-")}`,
+  value,
+]);
+
+export const theme = forObjectReplace(themeVars, (keys) => `var(--${keys.join("-")})`)

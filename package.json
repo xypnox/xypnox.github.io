@@ -18,7 +18,8 @@
     "astro-icon": "^0.8.1",
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
-    "solid-js": "^1.7.7"
+    "solid-js": "^1.7.7",
+    "solid-styled-components": "^0.28.5"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
