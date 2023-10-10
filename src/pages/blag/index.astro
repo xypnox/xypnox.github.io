@@ -1,10 +1,13 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
 import Blag from "../../vectors/blag.astro";
+import Tag from "../../components/Tag.astro";
+import BlogPostCard from "../../components/BlogPostCard.astro";
 
 const blogEntriesAll = await getCollection("blog");
+
+console.log({ blogEntries: blogEntriesAll.map((entry) => entry.slug) });
 
 const blogEntries = blogEntriesAll
   .sort((a, b) => {
@@ -15,15 +18,10 @@ const blogEntries = blogEntriesAll
     return blogPostEntry.slug.split("/").length === 1;
   });
 
-const allTags = blogEntriesAll
+const allTags: string[] = blogEntriesAll
   .map((blogPostEntry) => blogPostEntry.data.tags)
-  .flat();
-
-const dateFormatOption = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-} as const;
+  .flat()
+  .filter((tag) => tag !== undefined) as string[];
 ---
 
 <Layout title="Blog">
@@ -39,40 +37,7 @@ const dateFormatOption = {
       <div class="blog-list">
         {
           blogEntries.map((blogPostEntry) => (
-            <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
-              {blogPostEntry.data.coverImage && (
-                <div class="coverImage">
-                  <Image
-                    alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
-                    src={blogPostEntry.data.coverImage}
-                  />
-                </div>
-              )}
-              <h2>{blogPostEntry.data.title}</h2>
-              {blogPostEntry.data.description && (
-                <p class="description">{blogPostEntry.data.description}</p>
-              )}
-              <div class="details">
-                <div>
-                  <time datetime={blogPostEntry.data.date.toISOString()}>
-                    {blogPostEntry.data.date.toLocaleDateString(
-                      "en-US",
-                      dateFormatOption
-                    )}
-                  </time>
-                  {blogPostEntry.data.tags && (
-                    <>
-                      <span class="separator">•</span>
-                      <div class="tags">
-                        {blogPostEntry.data.tags.map((tag: string) => (
-                          <span class="tag">#{tag}</span>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </a>
+            <BlogPostCard slug={blogPostEntry.slug} />
           ))
         }
       </div>
@@ -82,7 +47,7 @@ const dateFormatOption = {
           {
             [...new Set(allTags)].map((tag) => (
               <li>
-                <a href={`/blog/tags/${tag}`}>#{tag}</a>
+                <Tag tag={tag} />
               </li>
             ))
           }
@@ -129,85 +94,6 @@ const dateFormatOption = {
     gap: 1rem;
   }
 
-  .blog-entry {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: var(--text);
-    width: 100%;
-  }
-
-  .blog-entry .coverImage {
-    display: flex;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-  }
-
-  .blog-entry .coverImage img {
-    width: auto;
-    height: 100%;
-    object-fit: contain;
-    object-position: left;
-    border-radius: 0.5rem;
-  }
-
-  .description {
-    color: var(--text);
-  }
-
-  .blog-entry h2,
-  .blog-entry p {
-    margin: 0;
-  }
-
-  .blog-entry h2 {
-    font-size: var(--font-size-lg);
-    color: var(--heading);
-  }
-
-  .blog-entry .details {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--fadeText);
-    gap: 1rem;
-  }
-
-  .blog-entry .details .author {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--fadeText);
-  }
-
-  .author-icon {
-    border-radius: 50%;
-  }
-
-  .blog-entry .details div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .blog-entry .details time {
-    font-size: 0.9rem;
-  }
-
-  .blog-entry:hover {
-    color: var(--primary-color);
-  }
-
-  .blog-entry .tags {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-
   .tags-list {
     max-width: 10rem;
   }
@@ -220,21 +106,6 @@ const dateFormatOption = {
     padding: 0;
     gap: 0.5rem;
   }
-  .tags-list li a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: max-content;
-    color: var(--text);
-    text-decoration: none;
-    background-color: var(--surface);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-  }
-
-  .tags-list li a:hover {
-    color: var(--primary-color);
-  }
 
   @media (max-width: 768px) {
     .blog-wrapper {
@@ -245,25 +116,6 @@ const dateFormatOption = {
     }
     .tags-list {
       max-width: 100%;
-    }
-  }
-
-  @media (max-width: 390px) {
-    .blog-entry .details {
-      gap: 0.5rem;
-    }
-    .blog-entry .details div {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      width: 100%;
-      gap: 0.5rem;
-    }
-    .separator {
-      display: none;
-    }
-    .blog-entry .details time {
-      font-size: 0.8rem;
     }
   }
 </style>

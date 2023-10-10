@@ -1,0 +1,51 @@
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--heading);
+  font-family: "Jost", serif;
+}
+
+.content blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--surface);
+  border-left: 0.25rem solid var(--primary-color);
+}
+
+.content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.content table th {
+  font-family: "Jost", serif;
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--heading);
+  background-color: var(--surface);
+  padding: 0.5rem;
+  color: var(--heading);
+}
+
+.content table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+}
+
+.content a {
+  color: inherit;
+	text-decoration: none;
+	border-bottom: 2px dotted var(--fadeText);
+	transition: border 1s ease;
+  word-break: break-word;
+}
+
+.content a:hover {
+  border-bottom: 2px solid var(--primary-color);
+}

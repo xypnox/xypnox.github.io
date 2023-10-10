@@ -3,7 +3,7 @@ title: "Sample Blog"
 description: "A sample post with tons of elements to test the styles and layout"
 date: 2023-03-04
 
-coverImage: "./cover-intro.png"
+coverImage: "./test-social3.webp"
 coverAlt: "Some text for describing the cover image"
 categories: ["sample"]
 tags: ["sample", "fun"]

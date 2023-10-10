@@ -1,0 +1,27 @@
+---
+interface Props {
+  tag: string;
+}
+const { tag } = Astro.props;
+---
+
+<a href={`/blag/tags/${tag}`} class="tag">
+  #{tag}
+</a>
+
+<style>
+  .tag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    color: var(--text);
+    text-decoration: none;
+    background-color: var(--surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .tag:hover {
+    color: var(--primary-color);
+  }
+</style>

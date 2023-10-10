@@ -1,0 +1,164 @@
+---
+import { getEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+
+const blogPostEntry = await getEntry("blog", slug);
+
+const dateFormatOption = {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+} as const;
+
+---
+
+{
+  blogPostEntry && (
+    <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
+      {blogPostEntry.data.coverImage && (
+        <div class="coverImage">
+          <Image
+            alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
+            src={blogPostEntry.data.coverImage}
+          />
+        </div>
+      )}
+      <h2>{blogPostEntry.data.title}</h2>
+      {blogPostEntry.data.description && (
+        <p class="description">{blogPostEntry.data.description}</p>
+      )}
+      <div class="details">
+        <div>
+          <time datetime={blogPostEntry.data.date.toISOString()}>
+            {blogPostEntry.data.date.toLocaleDateString(
+              "en-US",
+              dateFormatOption
+            )}
+          </time>
+          {blogPostEntry.data.tags && (
+            <>
+              <span class="separator">•</span>
+              <div class="tags">
+                {blogPostEntry.data.tags.map((tag: string) => (
+                  <span class="tag">#{tag}</span>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </a>
+  )
+}
+
+<style>
+  .blog-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    width: 100%;
+    font-family: var(--font-family);
+    border: none;
+  }
+
+  .blog-entry .coverImage {
+    display: flex;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    align-items: flex-start;
+  }
+
+  .blog-entry .coverImage img {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    object-position: left;
+    border-radius: 0.5rem;
+    margin: 0;
+  }
+
+  .blog-entry .description {
+    color: var(--text);
+  }
+
+  .blog-entry h2,
+  .blog-entry p {
+    margin: 0;
+  }
+
+  .blog-entry h2 {
+    font-size: var(--font-size-lg);
+    color: var(--heading);
+  }
+
+  .blog-entry .details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--fadeText);
+    gap: 1rem;
+  }
+
+  .blog-entry .details .author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--fadeText);
+  }
+
+  .author-icon {
+    border-radius: 50%;
+  }
+
+  .blog-entry .details div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .blog-entry .details time {
+    font-size: 0.9rem;
+  }
+
+  .blog-entry:hover {
+    color: var(--primary-color);
+    border: none;
+  }
+
+  .blog-entry:hover h2 {
+    color: var(--primary-color);
+  }
+
+  .blog-entry .tags {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 390px) {
+    .blog-entry .details {
+      gap: 0.5rem;
+    }
+    .blog-entry .details div {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      gap: 0.5rem;
+    }
+    .blog-entry .details time {
+      font-size: 0.8rem;
+    }
+  }
+</style>

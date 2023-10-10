@@ -19,7 +19,7 @@ interface ImageGridProps {
 
 const GridWrapper = styled("div")`
   display: grid;
-  grid-template-columns: repeat(var(--count), 1fr);
+  grid-template-columns: repeat(var(--count, 5), 1fr);
   gap: 2rem;
   width: 100%;
 
