@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createSignal } from "solid-js"
+import { For, Show, createSignal } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
@@ -49,8 +49,7 @@ export const ImageGrid = (props: ImageGridProps) => {
   const hasLink = (img: Image) => img.link && img.link.length > 0
 
   return (
-    <GridWrapper
-    >
+    <GridWrapper>
       <For each={props.images}>
         {(img) => (
           <GridItem>
@@ -95,9 +94,14 @@ const CollageWrapper = styled("div")`
   align-items: center;
   gap: 4rem;
   margin: 2rem auto;
+  padding: 0 2rem;
 
   transition: all 0.3s ease-in-out;
   width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `
 
 
