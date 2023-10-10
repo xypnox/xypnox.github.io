@@ -9,6 +9,10 @@ categories: ["sample"]
 tags: ["sample", "fun"]
 ---
 
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+
+
+
 # This is a sample blog
 
 # Detailed Spec
@@ -22,6 +26,7 @@ Paragraphs. Lorizzle ipsizzle dang ass izzle, the bizzle adipiscing elit. My shi
 ## h2 Heading
 
 Etiam laorizzle urna shut the shizzle up mammasay mammasa mamma oo sa. Bizzle quizzle get down get down. Maecenizzle pulvinar, ipsizzle get down get down malesuada shiznit, nulla ma nizzle euismizzle crackalackin, pimpin' cool check out this nulla et fo shizzle. Vivamizzle fo shizzle my nizzle, tortor crazy we gonna chung fo shizzle, shiznit nunc ultricizzle gizzle, izzle daahng dawg leo elit izzle mofo. Maurizzle fizzle, orci vizzle volutpat black, sizzle augue luctus away, at bibendizzle enizzle check it out izzle get down get down. Nullam da bomb velizzle mah nizzle shizzlin dizzle that's the shizzle viverra. Phasellus nizzle black. Curabitizzle pimpin' my shizz vel pede yo facilisizzle.
+
 
 ### h3 Heading
 
@@ -263,11 +268,6 @@ const b = 2;
 
 Some hard core math:
 
-$$
-f(x)\relax{x} = \int_{-\infty}^\infty
-    \hat f(\xi)\,e^{2 \pi i \xi x}
-    \,d\xi
-$$
 
 And some inline math: $$f(x) = x^2$$
 
@@ -309,3 +309,9 @@ A bunch of Todos
 - [-] A cancelled todo
 - [a] A archived todo
 - [b] A backlog todo
+
+# Astro goodies
+
+I can mention blog posts as cards inside blog posts. Ex:
+
+<BlogPostCard slug="sample-blog" />
