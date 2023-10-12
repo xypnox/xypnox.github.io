@@ -54,7 +54,7 @@ export const ImageGrid = (props: ImageGridProps) => {
         {(img) => (
           <GridItem>
             <Dynamic component={hasLink(img) ? 'a' : 'div'} href={img.url} target="_blank" rel="noopener noreferrer">
-              <img src={img.url} loading="lazy" alt={img.title} />
+              <img src={img.thumbnail ?? img.url} loading="lazy" alt={img.title} />
             </Dynamic>
             {/* Capitalize the name */}
             <p class="img-name">{img.title}</p>
