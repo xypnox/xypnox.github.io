@@ -1,0 +1,30 @@
+---
+interface Props {
+  links: {
+    name: string;
+    slug: string;
+  }[];
+}
+
+const {links} = Astro.props
+---
+
+<nav class="page-nav">
+  {
+    links.map((link) => (
+      <a href={`#${link.slug}`}>
+        {link.name}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .page-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    gap: 1rem;
+  }
+</style>

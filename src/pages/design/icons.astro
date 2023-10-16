@@ -1,8 +1,9 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
 import { iconsData } from "../../content/iconsData";
-import { capitalize } from "../../lib/text";
 import { ImageCollage } from "../../components/imageGrid";
+import PageHeader from '../../components/pageHeader.astro'
+import PageNav from '../../components/pageNav.astro'
 
 const icons = iconsData.map((iconCol) => ({
   ...iconCol,
@@ -14,17 +15,14 @@ const icons = iconsData.map((iconCol) => ({
 }));
 ---
 
-<Layout title="Icons">
-  <h1 class="page-title">Icons</h1>
-  <nav class="icons-nav">
-    {
-      icons.map((col) => (
-        <a href={`#${col.slug}`}>
-          {col.name} - {col.covers.length}
-        </a>
-      ))
-    }
-  </nav>
+<Layout title="Logos">
+  <PageHeader title="Logos" />
+  <PageNav
+    links={icons.map((i) => ({
+      name: `${i.name} - ${i.covers.length}`,
+      slug: i.slug,
+    }))}
+  />
   <ImageCollage
     client:load
     collages={icons.map((col) => ({
@@ -41,17 +39,3 @@ const icons = iconsData.map((iconCol) => ({
     }))}
   />
 </Layout>
-
-<style>
-  .page-title {
-    text-align: center;
-  }
-  .icons-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-</style>
