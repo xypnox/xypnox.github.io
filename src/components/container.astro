@@ -2,17 +2,19 @@
 import Icon from "astro-icon";
 
 interface Props {
-  title: string;
+  title?: string;
   icon?: string;
 }
 const { title, icon } = Astro.props;
 ---
 
 <div class="container-wrapper">
-  <h1>
-    {icon && <Icon name={icon} />}
-    {title}
-  </h1>
+  {title && 
+    <h1>
+      {icon && <Icon name={icon} />}
+      {title}
+    </h1>
+  }
   <slot name="description" />
   <div class="container-content">
     <slot />
@@ -26,17 +28,24 @@ const { title, icon } = Astro.props;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
-    background-color: var(--surface);
-    border-radius: 1rem;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
   }
+
+  .container-wrapper :global(p) {
+    margin: 0;
+  }
+
   h1 {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.5rem;
     margin: 0;
     width: 100%;
-    color: var(--secondary-color);
+    color: var(--text);
   }
   h1 > svg {
     width: 2rem;
