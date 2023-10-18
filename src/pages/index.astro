@@ -2,14 +2,15 @@
 import Layout from "../layouts/BaseLayout.astro";
 import Links from "../components/profileLinks.astro";
 import Container from "../components/container.astro";
+import XypnoxEase from "../vectors/xypnoxEase.astro";
 import { icons } from "../content/icons";
 ---
 
 <Layout title="xypnox">
   <main>
     <div class="intro">
-      <img src="/xypnox-logo.svg" alt="xypnox" />
-      <h1>Hi, I am xypnox.</h1>
+      <XypnoxEase />
+      <h1>Hi, I am <span class="text-gradient">xypnox</span>.</h1>
       <p>I design/develop interfaces.</p>
       <p>This is the lair, the start page, the home to the digital.</p>
     </div>
@@ -87,6 +88,28 @@ import { icons } from "../content/icons";
     border-radius: 50%;
     background: var(--background);
     border: 4px solid var(--border);
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-gradient {
+    --gradient-color-1: var(--primary-color);
+    --gradient-color-2: var(--colors-purple);
+    background: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2));
+    background-size: 200% 200%;
+    animation: gradient 4s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   main a {

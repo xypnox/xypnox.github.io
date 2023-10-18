@@ -15,7 +15,7 @@ export const Projects: ProjectData[] = [
       'The constant grind to create, edit, curate and prune my personal notes. Currently private. I share some insights and tips about note taking once in a while.',
       'Several learnings of past experiences went into this.',
     ],
-    image: 'https://via.placeholder.com/150',
+    image: '/icons/Notes.svg',
     tags: ['SolidJS', 'Typescript', 'Figma']
   },
   {
@@ -25,7 +25,7 @@ export const Projects: ProjectData[] = [
       'A startup I was a founding member of in 2023. I was initially involved to a higher degree but once I heard the call of design, I could not resist.',
       'I worked on the design of the product and the website. I created several prototypes, revamped the design of the website 4 times in 3 months as we pivoted from one idea to another.',
     ],
-    image: 'https://via.placeholder.com/150',
+    image: '/icons/Calry.svg',
     link: 'https://calry.app',
     tags: ['SolidJS', 'Typescript', 'Figma']
   },
@@ -39,7 +39,7 @@ export const Projects: ProjectData[] = [
 
       'Apart from the usual design of company brand, website, and product design and frontend; I got my hands on content marketing, SEO, and even a bit of sales. I created several prototypes, from rough ideations to high-fidelity interfaces.',
     ],
-    image: 'https://via.placeholder.com/150',
+    image: 'icons/Workduck.svg',
     link: 'https://www.google.com',
     tags: ['React', 'Typescript', 'Figma']
   },
@@ -52,7 +52,7 @@ export const Projects: ProjectData[] = [
       "I also contributed significantly to the data and performance analytics stack for the backend that collected details of all calls made, with the precise functions that were called and in the order they were called and what time they took for each call."
 
     ],
-    image: 'https://via.placeholder.com/150',
+    image: 'icons/Fifthtry.svg',
     link: 'https://www.google.com',
     tags: ['Rust', 'Elm']
   },
@@ -64,7 +64,7 @@ export const Projects: ProjectData[] = [
       'LTTKGP webapp provides a way to browse and listen to the songs posted with a better interface and queued playlists.',
       'I designed and developed the frontend with React/Typescript from scratch.'
     ],
-    image: 'https://via.placeholder.com/150',
+    image: 'icons/lttkp.svg',
     link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
@@ -73,7 +73,7 @@ export const Projects: ProjectData[] = [
     description: [
       'This is a project'
     ],
-    image: 'https://via.placeholder.com/150',
+    image: '',
     link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
@@ -86,7 +86,7 @@ export const Projects: ProjectData[] = [
 
       'It won Gold in InterIIT Tech 2020 Coding hackathon. I worked on the UI/UX and frontend of the application.'
     ],
-    image: 'https://via.placeholder.com/150',
+    image: 'projects/marg.png',
     link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
@@ -96,7 +96,7 @@ export const Projects: ProjectData[] = [
       'Finbox is a fintech company that allows you to embed lending infratstructure in your application.',
       'I worked on the landing page and the entire website from scratch. I utilized react-static to generate static pages with instant navigation. I also organized Design Sprints to target specific audiences, started from scratch with UI/UX to develop a unique brand identity for the company. Made personalized icons. illustrations, animations, etc.'
     ],
-    image: 'https://via.placeholder.com/150',
+    image: 'icons/finbox.svg',
     link: 'https://www.google.com',
     tags: ['React Static']
   },

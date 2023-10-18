@@ -22,16 +22,19 @@ const ProjectsWithSlug = Projects.map((p) => {
     <div class="projectList">
       {ProjectsWithSlug.map((p) => (
           <div id={p.slug} class="projectCard">
-              <h1>{p.title}</h1>
-              {p.description.map((d) => (
-                  <p>{d}</p>
-              ))}
-              {p.link &&
-                <a href={p.link}>{p.link}</a>
-              }
-              <p class="projectTags">{p.tags.map((t) => (
-                  <span>{t}</span>
-              ))}</p>
+            <img src={p.image} alt={p.title} />
+            <div class="cardContent">
+                <h1>{p.title}</h1>
+                {p.description.map((d) => (
+                    <p>{d}</p>
+                ))}
+                {p.link &&
+                  <a href={p.link}>{p.link}</a>
+                }
+                <p class="projectTags">{p.tags.map((t) => (
+                    <span>{t}</span>
+                ))}</p>
+            </div>
           </div>
       ))}
     </div>
@@ -49,13 +52,28 @@ const ProjectsWithSlug = Projects.map((p) => {
 
 .projectCard {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
   border: 1px solid var(--border);
   background: var(--background);
   border-radius: 1rem;
   width: 100%;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.projectCard img {
+  width: 100%;
+  max-width: 256px;
+  border-radius: 1rem;
 }
 
 .projectCard p, .projectCard h1 {
@@ -72,6 +90,13 @@ const ProjectsWithSlug = Projects.map((p) => {
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   background: var(--surface);
+}
+
+@media (max-width: 768px) {
+  .projectCard {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>
 

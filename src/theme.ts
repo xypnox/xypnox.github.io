@@ -22,6 +22,10 @@ export const themeVars = {
     color: '#CCA685',
   },
 
+  colors: {
+    purple: '#6b5eff',
+  },
+
   background: '#0f111a',
   surface: '#1e213980',
 
