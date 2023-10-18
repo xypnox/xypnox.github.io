@@ -6,13 +6,15 @@ date : 2020-10-05
 categories : ["tech"]
 tags : ["tech", "blog", "zola", "theme"]
 
-metadata_image : "/posts/migrating-to-zola/cover.png"
+coverImage: "./cover.png"
+coverAlt: "The two sides of the Yin and Yang combine to provide ultimate harmony!"
 ---
 
-
-{% cover(src="cover.png") %}
-The two sides of the Yin and Yang combine to provide ultimate harmony!
-{% end %}
+> Update:
+> This blog has moved yet again!
+> I redid it again in Astro.
+> So this is kinda out of date.
+> The source code and template still remains if you want to use it with zola.
 
 I recently migrated my _blag_ from Hugo to [Zola](https://www.getzola.org/). I made my theme for this blog and it was a blast!
 

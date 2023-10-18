@@ -51,6 +51,7 @@ const { title, icon } = Astro.props;
     width: 2rem;
     height: 2rem;
     color: var(--primary-color);
+    flex-shrink: 0;
   }
   .container-content {
     display: grid;
@@ -59,5 +60,11 @@ const { title, icon } = Astro.props;
     grid-gap: 1rem;
     grid-column-gap: 1rem;
     gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .container-content {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

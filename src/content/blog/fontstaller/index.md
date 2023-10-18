@@ -4,11 +4,9 @@ date : 2018-05-18
 
 categories : ["tech"]
 tags : ["tech", "project", "linux"]
+coverImage: "./fontstaller-cover.jpg"
+coverAlt: "Install fonts quickly on linux"
 ---
-
-{% cover(src="/blag/images/fontstaller-cover.jpg") %}
-Install fonts quickly on linux
-{% end %}
 
 I have had troubles installing fonts in Linux. Although its far easier than Windows where the only way to install a bunch of fonts is to open the file and click install fonts. In Linux however, you can copy your fonts to `~/.fonts` or `/usr/share/fonts` and they will be recognized by all the applications. But can this process be improved or streamlined?
 

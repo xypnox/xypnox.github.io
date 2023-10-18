@@ -5,11 +5,9 @@ description: "A simple problem of number of moves to checkmate on a chessboard v
 
 categories: ["tech"]
 tags: ["tech", "blender", "chess"]
+coverImage: "./chess-problems.png"
+coverAlt: "Rendered using Blender"
 ---
-
-{% cover(src="/blag/images/chess-problems.png") %}
-Rendered using Blender
-{% end %}
 
 So I was interested in this chess puzzle:
 

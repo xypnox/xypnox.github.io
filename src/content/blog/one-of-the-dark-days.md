@@ -45,7 +45,7 @@ Because\
 Hope is all I have, and\
 I don't want to be locked in.\
 I try too much\
-And do too little.\
+And do too little.
 
 ---
 

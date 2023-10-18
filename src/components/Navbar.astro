@@ -1,13 +1,16 @@
 ---
+import XypnoxPlain from '../vectors/xypnoxPlain.astro'
 ---
 
 <nav class="navbar">
   <div class="navlinks">
     <a href="/">
-      <img class="navLogo" src="/xypnox-logo.svg" alt="Logo" />
+      <!-- <img class="navLogo" src="/xypnox-logo-white.svg" alt="Logo" /> -->
+      <XypnoxPlain />
     </a>
+    <a href="/projects">Projects</a>
     <a href="/blag">Blag</a>
-    <a href="/design">Design</a>
+    <a href="https://x5z.studio">x5z</a>
   </div>
 </nav>
 
@@ -20,7 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     background-color: var(--surface);
     width: max-content;
     margin: 0 auto;
@@ -59,5 +62,14 @@
   .navLogo {
     width: 2.5rem;
     height: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    nav.navbar {
+      bottom: 1rem;
+      left: 0.5rem;
+      right: 0.5rem;
+      padding: 0.5rem;
+    }
   }
 </style>

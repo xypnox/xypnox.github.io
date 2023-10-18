@@ -44,31 +44,29 @@ const dateFormatOption = {
 } as const;
 ---
 
-<Layout title={entry.data.title}>
+<Layout showLoading={false} title={entry.data.title}>
   <div class="postHeading">
     <h1>{entry.data.title}</h1>
     {
       entry.data.description && (
-        <>
           <p class="description">{entry.data.description}</p>
-          <div class="details">
-            <time datetime={entry.data.date.toISOString()}>
-              {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
-            </time>
-            {entry.data.tags && (
-              <>
-                <span class="separator">•</span>
-                <div class="tags">
-                  {entry.data.tags.map((tag: string) => (
-                    <Tag tag={tag} />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </>
       )
     }
+    <div class="details">
+      <time datetime={entry.data.date.toISOString()}>
+        {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
+      </time>
+      {entry.data.tags && (
+        <>
+          <span class="separator">•</span>
+          <div class="tags">
+            {entry.data.tags.map((tag: string) => (
+              <Tag tag={tag} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   </div>
   {
     entry.data.coverImage && (

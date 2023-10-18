@@ -5,7 +5,7 @@ date : 2018-01-16
 categories : ["literature"]
 tags : ["poem"]
 
-coverImg: "/blag/images/lonely.jpg"
+coverImage: "./lonely.jpg"
 coverAlt: "Photo by Brannon Naito on Unsplash"
 ---
 

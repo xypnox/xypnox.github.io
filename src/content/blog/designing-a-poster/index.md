@@ -5,11 +5,9 @@ description: 'The art and craft of designing a kick-ass poster.'
 
 categories: ["design"]
 tags: ["design", "poster"]
+coverImage: "./designing-a-poster.png"
+coverAlt: "A grid of posters for various events | Visit posters.xypnox.com to view all posters."
 ---
-
-{% cover(src="/blag/images/designing-a-poster.png") %}
-visit posters.xypnox.com to view all posters.
-{% end %}
 
 > To design a good poster,
 > you have to design 100 bad posters first.

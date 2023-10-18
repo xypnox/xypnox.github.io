@@ -12,6 +12,8 @@
   "dependencies": {
     "@astrojs/check": "^0.2.0",
     "@astrojs/mdx": "^1.1.0",
+    "@astrojs/rss": "^3.0.0",
+    "@astrojs/sitemap": "^3.0.2",
     "@astrojs/solid-js": "^3.0.1",
     "@solid-primitives/mouse": "^2.0.14",
     "astro": "^3.2.2",

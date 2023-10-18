@@ -7,7 +7,7 @@ const blogEntriesAll = await getCollection("blog");
 
 const blogEntries = blogEntriesAll;
 
-console.log({ blogEntries });
+// console.log({ blogEntries });
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog");

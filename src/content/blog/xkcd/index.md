@@ -4,11 +4,9 @@ date: 2018-03-04
 
 categories: ["comic"]
 tags: ["comic", "fun", "xkcd"]
+coverImage: "./angular_momentum.jpg"
+coverAlt: "Angular Momentum"
 ---
-
-{% cover(src="/blag/images/angular_momentum.jpg") %}
-Angular Momentum
-{% end %}
 
 Some of the best XKCDs, there are many more at : [xkcd.com](https://xkcd.com/)
 

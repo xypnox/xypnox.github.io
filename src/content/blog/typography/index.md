@@ -6,10 +6,8 @@ description: "A few musings on the discipline of Typography and a few fonts that
 categories: ["design"]
 tags: ["design", "typography"]
 coverAlt: 'Cover by xypnox'
+coverImage: "./typography.png"
 ---
-
-{% cover(src="/blag/images/typography.png") %}
-{% end %}
 
 **Typography** is the art and technique of arranging type. It is the method used to make text readable, legible, beautiful and meaningful. Good typography is readable. No matter how stylish and polished your font is, if it isn't readable no one is gonna _read_ it.
 

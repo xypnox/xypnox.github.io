@@ -6,13 +6,10 @@ date: 2020-11-05
 categories: ["design"]
 tags: ["design", "spotify"]
 
-metadata_image: "/posts/custom-spotify-covers/social_image.png"
+coverImage: "./social_image.png"
+coverAlt: "A few covers, discussed in detail below."
 hide_toc: true
 ---
-
-{% cover(src="cover.png") %}
-A few covers, discussed in detail below.
-{% end %}
 
 I started creating covers for my Spotify Playlists earlier this year. It started as a fun thing to make the playlists look cool and relatable and transitioned into a tradition.
 

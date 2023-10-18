@@ -10,8 +10,6 @@ coverImage: "./social.png"
 coverAlt: "My year in Culture - 2020."
 ---
 
-
-
 This year I have read several books, watched some movies, and listened to a lot of songs; here is a roundup of my favorite ones.
 
 As Maria Popova has put aptly in her roundup:

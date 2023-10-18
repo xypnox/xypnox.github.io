@@ -1,9 +1,16 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/container.astro";
+import { icons } from "../../content/icons";
 ---
 
 <Layout title="Design">
-  <h1>Design</h1>
-  <a href="/design/covers">Covers</a>
-  <a href="/design/logos">Logos</a>
+  <Container title="Design" icon={icons.design}>
+    <p slot="description">Where the decision of what to be shown and how is made.</p>
+    <a href="/design">Design</a>
+    <a href="/design/covers">Covers</a>
+    <a href="/design/logos">Logos</a>
+    <a href="https://posters.xypnox.com">Posters</a>
+    <a href="https://xypnox.studio">Studio</a>
+  </Container>
 </Layout>

@@ -4,11 +4,9 @@ date: 2018-11-09
 
 categories: ["tech"]
 tags: ["tech", "project", "linux", "todo", "python"]
+coverImage: "./optipress-2018-09-28-927_To-Do_SQ.png"
+coverAlt: "The ever lasting struggle to manage tasks via a todo list | Credit - Optipress"
 ---
-
-{% cover(src="http://www.optipess.com/comics/2018-09-28-927_To-Do_SQ.png") %}
-Credit - optipess.com
-{% end %}
 
 So, I have been working this past few weeks on a todo application using commandline interface in Python. You can skip the boring backstory and jump right into installation if you want to.
 
@@ -180,7 +178,7 @@ Currently things like done markers that define which status elements are marked 
 
 Since `todx` is commandline tool we can easily mix and match it with other commandline tools to create beautiful things. I created a simple script to run everytime I start my terminal telling me the current weather, a smal quote and my todos. Here is a screenshot:
 
-![](/blag/images/todx-setup-bash.png)
+![](./todx-setup-bash.png)
 
 # What I learnt
 

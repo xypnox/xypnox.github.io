@@ -1,8 +1,11 @@
 ---
-title : "Nettigritty Fraud"
+title : "Issues with Nittigritty"
 date : 2019-11-08
 description : "The lack of privacy and clear indications of what will happen with user data while registering for a \"free\" domain."
 ---
+
+> Of what quantity of high confidence I was carrying when I made this post is still a mystery to me. However, it serves the purpose of reminding to check whether your domain registrar charges extra for keeping your name and address off of a public database.
+> - 2023-10-18
 
 > Just so everyone knows
 

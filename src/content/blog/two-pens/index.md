@@ -4,11 +4,9 @@ date: 2019-02-27
 
 categories: ["literature"]
 tags: ["poem"]
+coverImage: "./two-pens.jpg"
+coverAlt: "Photo by pulkit jain on Unsplash (Modified)"
 ---
-
-{% cover(src="/blag/images/two-pens.jpg") %}
-Photo by pulkit jain on Unsplash (Modified)
-{% end %}
 
 In a busy school,
 two friends sat together
@@ -72,4 +70,4 @@ but weak in the face of hate.
 
 ---
 
-Initially, I thought of writing what I understood from the poem. However I would rather appreciate the reader to provide feedback on what you understand of the poem!
+Initially, I thought of writing what I understood from the poem. For this did not happen to me or to someone I know. But understanding is left to interpretation and the interpreter.

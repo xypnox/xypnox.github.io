@@ -12,7 +12,8 @@ export const Projects: ProjectData[] = [
     title: 'Notes',
     year: '2023',
     description: [
-      'My Project to create, edit, curate and prune my personal notes. Currently private. I share some details and usecases for this once in a while.',
+      'The constant grind to create, edit, curate and prune my personal notes. Currently private. I share some insights and tips about note taking once in a while.',
+      'Several learnings of past experiences went into this.',
     ],
     image: 'https://via.placeholder.com/150',
     tags: ['SolidJS', 'Typescript', 'Figma']
@@ -21,7 +22,8 @@ export const Projects: ProjectData[] = [
     title: 'Calry',
     year: '2023',
     description: [
-      'A startup to help people find the best fitness classes in their city'
+      'A startup I was a founding member of in 2023. I was initially involved to a higher degree but once I heard the call of design, I could not resist.',
+      'I worked on the design of the product and the website. I created several prototypes, revamped the design of the website 4 times in 3 months as we pivoted from one idea to another.',
     ],
     image: 'https://via.placeholder.com/150',
     link: 'https://calry.app',
@@ -31,11 +33,11 @@ export const Projects: ProjectData[] = [
     title: 'Workduck',
     year: '2021-2023',
     description: [
-      'Workduck is a no-code process automation platform for modern product teams. It helps you to focus on product building by taking care of documentation, testing, and communication with stakeholders etc. It serves as a central hub for organizing and collecting data from apps like Slack, GitHub, Jira, Linear, and more.',
+      'Workduck was a no-code process automation platform for modern product teams. It aimed to help people to focus on product building by taking care of documentation, testing, and communication with stakeholders etc. It served as a central hub for organizing and collecting data from apps like Slack, GitHub, Jira, Linear, and more.',
 
-      'I worked on the frontend of the electron desktop application. In it I owned the  feature design and development. As the application focused on offering a Rich Text editor with superpowers, I became intimately familiar with Text Editors, the DOM and the curse of the unending renderers.',
+      'I worked on the frontend of the electron desktop application. I ideated and executed the features from design to development to deployment. As the application focused on offering a Rich Text editor with superpowers, I became intimately familiar with Text Editors, the DOM and the curse of the unending renderers.',
 
-      'I worked on things larger than the same'
+      'Apart from the usual design of company brand, website, and product design and frontend; I got my hands on content marketing, SEO, and even a bit of sales. I created several prototypes, from rough ideations to high-fidelity interfaces.',
     ],
     image: 'https://via.placeholder.com/150',
     link: 'https://www.google.com',
@@ -46,8 +48,8 @@ export const Projects: ProjectData[] = [
     year: '2020',
     description: [
       'Fifthtry is a documentation tool that integrates with Github Pull Request, to ensure that no code goes live without being updated in the documentation.',
-
-      "I worked on both the backend and frontend of the application. It's written in Rust and Elm combined in the specialized Realm framework. I added several small features and pages. I also created the stats ingestion system for the backend."
+      "I worked on both the backend and frontend of the application. Written in Rust and Elm, in the specialized Realm framework. I worked in change requests, a feature similar to pull requests where I had to deal with versioning and diff of a text document.",
+      "I also contributed significantly to the data and performance analytics stack for the backend that collected details of all calls made, with the precise functions that were called and in the order they were called and what time they took for each call."
 
     ],
     image: 'https://via.placeholder.com/150',
@@ -58,10 +60,8 @@ export const Projects: ProjectData[] = [
     title: 'LTTKGP',
     year: '2020',
     description: [
-      'Listen to this KGP is a facebook group where people share songs they find interesting.',
-
+      'Listen to this KGP is a facebook group where people share songs they find interesting. While the group works for sharing, it is not that great of a place to listen to what has been shared.',
       'LTTKGP webapp provides a way to browse and listen to the songs posted with a better interface and queued playlists.',
-
       'I designed and developed the frontend with React/Typescript from scratch.'
     ],
     image: 'https://via.placeholder.com/150',
