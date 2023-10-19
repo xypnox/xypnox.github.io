@@ -39,6 +39,9 @@ const { title, showLoading } = Astro.props;
 <style is:global define:vars={themeCssVars}>
   * {
     box-sizing: border-box;
+    --gradient-color-1: var(--primary-color);
+    --gradient-color-2: var(--colors-purple);
+    --animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2));
   }
   html {
     font-family: var(--font-family);
@@ -53,7 +56,6 @@ const { title, showLoading } = Astro.props;
     margin: 0;
     padding: 1rem;
     padding-bottom: 8rem;
-    background-color: var(--background);
     background-image: url("/nnnoise.svg");
     min-height: 100vh;
   }
@@ -92,4 +94,35 @@ const { title, showLoading } = Astro.props;
     border: none;
     opacity: 0.5;
   }
+
+  @keyframes backgroundMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-gradient-fx:hover {
+    background: var(--animated-gradient);
+    background-size: 200% 200%;
+    animation: backgroundMove 3s ease infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-fx-constant {
+    background: var(--animated-gradient);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: backgroundMove 3s ease infinite;
+  }
+
 </style>

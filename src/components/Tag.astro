@@ -6,7 +6,7 @@ const { tag } = Astro.props;
 ---
 
 <a href={`/blag/tags/${tag}`} class="tag">
-  #{tag}
+  #<span>{tag}</span>
 </a>
 
 <style>
@@ -20,8 +20,18 @@ const { tag } = Astro.props;
     background-color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
   }
   .tag:hover {
     color: var(--primary-color);
+  }
+
+  .tag:hover span {
+    background: var(--animated-gradient);
+    background-size: 200% 200%;
+    animation: backgroundMove 3s ease infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 </style>

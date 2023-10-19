@@ -46,10 +46,10 @@ const dateFormatOption = {
 
 <Layout showLoading={false} title={entry.data.title}>
   <div class="postHeading">
-    <h1>{entry.data.title}</h1>
+    <h1 class="text-gradient-fx">{entry.data.title}</h1>
     {
       entry.data.description && (
-          <p class="description">{entry.data.description}</p>
+        <p class="description">{entry.data.description}</p>
       )
     }
     <div class="details">

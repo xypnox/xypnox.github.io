@@ -4,8 +4,12 @@ import Icon from "astro-icon";
 interface Props {
   title?: string;
   icon?: string;
+  links?: {
+    title: string;
+    href: string;
+  }[];
 }
-const { title, icon } = Astro.props;
+const { title, icon, links } = Astro.props;
 ---
 
 <div class="container-wrapper">
@@ -17,6 +21,13 @@ const { title, icon } = Astro.props;
   }
   <slot name="description" />
   <div class="container-content">
+      {links && links.map((link) => (
+        <a class="container-link" href={link.href}>
+          <span>
+          {link.title}
+          </span>
+        </a>
+      ))}
     <slot />
   </div>
 </div>
@@ -60,6 +71,34 @@ const { title, icon } = Astro.props;
     grid-gap: 1rem;
     grid-column-gap: 1rem;
     gap: 1rem;
+  }
+
+  .container-link {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+    color: var(--text);
+    background: var(--surface);
+    font-size: var(--font-size-base);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .container-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .container-link:hover span {
+    background: var(--animated-gradient);
+    background-size: 200% 200%;
+    animation: backgroundMove 3s ease infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @media (max-width: 768px) {

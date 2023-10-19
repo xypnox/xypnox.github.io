@@ -140,7 +140,12 @@ const dateFormatOption = {
   }
 
   .blog-entry:hover h2 {
-    color: var(--primary-color);
+    background: var(--animated-gradient);
+    background-size: 200% 200%;
+    animation: backgroundMove 3s ease infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .blog-entry .tags {

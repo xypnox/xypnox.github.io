@@ -1,4 +1,5 @@
 ---
+import NavLink from './NavLink.astro'
 interface Props {
   links: {
     name: string;
@@ -12,9 +13,9 @@ const {links} = Astro.props
 <nav class="page-nav">
   {
     links.map((link) => (
-      <a href={`#${link.slug}`}>
+      <NavLink href={`#${link.slug}`}>
         {link.name}
-      </a>
+      </NavLink>
     ))
   }
 </nav>

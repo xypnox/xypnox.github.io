@@ -10,32 +10,50 @@ import { icons } from "../content/icons";
   <main>
     <div class="intro">
       <XypnoxEase />
-      <h1>Hi, I am <span class="text-gradient">xypnox</span>.</h1>
+      <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
       <p>I design/develop interfaces.</p>
-      <p>This is the lair, the start page, the home to the digital.</p>
+      <p>This is the lair, the start page, <br /> the home to the digital.</p>
     </div>
 
-    <Container title="Dev" icon={icons.dev}>
+    <Container title="Dev"
+      links={[
+        {
+          title: "Projects",
+          href: "/projects"
+        },
+        {
+          title: "Studio",
+          href: "https://xypnox.studio"
+        },
+        {
+          title: "Github",
+          href: "https://github.com/xypnox",
+        }
+      ]}
+      icon={icons.dev}>
       <p slot="description">Where the bits are run and spun in wondorous ways.</p>
-      <a href="/projects">Projects</a>
-      <a href="https://xypnox.studio">Studio</a>
-      <a href="https://github.com/xypnox">Github</a>
     </Container>
 
-    <Container title="Design" icon={icons.design}>
+    <Container title="Design"
+      links={[
+        { title: "Covers", href: "/design/covers" },
+        { title: "Logos", href: "/design/logos" },
+        { title: "Studio", href: "https://xypnox.studio" },
+        { title: "Posters", href: "https://posters.xypnox.com" },
+        { title: "Behance", href: "https://www.behance.net/xypnox/" },
+      ]}
+      icon={icons.design}>
       <p slot="description">Where the decision of what to be shown and how is made.</p>
-      <a href="/design/covers">Covers</a>
-      <a href="/design/logos">Logos</a>
-      <a href="https://posters.xypnox.com">Posters</a>
-      <a href="https://xypnox.studio">Studio</a>
-      <a href="https://www.behance.net/xypnox/">Behance</a>
     </Container>
 
-    <Container title="Literature" icon={icons.lit}>
+    <Container title="Literature"
+      links={[
+        { title: "Blag", href: "/blag"},
+        { title: "Poems", href: "https://poems.xypnox.com"},
+        { title: "Why xypnox", href: "/why-xypnox"},
+      ]}
+      icon={icons.lit}>
       <p slot="description">Where the pen is set free and ink never runs dry.</p>
-      <a href="/blag">Blag</a>
-      <a href="https://poems.xypnox.com">Poems</a>
-      <a href="/why-xypnox">Why xypnox</a>
     </Container>
 
     <Container icon={icons.links}>
@@ -56,6 +74,7 @@ import { icons } from "../content/icons";
 
 <style>
   html {
+    background-color: var(--background);
     background-image: url("/back.svg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -75,41 +94,10 @@ import { icons } from "../content/icons";
   .intro {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
-    text-align: center;
-    font-size: var(--font-size-lg);
-  }
-
-  .intro img {
     width: 100%;
-    height: auto;
-    max-width: 400px;
-    border-radius: 50%;
-    background: var(--background);
-    border: 4px solid var(--border);
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .text-gradient {
-    --gradient-color-1: var(--primary-color);
-    --gradient-color-2: var(--colors-purple);
-    background: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2));
-    background-size: 200% 200%;
-    animation: gradient 4s ease infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: var(--font-size-lg);
   }
 
   main a {

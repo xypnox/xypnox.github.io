@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string;
+}
+const pathname = new URL(Astro.request.url).pathname;
+
+const { href } = Astro.props as Props;
+console.log( {
+  pathname,
+  href,
+})
+---
+
+
+<a class={`navLink text-gradient-fx ${ pathname.startsWith(href) ? "active " : ""}`} href={href}>
+  <slot />
+</a>
+
+<style>
+
+.navLink {
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease-out;
+}
+
+.navLink:hover {
+}
+
+.navLink.active {
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 2px;
+}
+
+</style>
