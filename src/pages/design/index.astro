@@ -2,15 +2,46 @@
 import Layout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/container.astro";
 import { icons } from "../../content/icons";
+import PageHeader from '../../components/pageHeader.astro'
+import PageNav from '../../components/nav/pageNav.astro'
+
+const skills = [
+  "/skills/ui-ux.svg",
+  "/skills/frontend.svg",
+  "/skills/design.svg",
+  "/skills/code.svg",
+  "/skills/backend.svg",
+]
 ---
 
 <Layout title="Design">
-  <Container title="Design" icon={icons.design}>
-    <p slot="description">Where the decision of what to be shown and how is made.</p>
-    <a href="/design">Design</a>
-    <a href="/design/covers">Covers</a>
-    <a href="/design/logos">Logos</a>
-    <a href="https://posters.xypnox.com">Posters</a>
-    <a href="https://xypnox.studio">Studio</a>
-  </Container>
+  <PageHeader title="Design" />
+  <PageNav
+    links={[
+      {name: "Design", slug: "/design"},
+      {name: "Covers", slug: "/design/covers"},
+      {name: "Logos", slug: "/design/logos"},
+      {name: "Posters", slug: "https://posters.xypnox.com"},
+      {name: "Studio", slug: "https://xypnox.studio"},
+    ]}
+  />
+  <hr />
+  <p>Some illustrations that are still looking for their correct place in the site.</p>
+  <div class="skill-grid">
+    {skills.map(sk => <img src={sk} alt="icons" />)}
+  </div>
 </Layout>
+
+<style>
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 2rem;
+}
+.skill-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
+

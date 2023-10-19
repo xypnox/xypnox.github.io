@@ -3,7 +3,7 @@ import Layout from "../../layouts/BaseLayout.astro";
 import { Covers } from "../../content/coverData";
 import { ImageCollage } from "../../components/imageGrid";
 import PageHeader from '../../components/pageHeader.astro'
-import PageNav from '../../components/pageNav.astro'
+import PageNav from '../../components/nav/pageNav.astro'
 
 const covers = Covers.map((coverCollection) => ({
   ...coverCollection,

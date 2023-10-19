@@ -9,6 +9,8 @@ export const icons = {
   "design": "ph:paint-brush-duotone",
   "dev": "uim:apps",
   "links": "ph:link-duotone",
+
+  "menu": "ph:dots-three-duotone",
 }
 
 

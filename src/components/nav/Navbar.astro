@@ -1,19 +1,33 @@
 ---
 import XypnoxPlain from '../vectors/xypnoxPlain.astro'
+import { icons } from "../../content/icons";
 import NavLink from './NavLink.astro'
+import Icon from "astro-icon";
+
 ---
 
 <nav class="navbar">
   <a href="/" class="navLogo" aria-label="Home"></a>
-  <div>
-    <div class="navlinks">
-      <NavLink href="/projects">Projects</NavLink>
-      <NavLink href="/design">Design</NavLink>
-      <NavLink href="/blag">Blag</NavLink>
-      <NavLink href="https://x5z.studio">x5z</NavLink>
-    </div>
+  <div class="navlinks">
+    <NavLink href="/projects">Projects</NavLink>
+    <NavLink href="/design">Design</NavLink>
+    <NavLink href="/blag">Blag</NavLink>
+    <NavLink href="https://x5z.studio">x5z</NavLink>
+  </div>
+  <div class="mobile-menu">
+    <NavLink href="/projects">Projects</NavLink>
+    <NavLink href="/design">Design</NavLink>
+    <NavLink href="/blag">Blag</NavLink>
+    <NavLink href="https://x5z.studio">x5z</NavLink>
+  </div>
+  <div class="mobile-menu-button">
+    <Icon name={icons.menu} />
   </div>
 </nav>
+
+<script>
+import '../../scripts/menu'
+</script>
 
 <style>
   nav.navbar {
@@ -29,6 +43,24 @@ import NavLink from './NavLink.astro'
     gap: 1rem;
   }
 
+  @keyframes borderFlash {
+    0% {
+      border-color: var(--border);
+    }
+    25% {
+      border-color: var(--primary-color);
+    }
+    50% {
+      border-color: var(--secondary-color);
+    }
+    75% {
+      border-color: var(--primary-color);
+    }
+    100% {
+      border-color: var(--border);
+    }
+  }
+
   .navbar > div {
     display: flex;
     align-items: center;
@@ -39,10 +71,15 @@ import NavLink from './NavLink.astro'
     -webkit-backdrop-filter: blur(1rem);
     border: 1px solid var(--border);
     transition: all 0.2s ease-in-out;
+    animation: borderFlash 3s;
   }
 
-  nav.navbar > div:hover {
+  .navbar .mobile-menu,
+  .navbar .mobile-menu-button {
+    display: none;
   }
+
+  nav.navbar > div:hover {}
 
   .navbar .navlinks {
     display: flex;
@@ -72,5 +109,28 @@ import NavLink from './NavLink.astro'
     }
     .navbar > div {
       padding: 0rem 0.75rem;
+    }
+    .navbar .navlinks {
+      display: none;
+    }
+    .navbar .mobile-menu-button {
+      width: 4rem;
+      display: flex;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    .navbar .mobile-menu-button:hover {
+      color: var(--primary-color);
+    }
+    .navbar .mobile-menu:global(.open) {
+      display: flex;
+      position: absolute;
+      bottom: 4rem;
+      left: 1rem;
+      width: calc(100% - 2rem);
+      flex-direction: column;
+      font-size: var(--font-size-lg);
+      box-shadow: 0px 8px 16px #00000080;
     }
 </style>

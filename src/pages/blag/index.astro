@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/BaseLayout.astro";
 import Blag from "../../vectors/blag.astro";
-import Tag from "../../components/Tag.astro";
+import Tag from "../../components/nav/Tag.astro";
 import BlogPostCard from "../../components/BlogPostCard.astro";
 
 const blogEntriesAll = await getCollection("blog");

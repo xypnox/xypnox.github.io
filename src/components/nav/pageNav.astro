@@ -13,9 +13,11 @@ const {links} = Astro.props
 <nav class="page-nav">
   {
     links.map((link) => (
-      <NavLink href={`#${link.slug}`}>
-        {link.name}
-      </NavLink>
+      <div class="link-wrapper">
+        <NavLink href={link.slug}>
+          {link.name}
+        </NavLink>
+      </div>
     ))
   }
 </nav>
@@ -27,5 +29,13 @@ const {links} = Astro.props
     flex-wrap: wrap;
     margin: 2rem 0;
     gap: 1rem;
+  }
+  .link-wrapper {
+    display: flex;
+    background: var(--surface);
+    border-radius: 0.5rem;
+  }
+  .link-wrapper > :global(a) {
+    padding: 0.5rem 1rem;
   }
 </style>
