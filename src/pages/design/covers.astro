@@ -21,7 +21,7 @@ const covers = Covers.map((coverCollection) => ({
   <PageNav
     links={covers.map((col) => ({
       name: `${col.name} - ${col.covers.length}`,
-      slug: col.slug,
+      slug: `#${col.slug}`,
     }))}
   />
   <ImageCollage

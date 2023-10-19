@@ -16,7 +16,7 @@ const ProjectsWithSlug = Projects.map((p) => {
     <PageNav links={
       ProjectsWithSlug.map((p) => ({
         name: p.title,
-        slug: p.slug
+        slug: `#${p.slug}`
       }))
     } />
     <div class="projectList">

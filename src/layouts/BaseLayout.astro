@@ -27,6 +27,7 @@ const { title, showLoading } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
+    <slot name="head" />
   </head>
   <body>
     {!( showLoading === false ) && (

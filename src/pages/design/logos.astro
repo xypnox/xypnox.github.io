@@ -20,7 +20,7 @@ const icons = iconsData.map((iconCol) => ({
   <PageNav
     links={icons.map((i) => ({
       name: `${i.name} - ${i.covers.length}`,
-      slug: i.slug,
+      slug: `#${i.slug}`,
     }))}
   />
   <ImageCollage
