@@ -30,6 +30,17 @@ export const Projects: ProjectData[] = [
     tags: ['SolidJS', 'Typescript', 'Figma']
   },
   {
+    title: 'Nirah',
+    year: '2023',
+    description: [
+      'A startup offering enterprise-first secure, reliable, and scalable webhook platform.',
+      'It was a 10 day sprint to design the product interfaces, website, blog, docs, brand, illustrations and then develop them.',
+    ],
+    image: '/icons/Nirah.svg',
+    link: 'https://nirah.app',
+    tags: ['Django', 'Astro', 'Figma']
+  },
+  {
     title: 'Workduck',
     year: '2021-2023',
     description: [
@@ -40,20 +51,20 @@ export const Projects: ProjectData[] = [
       'Apart from the usual design of the brand of the company, website, and product design (and frontend); I got my hands on content marketing, SEO, and even a bit of sales. I created several prototypes, from rough ideations to high-fidelity interfaces.',
     ],
     image: '/icons/Workduck.svg',
-    link: 'https://www.google.com',
+    link: 'https://mexit.so',
     tags: ['React', 'Typescript', 'Figma']
   },
   {
     title: 'Fifthtry',
     year: '2020',
     description: [
-      'Fifthtry is a documentation tool that integrates with Github Pull Request, to ensure that no code goes live without being updated in the documentation.',
+      'I worked at fifthry when it was a documentation tool that integrated with Github Pull Request, to ensure that no code goes live without being updated in the documentation.',
       "I worked on both the backend and frontend of the application. Written in Rust and Elm, in the specialized Realm framework. I worked in change requests, a feature similar to pull requests where I had to deal with versioning and diff of a text document.",
-      "I also contributed significantly to the data and performance analytics stack for the backend that collected details of all calls made, with the precise functions that were called and in the order they were called and what time they took for each call."
+      "I also contributed to the data and performance analytics stack for the backend that collected details of all calls made, with the functions that were called, in the order they were called, and what time they took."
 
     ],
     image: '/icons/Fifthtry.svg',
-    link: 'https://www.google.com',
+    link: 'https://fifthtry.com',
     tags: ['Rust', 'Elm']
   },
   {
@@ -66,7 +77,6 @@ export const Projects: ProjectData[] = [
       "It won Gold @ InterIIT Tech 2021 in Drishtee’s Tech-led Innovation for Rural Entrepreneurs."
     ],
     image: '/projects/GrameenSetu.svg',
-    link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
   {
@@ -75,10 +85,10 @@ export const Projects: ProjectData[] = [
     description: [
       'Listen to this KGP is a facebook group where people share songs they find interesting. While the group works for sharing, it is not that great of a place to listen to what has been shared.',
       'LTTKGP webapp provides a way to browse and listen to the songs posted with a better interface and queued playlists.',
-      'I designed and developed the frontend with React/Typescript from scratch.'
+      'I designed and developed the frontend with React/Typescript from scratch.',
+      'It gathers dust these days.'
     ],
     image: '/icons/lttkp.svg',
-    link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
   {
@@ -92,17 +102,17 @@ export const Projects: ProjectData[] = [
       'It won Gold @ InterIIT Tech 2020 in Coding hackathon. I worked on the UI/UX and frontend of the application.'
     ],
     image: '/projects/marg.png',
-    link: 'https://www.google.com',
     tags: ['React', 'Typescript']
   },
   {
     title: 'Finbox',
     description: [
       'Finbox is a fintech company that allows you to embed lending infratstructure in your application.',
-      'I worked on the landing page and the entire website from scratch. I utilized react-static to generate static pages with instant navigation. I also organized Design Sprints to target specific audiences, started from scratch with UI/UX to develop a unique brand identity for the company. Made personalized icons. illustrations, animations, etc.'
+      'I worked on the landing page and the entire website from scratch. Using react-static, I generated static pages SPA navigation.',
+      'I also organized Design Sprints to target specific audiences, started from scratch with UI/UX to develop a unique brand identity for the company. Made personalized icons. illustrations, animations, etc.'
     ],
     image: '/icons/finbox.svg',
-    link: 'https://www.google.com',
+    link: 'https://finbox.in',
     tags: ['React Static']
   },
 ]
