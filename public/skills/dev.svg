@@ -1,7 +1,7 @@
 <svg width="755" height="1006" viewBox="0 0 755 1006" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0)">
-<rect x="50" y="118" width="705" height="705" rx="100" fill="#181B27"/>
-<rect x="50" y="118" width="705" height="705" rx="100" fill="url(#paint0_radial)" fill-opacity="0.5"/>
+<g clip-path="url(#clip0_623_2686)">
+<path d="M655 118H150C94.7715 118 50 162.772 50 218V723C50 778.228 94.7715 823 150 823H655C710.228 823 755 778.228 755 723V218C755 162.772 710.228 118 655 118Z" fill="#181B27"/>
+<path d="M655 118H150C94.7715 118 50 162.772 50 218V723C50 778.228 94.7715 823 150 823H655C710.228 823 755 778.228 755 723V218C755 162.772 710.228 118 655 118Z" fill="url(#paint0_radial_623_2686)" fill-opacity="0.5"/>
 <path d="M107.5 420C113.299 420 118 415.523 118 410C118 404.477 113.299 400 107.5 400C101.701 400 97 404.477 97 410C97 415.523 101.701 420 107.5 420Z" fill="white" fill-opacity="0.05"/>
 <path d="M159 420C164.523 420 169 415.523 169 410C169 404.477 164.523 400 159 400C153.477 400 149 404.477 149 410C149 415.523 153.477 420 159 420Z" fill="white" fill-opacity="0.05"/>
 <path d="M211 420C216.523 420 221 415.523 221 410C221 404.477 216.523 400 211 400C205.477 400 201 404.477 201 410C201 415.523 205.477 420 211 420Z" fill="white" fill-opacity="0.05"/>
@@ -115,25 +115,25 @@
 <path opacity="0.4" d="M271 858.92C271 865.777 276.559 871.336 283.416 871.336C290.273 871.336 295.832 865.777 295.832 858.92C295.832 852.063 290.273 846.504 283.416 846.504C276.559 846.504 271 852.063 271 858.92Z" fill="#63F6FF"/>
 <path opacity="0.8" d="M306.696 858.92C306.696 865.777 312.255 871.336 319.112 871.336C325.969 871.336 331.528 865.777 331.528 858.92C331.528 852.063 325.969 846.504 319.112 846.504C312.255 846.504 306.696 852.063 306.696 858.92Z" fill="#63F6FF"/>
 <path d="M342.392 858.92C342.392 865.777 347.951 871.336 354.808 871.336C361.665 871.336 367.224 865.777 367.224 858.92C367.224 852.063 361.665 846.504 354.808 846.504C347.951 846.504 342.392 852.063 342.392 858.92Z" fill="#63F6FF"/>
-<g filter="url(#filter0_d)">
+<g filter="url(#filter0_d_623_2686)">
 <path d="M613.658 130.427C602.166 73.7215 552.916 31 493 31C445.391 31 404.35 58.1179 383.825 97.5518C334.575 102.483 296 144.395 296 195.375C296 249.611 340.317 294 394.5 294H607.916C653.058 294 689.999 257.012 689.999 211.813C690.086 191.044 682.22 171.032 668.02 155.893C653.82 140.755 634.365 131.641 613.658 130.427Z" fill="#63F6FF"/>
 </g>
 </g>
 <defs>
-<filter id="filter0_d" x="196" y="-19" width="594" height="463" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d_623_2686" x="196" y="-19" width="594" height="463" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="50"/>
 <feGaussianBlur stdDeviation="50"/>
 <feColorMatrix type="matrix" values="0 0 0 0 0.388235 0 0 0 0 0.964706 0 0 0 0 1 0 0 0 0.5 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_623_2686"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_623_2686" result="shape"/>
 </filter>
-<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(510.6 187.325) rotate(99.6511) scale(644.801)">
+<radialGradient id="paint0_radial_623_2686" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(510.6 187.325) rotate(99.6511) scale(644.801)">
 <stop stop-color="#63F6FF"/>
 <stop offset="1" stop-color="#63F6FF" stop-opacity="0"/>
 </radialGradient>
-<clipPath id="clip0">
+<clipPath id="clip0_623_2686">
 <rect width="755" height="1006" fill="white"/>
 </clipPath>
 </defs>

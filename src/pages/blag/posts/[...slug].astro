@@ -87,6 +87,11 @@ const dateFormatOption = {
   <div class="content-wrapper">
     <div class="content">
       <Content />
+      <div class="end-marker">
+        ❦
+        <p>Sooner or later, everything ends.</p>
+      </div>
+      <h2>Comments</h2>
       <script
         is:inline
         src="https://utteranc.es/client.js"
@@ -197,6 +202,26 @@ const dateFormatOption = {
     text-align: center;
     color: var(--fadeText);
   }
+
+  .end-marker {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xl);
+    color: var(--fadeText);
+    margin: 4rem 0;
+    padding: 2rem 0;
+    border-top: 1px dashed var(--fadeText);
+    border-bottom: 1px dashed var(--fadeText);
+  }
+  .end-marker p {
+    margin: 0;
+    font-style: italic;
+    font-size: var(--font-size-lg);
+  }
+
 
   @media (max-width: 1200px) {
     .content-wrapper {

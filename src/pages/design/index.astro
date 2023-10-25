@@ -1,47 +1,45 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
-import Container from "../../components/container.astro";
-import { icons } from "../../content/icons";
 import PageHeader from '../../components/pageHeader.astro'
-import PageNav from '../../components/nav/pageNav.astro'
 
-const skills = [
-  "/skills/ui-ux.svg",
-  "/skills/frontend.svg",
-  "/skills/design.svg",
-  "/skills/code.svg",
-  "/skills/backend.svg",
+const designSections = [
+  { name: "Covers", slug: "/design/covers"},
+  { name: "Logos", slug: "/design/logos"},
+  { name: "Posters", slug: "https://posters.xypnox.com"},
+  { name: "Experiments", slug: "https://xypnox.studio"},
 ]
 ---
 
 <Layout title="Design">
   <PageHeader title="Design" />
-  <PageNav
-    links={[
-      {name: "Design", slug: "/design"},
-      {name: "Covers", slug: "/design/covers"},
-      {name: "Logos", slug: "/design/logos"},
-      {name: "Posters", slug: "https://posters.xypnox.com"},
-      {name: "Studio", slug: "https://xypnox.studio"},
-    ]}
-  />
-  <hr />
-  <p>Some illustrations that are still looking for their correct place in the site.</p>
-  <div class="skill-grid">
-    {skills.map(sk => <img src={sk} alt="icons" />)}
+  <div class="design-sections">
+    {designSections.map(d =>
+      <div>
+        <a class="text-gradient-fx" href={d.slug}>{d.name}</a>
+      </div>
+    )}
   </div>
 </Layout>
 
 <style>
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 2rem;
-}
-.skill-grid img {
+.design-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  align-items: center;
+  justify-content: center;
+}
+
+.design-sections > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xxl);
+  background: var(--background);
+  padding: 4rem;
+  border: 1px solid var(--border);
+  border-radius: 4rem;
 }
 </style>
 

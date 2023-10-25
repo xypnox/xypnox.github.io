@@ -1,8 +1,8 @@
 export const icons = {
-  "github": "bi:github",
-  "mastodon": "bi:mastodon",
-  "email": "ph:envelope-duotone",
-  "telegram": "ic:baseline-telegram",
+  "github": "fa-brands:github",
+  "mastodon": "fa-brands:mastodon",
+  "email": "ic:round-mail",
+  "telegram": "fa-brands:telegram",
   "goodreads": "fa-brands:goodreads",
 
   "lit": "ph:pen-nib-duotone",

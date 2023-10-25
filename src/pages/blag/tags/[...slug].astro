@@ -29,10 +29,12 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.props;
 
-const blogEntriesFiltered = blogEntries.filter((blogPostEntry) => {
-  const tags = blogPostEntry.data.tags || [];
-  return tags.includes(tag);
-});
+const blogEntriesFiltered = blogEntries
+  .filter(b => b.data.hidden !== true)
+  .filter((blogPostEntry) => {
+    const tags = blogPostEntry.data.tags || [];
+    return tags.includes(tag);
+  });
 
 const allTags = blogEntriesAll
   .map((blogPostEntry) => blogPostEntry.data.tags)

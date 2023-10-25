@@ -15,44 +15,38 @@ import { icons } from "../content/icons";
       <p>This is the lair,<br /> the start page, <br /> the home to the digital.</p>
     </div>
 
-    <Container title="Dev"
+    <Container
+      title="Dev"
+      image="/skills/dev.svg"
       links={[
-        {
-          title: "Projects",
-          href: "/projects"
-        },
-        {
-          title: "Studio",
-          href: "https://xypnox.studio"
-        },
-        {
-          title: "Github",
-          href: "https://github.com/xypnox",
-        }
-      ]}
-      icon={icons.dev}>
+        { title: "Projects", href: "/projects" },
+        { title: "Experiments", href: "https://xypnox.studio" },
+        { title: "Github", href: "https://github.com/xypnox" }
+      ]}>
       <p slot="description">Where I jostle with bits in wondorous ways.</p>
     </Container>
 
     <Container title="Design"
+      image="/skills/design.svg"
       links={[
         { title: "Covers", href: "/design/covers" },
         { title: "Logos", href: "/design/logos" },
-        { title: "Studio", href: "https://xypnox.studio" },
+        { title: "Experiments", href: "https://xypnox.studio" },
         { title: "Posters", href: "https://posters.xypnox.com" },
         { title: "Behance", href: "https://www.behance.net/xypnox/" },
       ]}
-      icon={icons.design}>
+      >
       <p slot="description">Where the art is (a part of) the project.</p>
     </Container>
 
     <Container title="Literature"
+      image="/skills/lit.svg"
       links={[
         { title: "Blag", href: "/blag"},
         { title: "Poems", href: "https://poems.xypnox.com"},
         { title: "Why xypnox", href: "/why-xypnox"},
       ]}
-      icon={icons.lit}>
+      >
       <p slot="description">Where the pen runs uninterrupted and the ink never runs dry.</p>
     </Container>
 
@@ -60,15 +54,10 @@ import { icons } from "../content/icons";
       <Links />
     </Container>
 
-    <Container title="Services @">
+    <Container title="Collaborate @">
       <a href="https://x5z.studio">x5z.studio</a>
-      <!-- <div> -->
-      <!--   <p>So you wanna collab?</p> -->
-      <!--   <p>Drop me a mail</p> -->
-      <!--   <a href="mailto:collab@xypnox.com">collab@xypnox.com</a> -->
-      <!-- </div> -->
     </Container>
-    <p>PSA: The navbar is at the bottom & The content is human generated.</p>
+    <p>PSA: The navbar is at the bottom & the content is 100% human generated.</p>
   </main>
 </Layout>
 

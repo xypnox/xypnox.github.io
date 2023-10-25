@@ -4,15 +4,17 @@ import Icon from "astro-icon";
 interface Props {
   title?: string;
   icon?: string;
+  image?: string;
   links?: {
     title: string;
     href: string;
   }[];
 }
-const { title, icon, links } = Astro.props;
+const { title, icon, image, links } = Astro.props;
 ---
 
-<div class="container-wrapper">
+<div class={ "container-wrapper" + (image ? " with-image" : "") }>
+  {image && <img src={image} alt={title} />}
   {title && 
     <h1>
       {icon && <Icon name={icon} />}
@@ -99,6 +101,17 @@ const { title, icon, links } = Astro.props;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .with-image {
+    position: relative;
+    padding-top: 4rem;
+    margin-top: 8rem;
+  }
+  .with-image > img {
+    position: absolute;
+    height: 12rem;
+    top: -8rem;
   }
 
   @media (max-width: 768px) {

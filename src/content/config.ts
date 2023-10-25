@@ -12,7 +12,8 @@ const blog = defineCollection({
     // Image to show in blog list and intro image in blog post
     coverImage: image().optional(),
     coverAlt: z.string().optional(),
-    socialImage: image().optional(), // If not provided, will use coverImage or default
+    socialImage: image().optional(), // will use coverImage or default
+    hidden: z.boolean().optional(), // will default to false
   }),
 })
 
