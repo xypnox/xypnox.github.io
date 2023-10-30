@@ -8,12 +8,24 @@ interface ProjectData {
 }
 
 export const Projects: ProjectData[] = [
+  // {
+  //   title: 'Studio',
+  //   year: '2023',
+  //   description: [
+  //     'A design studio that helps startups and similar fast moving teams with design services.',
+  //     'The design as a service model allows people to easily and reliably collaborate with ',
+  //     'Currently private. (But hope to open the code later)',
+  //   ],
+  //   image: '/icons/Notes.svg',
+  //   tags: ['SolidJS', 'Typescript', 'Figma']
+  // },
   {
     title: 'Notes',
     year: '2023',
     description: [
-      'This project started with the constant grind to create, edit, curate and prune my personal notes. Currently private. I share some insights and tips about note taking once in a while.',
-      'Written in SolidJS, and meant to be the viewing and exploratory medium to the heirarchal interlinked notes. Several learnings from past experiences went into it.',
+      'A project started from the grind to create, edit, curate and prune my personal notes.  I share some insights and tips about note taking once in a while.',
+      'Written in SolidJS, it is meant to be the viewing and exploratory medium to my heirarchal interlinked notes. Several learnings from past experiences went into it.',
+      'Currently private. (But hope to open the code later)',
     ],
     image: '/icons/Notes.svg',
     tags: ['SolidJS', 'Typescript', 'Figma']
@@ -22,8 +34,9 @@ export const Projects: ProjectData[] = [
     title: 'Calry',
     year: '2023',
     description: [
-      'A startup I was a founding member of in 2023. I was initially involved to a higher degree but once I heard the call of design, I could not resist.',
-      'I worked on the design of the product and the website. I created several prototypes, revamped the design of the website 4 times in 3 months as we pivoted from one idea to another.',
+      'A startup I was a founding member of in 2023. We aimed to solve various problems in the data space and later pivoted to serving as a integration aggregator and dev tool for the hospitality industry.',
+      'I worked on the design and development of the product and the website. I created several prototypes, revamped the design of the website 4 times in 3 months as we pivoted from one idea to another.',
+      'I was involved in a high degree, but once I heard the call of design, I could not resist and left to start the studio.'
     ],
     image: '/icons/Calry.svg',
     link: 'https://calry.app',
@@ -34,7 +47,8 @@ export const Projects: ProjectData[] = [
     year: '2023',
     description: [
       'A startup offering enterprise-first secure, reliable, and scalable webhook platform.',
-      'It was a 10 day sprint to design the product interfaces, website, blog, docs, brand, illustrations and then develop them.',
+      'I collaborated with the founder, and in a 10 day sprint, we designed and developed the product interfaces, website, blog, docs, brand, illustrations.',
+      ''
     ],
     image: '/icons/Nirah.svg',
     link: 'https://nirah.app',
@@ -45,9 +59,7 @@ export const Projects: ProjectData[] = [
     year: '2021-2023',
     description: [
       'Workduck was a no-code process automation platform for modern product teams. It aimed to help people to focus on product building by taking care of documentation, testing, and communication with stakeholders etc. It served as a central hub for organizing and collecting data from apps like Slack, GitHub, Jira, Linear, and more.',
-
-      'I worked on the frontend of the electron desktop appl. I built most features, from design to development to deployment. As the experience revolved around a Rich Text editor with superpowers, I became intimately familiar with Text Editors, the DOM and the curse of the unending re-renders.',
-
+      'I worked on the frontend of the electron desktop app. I owned most features, from design to development. As the experience centered around a Rich Text editor with superpowers, I became intimately familiar with Text Editors, the DOM and the problems of the cursed re-renders.',
       'Apart from the usual design of the brand of the company, website, and product design (and frontend); I got my hands on content marketing, SEO, and even a bit of sales. I created several prototypes, from rough ideations to high-fidelity interfaces.',
     ],
     image: '/icons/Workduck.svg',
@@ -71,9 +83,9 @@ export const Projects: ProjectData[] = [
     title: 'Grameen Setu',
     year: '2021',
     description: [
-      'GrameenSetu is an all-in-one platform designed for rural producers to connect with SMEs.',
+      'GrameenSetu was an entry for InterIIT Tech 2021 as an all-in-one platform designed for rural producers to connect with SMEs.',
       'The platform offers a user-friendly interface, an improved e-marketplace tailored to their needs, and promotes collaborations among rural producers to enhance the rural economy.',
-      'I led the tech team and worked on the UI/UX and frontend of the application. I also designed the logos and the branding for the project.',
+      'I led the tech team, designed and developed the frontend of the application. I also designed the logos and the branding for the project.',
       "It won Gold @ InterIIT Tech 2021 in Drishtee’s Tech-led Innovation for Rural Entrepreneurs."
     ],
     image: '/projects/GrameenSetu.svg',
@@ -95,11 +107,11 @@ export const Projects: ProjectData[] = [
     title: 'Marg',
     year: '2020',
     description: [
-      'Monitor Assess Report Guide, a complete ecosystem for the citizens and government to ease the process of road maintenance and progress checking.',
+      'Monitor Assess Report Guide, was an entry for InterIIT Tech 2021, as a complete ecosystem for the citizens and government to ease the process of road maintenance and progress checking.',
 
       'We tried to incorporate a sense of ownership towards their surroundings as well as to motivate them using the stories of other people who have successfully helped the government.',
 
-      'It won Gold @ InterIIT Tech 2020 in Coding hackathon. I worked on the UI/UX and frontend of the application.'
+      'It won Gold @ InterIIT Tech 2020 in Coding hackathon. I worked on the design and frontend of the application.'
     ],
     image: '/projects/marg.png',
     tags: ['React', 'Typescript']
