@@ -1,5 +1,4 @@
 ---
-import XypnoxPlain from '../vectors/xypnoxPlain.astro'
 import { icons } from "../../content/icons";
 import NavLink from './NavLink.astro'
 import Icon from "astro-icon";
@@ -7,7 +6,9 @@ import Icon from "astro-icon";
 ---
 
 <nav class="navbar">
-  <a href="/" class="navLogo" aria-label="Home"></a>
+  <a href="/"  aria-label="Home">
+    <div class="navLogo" />
+  </a>
   <div class="navlinks">
     <NavLink href="/blag">Blag</NavLink>
     <NavLink href="/projects">Projects</NavLink>
@@ -61,14 +62,12 @@ import '../../scripts/menu'
     }
   }
 
-  .navbar > div {
+  .navbar > * {
     display: flex;
     align-items: center;
     border-radius: 1rem;
-    background-color: var(--surface);
-    backdrop-filter: blur(1rem);
+    background: linear-gradient(to bottom, var(--surface), var(--background));
     padding: 0 0.5rem;
-    -webkit-backdrop-filter: blur(1rem);
     border: 1px solid var(--border);
     transition: all 0.2s ease-in-out;
     animation: borderFlash 3s;
