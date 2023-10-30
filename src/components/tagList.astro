@@ -1,0 +1,26 @@
+---
+import { sortedTags } from '../lib/dataAstro'
+import Tag from '../components/nav/Tag.astro'
+---
+
+<div class="tags-list">
+  <h3>Tags</h3>
+  <ul>
+    {sortedTags.map((tag) => <Tag showCount tag={tag} />)}
+  </ul>
+</div>
+
+<style>
+  .tags-list {
+    max-width: 10rem;
+  }
+
+  .tags-list ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+  }
+</style>

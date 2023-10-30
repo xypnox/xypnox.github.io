@@ -1,115 +1,40 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "../../../layouts/BaseLayout.astro";
-import Tag from "../../../components/nav/Tag.astro";
-import BlogPostCard from "../../../components/BlogPostCard.astro";
-const blogEntriesAll = await getCollection("blog");
+import TagList from "../../../components/tagList.astro";
+import BlogGrid from "../../../components/blogGrid.astro";
+import { staticPaths, filteredByTag } from "../../../lib/dataAstro";
 
-const blogEntries = blogEntriesAll;
-
-// console.log({ blogEntries });
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("blog");
-  return blogEntries
-    .reduce((acc, blogPostEntry) => {
-      const tags = blogPostEntry.data.tags || [];
-      tags.forEach((tag: string) => {
-        if (!acc.includes(tag)) {
-          acc.push(tag);
-        }
-      });
-      return acc;
-    }, [] as string[])
-    .map((tag: string) => ({
-      params: { slug: tag },
-      props: { tag },
-    }));
+  return staticPaths;
 }
 
 const { tag } = Astro.props;
-
-const blogEntriesFiltered = blogEntries
-  .filter(b => b.data.hidden !== true)
-  .filter((blogPostEntry) => {
-    const tags = blogPostEntry.data.tags || [];
-    return tags.includes(tag);
-  });
-
-const allTags = blogEntriesAll
-  .map((blogPostEntry) => blogPostEntry.data.tags)
-  .flat();
+const entries = filteredByTag(tag).map((e) => e.slug)
 ---
 
 <Layout title={`Blog `}>
   <main class="blog-index">
     <div class="blog-header">
-      <h1>Blog</h1>
       <h2>#{tag}</h2>
+      <a class="text-gradient-fx" href="/blag">Blag</a>
     </div>
     <div class="blog-wrapper">
-      <div class="blog-list">
-        {
-          blogEntriesFiltered.map((blogPostEntry) => (
-            <BlogPostCard slug={blogPostEntry.slug} />
-          ))
-        }
-      </div>
-      <div class="tags-list">
-        <h3>Tags</h3>
-        <ul>
-          {[...new Set(allTags)].map((tag) => <Tag tag={tag} />)}
-        </ul>
-      </div>
+      <BlogGrid entries={entries} />
+      <TagList />
     </div>
   </main>
 </Layout>
 
 <style>
   .blog-index {
-    max-width: 1000px;
     margin: 0 auto;
-  }
-  .blog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    flex-grow: 1;
   }
 
   .blog-wrapper {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-  }
-
-
-  .tags-list {
-    max-width: 10rem;
-  }
-
-  .tags-list ul {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 0.5rem;
-  }
-  .tags-list li a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: max-content;
-    color: var(--text);
-    text-decoration: none;
-    background-color: var(--cardBackground);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-  }
-
-  .tags-list li a:hover {
-    color: var(--primary);
   }
 
   .blog-header {
@@ -119,15 +44,19 @@ const allTags = blogEntriesAll
     align-items: center;
     flex-wrap: wrap;
   }
+
+  .blog-header a {
+    color: var(--fadeText);
+  }
   .blog-header h2 {
-    color: var(--text-fade);
+    background: var(--surface);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    color: var(--heading);
   }
 
   @media (max-width: 768px) {
     .blog-wrapper {
-      flex-direction: column;
-    }
-    .blog-list {
       flex-direction: column;
     }
     .tags-list {

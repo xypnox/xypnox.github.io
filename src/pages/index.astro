@@ -4,6 +4,7 @@ import Links from "../components/profileLinks.astro";
 import Container from "../components/container.astro";
 import XypnoxEase from "../vectors/xypnoxEase.astro";
 import { icons } from "../content/icons";
+import LatestBlog from "../components/latestBlog.astro";
 ---
 
 <Layout title="xypnox">
@@ -12,52 +13,61 @@ import { icons } from "../content/icons";
       <XypnoxEase />
       <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
       <p>I design/develop interfaces.</p>
-      <p>This is the lair,<br /> the start page, <br /> the home to the digital.</p>
+      <p>This is the lair, a collection of my works, designs, and writings.</p>
     </div>
 
-    <Container
-      title="Dev"
-      image="/skills/dev.svg"
-      links={[
-        { title: "Projects", href: "/projects" },
-        { title: "Experiments", href: "https://xypnox.studio" },
-        { title: "Github", href: "https://github.com/xypnox" }
-      ]}>
-      <p slot="description">Where I jostle with bits in wondorous ways.</p>
-    </Container>
+    <div class="containers">
+      <Container
+        title="Dev"
+        image="/skills/dev.svg"
+        links={[
+          { title: "Projects", href: "/projects" },
+          { title: "Experiments", href: "https://xypnox.studio" },
+          { title: "Github", href: "https://github.com/xypnox" }
+        ]}>
+        <p slot="description">Where I jostle with bits in wondorous ways.</p>
+      </Container>
 
-    <Container title="Design"
-      image="/skills/design.svg"
-      links={[
-        { title: "Covers", href: "/design/covers" },
-        { title: "Logos", href: "/design/logos" },
-        { title: "Experiments", href: "https://xypnox.studio" },
-        { title: "Posters", href: "https://posters.xypnox.com" },
-        { title: "Behance", href: "https://www.behance.net/xypnox/" },
-      ]}
-      >
-      <p slot="description">Where the art is (a part of) the project.</p>
-    </Container>
+      <Container title="Design"
+        image="/skills/design.svg"
+        linkTitle="/design"
+        links={[
+          { title: "Covers", href: "/design/covers" },
+          { title: "Logos", href: "/design/logos" },
+          { title: "Experiments", href: "https://xypnox.studio" },
+          { title: "Posters", href: "https://posters.xypnox.com" },
+          { title: "Behance", href: "https://www.behance.net/xypnox/" },
+        ]}
+        >
+        <p slot="description">Where the art is (a part of) the project.</p>
+      </Container>
 
-    <Container title="Literature"
-      image="/skills/lit.svg"
-      links={[
-        { title: "Blag", href: "/blag"},
-        { title: "Poems", href: "https://poems.xypnox.com"},
-        { title: "Why xypnox", href: "/why-xypnox"},
-      ]}
-      >
-      <p slot="description">Where the pen runs uninterrupted and the ink never runs dry.</p>
-    </Container>
+      <Container title="Literature"
+        image="/skills/lit.svg"
+        links={[
+          { title: "Blag", href: "/blag"},
+          { title: "Poems", href: "https://poems.xypnox.com"},
+          { title: "Why xypnox", href: "/why-xypnox"},
+        ]}
+        >
+        <p slot="description">Where the pen runs uninterrupted and the ink never runs dry.</p>
+      </Container>
+    </div>
 
-    <Container icon={icons.links}>
-      <Links />
-    </Container>
+    <div class="blog-and-links">
+      <Container linkTitle="/blag" title="Blag">
+        <LatestBlog />
+      </Container>
 
-    <Container title="Collaborate @">
-      <a href="https://x5z.studio">x5z.studio</a>
-    </Container>
-    <p>PSA: The navbar is at the bottom & the content is 100% human generated.</p>
+      <Container icon={icons.links}>
+        <Links />
+      </Container>
+
+      <Container title="Collaborate @">
+        <a href="https://x5z.studio">x5z.studio</a>
+      </Container>
+      <p>PSA: The navbar is at the bottom & the content is 100% human generated.</p>
+    </div>
   </main>
 </Layout>
 
@@ -76,7 +86,6 @@ import { icons } from "../content/icons";
     align-items: center;
     gap: 4rem;
     padding: 1.5rem;
-    max-width: 800px;
     margin-top: 4rem;
   }
 
@@ -86,7 +95,22 @@ import { icons } from "../content/icons";
     align-items: flex-start;
     gap: 0.5rem;
     width: 100%;
+    max-width: 800px;
     font-size: var(--font-size-lg);
+  }
+
+  .containers {
+    width: 100%;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .blog-and-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
   }
 
   main a {

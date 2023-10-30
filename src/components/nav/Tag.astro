@@ -1,12 +1,15 @@
 ---
 interface Props {
   tag: string;
+  showCount?: boolean
 }
-const { tag } = Astro.props;
+const { tag, showCount } = Astro.props;
+
+import { tagCounts } from '../../lib/dataAstro'
 ---
 
 <a href={`/blag/tags/${tag}`} class="tag">
-  #<span>{tag}</span>
+  #<span>{tag}</span> {showCount && <span class="count">{tagCounts[tag]}</span>}
 </a>
 
 <style>
@@ -24,6 +27,11 @@ const { tag } = Astro.props;
   }
   .tag:hover {
     color: var(--primary-color);
+  }
+
+  .count {
+    color: var(--fadeText);
+    margin-left: 0.5rem;
   }
 
   .tag:hover span {

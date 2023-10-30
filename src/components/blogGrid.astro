@@ -1,0 +1,29 @@
+---
+interface Props {
+  entries: string[]
+}
+const { entries } = Astro.props;
+import BlogPostCard from "./BlogPostCard.astro";
+---
+<div class="blog-grid">
+  {
+    entries.map((entrySlug) => (
+      <BlogPostCard slug={entrySlug} />
+    ))
+  }
+</div>
+
+<style>
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 3rem;
+    width: 100%;
+    height: fit-content;
+  }
+  @media (max-width: 600px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

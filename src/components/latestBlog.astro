@@ -1,0 +1,73 @@
+---
+// Component to show latest from blog
+import BlogPostCard from "./BlogPostCard.astro";
+import { latestBlog, topFiveTags } from "../lib/dataAstro"
+import Tag from '../components/nav/Tag.astro'
+---
+
+<div class="blog-card">
+  {
+    topFiveTags.length > 0 && <div class="toptags">
+      <em>Top Tags</em>
+      {topFiveTags.map((t: string) => <Tag tag={t} />)}
+    </div>
+  }
+  {
+    latestBlog && latestBlog.length > 0 &&
+    <div class="col-l">
+      <em>Latest Posts</em>
+      <BlogPostCard slug={latestBlog[0].slug} />
+    </div>
+    <div class="col-l col-end">
+      <BlogPostCard hideImage slug={latestBlog[1].slug} />
+      <BlogPostCard hideImage slug={latestBlog[2].slug} />
+    </div>
+  }
+</div>
+
+<style>
+  em {
+    font-size: var(--font-size-base);
+  }
+  .blog-card {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    width: 100%;
+  }
+  .toptags {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: auto;
+  }
+  .col-l {
+    display: flex;
+    max-width: 400px;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .col-end {
+    gap: 2rem;
+  }
+  .col-end :global(.blog-entry) :global(h2) {
+    font-size: var(--font-size-md);
+  }
+
+  @media (max-width: 768px) {
+    .toptags {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .col-l {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+</style>

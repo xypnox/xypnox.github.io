@@ -1,28 +1,9 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/BaseLayout.astro";
 import Blag from "../../vectors/blag.astro";
-import Tag from "../../components/nav/Tag.astro";
-import BlogPostCard from "../../components/BlogPostCard.astro";
-
-const blogEntriesAll = await getCollection("blog");
-
-const blogEntriesFiltered = blogEntriesAll
-  .filter(b => b.data.hidden !== true)
-  .filter((b) => b.slug.split("/").length === 1);
-
-// console.log({ blogEntries: blogEntriesAll.map((entry) => entry.slug) });
-
-const blogEntries = blogEntriesFiltered
-  .sort((a, b) => {
-    const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
-    return bDateNum - aDateNum;
-  })
-
-const allTags: string[] = blogEntriesAll
-  .map((blogPostEntry) => blogPostEntry.data.tags)
-  .flat()
-  .filter((tag) => tag !== undefined) as string[];
+import TagList from "../../components/tagList.astro";
+import { blogEntries } from '../../lib/dataAstro'
+import BlogGrid from "../../components/blogGrid.astro";
 ---
 
 <Layout title="Blog">
@@ -35,32 +16,15 @@ const allTags: string[] = blogEntriesAll
     </header>
 
     <div class="blog-wrapper">
-      <div class="blog-list">
-        {
-          blogEntries.map((blogPostEntry) => (
-            <BlogPostCard slug={blogPostEntry.slug} />
-          ))
-        }
-      </div>
-      <div class="tags-list">
-        <h3>Tags</h3>
-        <ul>
-          {
-            [...new Set(allTags)].map((tag) => (
-              <li>
-                <Tag tag={tag} />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <BlogGrid entries={blogEntries.map(e => e.slug)} />
+      <TagList />
     </div>
   </main>
 </Layout>
 
 <style>
   .blog-index {
-    max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
   }
   .blog-index header {
@@ -81,31 +45,10 @@ const allTags: string[] = blogEntriesAll
     font-size: var(--font-size-md);
   }
 
-  .blog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    flex-grow: 1;
-    width: 100%;
-  }
-
   .blog-wrapper {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
-  }
-
-  .tags-list {
-    max-width: 10rem;
-  }
-
-  .tags-list ul {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 0.5rem;
+    gap: 2rem;
   }
 
   @media (max-width: 768px) {

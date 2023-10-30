@@ -3,6 +3,8 @@ import Icon from "astro-icon";
 
 interface Props {
   title?: string;
+  // Links title
+  linkTitle?: string;
   icon?: string;
   image?: string;
   links?: {
@@ -10,7 +12,7 @@ interface Props {
     href: string;
   }[];
 }
-const { title, icon, image, links } = Astro.props;
+const { title, icon, image, links, linkTitle } = Astro.props;
 ---
 
 <div class={ "container-wrapper" + (image ? " with-image" : "") }>
@@ -18,7 +20,7 @@ const { title, icon, image, links } = Astro.props;
   {title && 
     <h1>
       {icon && <Icon name={icon} />}
-      {title}
+      {linkTitle ? <a class="text-gradient-fx" href={linkTitle}> {title}</a> : title}
     </h1>
   }
   <slot name="description" />
@@ -32,6 +34,7 @@ const { title, icon, image, links } = Astro.props;
       ))}
     <slot />
   </div>
+  <slot name="end" />
 </div>
 
 <style>
@@ -40,7 +43,7 @@ const { title, icon, image, links } = Astro.props;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    padding: 1rem;
+    padding: 2rem;
     background-color: var(--background);
     border: 1px solid var(--border);
     box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
@@ -65,6 +68,11 @@ const { title, icon, image, links } = Astro.props;
     height: 2rem;
     color: var(--primary-color);
     flex-shrink: 0;
+  }
+
+  h1 a {
+    text-decoration: none;
+    color: currentColor;
   }
   .container-content {
     display: grid;

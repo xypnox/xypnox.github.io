@@ -3,10 +3,10 @@ import Layout from "../../layouts/BaseLayout.astro";
 import PageHeader from '../../components/pageHeader.astro'
 
 const designSections = [
-  { name: "Covers", slug: "/design/covers"},
-  { name: "Logos", slug: "/design/logos"},
-  { name: "Posters", slug: "https://posters.xypnox.com"},
-  { name: "Experiments", slug: "https://xypnox.studio"},
+  { name: "Covers", image: '/design-covers/covers.webp', slug: "/design/covers"},
+  { name: "Logos", image: '/design-covers/logos.webp', slug: "/design/logos"},
+  { name: "Posters", image: '/design-covers/posters.webp',  slug: "https://posters.xypnox.com"},
+  { name: "Experiments", image: '/design-covers/exp.webp',  slug: "https://xypnox.studio"},
 ]
 ---
 
@@ -14,32 +14,51 @@ const designSections = [
   <PageHeader title="Design" />
   <div class="design-sections">
     {designSections.map(d =>
-      <div>
-        <a class="text-gradient-fx" href={d.slug}>{d.name}</a>
-      </div>
+      <a href={d.slug}>
+        <img src={d.image} />
+        <span class="text-gradient-fx">{d.name}</span>
+      </a>
     )}
   </div>
 </Layout>
 
 <style>
 .design-sections {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
   gap: 2rem;
   width: 100%;
-  align-items: center;
-  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.design-sections > div {
+.design-sections > a {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-xxl);
   background: var(--background);
-  padding: 4rem;
   border: 1px solid var(--border);
-  border-radius: 4rem;
+  color: var(--heading);
+  border-radius: 2rem;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  text-decoration: none;
+}
+
+.design-sections > a:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.design-sections img {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  max-width: 600px;
+  border-radius: 2rem;
 }
 </style>
 

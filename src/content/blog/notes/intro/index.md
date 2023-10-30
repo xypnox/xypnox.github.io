@@ -1,6 +1,6 @@
 ---
 title : "Notes: Intro"
-description : "Once when I was foolish and clever, I thought I would never need to write anything down. That I will remember everything forever. I lived with this assumption till I came to my senses."
+description : "From a time when I discovered the joy of note taking."
 date : 2021-06-13
 
 categories : ["tech"]

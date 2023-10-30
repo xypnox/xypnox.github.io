@@ -4,8 +4,9 @@ import { Image } from "astro:assets";
 
 interface Props {
   slug: string;
+  hideImage?: boolean;
 }
-const { slug } = Astro.props;
+const { slug, hideImage } = Astro.props;
 
 const blogPostEntry = await getEntry("blog", slug);
 
@@ -20,14 +21,15 @@ const dateFormatOption = {
 {
   blogPostEntry && (
     <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
-      {blogPostEntry.data.coverImage && (
         <div class="coverImage">
+      {blogPostEntry.data.coverImage && hideImage !== true && (
           <Image
             alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
             src={blogPostEntry.data.coverImage}
           />
-        </div>
       )}
+        {!blogPostEntry.data.coverImage && hideImage !== true && <img src="/blogpostcover.webp"/>}
+        </div>
       <h2>{blogPostEntry.data.title}</h2>
       {blogPostEntry.data.description && (
         <p class="description">{blogPostEntry.data.description}</p>
@@ -112,13 +114,6 @@ const dateFormatOption = {
     gap: 1rem;
   }
 
-  .blog-entry .details .author {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--fadeText);
-  }
-
   .author-icon {
     border-radius: 50%;
   }
@@ -131,7 +126,7 @@ const dateFormatOption = {
   }
 
   .blog-entry .details time {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
   }
 
   .blog-entry:hover {
@@ -152,6 +147,7 @@ const dateFormatOption = {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    font-size: var(--font-size-sm);
   }
 
   @media (max-width: 390px) {
