@@ -20,6 +20,9 @@ const designSections = [
       </a>
     )}
   </div>
+  <div class="notice">
+    For design related services contact via <a href="https://x5z.studio">x5z.studio</a>
+  </div>
 </Layout>
 
 <style>
@@ -38,7 +41,7 @@ const designSections = [
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-xl);
   background: var(--background);
   border: 1px solid var(--border);
   color: var(--heading);
@@ -46,6 +49,7 @@ const designSections = [
   gap: 0.5rem;
   padding-bottom: 1rem;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .design-sections > a:hover {
@@ -59,6 +63,11 @@ const designSections = [
   max-height: 600px;
   max-width: 600px;
   border-radius: 2rem;
+}
+.notice {
+  margin-top: 4rem;
+  padding: 1rem;
+  text-align: center;
 }
 </style>
 
