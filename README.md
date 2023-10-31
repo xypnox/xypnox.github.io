@@ -4,6 +4,7 @@ This is the source of [xypnox.com](https://xypnox.com)
 
 - Redone in [astro](https://astro.build/) 
 - Now comes with blag
+  Previously it was maintained as a separate zola built blog but has now been integrated into the astro site.
 
 
 ## Commands
@@ -30,3 +31,5 @@ All commands are run from the root of the project, from a terminal:
 ---
 
 Some parts of the code are artifacts that were initially prototyped but later removed from the final version. Start with the pages directory to see what was used and how.
+
+
