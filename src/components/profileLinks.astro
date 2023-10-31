@@ -6,7 +6,7 @@ import { Icon } from "astro-icon";
 <div class="links">
   {
     links.map((link) => (
-      <a class="link" href={link.url}>
+      <a class="link" rel="me" href={link.url}>
         <Icon name={link.icon} />
         <span>
         {link.name}
