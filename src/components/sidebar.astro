@@ -1,0 +1,45 @@
+---
+import { links } from "../content/navLinks";
+import Link from "./link.astro";
+
+import { links as profileLinks } from "../content/profileLinks";
+---
+
+<nav class="sidebar">
+  <div class="linkList">
+    {Object.values(links).map((link) => <Link link={link} />)}
+  </div>
+  <div class="linkList">
+    {Object.values(profileLinks).map((link) => <Link link={link} external />)}
+  </div>
+</nav>
+
+<style>
+  .sidebar {
+    color: var(--fadeText);
+    background: var(--sidebarBackground);
+    width: 100%;
+
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    font-size: 1.25rem;
+
+    transition: color 0.2s ease-in-out;
+  }
+
+  .sidebar:hover {
+    color: var(--text);
+  }
+
+  .linkList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+</style>

@@ -4,32 +4,32 @@ interface Link {
   icon: string;
 }
 
-export const links: Link[] = [
-  {
-    name: 'Experience',
-    url: '/experience',
+export const links: { [key: string]: Link } = {
+  home: {
+    name: 'Home',
+    url: '/',
+    icon: 'solar:home-smile-angle-bold-duotone',
+  },
+  code: {
+    name: 'Code',
+    url: '/code',
     icon: 'bi:github',
   },
-  {
-    name: 'Projects',
-    url: '/projects',
-    icon: 'bi:github',
+  art: {
+    name: 'Art',
+    url: '/art',
+    icon: 'bi:palette',
   },
-  {
-    name: 'Blag',
-    url: '/blag',
+  text: {
+    name: 'Text',
+    url: '/text',
     icon: 'bi:mastodon',
   },
-  {
-    name: 'About',
-    url: '/about',
-    icon: 'bi:palette',
-  },
-  {
-    name: 'Designs',
-    url: '/designs',
-    icon: 'bi:palette',
+  about: {
+    name: "About",
+    url: "/about",
+    icon: "bi:camera",
   }
-]
+}
 
 

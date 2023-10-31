@@ -1,6 +1,6 @@
 ---
 import { themeVars } from "../theme";
-import Navbar from "../components/navbar.astro";
+import Sidebar from "../components/sidebar.astro";
 
 import "../styles.css";
 
@@ -22,8 +22,15 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <slot />
-    <Navbar />
+    <div class="grid">
+      <Sidebar />
+      <div class="content">
+        <slot />
+      </div>
+    </div>
+    <script>
+      import "iconify-icon";
+    </script>
   </body>
 </html>
 <style is:global define:vars={themeVars}>
@@ -34,9 +41,24 @@ const { title } = Astro.props;
     font-family: Jost;
     color: var(--text);
     background-color: var(--background);
+    font-size: 16px;
   }
   body {
     margin: 0;
-    margin-bottom: 8rem;
+  }
+
+
+  .grid {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    height: 100vh;
+  }
+
+  .content {
+    overflow-y: auto;
+    background-color: var(--surface);
+    border-radius: 1rem;
   }
 </style>

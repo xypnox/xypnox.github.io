@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { HoverLogo } from "../components/hoverLogo";
-import Links from "../components/profileLinks.astro";
+import { links } from '../content/navLinks';
 ---
 
 <Layout title="xypnox">
@@ -9,10 +9,9 @@ import Links from "../components/profileLinks.astro";
     <HoverLogo client:load />
     <div class="introduction">
       <h1>Hi, I am xypnox!</h1>
-      <p>I like to code, design, write.</p>
+      <p>I like to <a href={links.code.url}>code</a>, <a href={links.art.url}>design </a> and <a href={links.text.url}>write</a>
       <p>This here is my personal website.</p>
     </div>
-    <Links />
   </main>
 </Layout>
 
@@ -22,10 +21,11 @@ import Links from "../components/profileLinks.astro";
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 4rem;
     padding: 1.5rem;
     max-width: 80ch;
-    margin-top: 4rem;
+    height: 100%;
   }
 
   .introduction {
@@ -39,5 +39,4 @@ import Links from "../components/profileLinks.astro";
     margin: 0;
     font-weight: normal;
   }
-
 </style>

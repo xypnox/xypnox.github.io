@@ -1,12 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { experiences } from "../content/experience";
-import { Icon } from "astro-icon";
 ---
 
-<Layout title="Experience">
+<Layout title="Code">
   <main>
-    <h1 class="pageTitle">Experience</h1>
+    <h1 class="pageTitle">Code</h1>
     <div class="experiences">
       {
         experiences.map((experience, index) => (
@@ -15,7 +14,7 @@ import { Icon } from "astro-icon";
               <h1>{experience.name}</h1>
               {experience.tag && (
                 <div>
-                  <Icon name={experience.tag.icon} />
+                  <iconify-icon icon={experience.tag.icon} />
                   {experience.tag.name}
                 </div>
               )}

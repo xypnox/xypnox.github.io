@@ -1,0 +1,73 @@
+---
+interface Props {
+  link: {
+    name: string;
+    url: string;
+    icon: string;
+  };
+  inline?: boolean;
+  external?: boolean;
+}
+
+const { link, inline, external } = Astro.props;
+
+const { pathname } = Astro.url;
+const isActive =
+  link.url === pathname || link.url === pathname.replace(/\/$/, "");
+---
+
+<a
+  class={"link " + (inline ? "inline " : " ") + (isActive ? "active" : "")}
+  href={link.url}
+  target={external ? "_blank" : "_self"}
+  rel={external ? "noopener noreferrer" : ""}
+>
+  <iconify-icon icon={link.icon}></iconify-icon>
+  <span>{link.name}</span>
+</a>
+
+<style>
+  .link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 1rem 2rem;
+    gap: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    border-radius: 1rem;
+  }
+
+  .link.inline {
+    display: inline-flex;
+    padding: 0;
+    font-size: inherit;
+    align-items: baseline;
+    color: var(--text);
+  }
+
+  .link.inline iconify-icon {
+    font-size: inherit;
+  }
+
+  .link:hover {
+    color: var(--primary);
+    background-color: var(--hoverSurface);
+    transition: all 0.1s ease-in-out;
+  }
+
+  .link.inline:hover {
+    color: var(--primary);
+    background-color: transparent;
+  }
+
+  .link.active {
+    color: var(--primary);
+  }
+  .link.active span {
+    background: var(--textGradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
