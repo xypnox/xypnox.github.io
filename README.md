@@ -5,6 +5,7 @@ This is the source of [xypnox.com](https://xypnox.com)
 - Redone in [astro](https://astro.build/) 
 - Now comes with blag
   Previously it was maintained as a separate zola built blog but has now been integrated into the astro site.
+- Has some design stuff too!
 
 
 ## Commands
