@@ -55,18 +55,12 @@ import LatestBlog from "../components/latestBlog.astro";
     </div>
 
     <div class="blog-and-links">
-      <Container linkTitle="/blag" title="Blag">
-        <LatestBlog />
-      </Container>
+      <LatestBlog />
 
-      <Container icon={icons.links}>
-        <Links />
-      </Container>
+      <Links />
+      <p class="collaborate">Let's collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
 
-      <Container title="Collaborate @">
-        <a href="https://x5z.studio">x5z.studio</a>
-      </Container>
-      <p>PSA: The navbar is at the bottom & the content is 100% human generated.</p>
+      <em>PSA: The navbar is at the bottom & the content is 100% human generated.</em>
     </div>
   </main>
 </Layout>
@@ -137,5 +131,22 @@ import LatestBlog from "../components/latestBlog.astro";
     color: var(--primary-color);
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .collaborate {
+    width: 100%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    gap: 1rem;
+  }
+  .collaborate a {
+    max-width: max-content;
+    background: none;
+    font-size: var(--font-size-lg);
+    text-decoration: underline;
+    padding: 0;
   }
 </style>

@@ -35,6 +35,8 @@ export const themeVars = {
   text: '#919DCF',
   fadeText: '#919DCF80',
 
+  cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.5)',
+
   bold: '#BB6170',
   italic: '#BB6170',
   strikethrough: '#ff5370',

@@ -4,6 +4,7 @@ import { Icon } from "astro-icon";
 ---
 
 <div class="links">
+  <div>Other Places</div>
   {
     links.map((link) => (
       <a class="link" rel="me" href={link.url}>
@@ -20,21 +21,26 @@ import { Icon } from "astro-icon";
   .links {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1rem 2rem;
     width: 100%;
   }
   .link {
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
     color: var(--text);
     font-size: 1rem;
     transition: color 0.5s ease;
-    width: max-content;
+
+    border: 1px solid var(--border);
+    background: var(--background);
+    box-shadow: var(--cardShadow);
+
+    padding: 0.5rem;
+    border-radius: 0.5rem;
   }
   .link:hover {
     color: var(--primary-color);

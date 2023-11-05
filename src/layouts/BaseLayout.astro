@@ -52,8 +52,8 @@ const { title, showLoading } = Astro.props;
     {!( showLoading === false ) && (
       <Loading />
     )}
-    <slot />
     <Navbar />
+    <slot />
   </body>
 </html>
 <style is:global define:vars={themeCssVars}>

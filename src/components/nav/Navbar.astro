@@ -42,6 +42,7 @@ import '../../scripts/menu'
     width: 100%;
     margin: 0 auto;
     gap: 1rem;
+    z-index: 1000;
   }
 
   @keyframes borderFlash {
@@ -66,9 +67,10 @@ import '../../scripts/menu'
     display: flex;
     align-items: center;
     border-radius: 1rem;
-    background: linear-gradient(to bottom, var(--surface), var(--background));
+    background: var(--background);
     padding: 0 0.5rem;
     border: 1px solid var(--border);
+    box-shadow: var(--cardShadow);
     transition: all 0.2s ease-in-out;
     animation: borderFlash 3s;
   }
