@@ -28,6 +28,7 @@ All commands are run from the root of the project, from a terminal:
 
 - `css variables`
   We have a postcss check that throws warnings when a css variable is encountered that has either not been declared in the style tag or is not present in the global theme variables.
+  The check script does not reload on theme.ts changes. You can run `pnpm run convert` independently to recreate the `cssVariables.json` file to check the variables correctly.
 
 # Dependencies
 
