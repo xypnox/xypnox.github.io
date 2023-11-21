@@ -1,11 +1,13 @@
 {
   "name": "com",
-  "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "pnpm run convert && pnpm run astro:dev",
     "start": "astro dev",
-    "build": "astro build",
+    "convert": "tsc -p tsconfig-dev.json && node dist/buildChecks/cssJsonExport.js",
+    "build": "pnpm run convert && pnpm run astro:build",
+    "astro:build": "astro build",
+    "astro:dev": "astro dev",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -24,6 +26,7 @@
     "solid-styled-components": "^0.28.5"
   },
   "devDependencies": {
+    "@types/node": "^20.9.3",
     "typescript": "^5.2.2"
   }
 }

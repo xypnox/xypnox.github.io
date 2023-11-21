@@ -40,6 +40,13 @@ export const themeVars = {
   bold: '#BB6170',
   italic: '#BB6170',
   strikethrough: '#ff5370',
+
+  gradient: {
+    'color-1': 'var(--primary-color)',
+    'color-2': 'var(--colors-purple)',
+  },
+
+  'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
 }
 
 export type ThemeVars = typeof themeVars

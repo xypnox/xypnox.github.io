@@ -86,6 +86,13 @@ const dateFormatOption = {
   }
   <div class="content-wrapper">
     <div class="content">
+      {entry.data.hidden &&
+        <blockquote>
+          <p><strong>This is a Hidden Post</strong></p>
+          <p>If you have landed here, wow!</p>
+          <p>This may also be a draft post, and if you want to share feedback, reachout to me!</p>
+        </blockquote>
+      }
       <Content />
       <div class="end-marker">
         ❦

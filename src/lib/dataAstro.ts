@@ -38,18 +38,18 @@ const sortedTags = allTags.sort((a, b) => tagCounts[b] - tagCounts[a])
 
 const topFiveTags = sortedTags.slice(0, 5)
 
-console.log(
-  {
-    blogEntriesAll,
-    blogEntriesFiltered,
-    blogEntries,
-    allTags,
-    latestBlog,
-    tagCounts,
-    topFiveTags,
-    sortedTags
-  }
-)
+// console.log(
+//   {
+//     blogEntriesAll,
+//     blogEntriesFiltered,
+//     blogEntries,
+//     allTags,
+//     latestBlog,
+//     tagCounts,
+//     topFiveTags,
+//     sortedTags
+//   }
+// )
 
 const staticPaths = blogEntries
   .reduce((acc, blogPostEntry) => {

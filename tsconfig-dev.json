@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/buildChecks/*.ts",
+    "src/theme.ts",
+    "src/lib/objects.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
