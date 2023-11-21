@@ -7,23 +7,26 @@ interface Props {
   linkTitle?: string;
   icon?: string;
   image?: string;
+  color?: string
   links?: {
     title: string;
     href: string;
   }[];
 }
-const { title, icon, image, links, linkTitle } = Astro.props;
+const { title, icon, image, links, linkTitle, color } = Astro.props;
 ---
 
 <div class={ "container-wrapper" + (image ? " with-image" : "") }>
   {image && <img src={image} alt={title} />}
-  {title && 
-    <h1>
-      {icon && <Icon name={icon} />}
-      {linkTitle ? <a class="text-gradient-fx" href={linkTitle}> {title}</a> : title}
-    </h1>
-  }
-  <slot name="description" />
+  <div class="info">
+    {title && 
+      <h1>
+        {icon && <Icon name={icon} />}
+        {linkTitle ? <a class="text-gradient-fx" href={linkTitle}> {title}</a> : title}
+      </h1>
+    }
+    <slot name="description" />
+  </div>
   <div class="container-content">
       {links && links.map((link) => (
         <a class="container-link" href={link.href}>
@@ -37,28 +40,36 @@ const { title, icon, image, links, linkTitle } = Astro.props;
   <slot name="end" />
 </div>
 
-<style>
+<style define:vars={{ color: color }}>
   .container-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1em;
     width: 100%;
-    padding: 2rem;
-    background-color: var(--background);
+    padding: 1em;
+    background: linear-gradient(45deg, var(--background), var(--surface));
+    background-size: 200%;
     border: 1px solid var(--border);
     box-shadow: var(--cardShadow);
-    border-radius: 2rem;
+    border-radius: 2em;
   }
 
   .container-wrapper :global(p) {
     margin: 0;
   }
 
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    padding: 1em;
+  }
   h1 {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 0.5rem;
+    gap: 0.5em;
     margin: 0;
     width: 100%;
     color: var(--text);
@@ -85,30 +96,32 @@ const { title, icon, image, links, linkTitle } = Astro.props;
 
   .container-link {
     display: flex;
-    padding: 0.5rem;
-    justify-content: center;
-    text-decoration: none;
+    padding: 0.5rem 1rem;
     width: 100%;
     color: var(--text);
-    background: var(--surface);
-    font-size: var(--font-size-base);
+    text-decoration-color: var(--color);
+    font-size: var(--font-size-md);
     border-radius: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+    transition: all 0.5s ease-in-out;
+  }
+  .container-link span {
+    transition: all 0.5s ease-in-out;
   }
 
   .container-link:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease-in-out;
+    border-color: var(--border);
+    transform-origin: left;
+  }
+  .container-link:active {
+    transform: scale(0.9);
   }
 
   .container-link:hover span {
-    background: var(--animated-gradient);
-    background-size: 200% 200%;
-    animation: backgroundMove 3s ease infinite;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    transition: all 0.1s ease-in-out;
+    transform: scale(1.1);
+    color: var(--color);
   }
 
   .with-image {
