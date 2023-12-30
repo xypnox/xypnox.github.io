@@ -101,8 +101,8 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     color: var(--text);
     text-decoration-color: var(--color);
     font-size: var(--font-size-md);
-    border-radius: 1rem;
-    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
     transition: all 0.5s ease-in-out;
   }
   .container-link span {
@@ -111,7 +111,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
 
   .container-link:hover {
     transition: all 0.1s ease-in-out;
-    border-color: var(--border);
+    border-color: var(--color);
     transform-origin: left;
   }
   .container-link:active {
@@ -121,7 +121,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   .container-link:hover span {
     transition: all 0.1s ease-in-out;
     transform: scale(1.1);
-    color: var(--color);
+    /* color: var(--color); */
   }
 
   .with-image {
