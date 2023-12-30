@@ -1,0 +1,67 @@
+---
+
+const year = new Date().getFullYear();
+
+const links = [
+  {
+    name: "xypnox",
+    link: "/",
+  },
+  {
+    name: "Blag",
+    link: "/blag",
+  },
+  {
+    name: "Rss",
+    link: "/blag/rss.xml",
+  }
+]
+---
+
+<footer>
+    <div class="links">
+      {links.map((link) => (
+        <a href={link.link} target="_blank">{link.name}</a>
+      ))}
+    </div>
+    <p>
+      <em>The content is 100% human generated.</em>
+    </p>
+    <p>© {year}</p>
+    <div class="navbar-helper">
+      And this is the navbar
+    </div>
+</footer>
+
+<style>
+  footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4em 0 0;
+    gap: 1rem;
+    padding: 4rem 0 0;
+    border-top: 2px dashed var(--border);
+    /* background: linear-gradient(45deg,var(--background), var(--surface)) */
+  }
+  footer p {
+    margin: 0;
+  }
+  .links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .navbar-helper {
+    width: 100%;
+    margin-top: 2rem;
+    height: 2.9rem;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    border-radius: 1rem;
+    color: var(--fadeText);
+    border: 2px dashed var(--border);
+  }
+</style>

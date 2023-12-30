@@ -1,0 +1,220 @@
+---
+title: "Dark Modes"
+description: "A discussion about the dark modes"
+date: 2023-11-22
+
+# coverImage: "./test-social3.webp"
+# coverAlt: "Some text for describing the cover image"
+categories: ["sample"]
+tags: ["design", "dev"]
+
+hidden: true
+---
+
+import { ThemePreview, themePreviewElementConfigs }  from '../../../components/themePreview'
+
+{/* The difficulties faced in making a dark mode. */}
+
+{/* I have a multitude of thoughts about theming, styling, modes etc, this post is about the difficulties usually encountered in implementing a dark mode. */}
+
+With white paper and black ink
+you save ink, 
+with LCDs you save nothing,
+and with OLEDs,
+you waste light the more there is white.
+
+As we moved from paper to pixel, the black on white became standard after the garish green on black of the terminals of the old.
+
+Dark mode is _a different stylistic version of the same interface_, and uses lighter colors on top of darker background. There should be _no change_ in layout. Any changes that could be done to the layout should work in both modes.
+
+Some things remained dark, some turned towards light like the web browser with the default white background. And the bright themes of the operating systems. 
+
+Dark mode has now become a staple in all forms of software. Even government websites have dark modes now, and I prefer them over white however ugly they may be. _But does everything need a dark mode? And can everything be turned dark?_
+
+# Is it needed?
+
+Dark mode is cool'n'all but does it make sense in your situation? The question we must understand is _whether mode switching is necessary or not_. Whether a single mode, light or dark, makes more sense than adding the option to switch modes.
+
+{/* The point of having modes and the ability to switch between them is directly dependent on the content that is being presented. Not everything needs to be switchable, between light and the dark.*/}
+
+Whether one should have a dark mode depends on what one wants to show, i.e. it depends on the _content_ being shown. And to whom it is being shown to, and for what purpose. (The _context_)
+
+{/* Power savings aside, */}
+I consider the best place for dark mode are _frequently used_ applications, and those that put focus on the content more. Applications are opened more frequently and people spend more time with their interface than normal websites. _Complex editors_ - both text and graphic - want to focus on the thing being edited rather than the editor itself. Moreover larger color variations can be used with code highlights in dark mode.
+
+Moreover, for applications _usability trumps any branding specific design implementations_. Brands, companies, etc are more targeted towards conveying a distinct and unique identity, where uniqueness can sometimes trump usability (in the sense of not following the standard layouts). And that brand is represented on their digital interfaces of websites and apps.
+
+If more people who use the software prefer the dark mode, think whether it is necessary to have a light mode. How about just the dark mode? 
+
+There are arguments from research about how the black on white background (light mode) is easier on the eyes for reading, but in my case, I have developed a fondness with dark mode after several years of usage. And hence I like to interact with interfaces in dark mode.
+
+---
+
+# The conversion
+
+Once you have reached the decision, after considering the content and the context, that a dark mode is indeed what you want, you can use one of the most common methods of converting a light mode to a dark mode. Simply _switch the background and text colors_.
+
+<ThemePreview
+  client:load
+  {...themePreviewElementConfigs.minimal}
+/>
+
+And a direct reversal results in
+
+<ThemePreview
+  client:load
+  {...themePreviewElementConfigs.converted}
+/>
+
+
+While this serves for basic text only content, there are various elements that don't directly translate into a usable dark mode. 
+
+Lets add a bit of color!
+
+<ThemePreview
+  client:load
+  {...themePreviewElementConfigs.complex}
+/>
+
+## Darker shades
+
+<ThemePreview
+  client:load
+  {...themePreviewElementConfigs.complex}
+/>
+
+### The ugly gray
+
+Yes I call all dark mode themes that are monochrome and use a grey background ugly. And I will die on this hill. Especially the ones of the old material design (pre v3) days.
+
+https://m2.material.io/design/color/dark-theme.html#properties
+
+https://m3.material.io/styles/color/choosing-a-scheme
+
+And I think these gray themes are what have given the dark mode the aura of unsaturated monochromatic soulless interfaces. As if colors are meant to be reserved for the light mode.
+
+## The code block
+
+What color mode should the code block be in?
+
+Should light mode and dark mode both have different color schemes? What if your light mode already has a dark code highlighting? Does this mean we add a light code highlighting theme for dark mode?
+
+## Contrasty designer
+
+There are designs for software (websites, products) that use different modes (dark/light) in the same interface to distinguish a sidebar/navigation/sections of a page.
+
+Ex: Sidebar with black back and white text beside a product dashboard, a website with dark and light sections in the landing page.
+
+While this is effective to some degree. It is neither dark nor light. And the contrast is needless in most cases. Why would you use a different mode when a border or a slightly different shade of background could have achieved the same? Is it because of a "brand identity"? But even then, what kind of brand is both dark and light and that at the same time?
+
+## Shady Shadows
+
+Shadows become extremely hard to see in dark modes. More so if the background is completely black.
+
+## Only prefers color scheme
+
+1. Perhaps if you have managed to make the dark theme, tying it only to the prefers color scheme option feels kinda bad. Having the ability is cool, but the inability for the user to select the theme they want instead of forcing them to switch the theme for the entire system is kinda bad.
+
+
+---
+
+# Living in the dark mode
+
+- Dark Reader extension converts light mode websites to dark mode
+- Stylus allows setting custom stylesheets on specific websites, in combination with websites that have a good css variable declaration, a simple changes can be made that will be retained (hopefully) till the next overhaul.
+
+---
+
+# Some good things
+
+## Colors that were lost
+
+Some colors look bad on white background if used as text. Yellow is a prime example. But in the world of dark mode, yellow literally shines!
+
+// Add example yellow calry website
+
+## CSS variables for theming
+
+When I dwelled in the world of react and styled components, I used their theme providers which functioned as:
+
+```tsx
+// Define what props.theme will look like
+const theme = {
+  main: "mediumseagreen"
+};
+
+// Color the border and text with theme.main
+const Button = styled.button`
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`;
+
+component(
+  // Use theme provider on root or somewhere as a parent
+  <div>
+    <ThemeProvider theme={theme}>
+      <Button>Themed</Button>
+    </ThemeProvider>
+  </div>
+);
+```
+
+But when the themes changed, all the css was recalculated and generated again, which was suboptimal. Moreover this strategy stops working once you move out of the react ecosystem. The better way of theming is to use css variables.
+
+We define the variables ones for each theme:
+
+```css
+:root {
+  --primary: mediumseagreen;
+}
+.dark {
+  --primary: skyblue;
+}
+```
+
+And then we use those variables in the css styles:
+
+```css
+button {
+  color: var(--primary);
+}
+```
+
+We can add simple code to add a .dark class to our body/html element to toggle between the themes. None of the styles are recomputed, and this can be used across frameworks or even without any framework. Moreover you can always override the theme variables in smaller contexts:
+
+```html
+<div class="special">
+  <button>Hello</button>
+</div>
+
+<style>
+  .special {
+    --primary: red;
+  }
+</style>
+```
+
+## A step further via objects
+
+But these do not have type safety. When you write css and later refactor any of the theme variables, the older ones are left dangling. While fallbacks are nice, refactoring still requires manually scouring for the older ones are rewriting them again. Moreover these errors can not be found in the build step and will easily mess up your stylesheets. 
+
+I have found a promising solution. Which has type safety when using css-in-js. But the basic structure remains same.
+
+The way I organize the themes is to declare the variables as a js object.
+
+```ts
+const theme = {
+}
+```
+
+---
+
+# Resources
+
+
+- https://tonsky.me/
+  Cool dark mode with round light where the mouse is.
+  Don't know about accessibility but emulates the torchlight under a quilt nicely.
+
+
+

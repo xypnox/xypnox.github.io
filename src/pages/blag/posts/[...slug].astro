@@ -210,6 +210,14 @@ const dateFormatOption = {
     color: var(--fadeText);
   }
 
+  .content :global(p) {
+    text-wrap: stable;
+  }
+
+  .content :global(p) :global(em) {
+    color: var(--italic);
+  }
+
   .end-marker {
     width: 100%;
     display: flex;

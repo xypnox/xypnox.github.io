@@ -60,17 +60,18 @@ import LatestBlog from "../components/latestBlog.astro";
       <LatestBlog />
 
       <Links />
-      <p class="collaborate">Let's collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
+      <div class="collaborate">
+        <p>Let's collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
+      </div>
 
-      <em>PSA: The navbar is at the bottom & the content is 100% human generated.</em>
     </div>
   </main>
 </Layout>
 
 <style>
   html {
-    background-color: var(--background);
-    background-image: url("/back.svg");
+    /* background-color: var(--background); */
+    /* background-image: url("/back.svg"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -137,15 +138,15 @@ import LatestBlog from "../components/latestBlog.astro";
 
   .collaborate {
     width: 100%;
-    font-weight: bold;
+    padding-top: 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     gap: 1rem;
   }
   .collaborate a {
-    max-width: max-content;
+    display: inline;
     background: none;
     font-size: var(--font-size-xm);
     text-decoration: underline;

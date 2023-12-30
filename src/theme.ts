@@ -13,6 +13,7 @@ export const themeVars = {
       xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
     }
   },
+
   primary: {
     color: '#ff5370',
     contrast: '#0f111a',

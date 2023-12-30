@@ -11,7 +11,9 @@ import BlogGrid from "../../components/blogGrid.astro";
     <header>
       <Blag />
       <p>
-        I write about things I learn, things I make, and things I think about.
+        I write about things I learn, things I make, and things I think about. <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+        RSS
+      </a>
       </p>
     </header>
 
@@ -36,7 +38,7 @@ import BlogGrid from "../../components/blogGrid.astro";
 
   .blog-index header :global(svg) {
     width: 100%;
-    max-width: 400px;
+    max-width: 200px;
     height: auto;
   }
 

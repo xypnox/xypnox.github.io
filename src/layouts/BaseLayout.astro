@@ -1,6 +1,7 @@
 ---
 import { themeCssVars } from "../theme";
 import Navbar from "../components/nav/Navbar.astro";
+import Footer from "../components/footer.astro";
 import "../styles/content.css";
 import Loading from "../components/Loading.astro";
 
@@ -54,6 +55,7 @@ const { title, showLoading } = Astro.props;
     )}
     <Navbar />
     <slot />
+    <Footer />
   </body>
 </html>
 <style is:global define:vars={themeCssVars}>
@@ -72,8 +74,7 @@ const { title, showLoading } = Astro.props;
   body {
     margin: 0;
     padding: 1rem;
-    padding-bottom: 8rem;
-    background-image: url("/nnnoise.svg");
+    /* background-image: url("/nnnoise.svg"); */
     min-height: 100vh;
   }
 
