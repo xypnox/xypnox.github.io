@@ -11,17 +11,34 @@ tags: ["design", "dev"]
 hidden: true
 ---
 
-import { ThemePreview, themePreviewElementConfigs }  from '../../../components/themePreview'
+import { ThemePreview, ThemePreviewSplits, themePreviewElementConfigs, themePreviewSplitsConfigs }  from '../../../components/themePreview'
 
 {/* The difficulties faced in making a dark mode. */}
 
 {/* I have a multitude of thoughts about theming, styling, modes etc, this post is about the difficulties usually encountered in implementing a dark mode. */}
 
-With white paper and black ink
-you save ink, 
-with LCDs you save nothing,
-and with OLEDs,
-you waste light the more there is white.
+<ThemePreviewSplits
+  client:visible
+  vars={[{
+    txt: '#172d60',
+    bg: '#d3c4a0',
+  },{
+    txt: '#d3c4a0',
+    bg: '#0d1d35',
+  }]}
+  elements={[
+    [
+      { type: 'h2', text: 'With white paper and black ink' },
+      { type: 'text', text: 'You save ink' },
+      { type: 'text', text: 'with LCDs you save nothing' },
+    ],
+    [
+      { type: 'h1', text: 'With OLEDs' },
+      { type: 'h2', text: 'you waste light the more there is white' }
+    ],
+  ]}
+  showInfo={false}
+/>
 
 As we moved from paper to pixel, the black on white became standard after the garish green on black of the terminals of the old.
 
@@ -54,34 +71,84 @@ There are arguments from research about how the black on white background (light
 
 Once you have reached the decision, after considering the content and the context, that a dark mode is indeed what you want, you can use one of the most common methods of converting a light mode to a dark mode. Simply _switch the background and text colors_.
 
-<ThemePreview
-  client:load
-  {...themePreviewElementConfigs.minimal}
+<ThemePreviewSplits
+  client:visible
+  {...themePreviewSplitsConfigs.bnw}
 />
 
-And a direct reversal results in
+While this serves for basic text only content, there are various elements that don't directly translate into a usable dark mode.
 
-<ThemePreview
-  client:load
-  {...themePreviewElementConfigs.converted}
+## Relative colors
+
+Although an explanation about how the perceived colors depend on the background is not needed, here is a fine example:
+
+<ThemePreviewSplits
+  client:visible
+  vars={[{
+    txt: '#333',
+    surface: '#fff',
+    primary: {
+      color: '#447DEB',
+      over: '#fff'
+    },
+    bg: '#EBEDF2',
+  },{
+    txt: '#eee',
+    surface: '#222',
+    primary: {
+      color: '#447DEB',
+      over: '#fff'
+    },
+    bg: '#0f0f0f',
+  },{
+    txt: '#eee',
+    surface: '#222',
+    primary: {
+      color: '#2A5EC3',
+      over: '#fff'
+    },
+    bg: '#0f0f0f',
+  }
+  ]}
+  elements={[
+    [
+      { type: 'text', text: 'Notice the color blue' },
+      { type: 'button', text: 'Bluuue' },
+      { type: 'card', text: 'This is our benchmark' },
+    ],
+    [
+      { type: 'text', text: 'Now a direct conversion' },
+      { type: 'button', text: 'Bluuue' },
+      { type: 'card', text: 'See how this doesn\'t match' },
+      { type: 'text', text: 'Even though its the exact same hex code.' },
+    ],
+    [
+      { type: 'text', text: 'A little adjustment' },
+      { type: 'button', text: 'Bluuue' },
+      { type: 'card', text: 'To the color makes it match the color in light mode.' },
+    ],
+  ]}
+  showInfo={false}
 />
 
 
-While this serves for basic text only content, there are various elements that don't directly translate into a usable dark mode. 
 
-Lets add a bit of color!
-
-<ThemePreview
-  client:load
-  {...themePreviewElementConfigs.complex}
-/>
 
 ## Darker shades
 
-<ThemePreview
-  client:load
-  {...themePreviewElementConfigs.complex}
+Another dilemma arises when we have a background and a card, there are several ways to differentiate the background with the foreground. In the light mode, we can enjoy a variety of styles to depict boxes of content.
+
+<ThemePreviewSplits
+  client:visible
+  {...themePreviewSplitsConfigs.lightCard}
 />
+
+<ThemePreviewSplits
+  client:visible
+  {...themePreviewSplitsConfigs.card}
+/>
+
+
 
 ### The ugly gray
 

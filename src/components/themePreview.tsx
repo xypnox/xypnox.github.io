@@ -1,61 +1,94 @@
-import { For, Show, type ParentProps, } from "solid-js"
+import { For, Show, type ParentProps, createSignal, type Accessor } from "solid-js"
 import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
 import { flattenObject } from "../lib/objects"
-
+import { Tabs } from "./tabs"
 
 interface UIElement {
   type: string
   text: string
 }
 
-interface ThemePreviewProps extends ParentProps {
-  initialElements: UIElement[]
-  vars?: Themevars
-}
-
-
 interface Themevars {
   txt: string
   bg: string
-  primary?: string
+  primary?: {
+    color: string
+    over: string
+  }
   surface?: string
-  border?: string
-  shadow?: string
+  cardBorder?: string
+  cardShadow?: string
+}
+
+interface ThemePreviewProps extends ParentProps {
+  elements: UIElement[]
+  vars: Themevars
+  /** Needed if you want to show the info tab and are not using the ThemePreviewSplits component */
+  showInfo?: boolean
 }
 
 const lightMode: Themevars = {
-  txt: "#333",
+  txt: "#000",
   bg: "#fff",
-  primary: "#000",
   surface: "#f0f0f0",
-  border: "#333",
-  shadow: "#000",
 }
 
 const blackModeVars: Themevars = {
   txt: "#fff",
   bg: "#000",
-  primary: "#fff",
   surface: "#222",
-  border: "#fff",
 }
 
-const lightModeColorVars: Themevars = {
+const darkModeColorVars: Themevars = {
   txt: "#B5C0DB",
   bg: "#1A1E27",
-  primary: "#2A5EC3",
   surface: "#303748",
-  border: "#fff",
+}
+
+const darkModeShadeColorVars: Themevars = {
+  txt: "#B5C0DB",
+  bg: "#303748",
+  surface: "#1A1E27",
+}
+
+const lightModeCardVars: Themevars = {
+  txt: "#000",
+  bg: "#f0f0f0",
+  surface: "#fff",
+}
+
+const lightModeCardFlippedVars: Themevars = {
+  txt: "#000",
+  bg: "#fff",
+  surface: "#f0f0f0",
+}
+const lightModeShadowCardVars: Themevars = {
+  txt: "#000",
+  bg: "#f0f0f0",
+  surface: "#fff",
+  cardShadow: "0px 8px 16px -8px rgba(0,0,0,0.2)",
+}
+
+const lightModeCardBorderVars: Themevars = {
+  txt: "#000",
+  bg: "#f0f0f0",
+  surface: "#fff",
+  cardBorder: "1px solid #ccc",
 }
 
 export const themePreviewConfigVars = {
   lightMode,
   blackModeVars,
-  lightModeColorVars,
+  darkModeColorVars,
+  darkModeShadeColorVars,
+  lightModeCardVars,
+  lightModeCardFlippedVars,
+  lightModeShadowCardVars,
+  lightModeCardBorderVars,
 }
 
-const minimalElements = [
+const minimalElements: UIElement[] = [
   {
     type: "h1",
     text: "Black & White",
@@ -66,56 +99,72 @@ const minimalElements = [
   },
 ]
 
-const complexElements = [
+const cardElements: UIElement[] = [
   {
     type: "h2",
-    text: "The complexities of life",
-  },
-  {
-    type: "text",
-    text: "While it is indeed true that life is hard as evidenced by punching the ground, although it is not recommeded to do so yourself, the happiness gained with living continues to write this...."
+    text: "disCarded",
   },
   {
     type: "card",
-    text: "There are various uses of a card component. It can be used to display a product, a blog post, a comment, a tweet, a profile, or anything that you can think of."
+    text: "While it is indeed true that life is hard as evidenced by punching the ground ...."
   },
-  {
-    type: "button",
-    text: "Hello World",
-  }
 ]
 
-export const themePreviewElementConfigs = {
+export const themePreviewElementConfigs: Record<string, ThemePreviewProps> = {
   minimal: {
-    initialElements: minimalElements,
+    elements: minimalElements,
+    vars: themePreviewConfigVars.lightMode,
   },
   converted: {
-    initialElements: minimalElements,
+    elements: minimalElements,
     vars: themePreviewConfigVars.blackModeVars,
   },
   complex: {
-    initialElements: complexElements,
-    vars: themePreviewConfigVars.lightModeColorVars,
+    elements: cardElements,
+    vars: themePreviewConfigVars.darkModeColorVars,
+  },
+}
+
+export const themePreviewSplitsConfigs = {
+  bnw: {
+    elements: minimalElements,
+    vars: [themePreviewConfigVars.lightMode, themePreviewConfigVars.blackModeVars],
+  },
+  card: {
+    elements: cardElements,
+    vars: [themePreviewConfigVars.darkModeColorVars, themePreviewConfigVars.darkModeShadeColorVars],
+  },
+  lightCard: {
+    elements: cardElements,
+    vars: [
+      themePreviewConfigVars.lightModeShadowCardVars,
+      themePreviewConfigVars.lightModeCardVars,
+      themePreviewConfigVars.lightModeCardFlippedVars,
+      themePreviewConfigVars.lightModeCardBorderVars,
+    ],
   }
 }
+
 
 const Container = styled("div")`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 100%;
+  font-size: ${theme.font.size.sm};
 `
 
 const Column = styled("div")`
   width: 100%;
   border-radius: 0.25rem;
-  background-color: var(--bg);
+  background-color: var(--preview-bg);
   border-radius: 0.5rem;
-  color: var(--txt);
+  color: var(--preview-txt);
   font-family: ${theme.font.family};
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
+  padding: 1.5rem;
   width: 100%;
 
   * {
@@ -132,13 +181,13 @@ const GridItem = styled("div")`
 
 const Text = styled("div")`
   width: 100%;
-  color: var(--txt);
+  color: var(--preview-txt);
   border-radius: 0.5rem;
 `
 
 const H1 = styled("div")`
   width: 100%;
-  color: var(--txt);
+  color: var(--preview-txt);
   border-radius: 0.5rem;
   font-size: 2rem;
   margin: 0.5rem 0 0;
@@ -146,7 +195,7 @@ const H1 = styled("div")`
 
 const H2 = styled("div")`
   width: 100%;
-  color: var(--txt);
+  color: var(--preview-txt);
   border-radius: 0.5rem;
   font-size: 1.5rem;
   margin: 0.5rem 0 0;
@@ -158,8 +207,8 @@ const Button = styled("button")`
   font-size: 1rem;
   padding: 0.5rem 1rem;
   font-family: ${theme.font.family};
-  color: var(--bg);
-  background-color: var(--primary);
+  color: var(--preview-primary-over);
+  background-color: var(--preview-primary-color);
   border: none;
   cursor: pointer;
 `
@@ -167,23 +216,176 @@ const Button = styled("button")`
 const Card = styled("div")`
   margin: 1rem 0;
   border-radius: 0.5rem;
-  background-color: var(--surface);
+  background-color: var(--preview-surface);
   color: var(--txt);
   padding: 1rem;
+  box-shadow: var(--preview-cardShadow);
+  border: var(--preview-cardBorder, 1px solid transparent);
 `
 
+const ThemeInfoWrapper = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: ${theme.font.family};
+  button {
+    font-family: ${theme.font.family};
+  }
+`
+
+const Content = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+`
+
+
+const ColorSwatch = styled("div")`
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: ${theme.surface};
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: ${theme.font.size.sm};
+
+  span:nth-child(3) {
+    color: ${theme.fadeText};
+  }
+`
+
+const ColorPreview = styled("div")`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.33rem;
+  background-color: var(--color);
+`
+
+const ColorSwatches = styled("div")`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`
+
+const InfoHeaderWrapper = styled("div")`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  /* justify-content: center; */
+`
+
+const InfoButton = styled(Button)`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background-color: ${theme.surface};
+  color: ${theme.fadeText};
+  font-size: ${theme.font.size.sm};
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: ${theme.primary.color};
+  }
+`
+
+const ThemeInfoContent = (props: {
+  currentTab: Accessor<number>
+} & ThemePreviewProps) => {
+  const flattenedVars = () => flattenObject(props.vars, (keys, value) => [
+    keys.join("-"),
+    value,
+  ]);
+  return (
+    <Content>
+      <Show when={props.currentTab() === 0}>
+        <ColorSwatches>
+          <For each={Object.entries(flattenedVars())}>
+            {(entry) => (
+              <ColorSwatch>
+                <ColorPreview style={{ "--color": entry[1] }} />
+                <span>{entry[1]}</span>
+                <span>{entry[0]}</span>
+              </ColorSwatch>
+            )}
+          </For>
+        </ColorSwatches>
+      </Show>
+
+      <Show when={props.currentTab() === 1}>
+        <ColorSwatches>
+          <For each={props.elements}>
+            {(entry) => (
+              <ColorSwatch>
+                <span>{entry.type}</span>
+              </ColorSwatch>
+            )}
+          </For>
+        </ColorSwatches>
+      </Show>
+
+      <Show when={props.currentTab() === 2}>
+        <p>Typography</p>
+        <div>WIP</div>
+      </Show>
+    </Content>
+  )
+}
+
+/**
+ * Shows the theme info for a single theme preview,
+ * ideal to show beside a single theme preview
+ * can be hidden by clicking the info button
+ */
+const ThemeInfo = (props: ThemePreviewProps) => {
+  const [showInfo, setShowInfo] = createSignal(false);
+  const [currentTab, setCurrentTab] = createSignal(0);
+
+  return (
+    <ThemeInfoWrapper>
+      <InfoHeaderWrapper>
+        <InfoButton onClick={() => setShowInfo(!showInfo())}>
+          <iconify-icon icon="ph:palette" />
+          Info
+        </InfoButton>
+        <Show when={showInfo()}>
+          <Tabs
+            tabs={[
+              { name: "Colors", },
+              { name: "Components", },
+            ]}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          />
+        </Show>
+      </InfoHeaderWrapper>
+
+      <Show when={showInfo()}>
+        <ThemeInfoContent currentTab={currentTab} {...props} />
+      </Show>
+
+    </ThemeInfoWrapper>
+  )
+}
+
+// Add type reference in comments
+/**
+ * Shows a single theme preview
+ * Requires theme vars: `Themevars`
+ */
 export const ThemePreview = (props: ThemePreviewProps) => {
   const themeCssVars = flattenObject(props.vars ?? lightMode, (keys, value) => [
-    `--${keys.join("-")}`,
+    `--preview-${keys.join("-")}`,
     value,
   ]);
 
-  console.log({ themeCssVars, initialVars: lightMode })
+  // console.log({ themeCssVars, initialVars: lightMode })
 
   return (
     <Container>
       <Column style={{ ...themeCssVars }}>
-        <For each={props.initialElements ?? themePreviewElementConfigs.minimal}>
+        <For each={props.elements ?? themePreviewElementConfigs.minimal}>
           {(element) => (
             <GridItem>
               <Show when={element.type === "text"}>
@@ -205,7 +407,116 @@ export const ThemePreview = (props: ThemePreviewProps) => {
           )}
         </For>
       </Column>
+      <Show when={props.showInfo === undefined || props.showInfo}>
+        <ThemeInfo {...props} />
+      </Show>
       {props.children}
+    </Container>
+  )
+}
+
+const SplitContainer = styled("div")`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+`
+
+const SplitContent = styled("div")`
+  @media (min-width: 600px) {
+    max-width: 50%;
+  }
+  min-width: min(50%, 300px);
+  height: fit-content;
+  flex-grow: 1;
+  flex-basis: 0;
+  outline-offset: 4px;
+
+  &:hover {
+    outline: 2px solid ${theme.fadeText};
+  }
+
+  border-radius: 0.5rem;
+
+  &.active {
+    outline: 2px solid ${theme.primary.color};
+  }
+`
+
+interface ThemePreviewSplitsProps extends ParentProps {
+  elements: UIElement[] | UIElement[][]
+  vars: Themevars[]
+}
+
+export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
+  const [currentTab, setCurrentTab] = createSignal(0);
+  const [currentPreview, setCurrentPreview] = createSignal(0);
+  const [showInfo, setShowInfo] = createSignal(false);
+
+  const initialElements = (index: number): UIElement[] => {
+    if (Array.isArray(props.elements[0])) {
+      return props.elements[index] as UIElement[];
+    }
+    return props.elements as UIElement[];
+  }
+
+  return (
+    <Container style={{
+      margin: "1rem 0",
+    }}>
+      <SplitContainer>
+        <For each={props.vars ?? [lightMode, blackModeVars]}>
+          {(vars, index) => (
+            <SplitContent
+              classList={{
+                active: showInfo() && currentPreview() === index(),
+              }}
+              tabIndex={0}
+              role="button"
+              onClick={() => {
+                setShowInfo(true);
+                setCurrentPreview(index());
+              }}
+            >
+              <ThemePreview
+                elements={initialElements(index())}
+                vars={vars}
+                showInfo={false}
+              />
+            </SplitContent>
+          )}
+        </For>
+      </SplitContainer>
+      <Show when={props.vars.length > 1}>
+        <ThemeInfoWrapper>
+          <InfoHeaderWrapper>
+            <InfoButton onClick={() => setShowInfo(!showInfo())}>
+              <iconify-icon icon="ph:cursor-click" />
+              Inspect
+            </InfoButton>
+            <Show when={showInfo()}>
+              <Tabs
+                tabs={[
+                  { name: "Variables", },
+                  { name: "Components", },
+                ]}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+              />
+            </Show>
+          </InfoHeaderWrapper>
+
+          <Show when={showInfo()}>
+            <ThemeInfoContent currentTab={currentTab}
+              elements={initialElements(currentPreview())}
+              vars={props.vars[currentPreview()]}
+            />
+          </Show>
+
+        </ThemeInfoWrapper>
+
+      </Show>
     </Container>
   )
 }
