@@ -21,9 +21,13 @@ interface Themevars {
   cardShadow?: string
 }
 
-interface ThemePreviewProps extends ParentProps {
+interface Preview {
   elements: UIElement[]
   vars: Themevars
+}
+
+interface ThemePreviewProps extends ParentProps {
+  preview: Preview
   /** Needed if you want to show the info tab and are not using the ThemePreviewSplits component */
   showInfo?: boolean
 }
@@ -101,10 +105,6 @@ const minimalElements: UIElement[] = [
 
 const cardElements: UIElement[] = [
   {
-    type: "h2",
-    text: "disCarded",
-  },
-  {
     type: "card",
     text: "While it is indeed true that life is hard as evidenced by punching the ground ...."
   },
@@ -112,36 +112,36 @@ const cardElements: UIElement[] = [
 
 export const themePreviewElementConfigs: Record<string, ThemePreviewProps> = {
   minimal: {
-    elements: minimalElements,
-    vars: themePreviewConfigVars.lightMode,
+    preview: { elements: minimalElements, vars: themePreviewConfigVars.lightMode, }
   },
   converted: {
-    elements: minimalElements,
-    vars: themePreviewConfigVars.blackModeVars,
+    preview: { elements: minimalElements, vars: themePreviewConfigVars.blackModeVars, }
   },
   complex: {
-    elements: cardElements,
-    vars: themePreviewConfigVars.darkModeColorVars,
+    preview: { elements: cardElements, vars: themePreviewConfigVars.darkModeColorVars, }
   },
 }
 
-export const themePreviewSplitsConfigs = {
+export const themePreviewSplitsConfigs: Record<string, ThemePreviewSplitsProps> = {
   bnw: {
-    elements: minimalElements,
-    vars: [themePreviewConfigVars.lightMode, themePreviewConfigVars.blackModeVars],
+    previews: [
+      { elements: minimalElements, vars: themePreviewConfigVars.lightMode, },
+      { elements: minimalElements, vars: themePreviewConfigVars.blackModeVars, },
+    ]
   },
   card: {
-    elements: cardElements,
-    vars: [themePreviewConfigVars.darkModeColorVars, themePreviewConfigVars.darkModeShadeColorVars],
+    previews: [
+      { elements: cardElements, vars: themePreviewConfigVars.darkModeColorVars, },
+      { elements: cardElements, vars: themePreviewConfigVars.darkModeShadeColorVars, },
+    ],
   },
   lightCard: {
-    elements: cardElements,
-    vars: [
-      themePreviewConfigVars.lightModeShadowCardVars,
-      themePreviewConfigVars.lightModeCardVars,
-      themePreviewConfigVars.lightModeCardFlippedVars,
-      themePreviewConfigVars.lightModeCardBorderVars,
-    ],
+    previews: [
+      { elements: cardElements, vars: themePreviewConfigVars.lightModeShadowCardVars, },
+      { elements: cardElements, vars: themePreviewConfigVars.lightModeCardVars, },
+      { elements: cardElements, vars: themePreviewConfigVars.lightModeCardFlippedVars, },
+      { elements: cardElements, vars: themePreviewConfigVars.lightModeCardBorderVars, },
+    ]
   }
 }
 
@@ -293,7 +293,7 @@ const InfoButton = styled(Button)`
 const ThemeInfoContent = (props: {
   currentTab: Accessor<number>
 } & ThemePreviewProps) => {
-  const flattenedVars = () => flattenObject(props.vars, (keys, value) => [
+  const flattenedVars = () => flattenObject(props.preview.vars, (keys, value) => [
     keys.join("-"),
     value,
   ]);
@@ -315,7 +315,7 @@ const ThemeInfoContent = (props: {
 
       <Show when={props.currentTab() === 1}>
         <ColorSwatches>
-          <For each={props.elements}>
+          <For each={props.preview.elements}>
             {(entry) => (
               <ColorSwatch>
                 <span>{entry.type}</span>
@@ -375,7 +375,7 @@ const ThemeInfo = (props: ThemePreviewProps) => {
  * Requires theme vars: `Themevars`
  */
 export const ThemePreview = (props: ThemePreviewProps) => {
-  const themeCssVars = flattenObject(props.vars ?? lightMode, (keys, value) => [
+  const themeCssVars = flattenObject(props.preview.vars ?? lightMode, (keys, value) => [
     `--preview-${keys.join("-")}`,
     value,
   ]);
@@ -385,7 +385,7 @@ export const ThemePreview = (props: ThemePreviewProps) => {
   return (
     <Container>
       <Column style={{ ...themeCssVars }}>
-        <For each={props.elements ?? themePreviewElementConfigs.minimal}>
+        <For each={props.preview.elements ?? themePreviewElementConfigs.minimal}>
           {(element) => (
             <GridItem>
               <Show when={element.type === "text"}>
@@ -445,8 +445,7 @@ const SplitContent = styled("div")`
 `
 
 interface ThemePreviewSplitsProps extends ParentProps {
-  elements: UIElement[] | UIElement[][]
-  vars: Themevars[]
+  previews: Preview[]
 }
 
 export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
@@ -454,20 +453,13 @@ export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
   const [currentPreview, setCurrentPreview] = createSignal(0);
   const [showInfo, setShowInfo] = createSignal(false);
 
-  const initialElements = (index: number): UIElement[] => {
-    if (Array.isArray(props.elements[0])) {
-      return props.elements[index] as UIElement[];
-    }
-    return props.elements as UIElement[];
-  }
-
   return (
     <Container style={{
       margin: "1rem 0",
     }}>
       <SplitContainer>
-        <For each={props.vars ?? [lightMode, blackModeVars]}>
-          {(vars, index) => (
+        <For each={props.previews}>
+          {(preview, index) => (
             <SplitContent
               classList={{
                 active: showInfo() && currentPreview() === index(),
@@ -480,15 +472,15 @@ export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
               }}
             >
               <ThemePreview
-                elements={initialElements(index())}
-                vars={vars}
+                preview={preview}
                 showInfo={false}
               />
             </SplitContent>
           )}
         </For>
       </SplitContainer>
-      <Show when={props.vars.length > 1}>
+
+      <Show when={props.previews.length > 1}>
         <ThemeInfoWrapper>
           <InfoHeaderWrapper>
             <InfoButton onClick={() => setShowInfo(!showInfo())}>
@@ -509,14 +501,13 @@ export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
 
           <Show when={showInfo()}>
             <ThemeInfoContent currentTab={currentTab}
-              elements={initialElements(currentPreview())}
-              vars={props.vars[currentPreview()]}
+              preview={props.previews[currentPreview()]}
             />
           </Show>
 
         </ThemeInfoWrapper>
-
       </Show>
+
     </Container>
   )
 }

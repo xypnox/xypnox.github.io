@@ -219,6 +219,10 @@ const dateFormatOption = {
     color: var(--italic);
   }
 
+  .content :global(iframe) {
+    margin: 0 0 2rem;
+  }
+
   .end-marker {
     width: 100%;
     display: flex;
@@ -229,8 +233,8 @@ const dateFormatOption = {
     color: var(--fadeText);
     margin: 4rem 0;
     padding: 2rem 0;
-    border-top: 1px dashed var(--fadeText);
-    border-bottom: 1px dashed var(--fadeText);
+    border-top: 2px dashed var(--border);
+    border-bottom: 2px dashed var(--border);
   }
   .end-marker p {
     margin: 0;

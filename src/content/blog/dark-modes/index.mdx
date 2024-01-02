@@ -11,7 +11,7 @@ tags: ["design", "dev"]
 hidden: true
 ---
 
-import { ThemePreview, ThemePreviewSplits, themePreviewElementConfigs, themePreviewSplitsConfigs }  from '../../../components/themePreview'
+import { ThemePreview, ThemePreviewSplits, themePreviewConfigVars, themePreviewElementConfigs, themePreviewSplitsConfigs }  from '../../../components/themePreview'
 
 {/* The difficulties faced in making a dark mode. */}
 
@@ -19,23 +19,29 @@ import { ThemePreview, ThemePreviewSplits, themePreviewElementConfigs, themePrev
 
 <ThemePreviewSplits
   client:visible
-  vars={[{
-    txt: '#172d60',
-    bg: '#d3c4a0',
-  },{
-    txt: '#d3c4a0',
-    bg: '#0d1d35',
-  }]}
-  elements={[
-    [
+  previews={[
+  {
+    vars: {
+      txt: '#172d60',
+      bg: '#d3c4a0',
+    },
+    elements: [
       { type: 'h2', text: 'With white paper and black ink' },
       { type: 'text', text: 'You save ink' },
       { type: 'text', text: 'with LCDs you save nothing' },
-    ],
-    [
+    ]
+  },
+  {
+    vars: {
+    txt: '#d3c4a0',
+    bg: '#0d1d35',
+    },
+    elements: [
       { type: 'h1', text: 'With OLEDs' },
       { type: 'h2', text: 'you waste light the more there is white' }
-    ],
+    ]
+  }
+
   ]}
   showInfo={false}
 />
@@ -69,64 +75,102 @@ There are arguments from research about how the black on white background (light
 
 # The conversion
 
-Once you have reached the decision, after considering the content and the context, that a dark mode is indeed what you want, you can use one of the most common methods of converting a light mode to a dark mode. Simply _switch the background and text colors_.
+After considering the content and the context, if dark mode is indeed what we want, we can use one of the most common methods of converting a light mode to a dark mode. Simply _switch the background and text colors_.
 
 <ThemePreviewSplits
   client:visible
   {...themePreviewSplitsConfigs.bnw}
+  previews={[
+  {
+    vars: { txt: "#000", bg: "#fff", },
+    elements: [
+      {
+        type: "h1",
+        text: "Black & White",
+      },
+      {
+        type: "text",
+        text: "Black letters look thin as white light bleeds into the black lines, also things appear light and airy"
+      },
+    ]
+  },
+
+  {
+    vars: { txt: "#fff", bg: "#000", },
+    elements: [
+      {
+        type: "h1",
+        text: "Black & White",
+      },
+      {
+        type: "text",
+        text: "White letters bleed light onto the black background making text appear thicker. Consider also that this black is currently inside a dark blog.",
+
+      },
+    ]
+  }
+
+  ]}
 />
 
 While this serves for basic text only content, there are various elements that don't directly translate into a usable dark mode.
 
 ## Relative colors
 
-Although an explanation about how the perceived colors depend on the background is not needed, here is a fine example:
+Although an explanation about how the _perceived colors depend on the background_ is not needed, here is a fine example:
 
 <ThemePreviewSplits
   client:visible
-  vars={[{
-    txt: '#333',
-    surface: '#fff',
-    primary: {
-      color: '#447DEB',
-      over: '#fff'
+  previews={[
+    {
+      vars: {
+        txt: '#333',
+        surface: '#fff',
+        primary: {
+          color: '#447DEB',
+          over: '#fff'
+        },
+        bg: '#EBEDF2',
+      },
+      elements: [
+        { type: 'text', text: 'Notice the color blue' },
+        { type: 'button', text: 'Bluuue' },
+        { type: 'card', text: 'This is our benchmark' },
+      ]
     },
-    bg: '#EBEDF2',
-  },{
-    txt: '#eee',
-    surface: '#222',
-    primary: {
-      color: '#447DEB',
-      over: '#fff'
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#20202f',
+        primary: {
+          color: '#447DEB',
+          over: '#fff'
+        },
+        bg: '#0f0f1f',
+      },
+      elements: [
+        { type: 'text', text: 'Now a direct conversion' },
+        { type: 'button', text: 'Bluuue' },
+        { type: 'card', text: 'See how this doesn\'t match' },
+        { type: 'text', text: 'Even though its the exact same hex code.' },
+      ]
     },
-    bg: '#0f0f0f',
-  },{
-    txt: '#eee',
-    surface: '#222',
-    primary: {
-      color: '#2A5EC3',
-      over: '#fff'
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#20202f',
+        primary: {
+          color: '#2A5EC3',
+          over: '#fff'
+        },
+        bg: '#0f0f1f',
+      },
+      elements: [
+        { type: 'text', text: 'A little adjustment' },
+        { type: 'button', text: 'Bluuue' },
+        { type: 'card', text: 'To the color makes it match the color in light mode.' },
+      ]
     },
-    bg: '#0f0f0f',
-  }
-  ]}
-  elements={[
-    [
-      { type: 'text', text: 'Notice the color blue' },
-      { type: 'button', text: 'Bluuue' },
-      { type: 'card', text: 'This is our benchmark' },
-    ],
-    [
-      { type: 'text', text: 'Now a direct conversion' },
-      { type: 'button', text: 'Bluuue' },
-      { type: 'card', text: 'See how this doesn\'t match' },
-      { type: 'text', text: 'Even though its the exact same hex code.' },
-    ],
-    [
-      { type: 'text', text: 'A little adjustment' },
-      { type: 'button', text: 'Bluuue' },
-      { type: 'card', text: 'To the color makes it match the color in light mode.' },
-    ],
   ]}
   showInfo={false}
 />
@@ -136,11 +180,31 @@ Although an explanation about how the perceived colors depend on the background 
 
 ## Darker shades
 
-Another dilemma arises when we have a background and a card, there are several ways to differentiate the background with the foreground. In the light mode, we can enjoy a variety of styles to depict boxes of content.
+Another dilemma arises when we have a background and a card, there are several _ways to differentiate the background with the foreground_.
+
+In the light mode, we can enjoy a variety of styles to separate content into boxes.
 
 <ThemePreviewSplits
   client:visible
-  {...themePreviewSplitsConfigs.lightCard}
+  previews={[
+      {
+        vars: themePreviewConfigVars.lightModeShadowCardVars,
+        elements: [
+          { type: 'card', text: 'A shadow on a box is universally exploited as a card. It adds the perception of depth.' },
+      ],},
+      { vars: themePreviewConfigVars.lightModeCardVars,
+        elements: [
+          { type: 'card', text: 'A lighter background can look as if it is ahead of a darker background even though there are no shadows.' },
+      ],},
+      { vars: themePreviewConfigVars.lightModeCardFlippedVars,
+        elements: [
+          { type: 'card', text: 'A darker background can mean anything, from simple info to notifications, buttons and disabled elements as well.' },
+      ],},
+      { vars: themePreviewConfigVars.lightModeCardBorderVars,
+        elements: [
+          { type: 'card', text: 'A border can be a box if the design system decides it is so, and it can also be used as input.' },
+      ],},
+  ]}
 />
 
 <ThemePreviewSplits
@@ -152,9 +216,40 @@ Another dilemma arises when we have a background and a card, there are several w
 
 ### The ugly gray
 
-Yes I call all dark mode themes that are monochrome and use a grey background ugly. And I will die on this hill. Especially the ones of the old material design (pre v3) days.
+Yes I consider dark monochrome themes that use a grey background ugly. And I will die on this hill. Especially if [combined with material design (v2)](https://m2.material.io/design/color/dark-theme.html#properties).
 
-https://m2.material.io/design/color/dark-theme.html#properties
+<ThemePreviewSplits
+  client:visible
+  previews={[
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#333',
+        bg: '#222',
+      },
+      elements: [
+        { type: 'h2', text: 'Gray is static, gray is ugly' },
+        { type: 'card', text: 'Gray on gray is uglier still' },
+        { type: 'text', text: 'Through years of experience I can say, gray is grey, gray and darkgray and lightgray and dark all at the same time.' },
+      ]
+    },
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#333',
+        bg: '#111',
+      },
+      elements: [
+        { type: 'h1', text: 'A little darker?' },
+        { type: 'h2', text: 'We might as well have used black' },
+        { type: 'card', text: 'And the surfaces are still ugly' }
+      ]
+    }
+  ]}
+  showInfo={false}
+/>
+
+
 
 https://m3.material.io/styles/color/choosing-a-scheme
 

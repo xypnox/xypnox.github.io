@@ -4,11 +4,14 @@ import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
 
 interface Image {
+  // URL of the image
   url: string
   thumbnail?: string
   alt: string
   title: string
   description?: string
+
+  // Alternate link to go to instead of the image
   link?: string
 }
 
@@ -22,6 +25,8 @@ const GridWrapper = styled("div")`
   grid-template-columns: repeat(var(--count, 5), 1fr);
   gap: 2rem;
   width: 100%;
+
+  font-family: ${theme.font.family};
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
@@ -53,7 +58,7 @@ export const ImageGrid = (props: ImageGridProps) => {
       <For each={props.images}>
         {(img) => (
           <GridItem>
-            <Dynamic component={hasLink(img) ? 'a' : 'div'} href={img.url} target="_blank" rel="noopener noreferrer">
+            <Dynamic component={hasLink(img) ? 'a' : 'div'} href={img.link ?? img.url} target="_blank" rel="noopener noreferrer">
               <img src={img.thumbnail ?? img.url} loading="lazy" alt={img.title} />
             </Dynamic>
             {/* Capitalize the name */}
