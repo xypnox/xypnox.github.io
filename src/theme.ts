@@ -39,7 +39,7 @@ export const themeVars = {
   cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.5)',
 
   bold: '#BB6170',
-  italic: '#BB6170',
+  italic: '#CC64AD',
   strikethrough: '#ff5370',
 
   gradient: {
