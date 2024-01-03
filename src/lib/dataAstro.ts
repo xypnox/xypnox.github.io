@@ -5,7 +5,7 @@ const blogEntriesAll = await getCollection("blog");
 /** Filtered Blog entries that are root, and are not hidden */
 const blogEntriesFiltered = blogEntriesAll
   .filter(b => b.data.hidden !== true);
-  // .filter((b) => b.slug.split("/").length === 1);
+// .filter((b) => b.slug.split("/").length === 1);
 
 /** Blog entries which are filtered by hidden and sorted by time (latest first) */
 const blogEntries = blogEntriesFiltered
@@ -15,7 +15,7 @@ const blogEntries = blogEntriesFiltered
   })
 
 /** All the tags used in the blog posts */
-const allTags: string[] = [...(new Set(blogEntriesAll
+const allTags: string[] = [...(new Set(blogEntriesFiltered
   .map((blogPostEntry) => blogPostEntry.data.tags)
   .flat()
   .filter((tag) => tag !== undefined) as string[]))];

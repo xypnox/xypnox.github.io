@@ -214,7 +214,7 @@ const dateFormatOption = {
   .coverImage {
     max-width: 1200px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 4rem;
   }
 
   .coverImage img {
@@ -227,29 +227,6 @@ const dateFormatOption = {
     color: var(--fadeText);
   }
 
-  .content :global(p) {
-    text-wrap: stable;
-    margin: 0.5em 0 1em 0;
-  }
-
-  .content :global(p) :global(em) {
-    color: var(--italic);
-  }
-
-  .content :global(iframe) {
-    margin: 0 0 2rem;
-  }
-
-  .content :global(ul) {
-    margin: 0;
-  }
-
-  .content :global(li) {
-    margin: 1rem 0;
-  }
-  .content :global(li):first-child {
-    margin: 0rem 0 1rem;
-  }
   .end-marker {
     width: 100%;
     display: flex;
@@ -274,10 +251,10 @@ const dateFormatOption = {
       flex-direction: column-reverse;
     }
     .content-toc {
+      top: 0rem;
       width: 100%;
       max-width: 800px;
       position: relative;
-      margin-bottom: 2rem;
     }
   }
 

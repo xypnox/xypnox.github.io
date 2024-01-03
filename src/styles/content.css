@@ -10,12 +10,43 @@
   font-family: "Jost", serif;
 }
 
+.content p {
+  text-wrap: stable;
+  margin: 0.5em 0 1em 0;
+}
+
+.content p em {
+  color: var(--italic);
+}
+
+.content iframe {
+  margin: 0 0 2rem;
+}
+
+.content ul {
+  margin: 0;
+}
+
+.content li {
+  margin: 1rem 0;
+}
+.content li::marker {
+  color: var(--primary-color);
+}
+.content li:first-child {
+  margin: 0rem 0 1rem;
+}
 .content blockquote {
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0.5rem 1rem;
+  margin: 0;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1.5rem;
   background-color: var(--surface);
-  border-left: 0.25rem solid var(--primary-color);
+  border-left: 2px dashed var(--primary-color);
+  border-radius: 0.5rem;
+}
+
+.content blockquote p:last-child {
+  margin-bottom: 0.5rem;
 }
 
 .content table {
