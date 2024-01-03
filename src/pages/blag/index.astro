@@ -6,7 +6,10 @@ import { blogEntries } from '../../lib/dataAstro'
 import BlogGrid from "../../components/blogGrid.astro";
 ---
 
-<Layout title="Blog">
+<Layout title="Blag" meta={{
+  title: "Blag",
+  description: "I write about things I learn, things I make, and things I think about.",
+}}>
   <main class="blog-index">
     <header>
       <Blag />

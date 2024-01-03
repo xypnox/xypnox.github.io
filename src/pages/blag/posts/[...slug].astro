@@ -44,7 +44,16 @@ const dateFormatOption = {
 } as const;
 ---
 
-<Layout showLoading={false} title={entry.data.title}>
+<Layout
+  showLoading={false}
+  title={entry.data.title}
+  meta={{
+    description: entry.data.description,
+    image: entry.data.socialImage?.src ?? entry.data.coverImage?.src,
+    type: "article",
+    tags: entry.data.tags,
+  }}
+>
   <link
     slot="head"
     href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
@@ -61,16 +70,18 @@ const dateFormatOption = {
       <time datetime={entry.data.date.toISOString()}>
         {entry.data.date.toLocaleDateString("en-US", dateFormatOption)}
       </time>
-      {entry.data.tags && (
-        <>
-          <span class="separator">•</span>
-          <div class="tags">
-            {entry.data.tags.map((tag: string) => (
-              <Tag tag={tag} />
-            ))}
-          </div>
-        </>
-      )}
+      {
+        entry.data.tags && (
+          <>
+            <span class="separator">•</span>
+            <div class="tags">
+              {entry.data.tags.map((tag: string) => (
+                <Tag tag={tag} />
+              ))}
+            </div>
+          </>
+        )
+      }
     </div>
   </div>
   {
@@ -86,12 +97,19 @@ const dateFormatOption = {
   }
   <div class="content-wrapper">
     <div class="content">
-      {entry.data.hidden &&
-        <blockquote>
-          <p><strong>This is a Hidden Post</strong></p>
-          <p>If you have landed here, wow!</p>
-          <p>This may also be a draft post, and if you want to share feedback, reachout to me!</p>
-        </blockquote>
+      {
+        entry.data.hidden && (
+          <blockquote>
+            <p>
+              <strong>This is a Hidden Post</strong>
+            </p>
+            <p>If you have landed here, wow!</p>
+            <p>
+              This may also be a draft post, and if you want to share feedback,
+              reachout to me!
+            </p>
+          </blockquote>
+        )
       }
       <Content />
       <div class="end-marker">
@@ -107,8 +125,7 @@ const dateFormatOption = {
         label="comments"
         theme="photon-dark"
         crossorigin="anonymous"
-        async
-      ></script>
+        async></script>
     </div>
     {
       headings.length > 0 && (
@@ -241,7 +258,6 @@ const dateFormatOption = {
     font-style: italic;
     font-size: var(--font-size-lg);
   }
-
 
   @media (max-width: 1200px) {
     .content-wrapper {

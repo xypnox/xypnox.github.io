@@ -6,7 +6,8 @@ date : 2021-01-02
 categories : ["literature"]
 tags : ["culture", "review", "book", "music"]
 
-coverImage: "./social.png"
+coverImage: "./cover.png"
+socialImage: "./social.png"
 coverAlt: "My year in Culture - 2020."
 ---
 

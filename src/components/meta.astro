@@ -1,0 +1,79 @@
+---
+
+  // meta={{
+  //   description: entry.data.description,
+  //   image: entry.data.coverImage,
+  //   url: `https://xypnox.com/blog/${entry.slug}`,
+  //   type: "article",
+  //   publishedAt: entry.data.date.toISOString(),
+  //   modifiedAt: entry.data.date.toISOString(),
+  //   tags: entry.data.tags,
+  //   twitter: {
+  //     card: "summary_large_image",
+  //     site: "@xypnox",
+  //     creator: "@xypnox",
+  //   },
+  //   og: {
+  //     site_name: "xypnox",
+  //     type: "article",
+  //     locale: "en_US",
+  //   },
+  // }}
+
+import type { MetaData } from "../dataTypes";
+
+export interface Props extends MetaData {}
+
+const meta = Astro.props;
+
+const url = Astro.url;
+
+const defaultMeta: MetaData = {
+  title: "xypnox",
+  description: "I design/develop interfaces.",
+  image: "https://xypnox.com/social.png",
+  type: "website",
+  // tags: ["xypnox", "xypnox.com", "xypnox blog", "xypnox portfolio"],
+  twitter: {
+    card: "summary_large_image",
+    site: "@xypnox",
+    creator: "@xypnox",
+  },
+  og: {
+    site_name: "xypnox",
+  },
+};
+
+
+const metaTags = meta ? { ...defaultMeta, ...meta } : defaultMeta;
+const { title, description, image } = metaTags;
+---
+
+<!-- Title -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta property="og:title" content={title} />
+<meta property="twitter:title" content={title} />
+
+<!-- Description -->
+<meta name="description" content={description} />
+<meta property="og:description" content={description} />
+<meta property="twitter:description" content={description} />
+
+<!-- URL -->
+<meta property="og:url" content={url} />
+<meta property="twitter:url" content={url} />
+
+<!-- Image -->
+<meta property="og:image" content={image} />
+<meta property="twitter:image" content={image} />
+
+<meta property="og:type" content={metaTags.type} />
+
+<meta property="twitter:card" content={metaTags.twitter?.card} />
+<meta property="twitter:site" content={metaTags.twitter?.site} />
+<meta property="twitter:creator" content={metaTags.twitter?.creator} />
+
+<meta property="og:site_name" content={metaTags.og?.site_name} />
+
+<meta name="generator" content={Astro.generator} />

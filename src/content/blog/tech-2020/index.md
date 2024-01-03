@@ -6,7 +6,8 @@ date : 2020-12-26
 categories : ["tech"]
 tags : ["tech", "blog", "phone"]
 
-coverImage: "./social.png"
+coverImage: "./cover.png"
+socialImage: "./social.png"
 coverAlt: "My year in Tech - 2020. There will be a different post for culture 2020 as well."
 ---
 

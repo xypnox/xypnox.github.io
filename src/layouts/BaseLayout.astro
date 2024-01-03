@@ -4,24 +4,25 @@ import Navbar from "../components/nav/Navbar.astro";
 import Footer from "../components/footer.astro";
 import "../styles/content.css";
 import Loading from "../components/Loading.astro";
+import Meta from "../components/meta.astro";
+import type { MetaData } from "../dataTypes";
 
 export interface Props {
   title: string;
+  meta?: MetaData;
   showLoading?: boolean;
 }
 
-const { title, showLoading } = Astro.props;
+const { title, meta, showLoading } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,24 +30,8 @@ const { title, showLoading } = Astro.props;
       rel="stylesheet"
     />
 
-    <!-- Primary Meta Tags -->
-    <title>xypnox</title>
-    <meta name="title" content="xypnox" />
-    <meta name="description" content="I design/develop interfaces." />
+    <Meta {...meta} title={meta?.title ?? title} />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://xypnox.com/" />
-    <meta property="og:title" content="xypnox" />
-    <meta property="og:description" content="I design/develop interfaces." />
-    <meta property="og:image" content="https://xypnox.com/social.png" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://xypnox.com/" />
-    <meta property="twitter:title" content="xypnox" />
-    <meta property="twitter:description" content="I design/develop interfaces." />
-    <meta property="twitter:image" content="https://xypnox.com/social.png" />
     <slot name="head" />
   </head>
   <body>
