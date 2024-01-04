@@ -31,23 +31,6 @@ const { title, meta, showLoading } = Astro.props;
     />
 
     <Meta {...meta} title={meta?.title ?? title} />
-
-    <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
-    <script is:raw>
-      (function(f, a, t, h, o, m){
-        a[h]=a[h]||function(){
-          (a[h].q=a[h].q||[]).push(arguments)
-        };
-        o=f.createElement('script'),
-        m=f.getElementsByTagName('script')[0];
-        o.async=1; o.src=t; o.id='fathom-script';
-        m.parentNode.insertBefore(o,m)
-      })(document, window, '//165.22.211.193/tracker.js', 'fathom');
-      fathom('set', 'siteId', 'UBQIS');
-      fathom('trackPageview');
-    </script>
-    <!-- / Fathom -->
-
     <slot name="head" />
   </head>
   <body>
