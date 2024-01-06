@@ -9,11 +9,11 @@ import type { BaseLayoutProps } from "../dataTypes";
 
 export interface Props extends BaseLayoutProps {}
 
-const { title, meta, showLoading, hideNav } = Astro.props;
+const { title, meta, showLoading, hideNav, htmlClass } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class={htmlClass ?? ''}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

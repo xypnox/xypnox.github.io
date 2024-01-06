@@ -29,5 +29,6 @@ export interface BaseLayoutProps {
   title: string;
   meta?: MetaData;
   showLoading?: boolean;
+  htmlClass?: string;
   hideNav?: boolean;
 }
