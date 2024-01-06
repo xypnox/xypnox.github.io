@@ -12,10 +12,10 @@ const dateFormatOption = {
 ---
 
 <PoemLayout
-  title="Poems"
+  title="Poems - by xypnox"
   meta={{
-    title: "Poems",
-    description: "The best peoms are the ones we write for ourselves",
+    title: "Poems - by xypnox",
+    description: "The best poems are the ones we write for ourselves.",
   }}
 >
   <header>
@@ -57,9 +57,13 @@ const dateFormatOption = {
   .by-line {
     font-size: var(--font-size-lg);
     text-align: center;
-    font-weight: 500;
+    font-weight: normal;
     margin: 0rem 0rem;
     font-style: italic;
+  }
+  .by-line a {
+    text-decoration-style: dashed;
+    text-decoration-color: var(--poems-fadeText);
   }
   .description {
     font-size: var(--font-size-md);

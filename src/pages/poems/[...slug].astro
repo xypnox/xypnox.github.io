@@ -11,22 +11,12 @@ interface Props {
   }[];
 }
 
-// 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
   return poemsStaticPaths;
 }
 
-// 2. When it's time to render, you can get the entry directly from the prop
 const { poem } = Astro.props;
-console.log("In poems post getStaticProps", {
-  poem,
-  props: Astro.props
-});
 const { Content } = await poem.render();
-
-// console.log("In poem post EntryList", {
-//   entry,
-// });
 
 const dateFormatOption = {
   day: "numeric",
@@ -37,18 +27,12 @@ const dateFormatOption = {
 
 <PoemLayout
   showLoading={false}
-  title={poem.data.title + " | Poems by xypnox"}
+  title={poem.data.title + " | A poem by xypnox"}
   meta={{
     description: 'A poem by xypnox',
     type: "poem",
-    image: '/poems-social.png',
   }}
 >
-  <link
-    slot="head"
-    href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-    rel="stylesheet"
-  />
   <div class="postHeading">
     <h1>{poem.data.title}</h1>
     <p>by <a href="/">xypnox</a></p>

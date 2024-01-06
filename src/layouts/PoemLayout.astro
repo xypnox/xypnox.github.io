@@ -8,7 +8,15 @@ interface Props extends BaseLayoutProps {}
 const props = Astro.props;
 ---
 
-<BaseLayout {...props} hideNav htmlClass="poems-root">
+<BaseLayout
+  {...props}
+  hideNav
+  htmlClass="poems-root"
+  meta= {{
+    ...props.meta,
+    image: '/poems-social.png',
+  }}
+>
   <main>
     <slot />
   </main>
