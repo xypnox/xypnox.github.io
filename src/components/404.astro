@@ -1,19 +1,28 @@
 ---
-import { Icon } from "astro-icon";
 ---
 
-<div class="not-found-icon">
-  <Icon name="ph:warning-circle-duotone" />
+<div class="not-found">
+  <img src="/404-robot.svg" alt="A robot confused by the juggling balls" />
 </div>
 
 <style>
-.not-found-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-}
+  .not-found { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    min-height: 50dvh;
+    margin: 4rem auto;
+    padding: 2rem;
+    border: 4px dashed var(--border);
+    border-radius: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .not-found { 
+      padding: 1rem 0rem;
+      min-height: 0;
+    }
+  }
 </style>

@@ -79,6 +79,7 @@ export const poemThemeVars = {
   text: '#444',
   fadeText: '#666666',
   surface: '#f5f5f5',
+  border: '#aaa',
 }
 
 const poemTheme = generateTheme(poemThemeVars, "poems-")

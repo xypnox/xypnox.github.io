@@ -1,0 +1,58 @@
+---import { flattenObject } from '../lib/objects';
+
+export type Props = {
+  poem: string;
+  n: number;
+  colors: string[];
+};
+
+const { poem, colors } = Astro.props;
+
+const colorVars = flattenObject({ colors }, (keys, value) => [
+    `poem-${keys.join("-")}`,
+    value,
+  ]);
+
+const cssColorVars = Object.entries(colorVars)
+  .map(([key, value]) => `--${key}: ${value};`)
+  .join("\n");
+
+function colorNthWord(poem: string) {
+  const poemLines = poem.split("\n");
+  const coloredPoemLines = poemLines.map((line) => {
+    const words = line.split(" ");
+    const coloredLine = words.map((word, index) => {
+      return { text: word, color: `var(--poem-colors-${index % colors.length})` };
+    });
+    return coloredLine;
+  });
+  return coloredPoemLines;
+}
+---
+
+<div style={cssColorVars}>
+  {colorNthWord(poem).map((line) => {
+      return (
+        <div class="poem-line">
+          {line.map((word) => {
+            if (word.color) {
+              return <span style={{ color: word.color }}>{word.text} </span>;
+            }
+            return <span>{word.text} </span>;
+          })}
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  .poem-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 1.5rem;
+  }
+
+</style>

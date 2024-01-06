@@ -49,4 +49,6 @@ And slowly she became
 from the traveler I met on the roads  
 to a traveler I met on the roads.
 
-> _[Photo](https://unsplash.com/photos/u0vgcIOQG08) by [@madebyjens](https://unsplash.com/@madebyjens). Via [Unsplash](https://unsplash.com/)._
+---
+
+_[Photo](https://unsplash.com/photos/u0vgcIOQG08) by [@madebyjens](https://unsplash.com/@madebyjens). Via [Unsplash](https://unsplash.com/)._

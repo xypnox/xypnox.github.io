@@ -8,9 +8,9 @@ Sometime soon To part me from my ways of these days.
 Someone would surely have noticed, by now studying  
 The great depression of the 20s and my face.
 
-> 1. The depression of the 1920s after WWI. 
-> 2. and the great depression of my face. 
-> 3. and my face.
+1. The depression of the 1920s after WWI. 
+2. and the great depression of my face. 
+3. and my face.
 
 Late nights are long days,  
 I sleep off the daily nights,  
