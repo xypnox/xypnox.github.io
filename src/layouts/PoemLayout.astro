@@ -1,0 +1,50 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { poemThemeCssVars } from "../theme";
+import type { BaseLayoutProps } from "../dataTypes";
+
+interface Props extends BaseLayoutProps {}
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props} hideNav>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <p>
+      <a href="/poems">Poems</a> by <a href="/">xypnox</a>
+    </p>
+  </footer>
+</BaseLayout>
+
+<style is:global define:vars={poemThemeCssVars}>
+  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap");
+
+  html {
+    background-color: #fff;
+    color: #333333;
+  }
+
+  main, footer {
+    font-family: var(--poems-fontFamily);
+    font-size: var(--font-size-base);
+    max-width: 80ch;
+    margin: 8rem auto 2rem;
+  }
+
+  footer {
+    margin-top: 8rem;
+    padding: 2rem;
+    border-top: 2px dashed #aaa;
+  }
+
+  a {
+    color: var(--poems-text);
+    font-family: var(--poems-fontFamily);
+    &:hover {
+      color: var(--poems-heading);
+    }
+  }
+</style>

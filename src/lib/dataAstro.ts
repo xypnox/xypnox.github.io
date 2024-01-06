@@ -14,6 +14,18 @@ const blogEntries = blogEntriesFiltered
     return bDateNum - aDateNum;
   })
 
+
+
+const entryList = blogEntriesAll.map((entry) => ({
+  slug: entry.slug,
+  data: entry.data,
+}));
+
+const blogStaticPaths = blogEntriesAll.map((entry) => ({
+  params: { slug: entry.slug },
+  props: { entry, entryList },
+}));
+
 /** All the tags used in the blog posts */
 const allTags: string[] = [...(new Set(blogEntriesFiltered
   .map((blogPostEntry) => blogPostEntry.data.tags)
@@ -38,20 +50,7 @@ const sortedTags = allTags.sort((a, b) => tagCounts[b] - tagCounts[a])
 
 const topFiveTags = sortedTags.slice(0, 5)
 
-// console.log(
-//   {
-//     blogEntriesAll,
-//     blogEntriesFiltered,
-//     blogEntries,
-//     allTags,
-//     latestBlog,
-//     tagCounts,
-//     topFiveTags,
-//     sortedTags
-//   }
-// )
-
-const staticPaths = blogEntries
+const tagStaticPaths = blogEntries
   .reduce((acc, blogPostEntry) => {
     const tags = blogPostEntry.data.tags || [];
     tags.forEach((tag: string) => {
@@ -68,6 +67,25 @@ const staticPaths = blogEntries
 
 const filteredByTag = (tag: string) => blogEntriesFiltered.filter(e => e.data.tags && e.data.tags.includes(tag))
 
+const poems = await getCollection("poems");
+
+const filteredPoems = poems.filter(p => p.data.hidden !== true);
+
+const sortedPoems = filteredPoems.sort((a, b) => {
+  const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
+  return bDateNum - aDateNum;
+})
+
+const poemEntryList = poems.map((poem) => ({
+  slug: poem.slug,
+  data: poem.data,
+}));
+
+const poemsStaticPaths = poems.map((poem) => ({
+  params: { slug: poem.slug },
+  props: { poem, poemEntryList },
+}));
+
 export {
   blogEntriesAll,
   blogEntriesFiltered,
@@ -77,7 +95,10 @@ export {
   tagCounts,
   topFiveTags,
   sortedTags,
-  staticPaths,
-  filteredByTag
+  tagStaticPaths,
+  blogStaticPaths,
+  filteredByTag,
+  poemsStaticPaths,
+  sortedPoems,
 }
 

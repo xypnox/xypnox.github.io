@@ -25,3 +25,9 @@ export interface MetaData {
   };
 }
 
+export interface BaseLayoutProps {
+  title: string;
+  meta?: MetaData;
+  showLoading?: boolean;
+  hideNav?: boolean;
+}

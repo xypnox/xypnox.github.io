@@ -17,5 +17,13 @@ const blog = defineCollection({
   }),
 })
 
-export const collections = { blog }
+const poems = defineCollection({
+  schema: () => z.object({
+    title: z.string(),
+    date: z.date(),
+    hidden: z.boolean().optional(), // will default to false
+  }),
+})
+
+export const collections = { blog, poems }
 

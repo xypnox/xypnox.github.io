@@ -1,5 +1,19 @@
 import { flattenObject, forObjectReplace } from "./lib/objects";
 
+const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '') => {
+  const themeCssVars = flattenObject(vars, (keys, value) => [
+    `${prefix}${keys.join("-")}`,
+    value,
+  ]);
+
+  const theme = forObjectReplace(vars, (keys) => `var(--${keys.join("-")})`)
+
+  return {
+    themeCssVars,
+    theme,
+  };
+}
+
 export const themeVars = {
   font: {
     family: 'Jost, sans-serif',
@@ -52,9 +66,22 @@ export const themeVars = {
 
 export type ThemeVars = typeof themeVars
 
-export const themeCssVars = flattenObject(themeVars, (keys, value) => [
-  `${keys.join("-")}`,
-  value,
-]);
+const defaultTheme = generateTheme(themeVars)
+export const themeCssVars = defaultTheme.themeCssVars
+export const theme = defaultTheme.theme
 
-export const theme = forObjectReplace(themeVars, (keys) => `var(--${keys.join("-")})`)
+export const poemThemeVars = {
+  fontFamily: 'EB Garamond, serif',
+  headingFont: 'Cormorant Garamond, sans-serif',
+  background: '#ffffff',
+
+  heading: '#222',
+  text: '#444',
+  fadeText: '#666666',
+  surface: '#f5f5f5',
+}
+
+const poemTheme = generateTheme(poemThemeVars, "poems-")
+
+export const poemThemeCssVars = poemTheme.themeCssVars
+export const poemThemeCss = poemTheme.theme

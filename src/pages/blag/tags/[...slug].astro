@@ -2,11 +2,11 @@
 import Layout from "../../../layouts/BaseLayout.astro";
 import TagList from "../../../components/tagList.astro";
 import BlogGrid from "../../../components/blogGrid.astro";
-import { staticPaths, filteredByTag } from "../../../lib/dataAstro";
+import { tagStaticPaths, filteredByTag } from "../../../lib/dataAstro";
 
 
 export async function getStaticPaths() {
-  return staticPaths;
+  return tagStaticPaths;
 }
 
 const { tag } = Astro.props;

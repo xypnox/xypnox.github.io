@@ -1,0 +1,165 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PoemLayout from "../../layouts/PoemLayout.astro";
+import { poemsStaticPaths } from "../../lib/dataAstro";
+
+interface Props {
+  poem: CollectionEntry<"poems">;
+  entryList: {
+    slug: string;
+    data: any;
+  }[];
+}
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  return poemsStaticPaths;
+}
+
+// 2. When it's time to render, you can get the entry directly from the prop
+const { poem } = Astro.props;
+console.log("In poems post getStaticProps", {
+  poem,
+  props: Astro.props
+});
+const { Content } = await poem.render();
+
+// console.log("In poem post EntryList", {
+//   entry,
+// });
+
+const dateFormatOption = {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+} as const;
+---
+
+<PoemLayout
+  showLoading={false}
+  title={poem.data.title + " | Poems by xypnox"}
+  meta={{
+    description: 'A poem by xypnox',
+    type: "poem",
+  }}
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+  <div class="postHeading">
+    <h1>{poem.data.title}</h1>
+    <p>by <a href="/">xypnox</a></p>
+  </div>
+  <div class="content-wrapper">
+    <div class="poem-content">
+      {
+        poem.data.hidden && (
+          <blockquote>
+            <p>
+              <strong>This is a Hidden Poem</strong>
+            </p>
+            <p>If you have landed here, wow!</p>
+            <p>
+              This may also be a draft poem, [share feedback](/)!
+            </p>
+          </blockquote>
+        )
+      }
+      <Content />
+      <div class="details">
+        <time datetime={poem.data.date.toISOString()}>
+          {poem.data.date.toLocaleDateString("en-US", dateFormatOption)}
+        </time>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .postHeading {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  .postHeading h1, .postHeading p {
+    margin: 0;
+  }
+
+  .postHeading p,
+  .postHeading p a {
+    font-size: var(--font-size-md);
+    color: var(--poems-fadeText);
+    font-style: italic;
+  }
+
+  .postHeading h1 {
+    font-size: var(--font-size-xxl);
+    color: var(--poems-heading);
+    font-family: var(--poems-headingFont);
+    font-style: italic;
+  }
+
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .poem-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-family: var(--poems-fontFamily);
+    font-size: var(--font-size-md);
+  }
+
+  .poem-content :global(img) {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .poem-content :global(blockquote) {
+    font-size: var(--font-size-base);
+    border-left: 0.25rem solid var(--poems-text);
+    margin: 4rem 0;
+    padding: 0rem 1rem;
+  }
+
+  .details {
+    font-size: var(--font-size-base);
+    color: var(--poems-fadeText);
+    gap: 1rem;
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 1200px) {
+    .content-wrapper {
+      flex-direction: column-reverse;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .details {
+      flex-wrap: wrap;
+    }
+
+    .separator {
+      display: none;
+    }
+  }
+</style>
