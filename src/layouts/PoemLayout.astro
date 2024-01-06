@@ -15,6 +15,8 @@ const props = Astro.props;
   <footer>
     <p>
       <a href="/poems">Poems</a> by <a href="/">xypnox</a>
+      |
+      <a href="/poems/rss.xml">RSS</a>
     </p>
   </footer>
 </BaseLayout>
@@ -35,8 +37,8 @@ const props = Astro.props;
   }
 
   footer {
-    margin-top: 8rem;
-    padding: 2rem;
+    margin-top: 4rem;
+    padding: 2rem 0;
     border-top: 2px dashed #aaa;
   }
 

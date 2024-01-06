@@ -82,9 +82,7 @@ const dateFormatOption = {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-width: 800px;
     margin: 0 auto;
-    margin-top: 4rem;
     margin-bottom: 2rem;
   }
 
@@ -111,19 +109,18 @@ const dateFormatOption = {
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
   }
 
   .poem-content {
     display: flex;
     flex-direction: column;
-    max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.5;
     font-family: var(--poems-fontFamily);
-    font-size: var(--font-size-md);
+    font-size: calc((var(--font-size-md) + var(--font-size-base)) / 2 );
   }
 
   .poem-content :global(img) {
@@ -134,16 +131,16 @@ const dateFormatOption = {
 
   .poem-content :global(blockquote) {
     font-size: var(--font-size-base);
-    border-left: 0.25rem solid var(--poems-text);
-    margin: 4rem 0;
+    margin: 4rem 0 2rem;
     padding: 0rem 1rem;
+    background-color: var(--poems-surface);
+    border-radius: 1rem;
   }
 
   .details {
     font-size: var(--font-size-base);
     color: var(--poems-fadeText);
     gap: 1rem;
-    margin-top: 2rem;
     font-style: italic;
   }
 

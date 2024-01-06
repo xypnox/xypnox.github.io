@@ -7,12 +7,14 @@ export async function GET(context) {
     title: "Blag",
     description: "To muse over the words unmusable.",
     site: context.site,
-    items: blog.map((post) => ({
-      title: post.data.title,
-      pubDate: post.data.date,
-      description: post.data.description,
-      image: post.data.coverImage,
-      link: `/blag/${post.slug}`,
-    })),
+    items: blog
+      .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+      .map((post) => ({
+        title: post.data.title,
+        pubDate: post.data.date,
+        description: post.data.description,
+        image: post.data.coverImage,
+        link: `/blag/${post.slug}`,
+      })),
   })
 }
