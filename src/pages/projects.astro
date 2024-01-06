@@ -1,103 +1,105 @@
 ---
-import { Projects } from '../content/projects'
-import PageHeader from '../components/pageHeader.astro'
-import Layout from '../layouts/BaseLayout.astro'
-import PageNav from '../components/nav/pageNav.astro'
+import Layout from "../layouts/MainLayout.astro";
+import { Projects as projectsData } from "../content/projects";
+import PageHeader from "../components/pageHeader.astro";
+import PageNav from "../components/nav/pageNav.astro";
 
-const ProjectsWithSlug = Projects.map((p) => {
-  p.slug = p.title.toLowerCase().replace(/ /g, '-')
-  return p
-})
+const ProjectsWithSlug = projectsData.map((p) => ({
+  ...p,
+  slug: p.title.toLowerCase().replace(/ /g, "-"),
+}));
 ---
 
 <Layout title="Projects">
   <main>
     <PageHeader title="Projects" />
-    <PageNav links={
-      ProjectsWithSlug.map((p) => ({
+    <PageNav
+      links={ProjectsWithSlug.map((p) => ({
         name: p.title,
-        slug: `#${p.slug}`
-      }))
-    } />
+        slug: `#${p.slug}`,
+      }))}
+    />
     <div class="projectList">
-      {ProjectsWithSlug.map((p) => (
+      {
+        ProjectsWithSlug.map((p) => (
           <div id={p.slug} class="projectCard">
             <img src={p.image} alt={p.title} />
             <div class="cardContent">
-                <h1>{p.title}</h1>
-                {p.description.map((d) => (
-                    <p>{d}</p>
+              <h1>{p.title}</h1>
+              {p.description.map((d) => (
+                <p>{d}</p>
+              ))}
+              {p.link && <a href={p.link}>{p.link}</a>}
+              <p class="projectTags">
+                {p.tags.map((t) => (
+                  <span>{t}</span>
                 ))}
-                {p.link &&
-                  <a href={p.link}>{p.link}</a>
-                }
-                <p class="projectTags">{p.tags.map((t) => (
-                    <span>{t}</span>
-                ))}</p>
+              </p>
             </div>
           </div>
-      ))}
+        ))
+      }
     </div>
   </main>
 </Layout>
 
 <style>
-.projectList {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.projectCard {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 2rem;
-  padding: 2rem;
-  border: 1px solid var(--border);
-  background: var(--background);
-  border-radius: 1rem;
-  width: 100%;
-  line-height: 1.5;
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  max-width: 800px;
-}
-
-.projectCard img {
-  width: 100%;
-  max-width: 256px;
-  border-radius: 1rem;
-}
-
-.projectCard p, .projectCard h1 {
-  margin: 0;
-}
-
-.projectTags {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-
-.projectTags span {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  background: var(--surface);
-}
-
-@media (max-width: 768px) {
-  .projectCard {
+  .projectList {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-}
-</style>
 
+  .projectCard {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--background);
+    border-radius: 1rem;
+    width: 100%;
+    line-height: 1.5;
+  }
+
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .projectCard img {
+    width: 100%;
+    max-width: 256px;
+    border-radius: 1rem;
+  }
+
+  .projectCard p,
+  .projectCard h1 {
+    margin: 0;
+  }
+
+  .projectTags {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .projectTags span {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    background: var(--surface);
+  }
+
+  @media (max-width: 768px) {
+    .projectCard {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

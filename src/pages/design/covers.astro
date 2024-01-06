@@ -1,11 +1,11 @@
 ---
-import Layout from "../../layouts/BaseLayout.astro";
-import { Covers } from "../../content/coverData";
+import Layout from "../../layouts/MainLayout.astro";
+import { Covers as coversData } from "../../data/coverData";
 import { ImageCollage } from "../../components/imageGrid";
 import PageHeader from '../../components/pageHeader.astro'
 import PageNav from '../../components/nav/pageNav.astro'
 
-const covers = Covers.map((coverCollection) => ({
+const covers = coversData.map((coverCollection) => ({
   ...coverCollection,
   slug: coverCollection.name.toLowerCase().replace(" ", "-"),
   covers: coverCollection.covers.map((cover) => ({

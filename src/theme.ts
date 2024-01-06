@@ -1,5 +1,10 @@
 import { flattenObject, forObjectReplace } from "./lib/objects";
 
+interface GeneratedTheme<T> {
+  themeCssVars: Record<string, string>;
+  theme: T;
+}
+
 const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '') => {
   const themeCssVars = flattenObject(vars, (keys, value) => [
     `${prefix}${keys.join("-")}`,
@@ -8,24 +13,67 @@ const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '') => {
 
   const theme = forObjectReplace(vars, (keys) => `var(--${keys.join("-")})`)
 
-  return {
+  const generated: GeneratedTheme<T> = {
     themeCssVars,
     theme,
-  };
+  }
+
+  return generated
+}
+
+function isObject(item: any) {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+type Obj = Record<string, any>
+
+export default function mergeDeep<T extends Obj, U extends Obj, Y extends Obj>(target: T, source: U): Y {
+  let output: Y = Object.assign({}, target) as Y;
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isObject(source[key])) {
+        if (!(key in target))
+          Object.assign(output, { [key]: source[key] });
+        else
+          output[key as keyof Y] = mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
+}
+// Create function where theme is a combo of T and U
+const mergeThemes = <T extends Record<string, any>, U extends Record<string, any>>(theme1: GeneratedTheme<T>, theme2: GeneratedTheme<U>) => {
+  // Deep merge as deep object
+  const mergedTheme = mergeDeep(theme1.theme, theme2.theme)
+  const mergedThemeCssVars = {
+    ...theme1.themeCssVars,
+    ...theme2.themeCssVars,
+  }
+
+  return {
+    themeCssVars: mergedThemeCssVars,
+    theme: mergedTheme,
+  }
+}
+
+
+
+const fontSizes = {
+  sm: "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+  base: "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+  md: "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+  lg: "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+  xl: "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+  xxl: "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+  xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
 }
 
 export const themeVars = {
   font: {
     family: 'Jost, sans-serif',
-    size: {
-      sm: "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-      base: "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-      md: "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-      lg: "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-      xl: "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-      xxl: "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-      xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
-    }
+    size: fontSizes,
   },
 
   primary: {
@@ -82,7 +130,19 @@ export const poemThemeVars = {
   border: '#aaa',
 }
 
-const poemTheme = generateTheme(poemThemeVars, "poems-")
+const poemTheme = mergeThemes(
+  // We add a custom prefix to the theme variables
+  generateTheme(poemThemeVars, "poems-"),
+  // We want the font sizes to be the same
+  generateTheme({ font: { size: fontSizes } })
+)
+
+console.log('DebugPoem', {
+  poemThemeVars,
+  poemTheme,
+  pt: generateTheme(poemThemeVars, "poems-"),
+  pt2: generateTheme({ font: { size: fontSizes } }),
+})
 
 export const poemThemeCssVars = poemTheme.themeCssVars
 export const poemThemeCss = poemTheme.theme

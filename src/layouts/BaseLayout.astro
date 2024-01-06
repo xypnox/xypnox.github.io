@@ -1,15 +1,13 @@
 ---
-import { themeCssVars } from "../theme";
-import Navbar from "../components/nav/Navbar.astro";
-import Footer from "../components/footer.astro";
-import "../styles/content.css";
 import Loading from "../components/Loading.astro";
 import Meta from "../components/meta.astro";
 import type { BaseLayoutProps } from "../dataTypes";
 
+import "../styles/reset.css";
+
 export interface Props extends BaseLayoutProps {}
 
-const { title, meta, showLoading, hideNav, htmlClass } = Astro.props;
+const { title, meta, showLoading, htmlClass, themeCssVars } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,112 +17,18 @@ const { title, meta, showLoading, hideNav, htmlClass } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,600;1,400&display=swap"
-      rel="stylesheet"
-    />
-
     <Meta {...meta} title={meta?.title ?? title} />
     <slot name="head" />
   </head>
+
   <body>
     {!(showLoading === false) && <Loading />}
-    {!hideNav && <Navbar />}
     <slot />
-    {!hideNav && <Footer />}
-  </body><script>
+  </body>
+
+  <script>
     import "iconify-icon";
   </script>
-
-  <style is:global define:vars={themeCssVars}>
-    * {
-      box-sizing: border-box;
-    }
-    html {
-      font-family: var(--font-family);
-      color: var(--text);
-      background-color: var(--background);
-      font-size: var(--font-size-base);
-      min-height: 100vh;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 1rem;
-      /* background-image: url("/nnnoise.svg"); */
-      min-height: 100vh;
-    }
-
-    a {
-      color: var(--primary-color);
-    }
-
-    .content img {
-      max-width: 100%;
-      height: auto;
-      margin: 0 auto;
-    }
-
-    pre.astro-code {
-      padding: 1rem;
-      font-size: 1rem;
-      background-color: var(--surface) !important;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      margin: 1rem 0;
-    }
-
-    h1,
-    h2,
-    h3 {
-      line-height: 1.2;
-    }
-
-    hr {
-      border: none;
-      border-top: 2px dashed var(--border);
-      width: 100%;
-      height: 2px;
-      margin: 3rem 0;
-    }
-
-    @keyframes backgroundMove {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    .text-gradient-fx:hover {
-      background: var(--animated-gradient);
-      background-size: 200% 200%;
-      animation: backgroundMove 3s ease infinite;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .text-gradient-fx-constant {
-      background: var(--animated-gradient);
-      background-size: 200% 200%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: backgroundMove 3s ease infinite;
-    }
-  </style>
 </html>
+
+<style is:global define:vars={themeCssVars ?? {}}></style>

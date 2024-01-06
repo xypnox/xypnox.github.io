@@ -12,10 +12,11 @@ const props = Astro.props;
   {...props}
   hideNav
   htmlClass="poems-root"
-  meta= {{
+  meta={{
     ...props.meta,
-    image: '/poems-social.png',
+    image: "/poems-social.png",
   }}
+  themeCssVars={poemThemeCssVars}
 >
   <main>
     <slot />
@@ -23,16 +24,16 @@ const props = Astro.props;
   <footer>
     <p>
       <a href="/poems">Poems</a> by <a href="/">xypnox</a>
-      |
-      <a href="/poems/rss.xml">RSS</a>
+      | <a href="/poems/rss.xml">RSS</a>
     </p>
   </footer>
 </BaseLayout>
 
-<style is:global define:vars={poemThemeCssVars}>
-  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap");
+<style is:global>
+  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital@0;1&display=swap");
 
   html.poems-root {
+    font-size: var(--font-size-base);
     background-color: var(--poems-background);
     color: var(--poems-text);
   }
@@ -40,8 +41,7 @@ const props = Astro.props;
   html.poems-root main,
   html.poems-root footer {
     font-family: var(--poems-fontFamily);
-    font-size: var(--font-size-base);
-    max-width: 80ch;
+    max-width: 800px;
     margin: 8rem auto 2rem;
   }
 
@@ -49,6 +49,12 @@ const props = Astro.props;
     margin-top: 4rem;
     padding: 2rem 0;
     border-top: 2px dashed var(--poems-border);
+  }
+
+  .headingFont {
+    font-family: var(--poems-headingFont);
+    font-weight: 700;
+    font-style: italic;
   }
 
   html.poems-root a {

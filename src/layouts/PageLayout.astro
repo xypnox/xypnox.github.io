@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
+import MainLayout from "./MainLayout.astro";
 import type { MarkdownLayoutProps } from "astro";
 
 type Props = MarkdownLayoutProps<{
@@ -10,7 +10,7 @@ type Props = MarkdownLayoutProps<{
 const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout title={frontmatter.title}>
+<MainLayout title={frontmatter.title}>
   <main>
     <header>
       <h1>{frontmatter.title}</h1>
@@ -20,7 +20,7 @@ const { frontmatter } = Astro.props;
       <slot />
     </div>
   </main>
-</BaseLayout>
+</MainLayout>
 
 <style>
   header {
