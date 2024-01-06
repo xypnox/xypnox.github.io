@@ -72,7 +72,7 @@ export const theme = defaultTheme.theme
 
 export const poemThemeVars = {
   fontFamily: 'EB Garamond, serif',
-  headingFont: 'Cormorant Garamond, sans-serif',
+  headingFont: '"Cormorant Garamond", serif',
   background: '#ffffff',
 
   heading: '#222',
