@@ -18,6 +18,14 @@ const props = Astro.props;
   }}
   themeCssVars={poemThemeCssVars}
 >
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
   <main>
     <slot />
   </main>
@@ -30,8 +38,6 @@ const props = Astro.props;
 </BaseLayout>
 
 <style is:global>
-  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital@0;1&display=swap");
-
   html.poems-root {
     font-size: var(--font-size-base);
     background-color: var(--poems-background);
