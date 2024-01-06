@@ -29,6 +29,9 @@ const { title, meta, showLoading, htmlClass, themeCssVars } = Astro.props;
   <script>
     import "iconify-icon";
   </script>
+  <script is:inline>
+    import "../scripts/instantPage.js"
+  </script>
 </html>
 
 <style is:global define:vars={themeCssVars ?? {}}></style>
