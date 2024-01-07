@@ -53,12 +53,13 @@ export const ColorPoem = ({ poem, colors }: Props) => {
   `)
 
   const Word = createMemo(() => (colors: string[]) => styled('span')`
+    transition: color 0.5s ease-in-out;
     animation: ${colorKeyframes()(colors)} 5s linear alternate infinite;
     animation-delay: var(--poem-line-word-delay);
-    color: var(--poem-line-word-color);
+    /* color: var(--poem-line-word-color); */
   `)
 
-  const WordComp = Word()(cssColorVarsArray);
+  const WordComp = Word()([...cssColorVarsArray, cssColorVarsArray[0]]);
 
   return <div style={cssColorVars}>
     <For each={splitText(poem)}>{(line) => {
@@ -66,7 +67,7 @@ export const ColorPoem = ({ poem, colors }: Props) => {
         <PoemLine>
           <For each={line}>{(word, index) => {
             return <WordComp style={{
-              "--poem-line-word-delay": `${(index() / line.length * 5).toFixed(2)}s`,
+              "--poem-line-word-delay": `${(index() / line.length * 1).toFixed(2)}s`,
               "--poem-line-word-color": colors[index() % colors.length],
             }} >{word}</WordComp>;
           }}</For>
