@@ -1,0 +1,101 @@
+---
+title: "Typescript & CSS Variables"
+description: "Use typescript to declare and maintain theme as css variables"
+date: 2023-11-22
+
+# coverImage: "./test-social3.webp"
+# coverAlt: "Some text for describing the cover image"
+categories: ["draft"]
+tags: ["tech", "theme", "design", "draft"]
+
+hidden: true
+---
+
+
+# CSS variables for theming
+
+When I dwelled in the world of react and styled components, I used their theme providers which functioned as:
+
+```tsx
+// Define what props.theme will look like
+const theme = {
+  main: "mediumseagreen"
+};
+
+// Color the border and text with theme.main
+const Button = styled.button`
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`;
+
+component(
+  // Use theme provider on root or somewhere as a parent
+  <div>
+    <ThemeProvider theme={theme}>
+      <Button>Themed</Button>
+    </ThemeProvider>
+  </div>
+);
+```
+
+But when the themes changed, all the css was recalculated and generated again, which was suboptimal. Moreover this strategy stops working once you move out of the react ecosystem.
+
+## CSS Variables
+
+The better way of theming is to use css variables.
+
+We define the variables ones for each theme:
+
+```css
+:root {
+  --primary: mediumseagreen;
+}
+.dark {
+  --primary: skyblue;
+}
+```
+
+And then we use those variables in the css styles:
+
+```css
+button {
+  color: var(--primary);
+}
+```
+
+We can add simple code to add a .dark class to our body/html element to toggle between the themes. None of the styles are recomputed, and this can be used across frameworks or even without any framework. Moreover you can always override the theme variables in smaller contexts:
+
+```html
+<div class="special">
+  <button>Hello</button>
+</div>
+
+<style>
+  .special {
+    --primary: red;
+  }
+</style>
+```
+
+## A step further via objects
+
+But these do not have type safety. When you write css and later refactor any of the theme variables, the older ones are left dangling. While fallbacks are nice, refactoring still requires manually scouring for the older ones are rewriting them again. Moreover these errors can not be found in the build step and will easily mess up your stylesheets. 
+
+I have found a promising solution. Which has type safety when using css-in-js. But the basic structure remains same.
+
+The way I organize the themes is to declare the variables as a js object.
+
+```ts
+const theme = {
+}
+```
+
+---
+
+# Resources
+
+
+- https://tonsky.me/
+  Cool dark mode with round light where the mouse is.
+  Don't know about accessibility but emulates the torchlight under a quilt nicely.
+

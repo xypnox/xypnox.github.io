@@ -5,8 +5,8 @@ date: 2023-11-22
 
 # coverImage: "./test-social3.webp"
 # coverAlt: "Some text for describing the cover image"
-categories: ["sample"]
-tags: ["design", "dev"]
+categories: ["draft"]
+tags: ["design", "tech", "draft"]
 
 hidden: true
 ---
@@ -26,19 +26,21 @@ import { ThemePreview, ThemePreviewSplits, themePreviewConfigVars, themePreviewE
       bg: '#d3c4a0',
     },
     elements: [
-      { type: 'h2', text: 'With white paper and black ink' },
-      { type: 'text', text: 'You save ink' },
-      { type: 'text', text: 'with LCDs you save nothing' },
+      { type: 'h2', text: 'As we moved from' },
+      { type: 'text', text: 'Paper to Pixel' },
+      { type: 'h1', text: 'the Black on White' },
+      { type: 'text', text: 'became standard' },
     ]
   },
   {
     vars: {
-    txt: '#d3c4a0',
-    bg: '#0d1d35',
+    txt: '#0f0',
+    bg: 'black',
     },
     elements: [
-      { type: 'h1', text: 'With OLEDs' },
-      { type: 'h2', text: 'you waste light the more there is white' }
+      { type: 'h2', text: 'After the garish' },
+      { type: 'h1', text: 'Green on Black' },
+      { type: 'h1', text: 'days of the old' }
     ]
   }
 
@@ -46,13 +48,13 @@ import { ThemePreview, ThemePreviewSplits, themePreviewConfigVars, themePreviewE
   showInfo={false}
 />
 
-As we moved from paper to pixel, the black on white became standard after the garish green on black of the terminals of the old.
-
 Dark mode is _a different stylistic version of the same interface_, and uses lighter colors on top of darker background. There should be _no change_ in layout. Any changes that could be done to the layout should work in both modes.
 
 Some things remained dark, some turned towards light like the web browser with the default white background. And the bright themes of the operating systems. 
 
-Dark mode has now become a staple in all forms of software. Even government websites have dark modes now, and I prefer them over white however ugly they may be. _But does everything need a dark mode? And can everything be turned dark?_
+Dark mode has now become a staple in modern interfaces. Mainstream apps, government websites, and operating systems all have dark modes now, and I prefer them over the harsh white, however ugly they may be.
+
+_But does everything need a dark mode? And can everything be turned dark?_
 
 # Is it needed?
 
@@ -115,7 +117,9 @@ After considering the content and the context, if dark mode is indeed what we wa
 
 While this serves for basic text only content, there are various elements that don't directly translate into a usable dark mode.
 
-## Relative colors
+## Colors
+
+### Relative colors
 
 Although an explanation about how the _perceived colors depend on the background_ is not needed, here is a fine example:
 
@@ -176,9 +180,105 @@ Although an explanation about how the _perceived colors depend on the background
 />
 
 
+### The ugly gray
+
+One of the easiest ways to make a dark mode color palette is to pick shades of gray. And they are easy to pick in all color formats.
+
+However, the interfaces that use such gray shades look dull and washed out. Desaturated. As if someone disabled the app itself instead of a button. Especially if [combined with material design (v2)](https://m2.material.io/design/color/dark-theme.html#properties).
+
+<ThemePreviewSplits
+  client:visible
+  previews={[
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#333',
+        bg: '#222',
+      },
+      elements: [
+        { type: 'h2', text: 'Gray is static, gray is ugly' },
+        { type: 'card', text: 'Gray on gray is uglier still' },
+        { type: 'text', text: 'Through years of experience I can say, gray is grey, gray and darkgray and lightgray and dark all at the same time.' },
+      ]
+    },
+    {
+      vars: {
+        txt: '#eee',
+        surface: '#333',
+        bg: '#111',
+      },
+      elements: [
+        { type: 'h1', text: 'A little darker?' },
+        { type: 'h2', text: 'We might as well have used black' },
+        { type: 'card', text: 'And the surfaces are still ugly' }
+      ]
+    },
+    {
+      vars: {
+        txt: "#B5C0DB",
+        bg: "#1A1E27",
+        surface: "#303748",
+      },
+      elements: [
+        { type: 'h1', text: 'Adding a bit of color' },
+        { type: 'card', text: 'Adds a lot of life that was missing' },
+        { type: 'text', text: 'In these drab slabs of gray' }
+      ]
+    },
+    {
+      vars: {
+        txt: "#B5C0DB",
+        bg: "#0f111a",
+        surface: "#1A1E27",
+      },
+      elements: [
+        { type: 'h1', text: 'And we can always go darker still' },
+        { type: 'text', text: 'Though the effect is not as pronounced' },
+        { type: 'card', text: 'Yet it is good enough' }
+      ]
+    },
+  ]}
+  showInfo={false}
+/>
 
 
-## Darker shades
+
+https://m3.material.io/styles/color/choosing-a-scheme
+
+And I think these gray themes are what have given the dark mode the aura of unsaturated monochromatic soulless interfaces. As if colors are meant to be reserved for the light mode.
+
+## Colors that were lost
+
+Some colors look bad on white background if used as text. Yellow is a prime example. But in the world of dark mode, yellow literally shines!
+
+<ThemePreviewSplits
+  client:visible
+  previews={[
+    {
+      vars: {
+        txt: 'yellow',
+        bg: '#fff',
+      },
+      elements: [
+        { type: 'h1', text: 'Yellow in dark mode is more readable' },
+        { type: 'h2', text: 'than the light mode' },
+      ]
+    },
+    {
+      vars: {
+        txt: "yellow",
+        bg: "#0f111a",
+      },
+      elements: [
+        { type: 'h1', text: 'Yellow in dark mode is more readable' },
+        { type: 'h2', text: 'than the light mode' },
+      ]
+    },
+  ]}
+  showInfo={false}
+/>
+
+## Surfaces
 
 Another dilemma arises when we have a background and a card, there are several _ways to differentiate the background with the foreground_.
 
@@ -212,48 +312,59 @@ In the light mode, we can enjoy a variety of styles to separate content into box
   {...themePreviewSplitsConfigs.card}
 />
 
+### Shadows
 
+Natural looking shadows are easy in light mode as there is ample contrast from the lighter background for a faint shadow to be visible, however in dark mode, the shadow opacity and darkness has to be turned all the way up. Sometimes a glow is added instead as it matches the dark metaphor.
 
-### The ugly gray
-
-Yes I consider dark monochrome themes that use a grey background ugly. And I will die on this hill. Especially if [combined with material design (v2)](https://m2.material.io/design/color/dark-theme.html#properties).
 
 <ThemePreviewSplits
   client:visible
   previews={[
-    {
-      vars: {
-        txt: '#eee',
-        surface: '#333',
-        bg: '#222',
-      },
-      elements: [
-        { type: 'h2', text: 'Gray is static, gray is ugly' },
-        { type: 'card', text: 'Gray on gray is uglier still' },
-        { type: 'text', text: 'Through years of experience I can say, gray is grey, gray and darkgray and lightgray and dark all at the same time.' },
-      ]
-    },
-    {
-      vars: {
-        txt: '#eee',
-        surface: '#333',
-        bg: '#111',
-      },
-      elements: [
-        { type: 'h1', text: 'A little darker?' },
-        { type: 'h2', text: 'We might as well have used black' },
-        { type: 'card', text: 'And the surfaces are still ugly' }
-      ]
-    }
+      {
+        vars: themePreviewConfigVars.lightModeShadowCardVars,
+        elements: [
+          { type: 'card', text: 'This shadow looks fine, like a normal card would make.' },
+      ],},
+      {
+        vars: themePreviewConfigVars.darkModeShadowCardVars,
+        elements: [
+          { type: 'card', text: 'Notice how the same shadow is barely visible in dark mode' },
+      ],},
+      {
+        vars: themePreviewConfigVars.darkModeSharpShadowCardVars,
+        elements: [
+          { type: 'card', text: 'But once we pump up the shadow opacity we get similar contrast.' },
+      ],},
+      {
+        vars: themePreviewConfigVars.darkModeGlowCardVars,
+        elements: [
+          { type: 'card', text: 'A bit of glow, but it can sometimes become too harsh.' },
+      ],},
   ]}
-  showInfo={false}
+/>
+
+### Shiny
+
+An example of the current shiny look: 
+
+<ThemePreview
+  client:visible
+  preview={{
+        vars: themePreviewConfigVars.shinyCardVars,
+        elements: [
+          { type: 'shinycard', text: '',
+            elements: [
+              { type: 'h1', text: 'SaaS AI' },
+              { type: 'text', text: 'Get that latest SaaS AI Sauce sources via Safe Secure Shoutouts' },
+              { type: 'button', text: 'Subscribe.AI' },
+
+            ]
+          },
+      ],}
+  }
 />
 
 
-
-https://m3.material.io/styles/color/choosing-a-scheme
-
-And I think these gray themes are what have given the dark mode the aura of unsaturated monochromatic soulless interfaces. As if colors are meant to be reserved for the light mode.
 
 ## The code block
 
@@ -261,7 +372,7 @@ What color mode should the code block be in?
 
 Should light mode and dark mode both have different color schemes? What if your light mode already has a dark code highlighting? Does this mean we add a light code highlighting theme for dark mode?
 
-## Contrasty designer
+## Contrasty design
 
 There are designs for software (websites, products) that use different modes (dark/light) in the same interface to distinguish a sidebar/navigation/sections of a page.
 
@@ -269,9 +380,6 @@ Ex: Sidebar with black back and white text beside a product dashboard, a website
 
 While this is effective to some degree. It is neither dark nor light. And the contrast is needless in most cases. Why would you use a different mode when a border or a slightly different shade of background could have achieved the same? Is it because of a "brand identity"? But even then, what kind of brand is both dark and light and that at the same time?
 
-## Shady Shadows
-
-Shadows become extremely hard to see in dark modes. More so if the background is completely black.
 
 ## Only prefers color scheme
 
@@ -282,101 +390,18 @@ Shadows become extremely hard to see in dark modes. More so if the background is
 
 # Living in the dark mode
 
+Not all dark modes have to be built, some can be applied, because the light mode already contains a lot of information to convert itself to dark mode.
+
+
 - Dark Reader extension converts light mode websites to dark mode
 - Stylus allows setting custom stylesheets on specific websites, in combination with websites that have a good css variable declaration, a simple changes can be made that will be retained (hopefully) till the next overhaul.
 
----
 
-# Some good things
-
-## Colors that were lost
-
-Some colors look bad on white background if used as text. Yellow is a prime example. But in the world of dark mode, yellow literally shines!
-
-// Add example yellow calry website
-
-## CSS variables for theming
-
-When I dwelled in the world of react and styled components, I used their theme providers which functioned as:
-
-```tsx
-// Define what props.theme will look like
-const theme = {
-  main: "mediumseagreen"
-};
-
-// Color the border and text with theme.main
-const Button = styled.button`
-  color: ${props => props.theme.main};
-  border: 2px solid ${props => props.theme.main};
-`;
-
-component(
-  // Use theme provider on root or somewhere as a parent
-  <div>
-    <ThemeProvider theme={theme}>
-      <Button>Themed</Button>
-    </ThemeProvider>
-  </div>
-);
-```
-
-But when the themes changed, all the css was recalculated and generated again, which was suboptimal. Moreover this strategy stops working once you move out of the react ecosystem. The better way of theming is to use css variables.
-
-We define the variables ones for each theme:
-
-```css
-:root {
-  --primary: mediumseagreen;
-}
-.dark {
-  --primary: skyblue;
-}
-```
-
-And then we use those variables in the css styles:
-
-```css
-button {
-  color: var(--primary);
-}
-```
-
-We can add simple code to add a .dark class to our body/html element to toggle between the themes. None of the styles are recomputed, and this can be used across frameworks or even without any framework. Moreover you can always override the theme variables in smaller contexts:
-
-```html
-<div class="special">
-  <button>Hello</button>
-</div>
-
-<style>
-  .special {
-    --primary: red;
-  }
-</style>
-```
-
-## A step further via objects
-
-But these do not have type safety. When you write css and later refactor any of the theme variables, the older ones are left dangling. While fallbacks are nice, refactoring still requires manually scouring for the older ones are rewriting them again. Moreover these errors can not be found in the build step and will easily mess up your stylesheets. 
-
-I have found a promising solution. Which has type safety when using css-in-js. But the basic structure remains same.
-
-The way I organize the themes is to declare the variables as a js object.
-
-```ts
-const theme = {
-}
-```
 
 ---
 
 # Resources
 
-
-- https://tonsky.me/
-  Cool dark mode with round light where the mouse is.
-  Don't know about accessibility but emulates the torchlight under a quilt nicely.
-
+- [A Complete Guide to Dark Mode on the Web | CSS-Tricks](https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/)
 
 

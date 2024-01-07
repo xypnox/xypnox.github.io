@@ -7,6 +7,7 @@ import { Tabs } from "./tabs"
 interface UIElement {
   type: string
   text: string
+  elements?: UIElement[]
 }
 
 interface Themevars {
@@ -74,6 +75,37 @@ const lightModeShadowCardVars: Themevars = {
   cardShadow: "0px 8px 16px -8px rgba(0,0,0,0.2)",
 }
 
+const darkModeShadowCardVars: Themevars = {
+  txt: "#B5C0DB",
+  bg: "#1A1E27",
+  surface: "#303748",
+  cardShadow: "0px 8px 16px -8px rgba(0,0,0,0.2)",
+}
+const darkModeSharpShadowCardVars: Themevars = {
+  txt: "#B5C0DB",
+  bg: "#1A1E27",
+  surface: "#303748",
+  cardShadow: "0px 8px 16px -8px rgba(0,0,0,0.4)",
+}
+const darkModeGlowCardVars: Themevars = {
+  txt: "#1A1E27",
+  bg: "#1A1E27",
+  surface: "rgb(45,255,196)",
+  cardShadow: "0px 16px 32px 4px rgba(45,255,196,0.5)",
+}
+
+const shinyCardVars: Themevars = {
+  txt: "#B5C0DB",
+  bg: "#0f111a",
+  surface: "linear-gradient(180deg, #1A1E27 0%, #303748 100%)",
+  cardBorder: "1px solid #ffffff20",
+  cardShadow: "0px 16px 32px 4px rgba(45,255,196,0.5)",
+  primary: {
+    color: "#2DFFC4",
+    over: "#1A1E27",
+  }
+}
+
 const lightModeCardBorderVars: Themevars = {
   txt: "#000",
   bg: "#f0f0f0",
@@ -90,6 +122,10 @@ export const themePreviewConfigVars = {
   lightModeCardFlippedVars,
   lightModeShadowCardVars,
   lightModeCardBorderVars,
+  darkModeShadowCardVars,
+  darkModeSharpShadowCardVars,
+  darkModeGlowCardVars,
+  shinyCardVars,
 }
 
 const minimalElements: UIElement[] = [
@@ -216,10 +252,17 @@ const Button = styled("button")`
 const Card = styled("div")`
   margin: 1rem 0;
   border-radius: 0.5rem;
-  background-color: var(--preview-surface);
+  background: var(--preview-surface);
   color: var(--txt);
   padding: 1rem;
   box-shadow: var(--preview-cardShadow);
+  border: var(--preview-cardBorder, 1px solid transparent);
+`
+
+const ShinyCard = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   border: var(--preview-cardBorder, 1px solid transparent);
 `
 
@@ -369,6 +412,36 @@ const ThemeInfo = (props: ThemePreviewProps) => {
   )
 }
 
+const RenderElement = (props: { element: UIElement }) => {
+
+  return <GridItem>
+    <Show when={props.element.type === "text"}>
+      <Text>{props.element.text}</Text>
+    </Show>
+    <Show when={props.element.type === "button"}>
+      <Button>{props.element.text}</Button>
+    </Show>
+    <Show when={props.element.type === "h1"}>
+      <H1>{props.element.text}</H1>
+    </Show>
+    <Show when={props.element.type === "h2"}>
+      <H2>{props.element.text}</H2>
+    </Show>
+    <Show when={props.element.type === "card"}>
+      <Card>{props.element.text}</Card>
+    </Show>
+    <Show when={props.element.type === "shinycard"}>
+      <ShinyCard>
+        <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
+          {(element) => (
+            <RenderElement element={element} />
+          )}
+        </For>
+      </ShinyCard>
+    </Show>
+  </GridItem>
+}
+
 // Add type reference in comments
 /**
  * Shows a single theme preview
@@ -385,25 +458,9 @@ export const ThemePreview = (props: ThemePreviewProps) => {
   return (
     <Container>
       <Column style={{ ...themeCssVars }}>
-        <For each={props.preview.elements ?? themePreviewElementConfigs.minimal}>
+        <For each={props.preview.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
           {(element) => (
-            <GridItem>
-              <Show when={element.type === "text"}>
-                <Text>{element.text}</Text>
-              </Show>
-              <Show when={element.type === "button"}>
-                <Button>{element.text}</Button>
-              </Show>
-              <Show when={element.type === "h1"}>
-                <H1>{element.text}</H1>
-              </Show>
-              <Show when={element.type === "h2"}>
-                <H2>{element.text}</H2>
-              </Show>
-              <Show when={element.type === "card"}>
-                <Card>{element.text}</Card>
-              </Show>
-            </GridItem>
+            <RenderElement element={element} />
           )}
         </For>
       </Column>
