@@ -94,12 +94,15 @@ const darkModeGlowCardVars: Themevars = {
   cardShadow: "0px 16px 32px 4px rgba(45,255,196,0.5)",
 }
 
+/***
+border: 2px solid #2C3046; background: linear-gradient(155deg, #1A1D2C -3.43%, #131621 65.81%);
+ */
 const shinyCardVars: Themevars = {
   txt: "#B5C0DB",
   bg: "#0f111a",
-  surface: "linear-gradient(180deg, #1A1E27 0%, #303748 100%)",
-  cardBorder: "1px solid #ffffff20",
-  cardShadow: "0px 16px 32px 4px rgba(45,255,196,0.5)",
+  surface: "linear-gradient(155deg, #1A1D2C -3.43%, #131621 65.81%)",
+  cardBorder: "linear-gradient(155deg, #2C3046, #0f111a)",
+  cardShadow: "0px 8px 32px -4px rgba(45,255,196,0.05)",
   primary: {
     color: "#2DFFC4",
     over: "#1A1E27",
@@ -259,11 +262,26 @@ const Card = styled("div")`
   border: var(--preview-cardBorder, 1px solid transparent);
 `
 
+const ShinyCardWrapper = styled("div")`
+  border-radius: calc(0.5rem + 2px);
+  background: var(--preview-cardBorder);
+  padding: 2px;
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: var(--preview-cardShadow);
+`
+
 const ShinyCard = styled(Card)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border: var(--preview-cardBorder, 1px solid transparent);
+  border: none;
+  margin: 0;
+  ${H1.class} {
+    color: var(--preview-primary-color);
+  }
 `
 
 const ThemeInfoWrapper = styled("div")`
@@ -431,13 +449,15 @@ const RenderElement = (props: { element: UIElement }) => {
       <Card>{props.element.text}</Card>
     </Show>
     <Show when={props.element.type === "shinycard"}>
-      <ShinyCard>
-        <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
-          {(element) => (
-            <RenderElement element={element} />
-          )}
-        </For>
-      </ShinyCard>
+      <ShinyCardWrapper>
+        <ShinyCard>
+          <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
+            {(element) => (
+              <RenderElement element={element} />
+            )}
+          </For>
+        </ShinyCard>
+      </ShinyCardWrapper>
     </Show>
   </GridItem>
 }
