@@ -47,11 +47,17 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     gap: 1em;
     width: 100%;
     padding: 1em;
-    background: linear-gradient(45deg, var(--background), var(--surface));
-    background-size: 200%;
-    border: 1px solid var(--border);
-    box-shadow: var(--cardShadow);
-    border-radius: 2em;
+    border-radius: 2rem;
+    background: var(--card-background);
+    border: var(--card-border);
+    background-size: var(--card-backgroundSize);
+    background-position: var(--card-backgroundPosition);
+    transition: all 0.5s ease-in-out; 
+  }
+
+  .container-wrapper:hover {
+    background-position: var(--card-backgroundPositionHover);
+    border: var(--card-borderHover);
   }
 
   .container-wrapper :global(p) {
@@ -64,6 +70,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     gap: 1em;
     width: 100%;
     padding: 1em;
+    color: var(--fadeText);
   }
   h1 {
     display: flex;
@@ -99,7 +106,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     padding: 0.5rem 1rem;
     width: 100%;
     color: var(--text);
-    text-decoration-color: var(--color);
+    text-decoration: none;
     font-size: var(--font-size-md);
     border-radius: 0.75rem;
     border: 2px dashed transparent;

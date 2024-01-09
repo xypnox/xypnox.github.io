@@ -15,21 +15,23 @@ const dateFormatOption = {
   month: "long",
   year: "numeric",
 } as const;
-
 ---
 
 {
   blogPostEntry && (
     <a class="blog-entry" href={`/blag/posts/${blogPostEntry.slug}`}>
+      {hideImage !== true && (
         <div class="coverImage">
-      {blogPostEntry.data.coverImage && hideImage !== true && (
-          <Image
-            alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
-            src={blogPostEntry.data.coverImage}
-          />
-      )}
-        {!blogPostEntry.data.coverImage && hideImage !== true && <img src="/blogpostcover.webp"/>}
+          {blogPostEntry.data.coverImage ? (
+            <Image
+              alt={blogPostEntry.data.coverAlt ?? "Cover Image"}
+              src={blogPostEntry.data.coverImage}
+            />
+          ) : (
+            <img src="/blogpostcover.webp" />
+          )}
         </div>
+      )}
       <h2>{blogPostEntry.data.title}</h2>
       {blogPostEntry.data.description && (
         <p class="description">{blogPostEntry.data.description}</p>
@@ -39,7 +41,7 @@ const dateFormatOption = {
           <time datetime={blogPostEntry.data.date.toISOString()}>
             {blogPostEntry.data.date.toLocaleDateString(
               "en-US",
-              dateFormatOption
+              dateFormatOption,
             )}
           </time>
           {blogPostEntry.data.tags && (

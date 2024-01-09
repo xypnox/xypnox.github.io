@@ -130,9 +130,22 @@ import '../../scripts/menu'
       bottom: 4rem;
       left: 1rem;
       width: calc(100% - 2rem);
-      flex-direction: column;
       font-size: var(--font-size-lg);
+      gap: 2rem;
+      flex-wrap: wrap;
       box-shadow: 0px 8px 16px #00000080;
+      padding: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .navbar .mobile-menu :global(.navLink) {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.25rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      border: var(--card-border);
     }
   }
 </style>

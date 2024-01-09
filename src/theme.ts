@@ -76,6 +76,23 @@ const fontSizes = {
   xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
 }
 
+const technoCard = {
+  border: '2px dashed var(--border)',
+  background: 'linear-gradient(-45deg, var(--surface), var(--background), var(--background))',
+  backgroundSize: '200%',
+  borderHover: '2px solid var(--border)',
+  backgroundPositionHover: '-100% 0',
+}
+
+const card = {
+  border: '2px dashed var(--border)',
+  background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+  backgroundPosition: '90% 0',
+  backgroundSize: '200%',
+  borderHover: '2px solid var(--border)',
+  backgroundPositionHover: '10% 20%',
+}
+
 export const themeVars = {
   font: {
     family: 'Jost, sans-serif',
@@ -105,6 +122,8 @@ export const themeVars = {
   fadeText: '#919DCF80',
 
   cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.5)',
+
+  card,
 
   bold: '#BB6170',
   italic: '#CC64AD',

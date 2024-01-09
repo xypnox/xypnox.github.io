@@ -3,8 +3,10 @@ import { links } from "../content/links";
 import { Icon } from "astro-icon";
 ---
 
-<div class="links">
-  <div>Other Places</div>
+<div class="links-wrapper">
+  <h2>Other Places</h2>
+
+  <div class="links">
   {
     links.map((link) => (
       <a class="link" rel="me" href={link.url}>
@@ -15,16 +17,33 @@ import { Icon } from "astro-icon";
       </a>
     ))
   }
+  </div>
 </div>
 
 <style>
+  .links-wrapper {
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--card-background);
+    border: var(--card-border);
+    background-size: var(--card-backgroundSize);
+    background-position: var(--card-backgroundPosition);
+    transition: all 0.5s ease-in-out; 
+    max-width: max-content;
+  }
   .links {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 1rem 2rem;
+    gap: 1rem;
     width: 100%;
+  }
+  .links-wrapper h2 {
+    width: 100%;
+    color: var(--heading);
+    margin: 0;
+    margin-bottom: 1rem;
   }
   .link {
     display: flex;
@@ -33,21 +52,25 @@ import { Icon } from "astro-icon";
     text-decoration: none;
     color: var(--text);
     font-size: 1rem;
-    transition: color 0.5s ease;
 
-    border: 1px solid var(--border);
-    background: var(--background);
-    box-shadow: var(--cardShadow);
+    background: var(--card-background);
+    border: var(--card-border);
+    background-size: var(--card-backgroundSize);
+    background-position: var(--card-backgroundPosition);
+    transition: all 0.5s ease-in-out; 
 
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
   }
+
   .link:hover {
     color: var(--primary-color);
+    background-position: var(--card-backgroundPositionHover);
+    border: var(--card-borderHover);
   }
   .link svg {
-    width: 2rem;
-    height: 2rem;
+    width: 1.2rem;
+    height: 1.2rem;
     flex-shrink: 0;
   }
 

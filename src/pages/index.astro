@@ -10,9 +10,13 @@ import LatestBlog from "../components/latestBlog.astro";
   <main>
     <div class="intro">
       <XypnoxEase />
-      <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
-      <p>I design/develop interfaces.</p>
-      <p>This is the lair, a collection of my works, designs, and writings.</p>
+      <div class="intro-content">
+        <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
+        <p class="subline">I design/develop interfaces.</p>
+        <p>
+          This is the lair, a collection of my works, designs, and writings.
+        </p>
+      </div>
     </div>
 
     <div class="containers">
@@ -23,12 +27,16 @@ import LatestBlog from "../components/latestBlog.astro";
         links={[
           { title: "Projects", href: "/projects" },
           { title: "Experiments", href: "https://xypnox.studio" },
-          { title: "Github", href: "https://github.com/xypnox" }
-        ]}>
-        <p slot="description">For building something is a reward in and of itself.</p>
+          { title: "Github", href: "https://github.com/xypnox" },
+        ]}
+      >
+        <p slot="description">
+          For building something is a reward in and of itself.
+        </p>
       </Container>
 
-      <Container title="Design"
+      <Container
+        title="Design"
         image="/skills/design.svg"
         linkTitle="/design"
         color="var(--primary-color)"
@@ -39,19 +47,22 @@ import LatestBlog from "../components/latestBlog.astro";
           { title: "Posters", href: "https://posters.xypnox.com" },
           { title: "Behance", href: "https://www.behance.net/xypnox/" },
         ]}
-        >
-        <p slot="description">For utility and function are nothing without beauty.</p>
+      >
+        <p slot="description">
+          For utility and function are nothing without beauty.
+        </p>
       </Container>
 
-      <Container title="Literature"
+      <Container
+        title="Literature"
         image="/skills/lit.svg"
         color="#72ff80"
         links={[
-          { title: "Blag", href: "/blag"},
-          { title: "Poems", href: "/poems"},
-          { title: "Why xypnox", href: "/why-xypnox"},
+          { title: "Blag", href: "/blag" },
+          { title: "Poems", href: "/poems" },
+          { title: "Why xypnox", href: "/why-xypnox" },
         ]}
-        >
+      >
         <p slot="description">For writing and language are how we think.</p>
       </Container>
     </div>
@@ -63,7 +74,6 @@ import LatestBlog from "../components/latestBlog.astro";
       <div class="collaborate">
         <p>Let's collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
       </div>
-
     </div>
   </main>
 </Layout>
@@ -88,16 +98,43 @@ import LatestBlog from "../components/latestBlog.astro";
 
   .intro {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
     width: 100%;
     max-width: 1200px;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
+    color: var(--text);
+    padding: 2rem;
+    border-radius: 2rem;
+    border: 2px dashed var(--border);
   }
 
-  .intro p {
+  .intro :global(wrapper) {
+    flex-shrink: 1;
+  }
+
+  .intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-grow: 1;
+    max-width: 35ch;
+  }
+
+  .intro-content h1 {
     margin: 0;
+  }
+
+  .intro-content p {
+    margin: 0;
+    color: var(--fadeText);
+  }
+
+  .intro .subline {
+    font-size: var(--font-size-lg);
+    color: var(--text);
   }
 
   .containers {
@@ -112,7 +149,7 @@ import LatestBlog from "../components/latestBlog.astro";
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
+    gap: 4rem;
     width: 100%;
     max-width: 1200px;
   }
@@ -151,5 +188,16 @@ import LatestBlog from "../components/latestBlog.astro";
     font-size: var(--font-size-xm);
     text-decoration: underline;
     padding: 0;
+  }
+
+  @media (max-width: 600px) {
+    .intro {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .intro .subline {
+      font-size: var(--font-size-md);
+    }
   }
 </style>
