@@ -16,7 +16,7 @@ interface Props {
 const { title, icon, image, links, linkTitle, color } = Astro.props;
 ---
 
-<div class={ "container-wrapper" + (image ? " with-image" : "") }>
+<div class={ "container-wrapper theme-card" + (image ? " with-image" : "") }>
   {image && <img src={image} alt={title} />}
   <div class="info">
     {title && 
@@ -48,16 +48,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     width: 100%;
     padding: 1em;
     border-radius: 2rem;
-    background: var(--card-background);
-    border: var(--card-border);
-    background-size: var(--card-backgroundSize);
-    background-position: var(--card-backgroundPosition);
     transition: all 0.5s ease-in-out; 
-  }
-
-  .container-wrapper:hover {
-    background-position: var(--card-backgroundPositionHover);
-    border: var(--card-borderHover);
   }
 
   .container-wrapper :global(p) {
@@ -119,15 +110,11 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   .container-link:hover {
     transition: all 0.1s ease-in-out;
     border-color: var(--color);
-    transform-origin: left;
   }
   .container-link:active {
-    transform: scale(0.9);
   }
 
   .container-link:hover span {
-    transition: all 0.1s ease-in-out;
-    transform: scale(1.1);
     /* color: var(--color); */
   }
 

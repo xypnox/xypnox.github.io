@@ -80,3 +80,16 @@
 .content a:hover {
   border-bottom: 2px solid var(--primary-color);
 }
+
+.theme-card {
+  transition: all 0.3s ease;
+  background: var(--card-background);
+  border: var(--card-border);
+  background-size: var(--card-backgroundSize);
+  background-position: var(--card-backgroundPosition);
+}
+
+.theme-card:hover {
+  background-position: var(--card-backgroundPositionHover);
+  border: var(--card-borderHover);
+}

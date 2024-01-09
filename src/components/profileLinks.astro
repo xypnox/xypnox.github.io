@@ -9,7 +9,7 @@ import { Icon } from "astro-icon";
   <div class="links">
   {
     links.map((link) => (
-      <a class="link" rel="me" href={link.url}>
+      <a class="link theme-card" rel="me" href={link.url}>
         <Icon name={link.icon} />
         <span>
         {link.name}
@@ -25,10 +25,7 @@ import { Icon } from "astro-icon";
     margin: 0 auto;
     padding: 2rem;
     border-radius: 1rem;
-    background: var(--card-background);
     border: var(--card-border);
-    background-size: var(--card-backgroundSize);
-    background-position: var(--card-backgroundPosition);
     transition: all 0.5s ease-in-out; 
     max-width: max-content;
   }
@@ -53,10 +50,6 @@ import { Icon } from "astro-icon";
     color: var(--text);
     font-size: 1rem;
 
-    background: var(--card-background);
-    border: var(--card-border);
-    background-size: var(--card-backgroundSize);
-    background-position: var(--card-backgroundPosition);
     transition: all 0.5s ease-in-out; 
 
     padding: 1rem;
@@ -65,8 +58,7 @@ import { Icon } from "astro-icon";
 
   .link:hover {
     color: var(--primary-color);
-    background-position: var(--card-backgroundPositionHover);
-    border: var(--card-borderHover);
+    border-color: var(--primary-color);
   }
   .link svg {
     width: 1.2rem;
