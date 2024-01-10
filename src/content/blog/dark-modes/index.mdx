@@ -370,9 +370,62 @@ An example of the current shiny look:
 
 ## The code block
 
-What color mode should the code block be in?
+What color scheme should the code block be in? In light mode? Should light mode and dark mode both have different color schemes? What if your light mode already has a dark code highlighting? Does this mean we add a light code highlighting theme for dark mode? Nope.
 
-Should light mode and dark mode both have different color schemes? What if your light mode already has a dark code highlighting? Does this mean we add a light code highlighting theme for dark mode?
+Chances are you are using a popular color scheme, thus it would be available/convertable to the code highlighting solution you use. If not so, picking from one of the default color schemes also works. Go for a specific customized version if it is important, and make sure that the color scheme remains consistent across the experience.
+
+Some may want a custom theme that matches their overall style, so they may want to create a new theme or tweak an existing one. However it is not a easy affair, first we have to understand the highlighter that is being used. And find a theme we can derive from.
+
+As an example, this blog uses astro which comes with [shikijs/shiki](https://github.com/shikijs/shiki) syntax highlighter which can take a textmate or vscode highlighting config and use it to highlight code in html. However, due to the inherent complexities of the structure of theme, modification is non trivial. While I was tempted by it's css-variables color theme, it doesn't work as nicely with complex code snippets such as `jsx`. I ended up writing/tweaking the default vscode dark theme to match my color scheme:
+
+
+```tsx
+// Just some jsx to preview the theme!
+/**
+ * Shows a single theme preview
+ * Requires theme vars: `Themevars`
+ */
+export const ThemePreview = (props: ThemePreviewProps) => {
+  const themeCssVars = flattenObject(props.preview.vars ?? lightMode, (keys, value) => [
+    `--preview-${keys.join("-")}`,
+    value,
+  ]);
+
+  // console.log({ themeCssVars, initialVars: lightMode })
+
+  return (
+    <Container>
+      <Column style={{ ...themeCssVars }}>
+        <For each={props.preview.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
+          {(element) => (
+            <RenderElement element={element} />
+          )}
+        </For>
+      </Column>
+      <Show when={props.showInfo === undefined || props.showInfo}>
+        <ThemeInfo {...props} />
+      </Show>
+      {props.children}
+    </Container>
+  )
+}
+```
+
+<ThemePreviewSplits
+  client:visible
+  previews={[
+    {
+      vars: themePreviewConfigVars.codeVars,
+      elements: [
+        { type: 'code', text: ''},
+    ],},
+    {
+      vars: themePreviewConfigVars.codeVars,
+      elements: [
+        { type: 'code', text: ''},
+    ],},
+  ]}
+/>
 
 ## Contrasty design
 

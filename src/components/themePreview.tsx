@@ -20,6 +20,7 @@ interface Themevars {
   surface?: string
   cardBorder?: string
   cardShadow?: string
+  astro?: { code?: Record<string, any> }
 }
 
 interface Preview {
@@ -116,6 +117,32 @@ const lightModeCardBorderVars: Themevars = {
   cardBorder: "1px solid #ccc",
 }
 
+const codeVars: Themevars = {
+  txt: "#c0caf5",
+  bg: "#101010",
+
+  astro: {
+    code: {
+      color: {
+        text: "#c0caf5", // fg
+        background: "#1A1E27", // bg
+      },
+      token: {
+        constant: "#89DDFF", // blue
+        string: "#C3E88D", // green
+        comment: "#565f89", // comment
+        keyword: "#BB9AF7", // purple
+        parameter: "#ff9e64", // orange
+        function: "#82AAFF", // blue
+        stringExpression: "#C3E88D", // green
+        punctuation: "#82AAFF", // blue
+        link: "#82AAFF", // blue
+      }
+    }
+  }
+}
+
+
 export const themePreviewConfigVars = {
   lightMode,
   blackModeVars,
@@ -129,6 +156,7 @@ export const themePreviewConfigVars = {
   darkModeSharpShadowCardVars,
   darkModeGlowCardVars,
   shinyCardVars,
+  codeVars
 }
 
 const minimalElements: UIElement[] = [
@@ -283,6 +311,33 @@ const ShinyCard = styled(Card)`
     color: var(--preview-primary-color);
   }
 `
+
+const CodeBlock = styled("pre")`
+  width: 100%;
+  x-overflow: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--preview-astro-code-color-background);
+`
+
+const Code = () => {
+  const code = `<span class="line"><span style="color:var(--preview-astro-code-token-comment)">/** A function to end all functions */</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-token-keyword)">function</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">showcaseSyntaxHighlighting</span><span style="color:var(--preview-astro-code-color-text)">&lt;</span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-keyword)">extends</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">string</span><span style="color:var(--preview-astro-code-color-text)">&gt;(</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  name</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-token-punctuation)">,</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">)</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">void</span><span style="color:var(--preview-astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  </span><span style="color:var(--preview-astro-code-token-comment)">// Use a for loop to log the age multiple times</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  </span><span style="color:var(--preview-astro-code-token-keyword)">for</span><span style="color:var(--preview-astro-code-color-text)"> (</span><span style="color:var(--preview-astro-code-token-keyword)">let</span><span style="color:var(--preview-astro-code-color-text)"> i </span><span style="color:var(--preview-astro-code-token-keyword)">=</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">0</span><span style="color:var(--preview-astro-code-color-text)">; i </span><span style="color:var(--preview-astro-code-token-keyword)">&lt;</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">18</span><span style="color:var(--preview-astro-code-color-text)">; i</span><span style="color:var(--preview-astro-code-token-keyword)">++</span><span style="color:var(--preview-astro-code-color-text)">) { </span><span style="color:var(--preview-astro-code-token-constant)">console</span><span style="color:var(--preview-astro-code-token-function)">.log</span><span style="color:var(--preview-astro-code-color-text)">(</span><span style="color:var(--preview-astro-code-token-string-expression)">\`Age marker: </span><span style="color:var(--preview-astro-code-token-keyword)">\${</span><span style="color:var(--preview-astro-code-color-text)">i</span><span style="color:var(--preview-astro-code-token-keyword)">}</span><span style="color:var(--preview-astro-code-token-string-expression)">\`</span><span style="color:var(--preview-astro-code-color-text)">); }</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  </span><span style="color:var(--preview-astro-code-token-keyword)">interface</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">User</span><span style="color:var(--preview-astro-code-color-text)">&lt;</span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-color-text)">&gt; {</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">    name</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-color-text)">;</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">    age</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">number</span><span style="color:var(--preview-astro-code-color-text)">;</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">    isDeveloper</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">boolean</span><span style="color:var(--preview-astro-code-color-text)">;</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  }</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  </span><span style="color:var(--preview-astro-code-token-keyword)">const</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">user</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">User</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-keyword)">=</span><span style="color:var(--preview-astro-code-color-text)"> { name</span><span style="color:var(--preview-astro-code-token-punctuation)">,</span><span style="color:var(--preview-astro-code-color-text)"> age</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">18</span><span style="color:var(--preview-astro-code-token-punctuation)">,</span><span style="color:var(--preview-astro-code-color-text)"> isDeveloper</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">false</span><span style="color:var(--preview-astro-code-color-text)"> };</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">  </span><span style="color:var(--preview-astro-code-token-function)">showcaseSyntaxHighlighting</span><span style="color:var(--preview-astro-code-color-text)">(</span><span style="color:var(--preview-astro-code-token-string-expression)">'Alice'</span><span style="color:var(--preview-astro-code-color-text)">);</span></span>
+<span class="line"><span style="color:var(--preview-astro-code-color-text)">}</span></span>`
+
+  return <CodeBlock class="css-variables" style="background-color:var(--preview-astro-code-color-background);overflow-x:auto" tabindex="0" innerHTML={code} />
+}
 
 const ThemeInfoWrapper = styled("div")`
   display: flex;
@@ -458,6 +513,9 @@ const RenderElement = (props: { element: UIElement }) => {
           </For>
         </ShinyCard>
       </ShinyCardWrapper>
+    </Show>
+    <Show when={props.element.type === "code"}>
+      <Code />
     </Show>
   </GridItem>
 }

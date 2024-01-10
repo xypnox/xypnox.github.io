@@ -54,10 +54,13 @@ const props = Astro.props;
     margin: 0 auto;
   }
 
-  pre.astro-code {
+  .content pre.astro-code {
     padding: 1rem;
-    font-size: 1rem;
-    background-color: var(--surface) !important;
+    font-size: var(--font-size-sm);
+    border-radius: 0.5rem;
+    border: 2px dashed var(--border);
+    background: var(--card-background);
+    background-position: var(--card-backgroundPosition);
   }
 
   h1,
