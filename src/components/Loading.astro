@@ -3,13 +3,16 @@
 
 <div id="loading">
   <span class="loader"></span>
+  <h1 style="color: #919DCF; font-size: 1.5rem; margin-top: 2rem;">Loading...</h1>
 </div>
 <script is:inline>
   window.addEventListener("load", function () {
     const loading = document.getElementById("loading");
     if (!loading) return;
-    loading.style.opacity = "0";
-    loading.style.pointerEvents = "none";
+    loading.classList.add("hidden");
+    this.setTimeout(() => {
+      loading.remove();
+    }, 2000);
   });
 </script>
 
@@ -26,6 +29,17 @@
     left: 0;
     background-color: #0f111a;
     z-index: 99;
+    transition: opacity 1s ease-in-out;
+  }
+
+  #loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #loading.hidden .loader {
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
   }
 
   .loader {
@@ -33,7 +47,7 @@
     position: relative;
     width: 48px;
     height: 48px;
-    animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite alternate;
   }
   .loader:after,
   .loader:before {
@@ -42,17 +56,23 @@
     height: 32px;
     position: absolute;
     border-radius: 50%;
-    background: #ff5370;
-    animation: spin 2s linear infinite;
     transform-origin: 0px 100%;
+  }
+  .loader:after {
+    background: #ff5370;
+    outline: 2px solid #ff5370; 
+    outline-offset: 2px;
+    animation: spin 3s linear infinite alternate;
   }
   .loader:before {
     transform-origin: 0 50%;
     background: #919DCF40;
+    border: 2px dashed #919DCF;
+    animation: spin 2s linear infinite alternate;
   }
   @keyframes spin {
     to {
-      transform: rotate(360deg);
+      transform: rotate(360deg) scale(1);
     }
   }
 </style>
