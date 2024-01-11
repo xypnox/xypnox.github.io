@@ -1,73 +1,97 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
-import PageHeader from '../../components/pageHeader.astro'
+import PageHeader from "../../components/pageHeader.astro";
 
 const designSections = [
-  { name: "Covers", image: '/design-covers/covers.webp', slug: "/design/covers"},
-  { name: "Logos", image: '/design-covers/logos.webp', slug: "/design/logos"},
-  { name: "Posters", image: '/design-covers/posters.webp',  slug: "https://posters.xypnox.com"},
-  { name: "Experiments", image: '/design-covers/exp.webp',  slug: "https://xypnox.studio"},
-]
+  {
+    name: "Covers",
+    image: "/design-covers/covers.webp",
+    slug: "/design/covers",
+  },
+  { name: "Logos", image: "/design-covers/logos.webp", slug: "/design/logos" },
+  {
+    name: "Posters",
+    image: "/design-covers/posters.webp",
+    slug: "https://posters.xypnox.com",
+  },
+  {
+    name: "Experiments",
+    image: "/design-covers/exp.webp",
+    slug: "https://xypnox.studio",
+  },
+];
 ---
 
 <Layout title="Design">
-  <PageHeader title="Design" />
   <div class="design-sections">
-    {designSections.map(d =>
-      <a href={d.slug}>
-        <img src={d.image} />
-        <span class="text-gradient-fx">{d.name}</span>
-      </a>
-    )}
+    <div>
+      <h1 class="page-title">Des<br />ign</h1>
+    </div>
+    {
+      designSections.map((d) => (
+        <a href={d.slug}>
+          <img src={d.image} />
+          <span class="text-gradient-fx">{d.name}</span>
+        </a>
+      ))
+    }
   </div>
   <div class="notice">
-    For design related services contact via <a href="https://x5z.studio">x5z.studio</a>
+    For design related services contact via <a href="https://x5z.studio"
+      >x5z.studio</a
+    >
   </div>
 </Layout>
 
 <style>
-.design-sections {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
+  .design-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+    margin: 4rem auto;
+  }
 
-.design-sections > a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xl);
-  background: var(--background);
-  border: 1px solid var(--border);
-  color: var(--heading);
-  border-radius: 2rem;
-  gap: 0.5rem;
-  padding-bottom: 1rem;
-  text-decoration: none;
-  flex-shrink: 0;
-}
+  .design-sections .page-title {
+    font-size: calc(min(100vw, 1000px) / 6);
+    text-shadow: 0.2rem 0.2rem 0.4rem var(--secondary-color);
+    color: var(--background);
+    width: 100%;
+  }
 
-.design-sections > a:hover {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-}
+  .design-sections > a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xl);
+    background: var(--background);
+    border: 1px solid var(--border);
+    color: var(--heading);
+    border-radius: 2rem;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
 
-.design-sections img {
-  width: 100%;
-  height: 100%;
-  max-height: 600px;
-  max-width: 600px;
-  border-radius: 2rem;
-}
-.notice {
-  margin-top: 4rem;
-  padding: 1rem;
-  text-align: center;
-}
+  .design-sections > a:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .design-sections img {
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    max-width: 600px;
+    border-radius: 2rem;
+  }
+  .notice {
+    margin-top: 4rem;
+    padding: 1rem;
+    text-align: center;
+  }
 </style>
-

@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  href: string;
+  icon?: string;
+}
+const { title, href, icon } = Astro.props;
+
+const prettyTitle = title || href.replace(/https?:\/\//, "");
+---
+
+<a class="weblink theme-card" href={href}>
+  {icon && <iconify-icon icon={icon} />}
+  <span class="linktext">{prettyTitle}</span>
+</a>
+
+<style>
+  .weblink {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+    /* text-decoration: none; */
+    gap: 0.5rem;
+    background: transparent;
+    border-radius: 0.5rem;
+    width: max-content;
+  }
+
+  .weblink:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  .weblink .linktext {
+    padding: 0.5rem 1rem;
+    padding-left: 0;
+  }
+
+  .weblink iconify-icon {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    padding-right: 0;
+  }
+</style>

@@ -93,3 +93,32 @@
   background-position: var(--card-backgroundPositionHover);
   border: var(--card-borderHover);
 }
+
+.content img {
+  height: auto;
+  margin: 0 auto;
+}
+
+@media (min-width: calc(1232px)) {
+  .content img {
+    width: calc(var(--layout-content-wide) - 32px);
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+}
+@media (max-width: 1232px) {
+  .content img {
+    max-width: 100%;
+  }
+}
+
+.content pre.astro-code {
+  padding: 1rem;
+  font-size: var(--font-size-sm);
+  border-radius: 0.5rem;
+  border: 1rem solid var(--surface);
+  background-position: var(--card-backgroundPosition);
+}
+

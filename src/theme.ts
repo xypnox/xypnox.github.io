@@ -93,7 +93,15 @@ const card = {
   backgroundPositionHover: '10% 20%',
 }
 
+const layout = {
+  content: {
+    wide: '1200px',
+    main: '800px',
+  },
+}
+
 export const themeVars = {
+  layout,
   font: {
     family: 'Jost, sans-serif',
     size: fontSizes,

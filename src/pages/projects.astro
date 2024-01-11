@@ -3,6 +3,7 @@ import Layout from "../layouts/MainLayout.astro";
 import { Projects as projectsData } from "../content/projects";
 import PageHeader from "../components/pageHeader.astro";
 import PageNav from "../components/nav/pageNav.astro";
+import WebLink from "../components/elements/link.astro";
 
 const ProjectsWithSlug = projectsData.map((p) => ({
   ...p,
@@ -12,24 +13,26 @@ const ProjectsWithSlug = projectsData.map((p) => ({
 
 <Layout title="Projects">
   <main>
-    <PageHeader title="Projects" />
-    <PageNav
-      links={ProjectsWithSlug.map((p) => ({
-        name: p.title,
-        slug: `#${p.slug}`,
-      }))}
-    />
     <div class="projectList">
+      <div>
+        <PageHeader title="Projects" />
+        <PageNav
+          links={ProjectsWithSlug.map((p) => ({
+            name: p.title,
+            slug: `#${p.slug}`,
+          }))}
+        />
+      </div>
       {
         ProjectsWithSlug.map((p) => (
-          <div id={p.slug} class="projectCard">
+          <div id={p.slug} class="projectCard theme-card">
             <img src={p.image} alt={p.title} />
             <div class="cardContent">
               <h1>{p.title}</h1>
               {p.description.map((d) => (
                 <p>{d}</p>
               ))}
-              {p.link && <a href={p.link}>{p.link}</a>}
+              {p.link && <WebLink href={p.link} icon="ph:globe-duotone" />}
               <p class="projectTags">
                 {p.tags.map((t) => (
                   <span>{t}</span>
@@ -58,11 +61,10 @@ const ProjectsWithSlug = projectsData.map((p) => ({
     align-items: flex-start;
     gap: 2rem;
     padding: 2rem;
-    border: 1px solid var(--border);
-    background: var(--background);
     border-radius: 1rem;
     width: 100%;
     line-height: 1.5;
+    transition: all 0.5s ease-in-out;
   }
 
   .cardContent {
