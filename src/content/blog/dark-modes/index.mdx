@@ -411,16 +411,29 @@ export const ThemePreview = (props: ThemePreviewProps) => {
 }
 ```
 
+Consider the following theme. 
+
+<ThemePreview
+  client:visible
+  preview={{
+    vars: themePreviewConfigVars.codeVars,
+    elements: [
+      { type: 'code', text: ''},
+    ]}}
+/>
+
+Perhaps we want a more lively look and we are using lavender and pink as our main colors. A few variations of the theme could be:
+
 <ThemePreviewSplits
   client:visible
   previews={[
     {
-      vars: themePreviewConfigVars.codeVars,
+      vars: themePreviewConfigVars.themeCodeVars,
       elements: [
         { type: 'code', text: ''},
     ],},
     {
-      vars: themePreviewConfigVars.codeVars,
+      vars: themePreviewConfigVars.lightThemeCodeVars,
       elements: [
         { type: 'code', text: ''},
     ],},

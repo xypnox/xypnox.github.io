@@ -129,14 +129,52 @@ const codeVars: Themevars = {
       },
       token: {
         constant: "#89DDFF", // blue
-        string: "#C3E88D", // green
         comment: "#565f89", // comment
         keyword: "#BB9AF7", // purple
-        parameter: "#ff9e64", // orange
         function: "#82AAFF", // blue
-        stringExpression: "#C3E88D", // green
         punctuation: "#82AAFF", // blue
-        link: "#82AAFF", // blue
+      }
+    }
+  }
+}
+
+const themeCodeVars: Themevars = {
+  txt: "#EC9BC2",
+  bg: "#2C3359",
+
+  astro: {
+    code: {
+      color: {
+        text: "#EC9BC2", // fg
+        background: "#222640", // bg
+      },
+      token: {
+        constant: "#89DDFF", // blue
+        comment: "#565f89", // comment
+        keyword: "#BB9AF7", // purple
+        function: "#82AAFF", // blue
+        punctuation: "#82AAFF", // blue
+      }
+    }
+  }
+}
+
+const lightThemeCodeVars: Themevars = {
+  txt: "#222640",
+  bg: "#efc3de",
+
+  astro: {
+    code: {
+      color: {
+        text: "#81475f", // fg
+        background: "#FFE4F8", // bg
+      },
+      token: {
+        constant: "#3594BA", // blue
+        comment: "#b495ae", // comment
+        keyword: "#6A45AB", // purple
+        function: "#B53985", // blue
+        punctuation: "#083CAB", // blue
       }
     }
   }
@@ -156,7 +194,9 @@ export const themePreviewConfigVars = {
   darkModeSharpShadowCardVars,
   darkModeGlowCardVars,
   shinyCardVars,
-  codeVars
+  codeVars,
+  themeCodeVars,
+  lightThemeCodeVars,
 }
 
 const minimalElements: UIElement[] = [
