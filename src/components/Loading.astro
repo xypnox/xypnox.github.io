@@ -9,7 +9,9 @@
   window.addEventListener("load", function () {
     const loading = document.getElementById("loading");
     if (!loading) return;
-    loading.classList.add("hidden");
+    this.setTimeout(() => {
+      loading.classList.add("hidden");
+    }, 100);
     this.setTimeout(() => {
       loading.remove();
     }, 2000);
