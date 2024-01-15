@@ -50,8 +50,6 @@ import { ThemePreview, ThemePreviewSplits, themePreviewConfigVars, themePreviewE
 
 Dark mode is _a different stylistic version of the same interface_, and uses lighter colors on top of darker background. There should be _no change_ in layout. Any changes that could be done to the layout should work in both modes.
 
-Some things remained dark, some turned towards light like the web browser with the default white background. And the bright themes of the operating systems. 
-
 Dark mode has now become a staple in modern interfaces. Mainstream apps, government websites, and operating systems all have dark modes now, and I prefer them over the harsh white, however ugly they may be.
 
 _But does everything need a dark mode? And can everything be turned dark?_
@@ -119,8 +117,6 @@ While this serves for basic text only content, there are various elements that d
 
 ## Colors
 
-### Relative colors
-
 Although an explanation about how the _perceived colors depend on the background_ is not needed, here is a fine example:
 
 <ThemePreviewSplits
@@ -178,6 +174,43 @@ Although an explanation about how the _perceived colors depend on the background
   ]}
   showInfo={false}
 />
+
+Note that colors in the light background look different when shown with dark background. 
+
+<ThemePreviewSplits
+  client:visible
+  {...themePreviewSplitsConfigs.bnw}
+  previews={[
+    {
+      vars: themePreviewConfigVars.lightColorsVars,
+      elements: [{type: 'colors', text: ''}]
+    },
+    {
+      vars: themePreviewConfigVars.darkColorsVars,
+      elements: [{type: 'colors', text: ''}]
+    },
+  ]}
+/>
+
+Sometimes it may be what is desired, but we can tweak the colors to suit each other and the background. Such themes work well together and still retain contrast to differentiate with color. Color should not be the sole way of differentiation as it would not be legible to the visually impaired. Moreover, anything that makes things more legible is good for everyone.
+
+
+<ThemePreviewSplits
+  client:visible
+  {...themePreviewSplitsConfigs.bnw}
+  previews={[
+    {
+      vars: themePreviewConfigVars.xypColorsVars,
+      elements: [{type: 'colors', text: ''}]
+    },
+    {
+      vars: themePreviewConfigVars.gruvColorsVars,
+      elements: [{type: 'colors', text: ''}]
+    },
+  ]}
+/>
+
+The first set of colors in the palettes above are the ones currently being used on this website, and the second are chosen from the Gruvbox color scheme.
 
 
 ### The ugly gray
@@ -247,7 +280,7 @@ https://m3.material.io/styles/color/choosing-a-scheme
 
 And I think these gray themes are what have given the dark mode the aura of unsaturated monochromatic soulless interfaces. As if colors are meant to be reserved for the light mode.
 
-## Colors that were lost
+### Colors that were lost
 
 Some colors look bad on white background if used as text. Yellow is a prime example. But in the world of dark mode, yellow literally shines!
 
@@ -379,7 +412,7 @@ Some may want a custom theme that matches their overall style, so they may want 
 As an example, this blog uses astro which comes with [shikijs/shiki](https://github.com/shikijs/shiki) syntax highlighter which can take a textmate or vscode highlighting config and use it to highlight code in html. However, due to the inherent complexities of the structure of theme, modification is non trivial. While I was tempted by it's css-variables color theme, it doesn't work as nicely with complex code snippets such as `jsx`. I ended up writing/tweaking the default vscode dark theme to match my color scheme:
 
 
-```tsx
+```js
 // Just some jsx to preview the theme!
 /**
  * Shows a single theme preview
@@ -438,6 +471,28 @@ Perhaps we want a more lively look and we are using lavender and pink as our mai
         { type: 'code', text: ''},
     ],},
   ]}
+/>
+
+## Icons & Illustrations
+
+Icons and Illustrations add visual appeal to a interface and help users navigate/understand the interface by adding meaning.
+
+Simple icons and illustrations can be directly converted to dark mode by inverting the colors and tweaking them to suit the needs.
+
+For icons, a icon-font or svg icons (ex: iconify.design) can be adjusted via the text color. Illustrations in vector formats also lend themselves to tweaking the colors for the dark mode.
+
+<ThemePreviewSplits
+  client:visible
+  previews={themePreviewSplitsConfigs.icons.previews}
+/>
+
+But it should be noted that not all illustrations and icons are fit for direct conversion.
+
+In case of icons, we can take the phases of the moons for example. A standard icon for the new moon is. However, it doesn't translate to dark mode as the meaning of the colors to represent the phases is also inverted. In such a case, using a different set of icons corresponding for different modes works well.
+
+<ThemePreviewSplits
+  client:visible
+  previews={themePreviewSplitsConfigs.moonIcons.previews}
 />
 
 ## Contrasty design

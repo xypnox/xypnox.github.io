@@ -21,6 +21,7 @@ interface Themevars {
   cardBorder?: string
   cardShadow?: string
   astro?: { code?: Record<string, any> }
+  colors?: Record<string, string>
 }
 
 interface Preview {
@@ -180,6 +181,73 @@ const lightThemeCodeVars: Themevars = {
   }
 }
 
+const lightColorsVars: Themevars = {
+  txt: "#222640",
+  // light gray
+  bg: "#f0f0f0",
+
+  surface: "#fff",
+
+  colors: {
+    primary: "#0d6efd",
+    secondary: "#6c757d",
+    warning: "#ffc107",
+    danger: "#dc3545",
+    success: "#198754",
+    info: "#0dcaf0",
+  }
+}
+
+const darkColorsVars: Themevars = {
+  txt: "#B5C0DB",
+  // light gray
+  bg: "#1A1E27",
+
+  surface: "#303748",
+
+  colors: {
+    primary: "#0d6efd",
+    secondary: "#6c757d",
+    warning: "#ffc107",
+    danger: "#dc3545",
+    success: "#198754",
+    info: "#0dcaf0",
+  }
+}
+
+const xypColorsVars: Themevars = {
+  txt: "#919DCF",
+  // light gray
+  bg: "#0f111a",
+
+  surface: "#1e213980",
+
+  colors: {
+    primary: "#ff5370",
+    secondary: "#6b5eff",
+    heading: "#CCA685",
+    italic: "#CC64AD",
+    fadeText: "#919DCF80",
+    text: "#919DCF",
+  }
+}
+
+const gruvColorsVars: Themevars = {
+  txt: "#AEA398",
+  // light gray
+  bg: "#252525",
+
+  surface: "#3C3836",
+
+  colors: {
+    primary: "#FBA359",
+    secondary: "#B8BB26",
+    heading: "#88B877",
+    italic: "#F47F71",
+    fadeText: "#897969",
+    text: "#AEA398",
+  }
+}
 
 export const themePreviewConfigVars = {
   lightMode,
@@ -197,6 +265,10 @@ export const themePreviewConfigVars = {
   codeVars,
   themeCodeVars,
   lightThemeCodeVars,
+  lightColorsVars,
+  darkColorsVars,
+  xypColorsVars,
+  gruvColorsVars,
 }
 
 const minimalElements: UIElement[] = [
@@ -209,6 +281,69 @@ const minimalElements: UIElement[] = [
     text: "Black and white are the colors of the zen. The white is the light and the black is the darkness, forever entangled in a dance of duality."
   },
 ]
+
+const iconElements = [
+
+  { type: "icon", text: "ph:user-switch-duotone", },
+  { type: "icon", text: "ph:gear-fine-duotone", },
+  { type: "icon", text: "ph:paint-brush-broad-duotone", },
+
+  { type: "icon", text: "pixelarticons:reciept", },
+  { type: "icon", text: "pixelarticons:home", },
+  { type: "icon", text: "pixelarticons:cloud", },
+
+  { type: "icon", text: "ph:heart", },
+  { type: "icon", text: "ph:heart-fill", },
+  { type: "icon", text: "ph:heart-straight-break-duotone", },
+
+  { type: "icon", text: "line-md:downloading-loop", },
+  { type: "icon", text: "line-md:coffee-half-empty-twotone-loop", },
+  { type: "icon", text: "line-md:sun-rising-twotone-loop", },
+]
+
+const moonIconElements = [
+  { type: "icon", text: "wi:moon-alt-full", },
+  { type: "icon", text: "wi:moon-alt-waning-gibbous-2", },
+  { type: "icon", text: "wi:moon-alt-waning-gibbous-4", },
+
+  { type: "icon", text: "wi:moon-alt-third-quarter", },
+  { type: "icon", text: "wi:moon-alt-waning-crescent-2", },
+  { type: "icon", text: "wi:moon-alt-waning-crescent-4", },
+
+  { type: "icon", text: "wi:moon-alt-new", },
+  { type: "icon", text: "wi:moon-alt-waxing-crescent-2", },
+  { type: "icon", text: "wi:moon-alt-waxing-crescent-4", },
+
+
+  { type: "icon", text: "wi:moon-alt-first-quarter", },
+  { type: "icon", text: "wi:moon-alt-waxing-gibbous-2", },
+  { type: "icon", text: "wi:moon-alt-waxing-gibbous-4", },
+]
+
+// Shift the moonIconElements array by half
+
+const moonIconElementsCorrected = [
+  ...moonIconElements.slice(6),
+  ...moonIconElements.slice(0, 6),
+]
+
+const iconsElements = [{
+  type: "icons",
+  text: "Icons",
+  elements: iconElements,
+}]
+
+const moonIconsElements = [{
+  type: "icons",
+  text: "Moon Icons",
+  elements: moonIconElements,
+}]
+
+const reversedMoonIconsElements = [{
+  type: "icons",
+  text: "Moon Icons",
+  elements: moonIconElementsCorrected,
+}]
 
 const cardElements: UIElement[] = [
   {
@@ -249,7 +384,21 @@ export const themePreviewSplitsConfigs: Record<string, ThemePreviewSplitsProps> 
       { elements: cardElements, vars: themePreviewConfigVars.lightModeCardFlippedVars, },
       { elements: cardElements, vars: themePreviewConfigVars.lightModeCardBorderVars, },
     ]
-  }
+  },
+  icons: {
+    previews: [
+      { elements: iconsElements, vars: themePreviewConfigVars.lightMode, },
+      { elements: iconsElements, vars: themePreviewConfigVars.blackModeVars, },
+    ]
+  },
+  moonIcons: {
+    previews: [
+      { elements: moonIconsElements, vars: themePreviewConfigVars.lightMode, },
+      { elements: moonIconsElements, vars: themePreviewConfigVars.blackModeVars, },
+      { elements: reversedMoonIconsElements, vars: themePreviewConfigVars.blackModeVars, },
+    ]
+  },
+
 }
 
 
@@ -352,6 +501,29 @@ const ShinyCard = styled(Card)`
   }
 `
 
+const IconGrid = styled("div")`
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+  grid-auto-rows: 2rem;
+  gap: 2rem;
+  width: 100%;
+  min-height: 6rem;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-items: center;
+
+  & > div {
+    width: max-content;
+  }
+
+  iconify-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+    color: var(--preview-txt);
+  }
+`
+
 const CodeBlock = styled("pre")`
   width: 100%;
   x-overflow: auto;
@@ -419,9 +591,41 @@ const ColorPreview = styled("div")`
   background-color: var(--color);
 `
 
+const ColorPreviewLarge = styled("div")`
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color);
+`
+
 const ColorSwatches = styled("div")`
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5rem;
+`
+
+const ColorInfo = styled("div")`
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+`
+
+const ColorCard = styled(Card)`
+  padding: 0.5rem;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: ${theme.font.size.sm};
+  border-radius: 0.75rem;
+`
+
+const ColorsPreview = styled("div")`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14ch, 1fr));
+  width: 100%;
   gap: 0.5rem;
 `
 
@@ -525,7 +729,12 @@ const ThemeInfo = (props: ThemePreviewProps) => {
   )
 }
 
-const RenderElement = (props: { element: UIElement }) => {
+const RenderElement = (props: {
+  element: UIElement,
+  vars: Themevars,
+}) => {
+
+  const logVars = () => { console.log(props.vars); return null }
 
   return <GridItem>
     <Show when={props.element.type === "text"}>
@@ -548,7 +757,7 @@ const RenderElement = (props: { element: UIElement }) => {
         <ShinyCard>
           <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
             {(element) => (
-              <RenderElement element={element} />
+              <RenderElement vars={props.vars} element={element} />
             )}
           </For>
         </ShinyCard>
@@ -556,6 +765,33 @@ const RenderElement = (props: { element: UIElement }) => {
     </Show>
     <Show when={props.element.type === "code"}>
       <Code />
+    </Show>
+    <Show when={props.element.type === "colors"}>
+      <ColorsPreview>
+        <For each={Object.entries(props.vars.colors ?? {})}>
+          {(entry) => (
+            <ColorCard>
+              <ColorPreviewLarge style={{ "--color": entry[1] }} />
+              <ColorInfo>
+                <div>{entry[1]}</div>
+                <div>{entry[0]}</div>
+              </ColorInfo>
+            </ColorCard>
+          )}
+        </For>
+      </ColorsPreview>
+    </Show>
+    <Show when={props.element.type === "icons"}>
+      <IconGrid>
+        <For each={props.element.elements ?? [{ type: 'icon', text: 'ph:heart' }]}>
+          {(element) => (
+            <RenderElement vars={props.vars} element={element} />
+          )}
+        </For>
+      </IconGrid>
+    </Show>
+    <Show when={props.element.type === "icon"}>
+      <iconify-icon icon={props.element.text} />
     </Show>
   </GridItem>
 }
@@ -578,7 +814,9 @@ export const ThemePreview = (props: ThemePreviewProps) => {
       <Column style={{ ...themeCssVars }}>
         <For each={props.preview.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
           {(element) => (
-            <RenderElement element={element} />
+            <RenderElement
+              vars={props.preview.vars ?? lightMode}
+              element={element} />
           )}
         </For>
       </Column>
