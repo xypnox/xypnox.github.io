@@ -393,9 +393,9 @@ export const themePreviewSplitsConfigs: Record<string, ThemePreviewSplitsProps> 
   },
   moonIcons: {
     previews: [
-      { elements: moonIconsElements, vars: themePreviewConfigVars.lightMode, },
-      { elements: moonIconsElements, vars: themePreviewConfigVars.blackModeVars, },
-      { elements: reversedMoonIconsElements, vars: themePreviewConfigVars.blackModeVars, },
+      { elements: moonIconsElements, vars: themePreviewConfigVars.lightModeCardVars, },
+      { elements: moonIconsElements, vars: themePreviewConfigVars.darkModeColorVars, },
+      { elements: reversedMoonIconsElements, vars: themePreviewConfigVars.darkModeColorVars, },
     ]
   },
 }
@@ -578,6 +578,14 @@ const SidebarPreviewWrapper = styled("div")`
   display: flex;
   gap: 2rem;
   width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 0.75rem;
+    flex-direction: column;
+    ${Sidebar.class} {
+      max-width: 100%;
+    }
+  }
 `
 
 const CodeBlock = styled("pre")`
