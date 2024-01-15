@@ -114,6 +114,11 @@
   }
 }
 
+.content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .content pre.astro-code {
   padding: 1rem;
   font-size: var(--font-size-sm);

@@ -501,6 +501,113 @@ There are designs for software (websites, products) that use different modes (da
 
 Ex: Sidebar with black back and white text beside a product dashboard, a website with dark and light sections in the landing page.
 
+<ThemePreviewSplits
+  client:visible
+  previews={[
+  {
+    vars: {
+      txt: '#172d60',
+      bg: "#B5C0DB",
+      surface: '#333',
+      colors: {
+        "section-1": "#222",
+        "section-1-txt": "#f0f0f0",
+        "section-0": "#f0f0f0",
+        "section-0-txt": "#222",
+        "section-2": "#f0f0f0",
+        "section-2-txt": "#222",
+      }
+    },
+    elements: [
+      { type: 'sections', text: '',
+        elements: [
+          { type: 'section', elements: [
+            { type: 'h1', text: 'These split sections' },
+            { type: 'text', text: 'have a lot of clarity' },
+          ]},
+          { type: 'section', elements: [
+            { type: 'h1', text: 'The separators' },
+            { type: 'text', text: 'Are particularly legible' },
+          ]},
+          { type: 'section', elements: [
+            { type: 'h1', text: 'Nice it is that' },
+            { type: 'text', text: 'And the content is marked' },
+          ]},
+        ]
+      },
+    ]
+  },
+  {
+    vars: {
+      txt: '#172d60',
+      bg: '#d3c4a0',
+      surface: '#333',
+      colors: {
+        "section-1": "#222",
+        "section-1-txt": "#f0f0f0",
+        "section-0": "#f0f0f0",
+        "section-0-txt": "#222",
+      }
+    },
+    elements: [
+      { type: 'sections', text: '',
+        elements: [
+          { type: 'section', elements: [
+            { type: 'h1', text: 'the Black on White' },
+            { type: 'text', text: 'became standard' },
+          ]},
+          { type: 'section', elements: [
+            { type: 'h1', text: 'the Black on White' },
+            { type: 'text', text: 'became standard' },
+          ]},
+        ]
+      },
+    ]
+  },
+
+
+  ]}
+  showInfo={false}
+/>
+
+
+<ThemePreview
+  client:visible
+  preview={{
+    vars: {
+      txt: "#1A1E27",
+      bg: "#B5C0DB",
+      surface: "#dae2f6",
+      colors: {
+        "section-1": "#222",
+        "section-1-txt": "#f0f0f0",
+        "section-0": "#f0f0f0",
+        "section-0-txt": "#222",
+      }
+    },
+    elements: [
+      { type: 'sidebar', text: '',
+        elements: [
+      { type: 'sections', text: '',
+        elements: [
+          { type: 'section', elements: [
+            { type: 'h1', text: 'the Black on White' },
+            { type: 'text', text: 'became standard' },
+          ]},
+          { type: 'section', elements: [
+            { type: 'h1', text: 'the Black on White' },
+            { type: 'text', text: 'became standard' },
+          ]},
+        ]
+      },
+          { type: 'card', text: 'the Black on White' },
+          { type: 'text', text: 'became standard' },
+      ]},
+    ]
+  }}
+/>
+
+
 While this is effective to some degree. It is neither dark nor light. And the contrast is needless in most cases. Why would you use a different mode when a border or a slightly different shade of background could have achieved the same? Is it because of a "brand identity"? But even then, what kind of brand is both dark and light and that at the same time?
 
 

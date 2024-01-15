@@ -398,7 +398,6 @@ export const themePreviewSplitsConfigs: Record<string, ThemePreviewSplitsProps> 
       { elements: reversedMoonIconsElements, vars: themePreviewConfigVars.blackModeVars, },
     ]
   },
-
 }
 
 
@@ -522,6 +521,63 @@ const IconGrid = styled("div")`
     font-size: 2rem;
     color: var(--preview-txt);
   }
+`
+
+const Sections = styled("div")`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+`
+
+const Section = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  width: 100%;
+  background: var(--preview-bg);
+`
+
+const Sidebar = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 200px;
+  padding: 1rem;
+  background: var(--preview-txt);
+  color: var(--preview-bg);
+  border-radius: 1rem;
+  ${H1.class}, a, a:hover, a:active {
+    margin: 0;
+    color: var(--preview-bg);
+    text-decoration: none;
+  }
+
+  a {
+    border: 1px dashed var(--preview-bg);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+`
+
+const SidebarMain = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  ${H1.class}, a, a:hover, a:active {
+    margin: 0;
+    text-decoration: none;
+  }
+`
+
+const SidebarPreviewWrapper = styled("div")`
+  display: flex;
+  gap: 2rem;
+  width: 100%;
 `
 
 const CodeBlock = styled("pre")`
@@ -732,6 +788,7 @@ const ThemeInfo = (props: ThemePreviewProps) => {
 const RenderElement = (props: {
   element: UIElement,
   vars: Themevars,
+  i: number,
 }) => {
 
   const logVars = () => { console.log(props.vars); return null }
@@ -756,8 +813,8 @@ const RenderElement = (props: {
       <ShinyCardWrapper>
         <ShinyCard>
           <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
-            {(element) => (
-              <RenderElement vars={props.vars} element={element} />
+            {(element, i) => (
+              <RenderElement vars={props.vars} element={element} i={i()} />
             )}
           </For>
         </ShinyCard>
@@ -784,14 +841,52 @@ const RenderElement = (props: {
     <Show when={props.element.type === "icons"}>
       <IconGrid>
         <For each={props.element.elements ?? [{ type: 'icon', text: 'ph:heart' }]}>
-          {(element) => (
-            <RenderElement vars={props.vars} element={element} />
+          {(element, i) => (
+            <RenderElement vars={props.vars} element={element} i={i()} />
           )}
         </For>
       </IconGrid>
     </Show>
     <Show when={props.element.type === "icon"}>
       <iconify-icon icon={props.element.text} />
+    </Show>
+    <Show when={props.element.type === "sidebar"}>
+      <SidebarPreviewWrapper>
+        <Sidebar>
+          <H1>Sidebar</H1>
+          <a href="#">Link</a>
+          <a href="#">Link</a>
+          <a href="#">Link</a>
+        </Sidebar>
+        <SidebarMain>
+          <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
+            {(element, i) => (
+              <RenderElement vars={props.vars} element={element} i={i()} />
+            )}
+          </For>
+        </SidebarMain>
+      </SidebarPreviewWrapper>
+    </Show>
+    <Show when={props.element.type === "sections"}>
+      <Sections>
+        <For each={props.element.elements ?? [{ type: 'section', text: 'This is a content section' }]}>
+          {(element, i) => (
+            <RenderElement vars={props.vars} element={element} i={i()} />
+          )}
+        </For>
+      </Sections>
+    </Show>
+    <Show when={props.element.type === "section"}>
+      <Section style={{
+        "--preview-bg": props.vars.colors ? props.vars.colors['section-' + props.i] : props.vars.surface,
+        "--preview-txt": props.vars.colors ? props.vars.colors['section-' + props.i + '-txt'] : props.vars.txt,
+      }}>
+        <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
+          {(element, i) => (
+            <RenderElement vars={props.vars} element={element} i={i()} />
+          )}
+        </For>
+      </Section>
     </Show>
   </GridItem>
 }
@@ -813,10 +908,12 @@ export const ThemePreview = (props: ThemePreviewProps) => {
     <Container>
       <Column style={{ ...themeCssVars }}>
         <For each={props.preview.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
-          {(element) => (
+          {(element, i) => (
             <RenderElement
               vars={props.preview.vars ?? lightMode}
-              element={element} />
+              i={i()}
+              element={element}
+            />
           )}
         </For>
       </Column>
