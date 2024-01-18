@@ -14,7 +14,7 @@ import LatestBlog from "../components/latestBlog.astro";
         <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
         <p class="subline">I design/develop interfaces.</p>
         <p>
-          This is the lair, a collection of my works, designs, and writings.
+          This is the lair, a collection of works, designs, and writings.
         </p>
       </div>
     </div>
@@ -25,13 +25,14 @@ import LatestBlog from "../components/latestBlog.astro";
         image="/skills/dev.svg"
         color="#63f6ff"
         links={[
-          { title: "Projects", href: "/projects" },
-          { title: "Experiments", href: "https://xypnox.studio" },
-          { title: "Github", href: "https://github.com/xypnox" },
+          { title: "Projects", href: "/projects", desc: "Software I have worked on" },
+          { title: "Experiments", href: "https://xypnox.studio", desc: "A place to experiment with frontend" },
+          { title: "Github", href: "https://github.com/xypnox", desc: "Repositories and open code" },
+          { title: "dotfiles", href: "https://github.com/xypnox/dotfiles", desc: "Configuration files for system" },
         ]}
       >
         <p slot="description">
-          For building something is a reward in and of itself.
+          Building something is a reward in and of itself.
         </p>
       </Container>
 
@@ -41,15 +42,15 @@ import LatestBlog from "../components/latestBlog.astro";
         linkTitle="/design"
         color="var(--primary-color)"
         links={[
-          { title: "Covers", href: "/design/covers" },
-          { title: "Logos", href: "/design/logos" },
+          { title: "Covers", href: "/design/covers", desc: "Covers of Spotify playlists" },
+          { title: "Logos", href: "/design/logos", desc: "Logos I have designed/refined" },
           // { title: "Experiments", href: "https://xypnox.studio" },
-          { title: "Posters", href: "https://posters.xypnox.com" },
-          { title: "Behance", href: "https://www.behance.net/xypnox/" },
+          { title: "Posters", href: "https://posters.xypnox.com", desc: "Posters I designed during college" },
+          { title: "Behance", href: "https://www.behance.net/xypnox/", desc: "A few works on Behance" },
         ]}
       >
         <p slot="description">
-          For utility and function are nothing without beauty.
+          Utility and function are nothing without beauty.
         </p>
       </Container>
 
@@ -58,12 +59,12 @@ import LatestBlog from "../components/latestBlog.astro";
         image="/skills/lit.svg"
         color="#72ff80"
         links={[
-          { title: "Blag", href: "/blag" },
-          { title: "Poems", href: "/poems" },
-          { title: "Why xypnox", href: "/why-xypnox" },
+          { title: "Blag", href: "/blag", desc: "Blog, long form prose" },
+          { title: "Poems", href: "/poems", desc: "Short works that sometimes rhyme" },
+          { title: "Why xypnox", href: "/why-xypnox", desc: "Why I chose this nom de guerre" },
         ]}
       >
-        <p slot="description">For writing and language are how we think.</p>
+        <p slot="description">With language, we can write how we think.</p>
       </Container>
     </div>
 
@@ -71,8 +72,9 @@ import LatestBlog from "../components/latestBlog.astro";
       <LatestBlog />
 
       <Links />
-      <div class="collaborate">
-        <p>Let's collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
+      <div class="collaborate theme-card">
+        <p>Book a short meeting @ <a href="https://cal.com/xypnox/30min">cal.com/xypnox</a></p>
+        <p>For larger projects collaborate @ <a href="https://x5z.studio">x5z.studio</a></p>
       </div>
     </div>
   </main>
@@ -175,12 +177,17 @@ import LatestBlog from "../components/latestBlog.astro";
 
   .collaborate {
     width: 100%;
-    padding-top: 4rem;
+    padding: 2rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    /* align-items: center; */
     justify-content: center;
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
+    border-radius: 1rem;
     gap: 1rem;
+  }
+  .collaborate p {
+    margin: 0;
   }
   .collaborate a {
     display: inline;

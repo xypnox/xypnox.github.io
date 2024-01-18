@@ -121,7 +121,7 @@ export const themeVars = {
   },
 
   background: '#0f111a',
-  surface: '#1e213980',
+  surface: '#1e2139a0',
 
   border: '#ffffff10',
 

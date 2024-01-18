@@ -20,7 +20,9 @@ interface Themevars {
   surface?: string
   cardBorder?: string
   cardShadow?: string
+  // Colors for the code block
   astro?: { code?: Record<string, any> }
+  // Generic named colors, for specific elements
   colors?: Record<string, string>
 }
 
@@ -32,7 +34,7 @@ interface Preview {
 interface ThemePreviewProps extends ParentProps {
   preview: Preview
   /** Needed if you want to show the info tab and are not using the ThemePreviewSplits component */
-  showInfo?: boolean
+  isSplit?: boolean
 }
 
 const lightMode: Themevars = {
@@ -120,20 +122,21 @@ const lightModeCardBorderVars: Themevars = {
 
 const codeVars: Themevars = {
   txt: "#c0caf5",
-  bg: "#101010",
+  bg: "#35383c",
 
   astro: {
     code: {
       color: {
-        text: "#c0caf5", // fg
-        background: "#1A1E27", // bg
+        text: "#92B2CA", // purple
+        background: "#27292c", // bg
       },
       token: {
-        constant: "#89DDFF", // blue
-        comment: "#565f89", // comment
-        keyword: "#BB9AF7", // purple
-        function: "#82AAFF", // blue
-        punctuation: "#82AAFF", // blue
+        function: "#F4CF86", // blue"
+        comment: "#A7A8A7", // comment
+        keyword: "#C0A7C7", // blue
+        constant: "#D77C79", // blue
+        punctuation: "#92B2CA", // purple
+        "string-expression": "#C2C77B", // blue
       }
     }
   }
@@ -436,13 +439,11 @@ const GridItem = styled("div")`
 
 const Text = styled("div")`
   width: 100%;
-  color: var(--preview-txt);
   border-radius: 0.5rem;
 `
 
 const H1 = styled("div")`
   width: 100%;
-  color: var(--preview-txt);
   border-radius: 0.5rem;
   font-size: 2rem;
   margin: 0.5rem 0 0;
@@ -450,7 +451,6 @@ const H1 = styled("div")`
 
 const H2 = styled("div")`
   width: 100%;
-  color: var(--preview-txt);
   border-radius: 0.5rem;
   font-size: 1.5rem;
   margin: 0.5rem 0 0;
@@ -537,7 +537,8 @@ const Section = styled("div")`
   gap: 1rem;
   padding: 2rem;
   width: 100%;
-  background: var(--preview-bg);
+  background: var(--section-bg);
+  color: var(--section-txt);
 `
 
 const Sidebar = styled("div")`
@@ -547,19 +548,23 @@ const Sidebar = styled("div")`
   width: 100%;
   max-width: 200px;
   padding: 1rem;
-  background: var(--preview-txt);
-  color: var(--preview-bg);
-  border-radius: 1rem;
+  background: var(--preview-colors-sidebar-bg);
+  color: var(--preview-colors-sidebar-txt);
   ${H1.class}, a, a:hover, a:active {
     margin: 0;
-    color: var(--preview-bg);
+    color: var(--preview-colors-sidebar-txt);
     text-decoration: none;
   }
 
   a {
-    border: 1px dashed var(--preview-bg);
+    border: 1px dashed var(--preview-colors-sidebar-txt);
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  a:hover {
+    border: 1px solid var(--preview-colors-sidebar-txt);
   }
 `
 
@@ -568,16 +573,24 @@ const SidebarMain = styled("div")`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  ${H1.class}, a, a:hover, a:active {
+  background: var(--preview-bg);
+  padding: 1rem;
+  ${H1.class}, ${H2.class}, a, a:hover, a:active {
     margin: 0;
     text-decoration: none;
+  }
+  ${Section.class} {
+    padding: 1.5rem;
   }
 `
 
 const SidebarPreviewWrapper = styled("div")`
   display: flex;
-  gap: 2rem;
+  gap: 0rem;
   width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px dashed var(--preview-colors-border);
 
   @media (max-width: 600px) {
     font-size: 0.75rem;
@@ -597,6 +610,8 @@ const CodeBlock = styled("pre")`
 `
 
 const Code = () => {
+  // This here is the generated html from shiki with css variables
+  // This is kinda hacky, but do you really want to ship a syntax highlighter?
   const code = `<span class="line"><span style="color:var(--preview-astro-code-token-comment)">/** A function to end all functions */</span></span>
 <span class="line"><span style="color:var(--preview-astro-code-token-keyword)">function</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">showcaseSyntaxHighlighting</span><span style="color:var(--preview-astro-code-color-text)">&lt;</span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-keyword)">extends</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-constant)">string</span><span style="color:var(--preview-astro-code-color-text)">&gt;(</span></span>
 <span class="line"><span style="color:var(--preview-astro-code-color-text)">  name</span><span style="color:var(--preview-astro-code-token-keyword)">:</span><span style="color:var(--preview-astro-code-color-text)"> </span><span style="color:var(--preview-astro-code-token-function)">T</span><span style="color:var(--preview-astro-code-token-punctuation)">,</span></span>
@@ -633,7 +648,7 @@ const Content = styled("div")`
 `
 
 
-const ColorSwatch = styled("div")`
+const InfoSwatch = styled("div")`
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -643,7 +658,11 @@ const ColorSwatch = styled("div")`
   border-radius: 0.5rem;
   font-size: ${theme.font.size.sm};
 
-  span:nth-child(3) {
+  span:nth-child(3):not(.type):not(.subtype) {
+    color: ${theme.fadeText};
+  }
+
+  span.subtype {
     color: ${theme.fadeText};
   }
 `
@@ -714,6 +733,14 @@ const InfoButton = styled(Button)`
   }
 `
 
+const IllustrationWrap = styled("div")`
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+`
+
 const ThemeInfoContent = (props: {
   currentTab: Accessor<number>
 } & ThemePreviewProps) => {
@@ -727,11 +754,11 @@ const ThemeInfoContent = (props: {
         <ColorSwatches>
           <For each={Object.entries(flattenedVars())}>
             {(entry) => (
-              <ColorSwatch>
+              <InfoSwatch>
                 <ColorPreview style={{ "--color": entry[1] }} />
                 <span>{entry[1]}</span>
                 <span>{entry[0]}</span>
-              </ColorSwatch>
+              </InfoSwatch>
             )}
           </For>
         </ColorSwatches>
@@ -741,9 +768,20 @@ const ThemeInfoContent = (props: {
         <ColorSwatches>
           <For each={props.preview.elements}>
             {(entry) => (
-              <ColorSwatch>
-                <span>{entry.type}</span>
-              </ColorSwatch>
+              <InfoSwatch>
+                <span class="type">{entry.type}</span>
+                {entry.elements && (
+                  <>
+                    <span>[</span>
+                    <For each={entry.elements}>
+                      {(element) => (
+                        <span class="subtype">{element.type}</span>
+                      )}
+                    </For>
+                    <span> ] </span>
+                  </>
+                )}
+              </InfoSwatch>
             )}
           </For>
         </ColorSwatches>
@@ -777,7 +815,7 @@ const ThemeInfo = (props: ThemePreviewProps) => {
           <Tabs
             tabs={[
               { name: "Colors", },
-              { name: "Components", },
+              { name: "Elements", },
             ]}
             currentTab={currentTab}
             setCurrentTab={setCurrentTab}
@@ -827,6 +865,9 @@ const RenderElement = (props: {
           </For>
         </ShinyCard>
       </ShinyCardWrapper>
+    </Show>
+    <Show when={props.element.type === "illus"}>
+      <IllustrationWrap><img src={props.element.text} /></IllustrationWrap>
     </Show>
     <Show when={props.element.type === "code"}>
       <Code />
@@ -886,8 +927,8 @@ const RenderElement = (props: {
     </Show>
     <Show when={props.element.type === "section"}>
       <Section style={{
-        "--preview-bg": props.vars.colors ? props.vars.colors['section-' + props.i] : props.vars.surface,
-        "--preview-txt": props.vars.colors ? props.vars.colors['section-' + props.i + '-txt'] : props.vars.txt,
+        "--section-bg": props.vars.colors ? props.vars.colors['section-' + props.i] : props.vars.surface,
+        "--section-txt": props.vars.colors ? props.vars.colors['section-' + props.i + '-txt'] : props.vars.txt,
       }}>
         <For each={props.element.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
           {(element, i) => (
@@ -913,7 +954,11 @@ export const ThemePreview = (props: ThemePreviewProps) => {
   // console.log({ themeCssVars, initialVars: lightMode })
 
   return (
-    <Container>
+    <Container
+      style={{
+        margin: props.isSplit !== true ? "1rem 0" : "0",
+      }}
+    >
       <Column style={{ ...themeCssVars }}>
         <For each={props.preview.elements ?? themePreviewElementConfigs.minimal.preview.elements}>
           {(element, i) => (
@@ -925,7 +970,7 @@ export const ThemePreview = (props: ThemePreviewProps) => {
           )}
         </For>
       </Column>
-      <Show when={props.showInfo === undefined || props.showInfo}>
+      <Show when={props.isSplit !== true}>
         <ThemeInfo {...props} />
       </Show>
       {props.children}
@@ -991,7 +1036,7 @@ export const ThemePreviewSplits = (props: ThemePreviewSplitsProps) => {
             >
               <ThemePreview
                 preview={preview}
-                showInfo={false}
+                isSplit={true}
               />
             </SplitContent>
           )}

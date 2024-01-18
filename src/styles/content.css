@@ -94,13 +94,13 @@
   border: var(--card-borderHover);
 }
 
-.content img {
+.content p > img {
   height: auto;
   margin: 0 auto;
 }
 
 @media (min-width: calc(1232px)) {
-  .content img {
+  .content p > img {
     width: calc(var(--layout-content-wide) - 32px);
     height: auto;
     margin: 0 auto;
@@ -109,7 +109,7 @@
   }
 }
 @media (max-width: 1232px) {
-  .content img {
+  .content p > img {
     max-width: 100%;
   }
 }

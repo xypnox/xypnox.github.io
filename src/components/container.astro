@@ -11,6 +11,7 @@ interface Props {
   links?: {
     title: string;
     href: string;
+    desc: string;
   }[];
 }
 const { title, icon, image, links, linkTitle, color } = Astro.props;
@@ -30,9 +31,12 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   <div class="container-content">
       {links && links.map((link) => (
         <a class="container-link" href={link.href}>
-          <span>
-          {link.title}
-          </span>
+          <div class="link-title">
+            {link.title}
+          </div>
+          <div class="link-desc">
+            {link.desc ?? ''}
+          </div>
         </a>
       ))}
     <slot />
@@ -94,17 +98,25 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
 
   .container-link {
     display: flex;
-    padding: 0.5rem 1rem;
+    flex-direction: column;
+    padding: 0.5rem 1rem 0.66rem;
     width: 100%;
     color: var(--text);
     text-decoration: none;
-    font-size: var(--font-size-md);
     border-radius: 0.75rem;
     border: 2px dashed transparent;
     transition: all 0.5s ease-in-out;
   }
-  .container-link span {
+  .container-link div {
     transition: all 0.5s ease-in-out;
+  }
+
+  .container-link .link-title {
+    font-weight: 500;
+    font-size: var(--font-size-md);
+  }
+  .container-link .link-desc {
+    color: var(--fadeText);
   }
 
   .container-link:hover {
@@ -114,8 +126,8 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   .container-link:active {
   }
 
-  .container-link:hover span {
-    /* color: var(--color); */
+  .container-link:hover div {
+    color: var(--color);
   }
 
   .with-image {
