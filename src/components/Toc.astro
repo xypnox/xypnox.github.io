@@ -18,6 +18,9 @@ function buildToc(headings: Heading[]) {
     if (heading.depth === 1) {
       toc.push(heading);
     } else {
+      if (!parentHeadings.has(heading.depth - 1)) {
+        toc.push(heading);
+      }
       parentHeadings.get(heading.depth - 1).subheadings.push(heading);
     }
   });
