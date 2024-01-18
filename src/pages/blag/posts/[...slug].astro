@@ -85,14 +85,13 @@ const dateFormatOption = {
     <div class="content">
       {
         entry.data.hidden && (
-          <blockquote>
+          <blockquote class="hidden-post theme-card">
             <p>
               <strong>This is a Hidden Post</strong>
+              If you have landed here, wow!
             </p>
-            <p>If you have landed here, wow!</p>
             <p>
-              This may also be a draft post, and if you want to share feedback,
-              reachout to me!
+              This may also be a draft, share feedback, <a href="/#contact-and-links">reachout to me!</a>
             </p>
           </blockquote>
         )
@@ -186,6 +185,12 @@ const dateFormatOption = {
     line-height: 1.5;
     font-family: "Crimson Text", serif;
     font-size: 1.2rem;
+  }
+
+  blockquote.hidden-post {
+    margin: 2rem 0;
+    padding: 1rem 2rem;
+    border-left: 4px dashed var(--secondary-color);
   }
 
   .details {
