@@ -127,7 +127,7 @@ export const themeVars = {
 
   heading: '#CCA685',
   text: '#919DCF',
-  fadeText: '#919DCF80',
+  fadeText: '#919DCF9a',
 
   cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.5)',
 
