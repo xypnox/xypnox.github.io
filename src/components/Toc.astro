@@ -14,20 +14,22 @@ function buildToc(headings: Heading[]) {
   headings.forEach((h) => {
     const heading = { ...h, subheadings: [] };
     parentHeadings.set(heading.depth, heading);
-    console.log({ heading });
+    // console.log({ heading });
     if (heading.depth === 1) {
       toc.push(heading);
     } else {
       if (!parentHeadings.has(heading.depth - 1)) {
         toc.push(heading);
+      } else {
+        parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+
       }
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
     }
   });
   return toc;
 }
 
-console.log({ headings });
+// console.log({ headings });
 
 const toc = buildToc(headings);
 ---
