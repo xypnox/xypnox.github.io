@@ -7,7 +7,7 @@
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: var(--heading);
-  font-family: "Jost", serif;
+  font-family: var(--font-jost);
 }
 
 .content p {
@@ -56,7 +56,7 @@
 }
 
 .content table th {
-  font-family: "Jost", serif;
+  font-family: var(--font-jost);
   border: 1px solid var(--border);
   border-bottom: 2px solid var(--heading);
   background-color: var(--surface);

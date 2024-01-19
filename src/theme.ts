@@ -103,7 +103,7 @@ const layout = {
 export const themeVars = {
   layout,
   font: {
-    family: 'Jost, sans-serif',
+    family: 'var(--font-jost)',
     size: fontSizes,
   },
 
