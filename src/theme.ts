@@ -5,7 +5,7 @@ interface GeneratedTheme<T> {
   theme: T;
 }
 
-const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '') => {
+export const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '') => {
   const themeCssVars = flattenObject(vars, (keys, value) => [
     `${prefix}${keys.join("-")}`,
     value,

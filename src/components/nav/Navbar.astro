@@ -1,5 +1,6 @@
 ---
 import { icons } from "../../content/icons";
+import { ThemeManager } from "../themeManager";
 import NavLink from './NavLink.astro'
 import Icon from "astro-icon";
 
@@ -21,6 +22,7 @@ import Icon from "astro-icon";
     <NavLink href="/design">Design</NavLink>
     <NavLink href="https://x5z.studio">x5z</NavLink>
   </div>
+  <ThemeManager client:only />
   <div class="mobile-menu-button">
     <Icon name={icons.menu} />
   </div>
