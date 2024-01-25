@@ -29,7 +29,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: #0f111a;
+    background-color: var(--background);
     z-index: 99;
     transition: opacity 1s ease-in-out;
   }
@@ -61,15 +61,15 @@
     transform-origin: 0px 100%;
   }
   .loader:after {
-    background: #ff5370;
-    outline: 2px solid #ff5370; 
+    background: var(--primary-color);
+    outline: 2px solid var(--primary-color);
     outline-offset: 2px;
     animation: spin 3s linear infinite alternate;
   }
   .loader:before {
     transform-origin: 0 50%;
     background: #919DCF40;
-    border: 2px dashed #919DCF;
+    border: 2px dashed var(--border);
     animation: spin 2s linear infinite alternate;
   }
   @keyframes spin {

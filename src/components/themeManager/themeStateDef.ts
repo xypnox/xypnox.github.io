@@ -1,74 +1,12 @@
-import { createMemo, on } from "solid-js";
-import { createStoredStore } from "../../utils/localStore";
+import { createEffect, createMemo, on } from "solid-js";
+import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 import { themeVars } from "../../theme";
 
 import type { ThemeVars } from "../../theme";
 import { flattenObject } from "../../lib/objects";
+import { defaultThemes, type ThemeMode, type UITheme } from "./defaultThemes";
 
 
-type ThemeMode = 'light' | 'dark'
-
-interface UITheme {
-  name: string;
-  vars: Record<ThemeMode, ThemeVars>;
-}
-
-
-const defaultThemes: UITheme[] = [
-  {
-    name: 'Studio',
-    vars: {
-      light: {
-        ...themeVars,
-      },
-      dark: {
-        ...themeVars,
-      }
-    }
-  },
-  {
-    name: 'Brutalist',
-    vars: {
-      light: {
-        ...themeVars,
-        card: {
-          ...themeVars.card,
-          background: '#ffffff50',
-          border: '2px solid #999',
-          borderHover: '2px solid #666'
-        },
-        font: {
-          family: 'Iosevka Term, sans-serif',
-          size: themeVars.font.size
-        },
-        primary: {
-          color: '#4e6bdc',
-          contrast: '#ffffff',
-        },
-
-        secondary: {
-          color: '#ff5370',
-        },
-
-        colors: {
-          purple: '#569867',
-        },
-
-        background: '#f2f0f8',
-        surface: '#ffffff50',
-
-        border: '#00000020',
-
-        heading: '#000000',
-        text: '#333333',
-        fadeText: '#666666',
-      },
-      dark: {
-        ...themeVars,
-      }
-    }
-  }
-]
 
 const cssConverter = (theme: UITheme, mode: ThemeMode) => {
   const cssVars = flattenObject(theme.vars[mode], (keys: string[], value: string) => [
@@ -96,13 +34,16 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     theme: initTheme ?? 'Studio',
   });
 
+  const themes = createMemo(() => {
+    return [...themesData.get(), ...defaultThemes];
+  });
+
   const theme = createMemo(() => {
-    const themes = [...themesData.get(), ...defaultThemes];
     const config = themeConfig.get();
-    const theme = themes.find(t => t.name === config.theme);
+    const theme = themes().find(t => t.name === config.theme);
     if (!theme) {
       console.error(`Theme ${config.theme} is not available`);
-      return themes[0];
+      return themes()[0];
     }
     return theme;
   });
@@ -118,6 +59,10 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
       }
     )
   );
+
+  createEffect(() => {
+    setLocalStorage('xypnoxCssTheme', cssTheme());
+  })
 
   const debugLog = (theme: UITheme) => {
     console.log('Theme', JSON.stringify(theme, null, 2));

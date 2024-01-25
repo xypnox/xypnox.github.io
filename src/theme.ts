@@ -98,6 +98,7 @@ const layout = {
     wide: '1200px',
     main: '800px',
   },
+  nav: { height: '58px', }
 }
 
 export const themeVars = {

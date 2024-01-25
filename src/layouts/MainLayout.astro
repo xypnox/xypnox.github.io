@@ -3,6 +3,7 @@ import Footer from "../components/footer.astro";
 import Navbar from "../components/nav/Navbar.astro";
 import type { BaseLayoutProps } from "../dataTypes";
 import BaseLayout from "./BaseLayout.astro";
+import LoadTheme from "../components/themeManager/loadTheme.astro";
 
 import { themeCssVars } from "../theme";
 
@@ -22,6 +23,7 @@ const props = Astro.props;
       rel="stylesheet"
     />
   </Fragment>
+  <LoadTheme />
   {!props.hideNav && <Navbar />}
   <slot />
   {!props.hideNav && <Footer />}

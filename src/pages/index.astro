@@ -4,7 +4,6 @@ import Links from "../components/profileLinks.astro";
 import Container from "../components/container.astro";
 import XypnoxEase from "../vectors/xypnoxEase.astro";
 import LatestBlog from "../components/latestBlog.astro";
-import { ThemeManager } from '../components/themeManager'
 ---
 
 <Layout title="xypnox">
@@ -103,14 +102,14 @@ import { ThemeManager } from '../components/themeManager'
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 3rem;
+    gap: 2.25rem;
     width: 100%;
     max-width: 1200px;
     font-size: var(--font-size-md);
     color: var(--text);
     padding: 2rem;
     border-radius: 2rem;
-    border: 2px dashed var(--border);
+    border: var(--card-border);
   }
 
   .intro :global(wrapper) {
@@ -196,16 +195,5 @@ import { ThemeManager } from '../components/themeManager'
     font-size: var(--font-size-xm);
     text-decoration: underline;
     padding: 0;
-  }
-
-  @media (max-width: 600px) {
-    .intro {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .intro .subline {
-      font-size: var(--font-size-md);
-    }
   }
 </style>

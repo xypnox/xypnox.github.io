@@ -23,6 +23,19 @@ export function createStoredSignal<T>(
 }
 
 
+export const parseLocalStorage = <T>(key: string, defaultValue: T, saveIfMissing = false): T => {
+  if (!localStorage) return defaultValue;
+  if (!localStorage.getItem(key) && saveIfMissing) {
+    setLocalStorage(key, defaultValue);
+  }
+  return localStorage.getItem(key)
+    ? JSON.parse(localStorage.getItem(key)!)
+    : defaultValue;
+}
+
+export const setLocalStorage = <T>(key: string, value: T) => {
+  localStorage.setItem(key, JSON.stringify(value))
+}
 
 type Path<T extends object> = Array<keyof T | number>;
 
@@ -36,10 +49,7 @@ export const createStoredStore = <T extends object>(
   key: string, defaultValue: T
 ): StoredStore<T> => {
 
-  const initialValue = localStorage ? localStorage.getItem(key)
-    ? JSON.parse(localStorage.getItem(key)!)
-    : defaultValue : defaultValue;
-
+  const initialValue = localStorage ? parseLocalStorage(key, defaultValue, true) : defaultValue;
   const [value, setValue] = createStore<T>(initialValue);
 
   const setNestedValueAndStore = (path: Path<T>, newValue: any) => {
@@ -53,7 +63,7 @@ export const createStoredStore = <T extends object>(
       current[path[lastIndex]] = newValue;
       return copy;
     });
-    if (localStorage) localStorage.setItem(key, JSON.stringify(value));
+    if (localStorage) setLocalStorage(key, value);
   };
 
   createEffect(() => {
