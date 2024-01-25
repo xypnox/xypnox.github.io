@@ -1,6 +1,7 @@
 import { createEffect } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
+import { theme } from "../../theme";
 
 const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
@@ -17,6 +18,22 @@ const updateThemeStyle = (themeCss: string) => {
   }
 }
 
+const WIPTag = styled('span')`
+  background: ${theme.primary.color};
+  color: ${theme.primary.contrast};
+  padding: 0.25rem 0.5rem;
+  border-radius: ${theme.layout.border.radius};
+  font-size: ${theme.font.size.sm};
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: max-content;
+  iconify-icon {
+    font-size: ${theme.font.size.base};
+  }
+`
+
 const ManagerWrapper = styled('div')`
   pointer-events: all;
   display: flex;
@@ -25,17 +42,17 @@ const ManagerWrapper = styled('div')`
 
   h2 {
     margin: 0;
-    font-size: var(--font-size-base);
+    font-size: ${theme.font.size.base};
     margin-bottom: 0.5rem;
   }
 
   button {
     padding: 0.5rem 1rem;
-    border-radius: 1rem;
-    font-size: var(--font-size-base);
+    border-radius: ${theme.layout.border.radius};
+    font-size: ${theme.font.size.base};
     border: none;
-    background: var(--surface);
-    color: var(--text);
+    background: ${theme.surface};
+    color: ${theme.text};
     transition: all 0.2s ease;
     font-family: inherit;
   }
@@ -60,26 +77,36 @@ const ThemeManager = () => {
 
   const changeTheme = (theme: string) => {
     const root = document.documentElement;
-    root.style.transition = 'all 0.5s ease';
+    // root.style.transition = 'all 0.5s ease';
+    document.body.classList.add('all-transition');
 
     themeState.changeTheme(theme);
     setTimeout(() => {
-      root.style.transition = '';
+      // root.style.transition = '';
+      document.body.classList.remove('all-transition');
     }, 500);
   }
 
   const changeMode = (mode: 'light' | 'dark') => {
     const root = document.documentElement;
     // Set transition to all elements on the page ease * { }
-    root.style.transition = 'all 0.5s ease';
+    // root.style.transition = 'all 0.5s ease';
+    document.body.classList.add('all-transition');
     themeState.changeMode(mode);
     setTimeout(() => {
-      root.style.transition = '';
+      // root.style.transition = '';
+      document.body.classList.remove('all-transition');
     }, 500);
   }
 
   return (
     <ManagerWrapper>
+      <div>
+        <WIPTag>
+          <iconify-icon icon="ph:traffic-cone-duotone"></iconify-icon>
+          Work In Progress
+        </WIPTag>
+      </div>
       <div>
         <h2>Theme</h2>
         <ButtonRow>

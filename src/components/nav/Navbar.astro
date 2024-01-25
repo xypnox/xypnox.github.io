@@ -56,7 +56,7 @@ import Icon from "astro-icon";
 
   @keyframes borderFlash {
     0% {
-      border-color: var(--border);
+      border-color: var(--border-color);
     }
     25% {
       border-color: var(--primary-color);
@@ -68,17 +68,17 @@ import Icon from "astro-icon";
       border-color: var(--primary-color);
     }
     100% {
-      border-color: var(--border);
+      border-color: var(--border-color);
     }
   }
 
   .navbar > .navSurface {
     display: flex;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     background: var(--background);
     padding: 0 0.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
     box-shadow: var(--cardShadow);
     transition: all 0.2s ease-in-out;
     animation: borderFlash 3s;
@@ -174,7 +174,7 @@ import Icon from "astro-icon";
       gap: 1rem;
       font-size: 1.25rem;
       padding: 1rem;
-      border-radius: 1rem;
+      border-radius: calc(var(--layout-border-radius) * 2);
       border: var(--card-border);
     }
   }

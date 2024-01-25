@@ -23,7 +23,7 @@ import LatestBlog from "../components/latestBlog.astro";
       <Container
         title="Dev"
         image="/skills/dev.svg"
-        color="#63f6ff"
+        color="var(--colors-dev)"
         links={[
           { title: "Projects", href: "/projects", desc: "Software I have worked on" },
           { title: "Experiments", href: "https://xypnox.studio", desc: "A place to experiment with frontend" },
@@ -40,7 +40,7 @@ import LatestBlog from "../components/latestBlog.astro";
         title="Design"
         image="/skills/design.svg"
         linkTitle="/design"
-        color="var(--primary-color)"
+        color="var(--colors-design)"
         links={[
           { title: "Covers", href: "/design/covers", desc: "Covers of Spotify playlists" },
           { title: "Logos", href: "/design/logos", desc: "Logos I have designed/refined" },
@@ -57,7 +57,7 @@ import LatestBlog from "../components/latestBlog.astro";
       <Container
         title="Literature"
         image="/skills/lit.svg"
-        color="#72ff80"
+        color="var(--colors-literature)"
         links={[
           { title: "Blag", href: "/blag", desc: "Blog, long form prose" },
           { title: "Poems", href: "/poems", desc: "Short works that sometimes rhyme" },
@@ -108,7 +108,7 @@ import LatestBlog from "../components/latestBlog.astro";
     font-size: var(--font-size-md);
     color: var(--text);
     padding: 2rem;
-    border-radius: 2rem;
+    border-radius: calc(var(--layout-border-radius) * 4);
     border: var(--card-border);
   }
 
@@ -165,7 +165,7 @@ import LatestBlog from "../components/latestBlog.astro";
     color: var(--text);
     background: var(--surface);
     font-size: 1.5rem;
-    border-radius: 1rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease-in-out;
   }
@@ -183,7 +183,7 @@ import LatestBlog from "../components/latestBlog.astro";
     /* align-items: center; */
     justify-content: center;
     font-size: var(--font-size-base);
-    border-radius: 1rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     gap: 1rem;
   }
   .collaborate p {

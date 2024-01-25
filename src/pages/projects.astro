@@ -61,7 +61,7 @@ const ProjectsWithSlug = projectsData.map((p) => ({
     align-items: flex-start;
     gap: 2rem;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: calc(2 * var(--layout-border-radius));
     width: 100%;
     line-height: 1.5;
     transition: all 0.5s ease-in-out;
@@ -78,7 +78,7 @@ const ProjectsWithSlug = projectsData.map((p) => ({
   .projectCard img {
     width: 100%;
     max-width: 256px;
-    border-radius: 1rem;
+    border-radius: calc(2 * var(--layout-border-radius));
   }
 
   .projectCard p,
@@ -94,7 +94,7 @@ const ProjectsWithSlug = projectsData.map((p) => ({
 
   .projectTags span {
     padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--layout-border-radius);
     background: var(--surface);
   }
 

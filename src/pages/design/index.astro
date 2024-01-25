@@ -68,9 +68,9 @@ const designSections = [
     justify-content: center;
     font-size: var(--font-size-xl);
     background: var(--background);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
     color: var(--heading);
-    border-radius: 2rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     gap: 0.5rem;
     padding-bottom: 1rem;
     text-decoration: none;
@@ -87,8 +87,9 @@ const designSections = [
     height: 100%;
     max-height: 600px;
     max-width: 600px;
-    border-radius: 2rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
   }
+
   .notice {
     margin-top: 4rem;
     padding: 1rem;

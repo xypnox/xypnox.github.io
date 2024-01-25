@@ -77,19 +77,19 @@ const fontSizes = {
 }
 
 const technoCard = {
-  border: '2px dashed var(--border)',
+  border: '2px dashed var(--border-color)',
   background: 'linear-gradient(-45deg, var(--surface), var(--background), var(--background))',
   backgroundSize: '200%',
-  borderHover: '2px solid var(--border)',
+  borderHover: '2px solid var(--border-color)',
   backgroundPositionHover: '-100% 0',
 }
 
 const card = {
-  border: '2px dashed var(--border)',
+  border: '2px dashed var(--border-color)',
   background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
   backgroundPosition: '90% 0',
   backgroundSize: '200%',
-  borderHover: '2px solid var(--border)',
+  borderHover: '2px solid var(--border-color)',
   backgroundPositionHover: '10% 20%',
 }
 
@@ -98,7 +98,14 @@ const layout = {
     wide: '1200px',
     main: '800px',
   },
-  nav: { height: '58px', }
+
+  nav: {
+    height: '58px',
+  },
+
+  border: {
+    radius: '0.5rem',
+  }
 }
 
 export const themeVars = {
@@ -119,12 +126,18 @@ export const themeVars = {
 
   colors: {
     purple: '#6b5eff',
+    dev: '#63f6ff',
+    design: '#ff5370',
+    literature: '#72ff80',
   },
 
   background: '#0f111a',
   surface: '#1e2139a0',
 
-  border: '#ffffff10',
+  border: {
+    style: 'dashed',
+    color: '#ffffff10'
+  },
 
   heading: '#CCA685',
   text: '#919DCF',
@@ -161,7 +174,9 @@ export const poemThemeVars = {
   text: '#444',
   fadeText: '#666666',
   surface: '#f5f5f5',
-  border: '#aaa',
+  border: {
+    color: '#aaa',
+  }
 }
 
 const poemThemeGen = mergeThemes(
@@ -220,3 +235,163 @@ export const poemTheme = poemThemeGen.theme
 // /** Use for declaring css styles in css-in-js
 //  * Ex: { 'primary': { 'color': 'var(--light-primary-color)' } } */
 // export const lightTheme = lightThemeGen.theme
+//
+
+export type ThemeMode = 'light' | 'dark'
+
+export interface UITheme {
+  name: string;
+  vars: Record<ThemeMode, ThemeVars>;
+}
+
+const lightTheme: ThemeVars = {
+  ...themeVars,
+  card: {
+    ...themeVars.card,
+    background: '#ffffff80',
+    border: '2px dashed #919DCF50',
+    borderHover: '2px solid #919DCFa0'
+  },
+  primary: {
+    color: '#6E49F2',
+    contrast: '#ffffff',
+  },
+
+  secondary: {
+    color: '#b55089',
+  },
+
+  colors: {
+    purple: '#569867',
+    dev: '#008a93',
+    design: '#ac1a65',
+    literature: '#0e7718',
+  },
+
+  background: '#d7d7ea',
+  surface: '#9797dd2e',
+
+  border: {
+    style: 'dashed',
+    color: '#2d3a6020',
+  },
+
+  heading: '#b55089',
+  text: '#2d3a60',
+  fadeText: '#687197',
+
+  cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
+}
+
+const BrutalistTheme: UITheme = {
+  name: 'Brutalist',
+  vars: {
+    light: {
+      ...themeVars,
+      layout: {
+        ...themeVars.layout,
+        border: {
+          radius: '0',
+        }
+      },
+      card: {
+        ...themeVars.card,
+        background: '#ffffff80',
+        border: '1px solid #999',
+        borderHover: '1px solid #666'
+      },
+      font: {
+        family: 'Iosevka Term, monospace',
+        size: themeVars.font.size
+      },
+      primary: {
+        color: '#222',
+        contrast: '#fff',
+      },
+
+      secondary: {
+        color: '#ff5370',
+      },
+
+      colors: {
+        purple: '#2080ff',
+        dev: '#444',
+        design: '#444',
+        literature: '#444',
+      },
+
+      background: '#f0f0f0',
+      surface: '#e0e0e0',
+
+      border: {
+        style: 'solid',
+        color: '#00000020'
+      },
+
+      heading: '#000000',
+      text: '#333333',
+      fadeText: '#666666',
+
+      cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
+    },
+    dark: {
+      ...themeVars,
+      layout: {
+        ...themeVars.layout,
+        border: {
+          radius: '0px',
+        }
+      },
+      card: {
+        ...themeVars.card,
+        background: '#33333380',
+        border: '1px solid #444',
+        borderHover: '1px solid #666'
+      },
+      font: {
+        family: 'Iosevka Term, monospace',
+        size: themeVars.font.size
+      },
+      primary: {
+        color: '#fff',
+        contrast: '#222',
+      },
+
+      secondary: {
+        color: '#ff5370',
+      },
+
+      colors: {
+        ...themeVars.colors,
+        purple: '#2080ff',
+      },
+
+      background: '#000000',
+      surface: '#30303080',
+
+      border: {
+        style: 'solid',
+        color: '#ffffff20'
+      },
+
+      heading: '#ffffff',
+      text: '#cccccc',
+      fadeText: '#999999',
+
+      cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
+    }
+  }
+
+}
+
+export const defaultThemes: UITheme[] = [
+  {
+    name: 'Studio',
+    vars: {
+      light: lightTheme,
+      dark: themeVars,
+    }
+  },
+  BrutalistTheme,
+]
+

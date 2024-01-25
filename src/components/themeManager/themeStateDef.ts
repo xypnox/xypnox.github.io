@@ -1,12 +1,8 @@
 import { createEffect, createMemo, on } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
-import { themeVars } from "../../theme";
 
-import type { ThemeVars } from "../../theme";
 import { flattenObject } from "../../lib/objects";
-import { defaultThemes, type ThemeMode, type UITheme } from "./defaultThemes";
-
-
+import { defaultThemes, type ThemeMode, type UITheme } from "../../theme"
 
 const cssConverter = (theme: UITheme, mode: ThemeMode) => {
   const cssVars = flattenObject(theme.vars[mode], (keys: string[], value: string) => [
@@ -16,14 +12,12 @@ const cssConverter = (theme: UITheme, mode: ThemeMode) => {
   const cssVarsString = Object.entries(cssVars).map(([key, value]) => {
     return `--${key}: ${value};`
   }).join('\n');
-  console.log({ cssVarsString })
+  // console.log({ cssVarsString })
   return cssVarsString;
 }
 
 
 export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: ThemeMode) => {
-  // const [theme, setTheme] = createStore<UITheme>({...(initTheme ?? defaultThemes[0])});
-
   const themesData = createStoredStore<UITheme[]>('themes', []);
 
   const themeConfig = createStoredStore<{
@@ -48,13 +42,11 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     return theme;
   });
 
-  // const [currentMode, setCurrentMode] = createSignal<DefaultModes>(initMode ?? "dark");
-
   const cssTheme = createMemo(
     on(
       () => ({ config: themeConfig.get().mode, theme: theme() })
       , (v) => {
-        console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
+        // console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
         return cssConverter(theme(), themeConfig.get().mode);
       }
     )
@@ -63,10 +55,6 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
   createEffect(() => {
     setLocalStorage('xypnoxCssTheme', cssTheme());
   })
-
-  const debugLog = (theme: UITheme) => {
-    console.log('Theme', JSON.stringify(theme, null, 2));
-  };
 
   const changeTheme = (name: string) => {
     const themes = [...themesData.get(), ...defaultThemes];
@@ -98,7 +86,6 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     changeMode,
     themesData,
     cssTheme,
-    debugLog,
   }
 }
 

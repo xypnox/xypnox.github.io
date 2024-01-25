@@ -1,5 +1,6 @@
 import { Show, createSignal, lazy } from 'solid-js';
 import { keyframes, styled } from 'solid-styled-components';
+import { theme } from '../../theme';
 
 const LazyComponent = lazy(() => import('./index'));
 
@@ -82,7 +83,7 @@ const PopupContent = styled('div')`
   color: var(--text);
   background: var(--background);
   box-shadow: var(--cardShadow);
-  border-radius: 1rem;
+  border-radius: calc(${theme.layout.border.radius} * 2);
   border: 2px solid var(--primary-color);
 
   display: flex;
@@ -125,13 +126,13 @@ const PopupControls = styled('div')`
   height: calc(var(--layout-nav-height) + 1rem);
   padding: 0.5rem 1rem;
   font-size: var(--font-size-sm);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
 `
 
 const PopupButton = styled('button')`
   padding: 0.5rem;
   width: 4rem;
-  border-radius: 1rem;
+  border-radius: calc(${theme.layout.border.radius} * 2);
   color: var(--primary-contrast);
   font-size: var(--font-size-md);
   background: var(--primary-color);
