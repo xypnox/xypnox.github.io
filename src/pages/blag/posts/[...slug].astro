@@ -171,9 +171,8 @@ const dateFormatOption = {
     max-height: 80vh;
     overflow-y: auto;
     margin: 1rem auto;
-    border-radius: 0.5rem;
-    border: 2px dashed var(--border);
-    box-shadow: 0 0 10px var(--shadow);
+    border-radius: var(--layout-border-radius);
+    border: var(--card-border);
   }
 
   .content {
@@ -190,7 +189,7 @@ const dateFormatOption = {
   blockquote.hidden-post {
     margin: 2rem 0;
     padding: 1rem 2rem;
-    border-left: 4px dashed var(--secondary-color);
+    border-left: 4px var(--border-style) var(--secondary-color);
   }
 
   .details {
@@ -231,8 +230,8 @@ const dateFormatOption = {
     color: var(--fadeText);
     margin: 4rem 0;
     padding: 2rem 0;
-    border-top: 2px dashed var(--border);
-    border-bottom: 2px dashed var(--border);
+    border-top: 2px var(--border-style) var(--border-color);
+    border-bottom: 2px var(--border-style) var(--border-color);
   }
   .end-marker p {
     margin: 0;

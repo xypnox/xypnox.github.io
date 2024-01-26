@@ -1,0 +1,13 @@
+---
+// Get localStorage themeVars string, and set it as the CSS variables
+---
+<script is:inline>
+  const themeCss = localStorage.getItem('xypnoxCssTheme');
+  let style = document.getElementById('_themeVars');
+
+  if (style && themeCss) {
+    const themeString = JSON.parse(themeCss);
+    if (themeString) style.innerHTML = `:root { ${themeString} }`;
+  } 
+</script>
+

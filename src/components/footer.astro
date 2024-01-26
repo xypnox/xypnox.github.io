@@ -47,7 +47,7 @@ const links = [
     margin: 4em 0 0;
     gap: 1rem;
     padding: 4rem 0 0;
-    border-top: 2px dashed var(--border);
+    border-top: 2px var(--border-style) var(--border-color);
   }
 
   .footer-content {
@@ -70,15 +70,15 @@ const links = [
   }
 
   .navbar-helper {
-    width: 100%;
-    margin-top: 2rem;
-    height: 2.9rem;
+    width: calc(100% + 1rem);
+    margin: 2rem -0.5rem -0.5rem;
+    height: calc(var(--layout-nav-height) + 1rem);
     display: flex;
     align-items: center;
     padding-left: 5rem;
-    border-radius: 1rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     color: var(--fadeText);
-    border: 2px dashed var(--border);
+    border: 2px var(--border-style) var(--border-color);
   }
 
 
@@ -87,7 +87,7 @@ const links = [
     height: 8rem;
     flex-shrink: 0;
     --gradient-color-1: var(--fadeText);
-    --gradient-color-2: var(--border);
+    --gradient-color-2: var(--border-color);
     background: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--surface), var(--gradient-color-1), var(--gradient-color-2));
     background-size: 200% 200%;
     animation: backgroundMove 25s linear infinite;

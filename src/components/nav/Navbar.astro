@@ -1,33 +1,36 @@
 ---
 import { icons } from "../../content/icons";
-import NavLink from './NavLink.astro'
+import { ThemePopup } from "../themeManager/popup";
+import NavLink from "./NavLink.astro";
 import Icon from "astro-icon";
-
 ---
 
 <nav class="navbar">
-  <a href="/"  aria-label="Home">
-    <div class="navLogo" />
+  <a href="/" aria-label="Home" class="navSurface">
+    <div class="navLogo"></div>
   </a>
-  <div class="navlinks">
+  <div class="navlinks navSurface">
     <NavLink href="/blag">Blag</NavLink>
     <NavLink href="/projects">Projects</NavLink>
     <NavLink href="/design">Design</NavLink>
     <NavLink href="https://x5z.studio">x5z</NavLink>
   </div>
-  <div class="mobile-menu">
+  <div class="mobile-menu navSurface">
     <NavLink href="/blag">Blag</NavLink>
     <NavLink href="/projects">Projects</NavLink>
     <NavLink href="/design">Design</NavLink>
     <NavLink href="https://x5z.studio">x5z</NavLink>
   </div>
-  <div class="mobile-menu-button">
+  <div class="mobile-menu-button navButton navSurface">
     <Icon name={icons.menu} />
+  </div>
+  <div id="themePopupSection">
+    <ThemePopup client:only />
   </div>
 </nav>
 
 <script>
-import '../../scripts/menu'
+  import "../../scripts/menu";
 </script>
 
 <style>
@@ -44,6 +47,7 @@ import '../../scripts/menu'
     gap: 1rem;
     z-index: 1000;
     pointer-events: none;
+    height: var(--layout-nav-height);
   }
 
   nav.navbar > * {
@@ -52,7 +56,7 @@ import '../../scripts/menu'
 
   @keyframes borderFlash {
     0% {
-      border-color: var(--border);
+      border-color: var(--border-color);
     }
     25% {
       border-color: var(--primary-color);
@@ -64,17 +68,17 @@ import '../../scripts/menu'
       border-color: var(--primary-color);
     }
     100% {
-      border-color: var(--border);
+      border-color: var(--border-color);
     }
   }
 
-  .navbar > * {
+  .navbar > .navSurface {
     display: flex;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: calc(var(--layout-border-radius) * 2);
     background: var(--background);
     padding: 0 0.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-color);
     box-shadow: var(--cardShadow);
     transition: all 0.2s ease-in-out;
     animation: borderFlash 3s;
@@ -85,13 +89,21 @@ import '../../scripts/menu'
     display: none;
   }
 
-  nav.navbar > div:hover {}
+  nav.navbar > div:hover {
+  }
+
+  #themePopupSection {
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 
   .navbar .navlinks {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1.25rem;
+    font-size: var(--font-size-base);
     padding: 0rem 1rem;
   }
 
@@ -101,31 +113,44 @@ import '../../scripts/menu'
     flex-shrink: 0;
     --gradient-color-1: var(--primary-color);
     --gradient-color-2: var(--colors-purple);
-    background: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2));
+    background: linear-gradient(
+      -60deg,
+      var(--gradient-color-1),
+      var(--gradient-color-2),
+      var(--gradient-color-1),
+      var(--gradient-color-2),
+      var(--gradient-color-1),
+      var(--secondary-color),
+      var(--gradient-color-1),
+      var(--gradient-color-2)
+    );
     background-size: 200% 200%;
     animation: backgroundMove 5s linear infinite;
-    -webkit-mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="m35.4 11.5.6.2a25.7 25.7 0 0 1 8.3 5.8l.4-.2.3-.3-.2-.2-2-1.8a20.1 20.1 0 0 0-7.4-3.5ZM20 16.9h-.4c-2.6.2-4.7 2.3-6.6 6.6a22.4 22.4 0 0 0-1.8 10.7A20.5 20.5 0 0 0 16 45.3l.4.5.4-.5.4-.5-.4-.8a18.9 18.9 0 0 1-1.5-13.8c1-3 2.8-4 5-3l2 1.4a45010.8 45010.8 0 0 0 16.7 14c2.4 2 3.4 2.7 4.7 3.4l2 .7a5 5 0 0 0 1.7 0c.5-.1 1.2-.5 1.6-.9.4-.4 1-1.3 1.6-2.5a19 19 0 0 0 2-8.7c0-1.6-.2-2.6-.4-4.1A26.1 26.1 0 0 0 46.9 19s-.2 0-.6.6l-.1.2.4.6A21.2 21.2 0 0 1 50 33.8c-.2 2-.8 4.3-1.4 5.6-.5 1-1.2 1.6-1.9 1.7-.8.2-1.8-.2-2.7-1.1A985.3 985.3 0 0 1 27 20.8C24.5 18.3 22 17 20 16.9Zm-1.2 30.2-.3.2-.3.3.3.3a24.2 24.2 0 0 0 5 3 17.8 17.8 0 0 1-4.7-3.8Z" /><path d="M48.8 15.2a694 694 0 0 0-14.4 12.2 23.6 23.6 0 0 0 2 2.4l12.4-14.6Zm-21.4 19A1128.2 1128.2 0 0 0 15.1 49l14.8-12.6-2.5-2Z" /></svg>') center/contain;
-    mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="m35.4 11.5.6.2a25.7 25.7 0 0 1 8.3 5.8l.4-.2.3-.3-.2-.2-2-1.8a20.1 20.1 0 0 0-7.4-3.5ZM20 16.9h-.4c-2.6.2-4.7 2.3-6.6 6.6a22.4 22.4 0 0 0-1.8 10.7A20.5 20.5 0 0 0 16 45.3l.4.5.4-.5.4-.5-.4-.8a18.9 18.9 0 0 1-1.5-13.8c1-3 2.8-4 5-3l2 1.4a45010.8 45010.8 0 0 0 16.7 14c2.4 2 3.4 2.7 4.7 3.4l2 .7a5 5 0 0 0 1.7 0c.5-.1 1.2-.5 1.6-.9.4-.4 1-1.3 1.6-2.5a19 19 0 0 0 2-8.7c0-1.6-.2-2.6-.4-4.1A26.1 26.1 0 0 0 46.9 19s-.2 0-.6.6l-.1.2.4.6A21.2 21.2 0 0 1 50 33.8c-.2 2-.8 4.3-1.4 5.6-.5 1-1.2 1.6-1.9 1.7-.8.2-1.8-.2-2.7-1.1A985.3 985.3 0 0 1 27 20.8C24.5 18.3 22 17 20 16.9Zm-1.2 30.2-.3.2-.3.3.3.3a24.2 24.2 0 0 0 5 3 17.8 17.8 0 0 1-4.7-3.8Z" /><path d="M48.8 15.2a694 694 0 0 0-14.4 12.2 23.6 23.6 0 0 0 2 2.4l12.4-14.6Zm-21.4 19A1128.2 1128.2 0 0 0 15.1 49l14.8-12.6-2.5-2Z" /></svg>') center/contain;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="m35.4 11.5.6.2a25.7 25.7 0 0 1 8.3 5.8l.4-.2.3-.3-.2-.2-2-1.8a20.1 20.1 0 0 0-7.4-3.5ZM20 16.9h-.4c-2.6.2-4.7 2.3-6.6 6.6a22.4 22.4 0 0 0-1.8 10.7A20.5 20.5 0 0 0 16 45.3l.4.5.4-.5.4-.5-.4-.8a18.9 18.9 0 0 1-1.5-13.8c1-3 2.8-4 5-3l2 1.4a45010.8 45010.8 0 0 0 16.7 14c2.4 2 3.4 2.7 4.7 3.4l2 .7a5 5 0 0 0 1.7 0c.5-.1 1.2-.5 1.6-.9.4-.4 1-1.3 1.6-2.5a19 19 0 0 0 2-8.7c0-1.6-.2-2.6-.4-4.1A26.1 26.1 0 0 0 46.9 19s-.2 0-.6.6l-.1.2.4.6A21.2 21.2 0 0 1 50 33.8c-.2 2-.8 4.3-1.4 5.6-.5 1-1.2 1.6-1.9 1.7-.8.2-1.8-.2-2.7-1.1A985.3 985.3 0 0 1 27 20.8C24.5 18.3 22 17 20 16.9Zm-1.2 30.2-.3.2-.3.3.3.3a24.2 24.2 0 0 0 5 3 17.8 17.8 0 0 1-4.7-3.8Z" /><path d="M48.8 15.2a694 694 0 0 0-14.4 12.2 23.6 23.6 0 0 0 2 2.4l12.4-14.6Zm-21.4 19A1128.2 1128.2 0 0 0 15.1 49l14.8-12.6-2.5-2Z" /></svg>')
+      center/contain;
+    mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="m35.4 11.5.6.2a25.7 25.7 0 0 1 8.3 5.8l.4-.2.3-.3-.2-.2-2-1.8a20.1 20.1 0 0 0-7.4-3.5ZM20 16.9h-.4c-2.6.2-4.7 2.3-6.6 6.6a22.4 22.4 0 0 0-1.8 10.7A20.5 20.5 0 0 0 16 45.3l.4.5.4-.5.4-.5-.4-.8a18.9 18.9 0 0 1-1.5-13.8c1-3 2.8-4 5-3l2 1.4a45010.8 45010.8 0 0 0 16.7 14c2.4 2 3.4 2.7 4.7 3.4l2 .7a5 5 0 0 0 1.7 0c.5-.1 1.2-.5 1.6-.9.4-.4 1-1.3 1.6-2.5a19 19 0 0 0 2-8.7c0-1.6-.2-2.6-.4-4.1A26.1 26.1 0 0 0 46.9 19s-.2 0-.6.6l-.1.2.4.6A21.2 21.2 0 0 1 50 33.8c-.2 2-.8 4.3-1.4 5.6-.5 1-1.2 1.6-1.9 1.7-.8.2-1.8-.2-2.7-1.1A985.3 985.3 0 0 1 27 20.8C24.5 18.3 22 17 20 16.9Zm-1.2 30.2-.3.2-.3.3.3.3a24.2 24.2 0 0 0 5 3 17.8 17.8 0 0 1-4.7-3.8Z" /><path d="M48.8 15.2a694 694 0 0 0-14.4 12.2 23.6 23.6 0 0 0 2 2.4l12.4-14.6Zm-21.4 19A1128.2 1128.2 0 0 0 15.1 49l14.8-12.6-2.5-2Z" /></svg>')
+      center/contain;
   }
-
 
   @media (max-width: 600px) {
     nav.navbar {
       padding: 0rem 1rem;
     }
-    /* .navbar > div { */
-    /*   padding: 0rem 0.75rem; */
-    /* } */
     .navbar .navlinks {
       display: none;
     }
-    .navbar .mobile-menu-button {
+    .navbar :global(.navButton) {
       width: 4rem;
       display: flex;
       font-size: 2rem;
       cursor: pointer;
     }
 
+    .navbar .mobile-menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .navbar .mobile-menu-button:hover {
       color: var(--primary-color);
     }
@@ -149,7 +174,7 @@ import '../../scripts/menu'
       gap: 1rem;
       font-size: 1.25rem;
       padding: 1rem;
-      border-radius: 1rem;
+      border-radius: calc(var(--layout-border-radius) * 2);
       border: var(--card-border);
     }
   }

@@ -51,7 +51,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     gap: 1em;
     width: 100%;
     padding: 1em;
-    border-radius: 2rem;
+    border-radius: calc(2 * var(--layout-border-radius));
     transition: all 0.5s ease-in-out; 
   }
 
@@ -103,8 +103,8 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     width: 100%;
     color: var(--text);
     text-decoration: none;
-    border-radius: 0.75rem;
-    border: 2px dashed transparent;
+    border-radius: calc(2 * var(--layout-border-radius));
+    border: 2px var(--border-style) transparent;
     transition: all 0.5s ease-in-out;
   }
   .container-link div {
