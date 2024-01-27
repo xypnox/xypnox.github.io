@@ -1,6 +1,5 @@
 ---
 import { links } from "../content/links";
-import { Icon } from "astro-icon";
 ---
 
 <div class="links-wrapper">
@@ -10,7 +9,7 @@ import { Icon } from "astro-icon";
   {
     links.map((link) => (
       <a class="link theme-card" rel="me" href={link.url}>
-        <Icon name={link.icon} />
+        <iconify-icon name={link.icon} />
         <span>
         {link.name}
         </span>
@@ -24,7 +23,7 @@ import { Icon } from "astro-icon";
   .links-wrapper {
     margin: 0 auto;
     padding: 2rem;
-    border-radius: calc(var(--layout-border-radius) * 2);
+    border-radius: calc(var(--border-radius) * 2);
     border: var(--card-border);
     transition: all 0.5s ease-in-out; 
     width: 100%;
@@ -53,7 +52,7 @@ import { Icon } from "astro-icon";
     transition: all 0.5s ease-in-out; 
 
     padding: 1rem;
-    border-radius: calc(var(--layout-border-radius) * 2);
+    border-radius: calc(var(--border-radius) * 2);
   }
 
   .link:hover {

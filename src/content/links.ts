@@ -1,4 +1,4 @@
-import { icons } from "./icons";
+import { icons } from "../components/icons";
 
 interface Link {
   name: string;

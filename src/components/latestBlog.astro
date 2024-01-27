@@ -3,7 +3,6 @@
 import BlogPostCard from "./BlogPostCard.astro";
 import { latestBlog, topFiveTags } from "../lib/dataAstro"
 import Tag from '../components/nav/Tag.astro'
-import { Icon } from "astro-icon";
 ---
 
 <div class="blog-card">
@@ -16,7 +15,7 @@ import { Icon } from "astro-icon";
   {
     latestBlog && latestBlog.length > 0 &&
     <div class="col-l">
-      <h2>Blag <em>Latest Posts</em> <a class="allposts" href="/blag">All posts<Icon name="ph:arrow-right" /></a></h2>
+      <h2>Blag <em>Latest Posts</em> <a class="allposts" href="/blag">All posts<iconify-icon name="ph:arrow-right" /></a></h2>
        
       <div class="first">
         <BlogPostCard slug={latestBlog[0].slug} />
@@ -50,7 +49,7 @@ import { Icon } from "astro-icon";
   .toptags, .col-l {
     padding: 1rem;
     height: 100%;
-    border-radius: calc(2 * var(--layout-border-radius));
+    border-radius: calc(2 * var(--border-radius));
     border: var(--card-border);
   }
 
@@ -98,7 +97,7 @@ import { Icon } from "astro-icon";
   .col-l :global(.blog-entry) {
     height: 100%;
     padding: 1rem;
-    border-radius: calc(2 * var(--layout-border-radius));
+    border-radius: calc(2 * var(--border-radius));
     flex-direction: column;
     justify-content: center;
     flex-wrap: nowrap;

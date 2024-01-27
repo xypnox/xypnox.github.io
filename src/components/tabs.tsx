@@ -17,7 +17,7 @@ const TabIndicator = styled("div")`
   width: 0rem;
   height: 4px;
   background-color: ${theme.primary.color};
-  border-radius: calc(${theme.layout.border.radius} * 1 / 2);
+  border-radius: calc(${theme.border.radius} * 1 / 2);
   transition: all 0.3s ease-in-out;
 `
 
@@ -45,7 +45,7 @@ const Tab = styled("button")`
   color: ${theme.fadeText};
   font-size: ${theme.font.size.sm};
   padding: 0.5rem 1rem 0.5rem;
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
@@ -54,7 +54,7 @@ const Tab = styled("button")`
   }
 
   &.active {
-    color: var(--primary);
+    color: ${theme.primary.color};
   }
 `
 export const Tabs = (props: TabsProps) => {

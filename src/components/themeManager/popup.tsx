@@ -83,7 +83,7 @@ const PopupContent = styled('div')`
   color: var(--text);
   background: var(--background);
   box-shadow: var(--cardShadow);
-  border-radius: calc(${theme.layout.border.radius} * 2);
+  border-radius: calc(${theme.border.radius} * 2);
   border: 2px solid var(--primary-color);
 
   display: flex;
@@ -132,7 +132,7 @@ const PopupControls = styled('div')`
 const PopupButton = styled('button')`
   padding: 0.5rem;
   width: 4rem;
-  border-radius: calc(${theme.layout.border.radius} * 2);
+  border-radius: calc(${theme.border.radius} * 2);
   color: var(--primary-contrast);
   font-size: var(--font-size-md);
   background: var(--primary-color);

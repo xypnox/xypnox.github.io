@@ -22,7 +22,7 @@ const WIPTag = styled('span')`
   background: ${theme.primary.color};
   color: ${theme.primary.contrast};
   padding: 0.25rem 0.5rem;
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
   font-size: ${theme.font.size.sm};
   font-weight: 500;
   display: flex;
@@ -48,7 +48,7 @@ const ManagerWrapper = styled('div')`
 
   button {
     padding: 0.5rem 1rem;
-    border-radius: ${theme.layout.border.radius};
+    border-radius: ${theme.border.radius};
     font-size: ${theme.font.size.base};
     border: none;
     background: ${theme.surface};

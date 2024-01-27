@@ -2,10 +2,10 @@ import { createEffect, createMemo, on } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
 import { flattenObject } from "../../lib/objects";
-import { defaultThemes, type ThemeMode, type UITheme } from "../../theme"
+import { deepMerge, defaultThemes, type ThemeMode, type UITheme } from "../../theme"
 
 const cssConverter = (theme: UITheme, mode: ThemeMode) => {
-  const cssVars = flattenObject(theme.vars[mode], (keys: string[], value: string) => [
+  const cssVars = flattenObject(deepMerge(theme.vars[mode], theme.base), (keys: string[], value: string) => [
     `${keys.join("-")}`,
     value,
   ]);
@@ -44,10 +44,10 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
 
   const cssTheme = createMemo(
     on(
-      () => ({ config: themeConfig.get().mode, theme: theme() })
+      () => ({ mode: themeConfig.get().mode, theme: theme() })
       , (v) => {
         // console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
-        return cssConverter(theme(), themeConfig.get().mode);
+        return cssConverter(v.theme, v.mode);
       }
     )
   );

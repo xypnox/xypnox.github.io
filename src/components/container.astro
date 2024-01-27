@@ -1,6 +1,4 @@
 ---
-import Icon from "astro-icon";
-
 interface Props {
   title?: string;
   // Links title
@@ -22,7 +20,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   <div class="info">
     {title && 
       <h1>
-        {icon && <Icon name={icon} />}
+        {icon && <iconify-icon name={icon} />}
         {linkTitle ? <a class="text-gradient-fx" href={linkTitle}> {title}</a> : title}
       </h1>
     }
@@ -51,7 +49,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     gap: 1em;
     width: 100%;
     padding: 1em;
-    border-radius: calc(2 * var(--layout-border-radius));
+    border-radius: calc(2 * var(--border-radius));
     transition: all 0.5s ease-in-out; 
   }
 
@@ -103,7 +101,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     width: 100%;
     color: var(--text);
     text-decoration: none;
-    border-radius: calc(2 * var(--layout-border-radius));
+    border-radius: calc(2 * var(--border-radius));
     border: 2px var(--border-style) transparent;
     transition: all 0.5s ease-in-out;
   }

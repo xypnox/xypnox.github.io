@@ -415,7 +415,7 @@ const Container = styled("div")`
 const Column = styled("div")`
   width: 100%;
   background-color: var(--preview-bg);
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
   color: var(--preview-txt);
   font-family: ${theme.font.family};
   display: flex;
@@ -654,7 +654,7 @@ const InfoSwatch = styled("div")`
   gap: 0.5rem;
   background-color: ${theme.surface};
   padding: 0.25rem 0.5rem;
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
   font-size: ${theme.font.size.sm};
 
   span:nth-child(3):not(.type):not(.subtype) {
@@ -669,7 +669,7 @@ const InfoSwatch = styled("div")`
 const ColorPreview = styled("div")`
   width: 1rem;
   height: 1rem;
-  border-radius: calc(${theme.layout.border.radius} / 2);
+  border-radius: calc(${theme.border.radius} / 2);
   background-color: var(--color);
 `
 
@@ -723,7 +723,7 @@ const InfoButton = styled(Button)`
   gap: 0.5rem;
   align-items: center;
   background-color: ${theme.surface};
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
   color: ${theme.fadeText};
   font-size: ${theme.font.size.sm};
   transition: all 0.3s ease-in-out;
@@ -1000,7 +1000,7 @@ const SplitContent = styled("div")`
     outline: 2px solid ${theme.fadeText};
   }
 
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
 
   &.active {
     outline: 2px solid ${theme.primary.color};

@@ -42,7 +42,7 @@
   padding: 0.5rem 1.5rem;
   background-color: var(--surface);
   border-left: 2px var(--border-style) var(--primary-color);
-  border-radius: var(--layout-border-radius);
+  border-radius: var(--border-radius);
 }
 
 .content blockquote p:last-child {
@@ -129,7 +129,7 @@
 .content pre.astro-code {
   padding: 1rem;
   font-size: var(--font-size-sm);
-  border-radius: var(--layout-border-radius);
+  border-radius: var(--border-radius);
   border: 1rem solid var(--surface);
   background-position: var(--card-backgroundPosition);
 }

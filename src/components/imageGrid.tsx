@@ -45,7 +45,7 @@ const GridItem = styled("div")`
   img {
     width: 100%;
     height: auto;
-    border-radius: ${theme.layout.border.radius};
+    border-radius: ${theme.border.radius};
   }
 `
 
@@ -123,7 +123,7 @@ const Controls = styled("div")`
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid ${theme.border.color};
   padding: 0 1rem;
-  border-radius: ${theme.layout.border.radius};
+  border-radius: ${theme.border.radius};
 
   & > svg {
     width: 2rem;
@@ -141,7 +141,7 @@ const Control = styled("div")`
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  border-radius: calc(${theme.layout.border.radius} * 2);
+  border-radius: calc(${theme.border.radius} * 2);
   &:hover {
     background-color: ${theme.surface};
     transform: scale(1.1);

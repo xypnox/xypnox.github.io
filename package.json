@@ -20,7 +20,6 @@
     "@astrojs/solid-js": "^3.0.1",
     "@solid-primitives/mouse": "^2.0.14",
     "astro": "^3.2.2",
-    "astro-icon": "^0.8.1",
     "iconify-icon": "^1.0.8",
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
@@ -29,8 +28,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.3",
+    "husky": "^8.0.0",
     "prettier-plugin-astro": "^0.12.3",
-    "typescript": "^5.2.2",
-    "husky": "^8.0.0"
+    "typescript": "^5.2.2"
   }
 }
