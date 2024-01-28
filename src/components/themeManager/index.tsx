@@ -1,7 +1,9 @@
-import { createEffect } from "solid-js";
+import { For, createEffect } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
 import { theme } from "../../theme";
+import { defaultThemes } from "../../theme";
+import { capitalize } from "../../lib/text";
 
 const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
@@ -35,6 +37,7 @@ const WIPTag = styled('span')`
 `
 
 const ManagerWrapper = styled('div')`
+  width: 100%;
   pointer-events: all;
   display: flex;
   flex-direction: column;
@@ -66,6 +69,7 @@ const ManagerWrapper = styled('div')`
 const ButtonRow = styled('div')`
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 `
 
 const ThemeManager = () => {
@@ -110,15 +114,21 @@ const ThemeManager = () => {
       <div>
         <h2>Theme</h2>
         <ButtonRow>
-          <button onClick={() => changeTheme('Studio')}>Studio</button>
-          <button onClick={() => changeTheme('Brutalist')}>Brutalist</button>
+          <For each={defaultThemes}>
+            {theme => (
+              <button onClick={() => changeTheme(theme.name)}>{theme.name}</button>
+            )}
+          </For>
         </ButtonRow>
       </div>
       <div>
         <h2>Mode</h2>
         <ButtonRow>
-          <button onClick={() => changeMode('light')}>Light</button>
-          <button onClick={() => changeMode('dark')}>Dark</button>
+          <For each={['light', 'dark'] as const}>
+            {mode => (
+              <button onClick={() => changeMode(mode)}>{capitalize(mode)}</button>
+            )}
+          </For>
         </ButtonRow>
       </div>
     </ManagerWrapper>

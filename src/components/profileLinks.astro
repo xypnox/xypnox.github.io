@@ -6,16 +6,14 @@ import { links } from "../content/links";
   <h2 id="contact-and-links">Contact and Links</h2>
 
   <div class="links">
-  {
-    links.map((link) => (
-      <a class="link theme-card" rel="me" href={link.url}>
-        <iconify-icon name={link.icon} />
-        <span>
-        {link.name}
-        </span>
-      </a>
-    ))
-  }
+    {
+      links.map((link) => (
+        <a class="link theme-card" rel="me" href={link.url}>
+          <iconify-icon icon={link.icon} />
+          <span> {link.name} </span>
+        </a>
+      ))
+    }
   </div>
 </div>
 
@@ -25,7 +23,7 @@ import { links } from "../content/links";
     padding: 2rem;
     border-radius: calc(var(--border-radius) * 2);
     border: var(--card-border);
-    transition: all 0.5s ease-in-out; 
+    transition: all 0.5s ease-in-out;
     width: 100%;
   }
   .links {
@@ -49,7 +47,7 @@ import { links } from "../content/links";
     color: var(--text);
     font-size: 1rem;
 
-    transition: all 0.5s ease-in-out; 
+    transition: all 0.5s ease-in-out;
 
     padding: 1rem;
     border-radius: calc(var(--border-radius) * 2);
@@ -59,9 +57,10 @@ import { links } from "../content/links";
     color: var(--primary-color);
     border-color: var(--primary-color);
   }
-  .link svg {
-    width: 1.2rem;
-    height: 1.2rem;
+  .link iconify-icon {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
     flex-shrink: 0;
   }
 

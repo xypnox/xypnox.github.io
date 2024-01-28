@@ -1,6 +1,7 @@
 import { Show, createSignal, lazy } from 'solid-js';
 import { keyframes, styled } from 'solid-styled-components';
 import { theme } from '../../theme';
+import { icons } from '../icons';
 
 const LazyComponent = lazy(() => import('./index'));
 
@@ -29,7 +30,7 @@ export const ThemePopup = () => {
             }
           }
         }>
-        <iconify-icon icon="mdi:palette" />
+        <iconify-icon icon={icons.customize} />
       </PopupButton>
       <Show when={show()}>
         <PopupContent
@@ -90,7 +91,7 @@ const PopupContent = styled('div')`
   flex-direction: column;
 
   z-index: 100;
-  overflow: auto;
+  overflow-y: auto;
 
   animation: ${zoomFade} 0.2s ease-in forwards;
   transform-origin: bottom right;
@@ -108,6 +109,7 @@ const ContentWrapper = styled('div')`
   padding: 1rem;
   flex-grow: 1;
   background: var(--card-background);
+  width: 100%;
 `
 
 const PopupWrapper = styled('div')`
@@ -134,7 +136,6 @@ const PopupButton = styled('button')`
   width: 4rem;
   border-radius: calc(${theme.border.radius} * 2);
   color: var(--primary-contrast);
-  font-size: var(--font-size-md);
   background: var(--primary-color);
   border: none;
   position: relative;
@@ -142,4 +143,7 @@ const PopupButton = styled('button')`
   display: flex;
   align-items: center;
   justify-content: center;
+  iconify-icon {
+    font-size: 2rem;
+  }
 `

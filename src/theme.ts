@@ -125,7 +125,7 @@ const layout = {
   },
 
   nav: {
-    height: '58px',
+    height: '3rem',
   },
 }
 
@@ -362,7 +362,7 @@ const BrutalistTheme: UITheme = {
 
 export const defaultThemes: UITheme[] = [
   {
-    name: 'Studio',
+    name: 'Aster',
     base: baseVars,
     vars: {
       light: lightTheme,
