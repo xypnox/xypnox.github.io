@@ -20,6 +20,9 @@ dependencies:
   '@astrojs/solid-js':
     specifier: ^3.0.1
     version: 3.0.1(solid-js@1.7.7)(vite@4.4.10)
+  '@melloware/coloris':
+    specifier: ^0.22.0
+    version: 0.22.0
   '@solid-primitives/mouse':
     specifier: ^2.0.14
     version: 2.0.14(solid-js@1.7.7)
@@ -1045,6 +1048,10 @@ packages:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@melloware/coloris@0.22.0:
+    resolution: {integrity: sha512-i06nJM0xQrgOkLFUi8d+8mrJjvFgPrU/nTM9vtRGip/T6yHUFIrNV7QgCyps3dBkKVRP/CeJzAeAIvJBSTSbFQ==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:

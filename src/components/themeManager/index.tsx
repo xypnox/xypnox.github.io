@@ -124,17 +124,17 @@ const ThemeManager = () => {
     const theme = generateThemeFromPalette(themeName, nanoid(), defaultThemePalette);
 
     themeState.addTheme(theme);
-    console.log('New Theme', { themeName, theme });
+    // console.log('New Theme', { themeName, theme });
     themeState.changeTheme(theme.id);
 
   }
 
-  createEffect(() => {
-    console.log('Theme State', {
-      themeState,
-      name: themeState.theme.name,
-    })
-  })
+  // createEffect(() => {
+  //   console.log('Theme State', {
+  //     themeState,
+  //     name: themeState.theme.name,
+  //   })
+  // })
 
   return (
     <ManagerWrapper>

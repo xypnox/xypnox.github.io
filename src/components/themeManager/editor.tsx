@@ -1,8 +1,12 @@
-import { Show, createSignal, type ParentProps, createEffect } from "solid-js";
+import { Show, createSignal, type ParentProps, createEffect, onMount, For, createMemo, onCleanup, on } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme, defaultThemePalette } from "../../theme";
+import { theme, defaultThemePalette, generateThemeFromPalette } from "../../theme";
 import { icons } from "../icons";
+import "@melloware/coloris/dist/coloris.css";
+import Coloris from "@melloware/coloris";
+import { nanoid } from "nanoid";
+
 
 const Label = styled('label')`
   display: flex;
@@ -155,11 +159,11 @@ const EditorSection = (props: ParentProps & {
   </EditorSectionWrapper>
 }
 
+const [themePalette, setThemePalette] = createSignal({ ...defaultThemePalette });
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
-  const [themePalette, setThemePalette] = createSignal({ ...defaultThemePalette });
 
   const [sectionCollapses, setSectionCollapses] = createSignal({
-    colors: false,
+    colors: true,
     typography: false,
     spacing: false,
     border: false,
@@ -176,9 +180,21 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     setSectionCollapses({ ...sectionCollapses(), [sectionKey]: !sectionCollapses()[sectionKey] })
   }
 
+  createEffect(on(themePalette, () => {
+    const themeId = themeState.theme().id
+    const themeName = themeState.theme().name
+
+    const theme = generateThemeFromPalette(themeName, themeId, themePalette())
+
+    themeState.modifyTheme(themeId, theme)
+  }))
+
 
 
   return <EditorWrapper>
+    {/* <code> */}
+    {/*   {JSON.stringify(themePalette(), null, 2)} */}
+    {/* </code> */}
     <Row>
       <Input
         type="text"
@@ -206,31 +222,83 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       open={sectionCollapses().colors}
       toggleSection={() => toggleSection('colors')}
     >
-      <Colors>
-        {/* <For each={Object.entries(palette)}> */}
-        {/*   {color => ( */}
-        {/*     <ColorLabel> */}
-        {/*       {color[0]} */}
-        {/*       <input type="color" value={color[1]} /> */}
-        {/*     </ColorLabel> */}
-        {/*   )} */}
-        {/* </For> */}
-      </Colors>
+      <Pickers colors={themePalette().vars[themeState.themeConfig.get().mode]} />
     </EditorSection>
 
-    <EditorSection
-      title="Typography"
-      open={sectionCollapses().typography}
-      toggleSection={() => toggleSection('typography')}
-    >
-      <Label>
-        Font Family
-        <Input type="text" value={theme.font.family} />
-      </Label>
-      <Label>
-        Font Size
-        <Input type="text" value={theme.font.family} />
-      </Label>
-    </EditorSection>
+
+    {/* <EditorSection */}
+    {/*   title="Typography" */}
+    {/*   open={sectionCollapses().typography} */}
+    {/*   toggleSection={() => toggleSection('typography')} */}
+    {/* > */}
+    {/* <Label> */}
+    {/*   Font Family */}
+    {/*   <Input type="text" value={theme.font.family} /> */}
+    {/* </Label> */}
+    {/* <Label> */}
+    {/*   Font Size */}
+    {/*   <Input type="text" value={theme.font.family} /> */}
+    {/* </Label> */}
+    {/* </EditorSection> */}
   </EditorWrapper>
 }
+
+const Swatch = styled('div')`
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: ${props => props.color};
+`
+
+const ColorInput = styled(Input)`
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  min-width: 10ch;
+  font-size: ${theme.font.size.base};
+`
+
+const Pickers = (props: { colors: Record<string, string> }) => {
+
+  const changeColor = (colorKey: string, color: string) => setThemePalette({
+    ...themePalette(),
+    vars: {
+      ...themePalette().vars,
+      [themeState.themeConfig.get().mode]: {
+        ...themePalette().vars[themeState.themeConfig.get().mode],
+        [colorKey]: color
+      }
+    }
+  })
+
+  // console.log('Coloris', { props })
+  Coloris.init()
+  Coloris({
+    el: '.coloris',
+  });
+  Object.entries(props.colors).forEach(([colorKey, color]) => {
+    Coloris.setInstance(
+      `#coloris-picker-${colorKey}`,
+      {
+        onChange: (color: string) => {
+          // console.log('Coloris', { colorKey, color, el: `#coloris-picker-${colorKey}` })
+          changeColor(colorKey, color)
+        }
+      })
+  })
+
+  return (<Colors>
+    <For each={Object.entries(props.colors)}>
+      {color => (
+        <Label>
+          <Swatch color={color[1]} />
+          <ColorInput
+            class="coloris"
+            id={`coloris-picker-${color[0]}`}
+            type="text" value={color[1]} />
+          {color[0]}
+        </Label>
+      )}
+    </For>
+  </Colors>)
+}
+

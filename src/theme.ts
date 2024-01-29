@@ -374,7 +374,7 @@ export const defaultThemes: UITheme[] = [
   BrutalistTheme,
 ]
 
-const defaultTheme = generateUITheme(defaultThemes[0], 'light')
+const defaultTheme = generateUITheme(defaultThemes[0], 'dark')
 export const themeCssVars = defaultTheme.themeCssVars
 export const theme = defaultTheme.theme
 

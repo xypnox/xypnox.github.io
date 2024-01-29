@@ -47,7 +47,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
       () => ({ mode: themeConfig.get().mode, theme: theme() })
       , (v) => {
         // console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
-        console.log('generating cssTheme for themeState', { v })
+        // console.log('generating cssTheme for themeState', { v })
         return cssConverter(v.theme, v.mode);
       }
     )
@@ -123,6 +123,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     cssTheme,
     modifyTheme,
     isThemeDefault,
+    themeConfig,
   }
 }
 

@@ -18,20 +18,6 @@ export const ThemePopup = () => {
   }
   return (
     <PopupWrapper id="themeManagerPopup">
-      <PopupButton
-        class="navButton"
-        aria-label={show() ? 'Close Theme Manager' : 'Open Theme Manager'}
-        onClick={
-          () => {
-            if (show()) {
-              hide();
-            } else {
-              setShow(true);
-            }
-          }
-        }>
-        <iconify-icon icon={icons.customize} />
-      </PopupButton>
       <Show when={show()}>
         <PopupContent
           classList={{
@@ -47,6 +33,20 @@ export const ThemePopup = () => {
           </PopupControls>
         </PopupContent>
       </Show>
+      <PopupButton
+        class="navButton"
+        aria-label={show() ? 'Close Theme Manager' : 'Open Theme Manager'}
+        onClick={
+          () => {
+            if (show()) {
+              hide();
+            } else {
+              setShow(true);
+            }
+          }
+        }>
+        <iconify-icon icon={icons.customize} />
+      </PopupButton>
     </PopupWrapper>
   )
 }
