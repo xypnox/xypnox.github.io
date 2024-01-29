@@ -79,7 +79,7 @@ const PopupContent = styled('div')`
   width: 400px;
   max-width: calc(100vw - 1rem);
   height: max-content;
-  max-height: 50vh;
+  max-height: 60vh;
 
   color: var(--text);
   background: var(--background);
@@ -125,7 +125,7 @@ const PopupControls = styled('div')`
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  height: calc(var(--layout-nav-height) + 1rem);
+  min-height: calc(var(--layout-nav-height) + 1rem);
   padding: 0.5rem 1rem;
   font-size: var(--font-size-sm);
   border-top: 1px solid var(--border-color);

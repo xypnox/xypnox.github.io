@@ -24,10 +24,12 @@
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
     "solid-js": "^1.7.7",
-    "solid-styled-components": "^0.28.5"
+    "solid-styled-components": "^0.28.5",
+    "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.9.3",
+    "@types/tinycolor2": "^1.4.6",
     "husky": "^8.0.0",
     "prettier-plugin-astro": "^0.12.3",
     "typescript": "^5.2.2"

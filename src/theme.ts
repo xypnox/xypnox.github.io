@@ -1,5 +1,7 @@
 import { flattenObject, forObjectReplace } from "./lib/objects";
 
+import tinycolor from 'tinycolor2'
+
 interface GeneratedTheme<T> {
   themeCssVars: Record<string, string>;
   theme: T;
@@ -377,3 +379,111 @@ export const themeCssVars = defaultTheme.themeCssVars
 export const theme = defaultTheme.theme
 
 
+const defaultPaletteColors = {
+  primary: '#ff0000',
+  secondary: '#ffff00',
+
+  background: '#000000',
+  surface: '#222',
+  text: '#ffffff',
+}
+
+type PaletteColors = typeof defaultPaletteColors
+
+export const defaultThemePalette = {
+  base: {
+    border: {
+      radius: '0.2rem',
+    },
+    font: {
+      family: 'Inter, sans-serif',
+      size: fontSizes,
+    },
+  },
+
+  vars: {
+    light: {
+      primary: '#ff0000',
+      secondary: '#ffff00',
+
+      background: '#ffffff',
+      surface: '#e0e0f0',
+      text: '#000000',
+    },
+    dark: {
+      primary: '#ff5370',
+      secondary: '#ffff00',
+
+      background: '#0f111a',
+      surface: '#1e2139a0',
+      text: '#919DCF',
+    }
+  }
+}
+
+const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
+  return {
+    primary: {
+      color: palette.primary,
+      contrast: tinycolor(palette.primary).isDark() ? '#ffffff' : '#000000',
+    },
+    secondary: {
+      color: palette.secondary,
+    },
+    colors: {
+      purple: palette.primary,
+      dev: tinycolor(palette.primary).spin(60).toString(),
+      design: tinycolor(palette.primary).spin(120).toString(),
+      literature: tinycolor(palette.primary).spin(180).toString(),
+    },
+    background: palette.background,
+    surface: palette.surface,
+    border: {
+      style: 'solid',
+      // Border color is between text and surface
+      color: tinycolor.mix(palette.text, palette.surface, 80).toString()
+    },
+    heading: palette.text,
+    text: palette.text,
+    fadeText: tinycolor.mix(palette.text, palette.surface, 40).toString(),
+    cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
+
+    card: {
+      border: '2px dashed var(--border-color)',
+      background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+      backgroundPosition: '90% 0',
+      backgroundSize: '200%',
+      borderHover: '2px solid var(--border-color)',
+      backgroundPositionHover: '10% 20%',
+    },
+
+    bold: palette.primary,
+    italic: palette.primary,
+    strikethrough: palette.primary,
+
+    gradient: {
+      'color-1': 'var(--primary-color)',
+      'color-2': 'var(--colors-purple)',
+    },
+
+    'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
+  }
+}
+
+type ThemePalette = typeof defaultThemePalette
+
+export const generateThemeFromPalette = (name: string, palette: ThemePalette): UITheme => {
+  const theme: UITheme = {
+    name,
+    base: {
+      layout,
+      ...palette.base,
+    },
+    vars: {
+      light: generateModeVarsFromPaletteColors(palette.vars.light),
+      dark: generateModeVarsFromPaletteColors(palette.vars.dark),
+    }
+  }
+
+  return theme
+}

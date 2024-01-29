@@ -1,9 +1,11 @@
-import { For, createEffect } from "solid-js";
+import { For, Show, createEffect, createSignal } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme } from "../../theme";
+import { defaultThemePalette, generateThemeFromPalette, theme } from "../../theme";
 import { defaultThemes } from "../../theme";
 import { capitalize } from "../../lib/text";
+import { generateName } from "../../lib/nameGen";
+import { ThemeEditor } from "./editor";
 
 const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
@@ -21,8 +23,8 @@ const updateThemeStyle = (themeCss: string) => {
 }
 
 const WIPTag = styled('span')`
-  background: ${theme.primary.color};
-  color: ${theme.primary.contrast};
+  background: linear-gradient(45deg, ${theme.border.color} 25%, ${theme.surface} 25%, ${theme.surface} 50%, ${theme.border.color} 50%, ${theme.border.color} 75%, ${theme.surface} 75%, ${theme.surface});
+  color: ${theme.primary.color};
   padding: 0.25rem 0.5rem;
   border-radius: ${theme.border.radius};
   font-size: ${theme.font.size.sm};
@@ -43,94 +45,142 @@ const ManagerWrapper = styled('div')`
   flex-direction: column;
   gap: 2rem;
 
-  h2 {
+  h3 {
     margin: 0;
     font-size: ${theme.font.size.base};
     margin-bottom: 0.5rem;
   }
 
-  button {
+  h2 {
+    margin: 0;
+    font-size: ${theme.font.size.md};
+  }
+
+`
+
+const Button = styled('button')`
     padding: 0.5rem 1rem;
     border-radius: ${theme.border.radius};
     font-size: ${theme.font.size.base};
-    border: none;
+    border: 1px solid transparent;
     background: ${theme.surface};
     color: ${theme.text};
     transition: all 0.2s ease;
     font-family: inherit;
+
+  &.active {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
   }
 
-  button:hover {
+  &:hover {
     color: var(--primary-contrast);
     background: var(--primary-color);
   }
-`
+`;
 
 const ButtonRow = styled('div')`
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
 `
 
 const ThemeManager = () => {
-
+  const [editing, setEditing] = createSignal(false);
   createEffect(() => {
     const theme = themeState.cssTheme;
     updateThemeStyle(theme());
   })
 
-  const changeTheme = (theme: string) => {
-    const root = document.documentElement;
-    // root.style.transition = 'all 0.5s ease';
-    document.body.classList.add('all-transition');
+  // const changeTheme = (theme: string) => {
+  //   const root = document.documentElement;
+  //   // root.style.transition = 'all 0.5s ease';
+  //   document.body.classList.add('all-transition');
 
-    themeState.changeTheme(theme);
-    setTimeout(() => {
-      // root.style.transition = '';
-      document.body.classList.remove('all-transition');
-    }, 500);
+  //   themeState.changeTheme(theme);
+  //   setTimeout(() => {
+  //     // root.style.transition = '';
+  //     document.body.classList.remove('all-transition');
+  //   }, 500);
+  // }
+
+  // const changeMode = (mode: 'light' | 'dark') => {
+  //   // document.body.classList.add('all-transition');
+  //   themeState.changeMode(mode);
+  //   // setTimeout(() => {
+  //   //   document.body.classList.remove('all-transition');
+  //   // }, 500);
+  // }
+
+  const newTheme = () => {
+    // Generate 10 names
+    // const names = Array.from({ length: 10 }, () => generateName());
+    // console.log('New Theme', { names });
+
+    const themeName = generateName();
+
+    const theme = generateThemeFromPalette(themeName, defaultThemePalette);
+
+    themeState.addTheme(theme);
+    console.log('New Theme', { themeName, theme });
+
   }
 
-  const changeMode = (mode: 'light' | 'dark') => {
-    const root = document.documentElement;
-    // Set transition to all elements on the page ease * { }
-    // root.style.transition = 'all 0.5s ease';
-    document.body.classList.add('all-transition');
-    themeState.changeMode(mode);
-    setTimeout(() => {
-      // root.style.transition = '';
-      document.body.classList.remove('all-transition');
-    }, 500);
-  }
+  createEffect(() => {
+    console.log('Theme State', {
+      themeState,
+      name: themeState.theme.name,
+    })
+  })
 
   return (
     <ManagerWrapper>
-      <div>
+      <ButtonRow>
+        <h2>Customize</h2>
         <WIPTag>
           <iconify-icon icon="ph:traffic-cone-duotone"></iconify-icon>
           Work In Progress
         </WIPTag>
-      </div>
-      <div>
-        <h2>Theme</h2>
+      </ButtonRow>
+      <Show when={!editing()}>
         <ButtonRow>
-          <For each={defaultThemes}>
-            {theme => (
-              <button onClick={() => changeTheme(theme.name)}>{theme.name}</button>
-            )}
-          </For>
+          <Button onClick={() => newTheme()}>New Theme</Button>
+          <Button onClick={() => setEditing(!editing())}>Edit</Button>
         </ButtonRow>
-      </div>
+        <div>
+          <h3>Theme</h3>
+          <ButtonRow>
+            <For each={themeState.themes()}>
+              {theme => (
+                <Button
+                  // class={`${theme.name === themeState.theme().name ? 'active' : ''}`}
+                  classList={{
+                    active: themeState.theme().name === theme.name
+                  }}
+                  onClick={() => themeState.changeTheme(theme.name)}>{theme.name}</Button>
+              )}
+            </For>
+          </ButtonRow>
+        </div>
+      </Show>
+      <Show when={editing()}>
+        <ThemeEditor
+          closeEditor={() => setEditing(false)}
+        />
+      </Show>
       <div>
-        <h2>Mode</h2>
+        <h3>Mode</h3>
         <ButtonRow>
           <For each={['light', 'dark'] as const}>
             {mode => (
-              <button onClick={() => changeMode(mode)}>{capitalize(mode)}</button>
+              <Button onClick={() => themeState.changeMode(mode)}>{capitalize(mode)}</Button>
             )}
           </For>
         </ButtonRow>
       </div>
+      {/* <Show when={!themeState.isThemeDefault()}> */}
+      {/* </Show> */}
     </ManagerWrapper>
   )
 }

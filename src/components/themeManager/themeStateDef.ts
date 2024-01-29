@@ -18,12 +18,12 @@ const cssConverter = (theme: UITheme, mode: ThemeMode) => {
 
 
 export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: ThemeMode) => {
-  const themesData = createStoredStore<UITheme[]>('themes', []);
+  const themesData = createStoredStore<UITheme[]>('xypnox-themes', []);
 
   const themeConfig = createStoredStore<{
     mode: ThemeMode;
     theme: string;
-  }>('themeConfig', {
+  }>('xypnox-themeConfig', {
     mode: initMode ?? 'dark',
     theme: initTheme ?? 'Studio',
   });
@@ -57,6 +57,26 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     setLocalStorage('xypnoxCssTheme', cssTheme());
   })
 
+
+  // is the current theme one of the default theme?
+  const isThemeDefault = createMemo(() => {
+    return defaultThemes.some(t => t.name === theme().name);
+  })
+
+  const addTheme = (theme: UITheme) => {
+    themesData.set([theme, ...themesData.get()]);
+  }
+
+  const deleteTheme = (name: string) => {
+    themesData.set(themesData.get().filter(t => t.name !== name));
+    if (themeConfig.get().theme === name) {
+      themeConfig.set({
+        ...themeConfig.get(),
+        theme: themesData.get()[0].name,
+      })
+    }
+  }
+
   const changeTheme = (name: string) => {
     const themes = [...themesData.get(), ...defaultThemes];
     const newTheme = themes.find(t => t.name === name);
@@ -83,10 +103,14 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
 
   return {
     theme,
+    themes,
     changeTheme,
     changeMode,
     themesData,
+    addTheme,
+    deleteTheme,
     cssTheme,
+    isThemeDefault,
   }
 }
 
