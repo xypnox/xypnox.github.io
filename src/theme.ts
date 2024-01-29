@@ -45,9 +45,6 @@ export const deepMerge = <T extends Record<string, any>, U extends Record<string
   return output;
 }
 
-// Extend UITheme.base and ThemeVars
-type FlatTheme = BaseVars & ThemeVars
-
 /**
  * Generates a theme from a UITheme
  *
@@ -225,6 +222,7 @@ export type ThemeMode = 'light' | 'dark'
 export type BaseVars = typeof baseVars
 
 export interface UITheme {
+  id: string;
   name: string;
   base: BaseVars;
   vars: Record<ThemeMode, ThemeVars>;
@@ -271,6 +269,7 @@ const lightTheme: ThemeVars = {
 
 const BrutalistTheme: UITheme = {
   name: 'Brutalist',
+  id: 'default_brutalist',
   base: {
     layout: {
       ...layout,
@@ -365,6 +364,7 @@ const BrutalistTheme: UITheme = {
 export const defaultThemes: UITheme[] = [
   {
     name: 'Aster',
+    id: 'default_aster',
     base: baseVars,
     vars: {
       light: lightTheme,
@@ -403,12 +403,12 @@ export const defaultThemePalette = {
 
   vars: {
     light: {
-      primary: '#ff0000',
-      secondary: '#ffff00',
+      primary: '#6E49F2',
+      secondary: '#b55089',
 
-      background: '#ffffff',
-      surface: '#e0e0f0',
-      text: '#000000',
+      background: '#d7d7ea',
+      surface: '#9797dd2e',
+      text: '#2d3a60',
     },
     dark: {
       primary: '#ff5370',
@@ -472,8 +472,9 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
 
 type ThemePalette = typeof defaultThemePalette
 
-export const generateThemeFromPalette = (name: string, palette: ThemePalette): UITheme => {
+export const generateThemeFromPalette = (name: string, id: string, palette: ThemePalette): UITheme => {
   const theme: UITheme = {
+    id,
     name,
     base: {
       layout,

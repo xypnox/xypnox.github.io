@@ -1,7 +1,7 @@
-import { For, Show, createSignal, type ParentProps } from "solid-js";
+import { Show, createSignal, type ParentProps, createEffect } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme } from "../../theme";
+import { theme, defaultThemePalette } from "../../theme";
 import { icons } from "../icons";
 
 const Label = styled('label')`
@@ -156,6 +156,8 @@ const EditorSection = (props: ParentProps & {
 }
 
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
+  const [themePalette, setThemePalette] = createSignal({ ...defaultThemePalette });
+
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: false,
     typography: false,
@@ -175,14 +177,26 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
   }
 
 
+
   return <EditorWrapper>
     <Row>
-      <Input type="text" value={themeState.theme().name} />
+      <Input
+        type="text"
+        value={themeState.theme().name}
+        disabled={themeState.theme().id.startsWith('default')}
+        onInput={(e) =>
+          themeState.modifyTheme(themeState.theme().id, {
+            ...themeState.theme(),
+            name: e.currentTarget.value
+          })
+        }
+      />
       <ButtonGroup>
-        {/* <Button onClick={() => themeState.changeTheme(themeState.theme().name)}>Save</Button> */}
-        <Button onClick={() => themeState.deleteTheme(themeState.theme().name)}>
-          <iconify-icon icon={icons.delete} />
-        </Button>
+        <Show when={!themeState.theme().id.startsWith('default')}>
+          <Button onClick={() => themeState.deleteTheme(themeState.theme().id)}>
+            <iconify-icon icon={icons.delete} />
+          </Button>
+        </Show>
         <Button onClick={() => props.closeEditor()}>Close</Button>
       </ButtonGroup>
     </Row>

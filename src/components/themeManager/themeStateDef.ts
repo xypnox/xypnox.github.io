@@ -34,7 +34,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
 
   const theme = createMemo(() => {
     const config = themeConfig.get();
-    const theme = themes().find(t => t.name === config.theme);
+    const theme = themes().find(t => t.id === config.theme);
     if (!theme) {
       console.error(`Theme ${config.theme} is not available`);
       return themes()[0];
@@ -58,35 +58,16 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
   })
 
 
-  // is the current theme one of the default theme?
-  const isThemeDefault = createMemo(() => {
-    return defaultThemes.some(t => t.name === theme().name);
-  })
-
-  const addTheme = (theme: UITheme) => {
-    themesData.set([theme, ...themesData.get()]);
-  }
-
-  const deleteTheme = (name: string) => {
-    themesData.set(themesData.get().filter(t => t.name !== name));
-    if (themeConfig.get().theme === name) {
-      themeConfig.set({
-        ...themeConfig.get(),
-        theme: themesData.get()[0].name,
-      })
-    }
-  }
-
-  const changeTheme = (name: string) => {
+  const changeTheme = (id: string) => {
     const themes = [...themesData.get(), ...defaultThemes];
-    const newTheme = themes.find(t => t.name === name);
+    const newTheme = themes.find(t => t.id === id);
     if (!newTheme) {
-      console.error(`Theme ${name} is not available`);
+      console.error(`Theme ${id} is not available`);
       return;
     }
     themeConfig.set({
       ...themeConfig.get(),
-      theme: name,
+      theme: id,
     });
   }
 
@@ -101,6 +82,36 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     });
   }
 
+  // is the current theme one of the default theme?
+  const isThemeDefault = createMemo(() => {
+    return defaultThemes.some(t => t.id === theme().id);
+  })
+
+  const addTheme = (theme: UITheme) => {
+    themesData.set([theme, ...themesData.get()]);
+  }
+
+  const deleteTheme = (id: string) => {
+    if (themeConfig.get().theme === id) {
+      themeConfig.set({
+        ...themeConfig.get(),
+        theme: themesData.get()[0].id,
+      })
+    }
+    themesData.set(themesData.get().filter(t => t.id !== id));
+  }
+
+  const modifyTheme = (id: string, theme: UITheme) => {
+    const themes = [...themesData.get()];
+    const index = themes.findIndex(t => t.id === id);
+    if (index === -1) {
+      console.error(`Theme ${id} is not available`);
+      return;
+    }
+    themes[index] = theme;
+    themesData.set(themes);
+  }
+
   return {
     theme,
     themes,
@@ -110,6 +121,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     addTheme,
     deleteTheme,
     cssTheme,
+    modifyTheme,
     isThemeDefault,
   }
 }

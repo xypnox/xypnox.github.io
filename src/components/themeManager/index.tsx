@@ -6,6 +6,7 @@ import { defaultThemes } from "../../theme";
 import { capitalize } from "../../lib/text";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
+import { nanoid } from "nanoid";
 
 const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
@@ -120,10 +121,11 @@ const ThemeManager = () => {
 
     const themeName = generateName();
 
-    const theme = generateThemeFromPalette(themeName, defaultThemePalette);
+    const theme = generateThemeFromPalette(themeName, nanoid(), defaultThemePalette);
 
     themeState.addTheme(theme);
     console.log('New Theme', { themeName, theme });
+    themeState.changeTheme(theme.id);
 
   }
 
@@ -158,7 +160,7 @@ const ThemeManager = () => {
                   classList={{
                     active: themeState.theme().name === theme.name
                   }}
-                  onClick={() => themeState.changeTheme(theme.name)}>{theme.name}</Button>
+                  onClick={() => themeState.changeTheme(theme.id)}>{theme.name}</Button>
               )}
             </For>
           </ButtonRow>
