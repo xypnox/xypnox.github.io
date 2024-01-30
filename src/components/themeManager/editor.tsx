@@ -372,6 +372,9 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     navigator.clipboard.writeText(css)
   }
 
+  const onCopyVars = () => {
+    navigator.clipboard.writeText(JSON.stringify(theme, null, 2));
+  }
 
   const updateFontLink = debounce((style: string) => {
     console.log('Update Font Link', { style })
@@ -490,8 +493,8 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     <ButtonGroup>
       <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
       <Button onClick={() => onCopyCss()}>Copy CSS</Button>
+      <Button onClick={() => onCopyVars()}>Copy Vars</Button>
     </ButtonGroup>
-
   </EditorWrapper>
 }
 
