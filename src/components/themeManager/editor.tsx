@@ -62,6 +62,9 @@ const Button = styled('button')`
   &.small {
     flex-grow: 1;
     flex-shrink: 0;
+    line-height: 1;
+    max-width: max-content;
+    min-height: 2rem;
     padding: 0.25rem 0.5rem;
     font-size: ${theme.font.size.sm};
   }
@@ -125,7 +128,7 @@ const Dropdown = styled('div')`
 
 const DropdownContent = styled('div')`
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.25rem);
   left: 0;
   right: 0;
   background: ${theme.surface};
@@ -133,12 +136,27 @@ const DropdownContent = styled('div')`
   border-radius: ${theme.border.radius};
   z-index: 200;
   padding: 0.5rem;
-  box-shadow: 0 0 0.5rem rgba(0,0,0,0.1);
+  box-shadow: ${theme.cardShadow};
   backdrop-filter: blur(10px);
    
   &.hidden {
     display: none;
   }
+
+  a {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: ${theme.text};
+  }
+`
+
+const SelectOptions = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.25rem;
 `
 
 const EditorSectionWrapper = styled('div')`
@@ -158,6 +176,7 @@ const EditorSectionTitle = styled('div')`
     flex: 1;
     font-size: ${theme.font.size.base};
     font-weight: 500;
+    color: ${theme.heading};
   }
 
   &.small {
@@ -289,10 +308,7 @@ const FontSelect = (props: {
         hidden: !focused(),
       }}
     >
-      <Row style={{
-        'flex-wrap': 'wrap',
-      }}>
-        Recommended Fonts
+      <SelectOptions>
         <For each={families()}>
           {family => (
             <Button
@@ -309,7 +325,13 @@ const FontSelect = (props: {
             >{family}</Button>
           )}
         </For>
-      </Row>
+        <Row>
+          <a href="https://fonts.google.com/" target="_blank">
+            Browse All
+            <iconify-icon icon={icons.external} />
+          </a>
+        </Row>
+      </SelectOptions>
     </DropdownContent>
   </Dropdown>
 }
@@ -424,7 +446,9 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       toggleSection={() => toggleSection('typography')}
     >
       <Label>
-        Font Family (Google Fonts)
+        <Row>
+          Font Family<a href="https://fonts.google.com/" target="_blank"> Browse All <iconify-icon icon={icons.external} /></a>
+        </Row>
         <FontSelect
           value={themePalette().base.font.family}
           onChange={(value) => {
@@ -499,9 +523,6 @@ const Pickers = (props: {
 
   // console.log('Coloris', { props })
   Coloris.init()
-  Coloris({
-    el: '.coloris',
-  });
   Object.entries(props.colors).forEach(([colorKey, _color]) => {
     Coloris.setInstance(
       `#coloris-picker-${colorKey}`,
@@ -509,8 +530,19 @@ const Pickers = (props: {
         onChange: (color: string) => {
           // console.log('Coloris', { colorKey, color, el: `#coloris-picker-${colorKey}` })
           changeColor(colorKey, color)
-        }
+        },
+        themeMode: themeState.themeConfig.get().mode,
       })
+  })
+
+  createEffect(() => {
+    console.log('Coloris', { themeMode: themeState.themeConfig.get().mode })
+    Coloris.setInstance(
+      `.coloris`,
+      {
+        themeMode: themeState.themeConfig.get().mode,
+      }
+    )
   })
 
   return (<Colors>
@@ -519,7 +551,7 @@ const Pickers = (props: {
         <ColorLabel>
           <Swatch color={color[1]} />
           <ColorInput
-            class="coloris"
+            data-coloris
             id={`coloris-picker-${color[0]}`}
             type="text" value={color[1]} />
           {color[0]}

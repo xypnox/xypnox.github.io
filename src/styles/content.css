@@ -15,7 +15,7 @@
   margin: 0.5em 0 1em 0;
 }
 
-.content p em {
+.content em {
   color: var(--italic);
 }
 
@@ -138,3 +138,18 @@
   transition: all 0.3s ease;
 }
 
+.content .color_swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: -2rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  background-color: var(--color);
+}
+
+.content ul:has(.color_swatch) {
+  list-style-type: none;
+  padding-left: 2rem;
+}

@@ -6,6 +6,7 @@ import { capitalize } from "../../lib/text";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
+import { icons } from "../icons";
 
 const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
   // Find style element with id _themeVars
@@ -21,22 +22,6 @@ const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
     `
   }
 }
-
-const WIPTag = styled('span')`
-  background: linear-gradient(45deg, ${theme.border.color} 25%, ${theme.surface} 25%, ${theme.surface} 50%, ${theme.border.color} 50%, ${theme.border.color} 75%, ${theme.surface} 75%, ${theme.surface});
-  color: ${theme.primary.color};
-  padding: 0.25rem 0.5rem;
-  border-radius: ${theme.border.radius};
-  font-size: ${theme.font.size.sm};
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  width: max-content;
-  iconify-icon {
-    font-size: ${theme.font.size.base};
-  }
-`
 
 const ManagerWrapper = styled('div')`
   width: 100%;
@@ -86,7 +71,11 @@ const ButtonRow = styled('div')`
   align-items: center;
 `
 
-const ThemeManager = () => {
+interface Props {
+  isPopup?: boolean;
+}
+
+const ThemeManager = (props: Props) => {
   const [editing, setEditing] = createSignal(false);
   createEffect(() => {
     const theme = themeState.cssTheme;
@@ -116,13 +105,16 @@ const ThemeManager = () => {
 
   return (
     <ManagerWrapper>
-      <ButtonRow>
-        <h2>Customize</h2>
-        <WIPTag>
-          <iconify-icon icon="ph:traffic-cone-duotone"></iconify-icon>
-          Work In Progress
-        </WIPTag>
-      </ButtonRow>
+      <Show when={props.isPopup}>
+        <ButtonRow>
+          <h2>Customize</h2>
+          <a href="/customize">Know More</a>
+          <span class="wip-tag">
+            <iconify-icon icon={icons.wip}></iconify-icon>
+            Work In Progress
+          </span>
+        </ButtonRow>
+      </Show>
       <Show when={!editing()}>
         <ButtonRow>
           <Button onClick={() => newTheme()}>New Theme</Button>

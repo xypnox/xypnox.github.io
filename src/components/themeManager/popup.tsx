@@ -25,11 +25,12 @@ export const ThemePopup = () => {
           }}
         >
           <ContentWrapper>
-            <LazyComponent />
+            <LazyComponent
+              isPopup
+            />
           </ContentWrapper>
           <PopupControls>
             <div>Suit your preferences</div>
-            <a href="/customize">Know More</a>
           </PopupControls>
         </PopupContent>
       </Show>
@@ -76,10 +77,11 @@ const PopupContent = styled('div')`
   position: fixed;
   bottom: 0.5rem;
   right: 0.5rem;
-  width: 400px;
+  width: 600px;
   max-width: calc(100vw - 1rem);
-  height: max-content;
-  max-height: 60vh;
+  height: calc(100vh - 1rem);
+  max-height: 800px;
+  overflow: hidden;
 
   color: var(--text);
   background: var(--background);
@@ -91,7 +93,6 @@ const PopupContent = styled('div')`
   flex-direction: column;
 
   z-index: 100;
-  overflow-y: auto;
 
   animation: ${zoomFade} 0.2s ease-in forwards;
   transform-origin: bottom right;
@@ -102,14 +103,12 @@ const PopupContent = styled('div')`
 `
 
 const ContentWrapper = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 1rem;
-  flex-grow: 1;
+  padding: 2rem 1rem;
+  padding-bottom: calc(var(--layout-nav-height) + 4rem);
   background: var(--card-background);
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
 `
 
 const PopupWrapper = styled('div')`
@@ -117,9 +116,15 @@ const PopupWrapper = styled('div')`
   pointer-events: all;
   display: flex;
   height: 100%;
+  
+  * {
+    pointer-events: all;
+  }
 `
 
 const PopupControls = styled('div')`
+  position: fixed;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -129,6 +134,9 @@ const PopupControls = styled('div')`
   padding: 0.5rem 1rem;
   font-size: var(--font-size-sm);
   border-top: 1px solid var(--border-color);
+  background: var(--card-background);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 `
 
 const PopupButton = styled('button')`

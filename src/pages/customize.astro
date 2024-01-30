@@ -2,13 +2,32 @@
 import Layout from "../layouts/MainLayout.astro";
 import PageHeader from "../components/pageHeader.astro";
 import ThemeManager from "../components/themeManager";
+import Guide from "../components/themeManager/guide.mdx";
+import { ThemeShowcase } from "../components/themeManager/showcase";
+import { icons } from "../components/icons";
 ---
 
 <Layout title="Customize">
   <main>
-    <PageHeader title="Customize" />
+    <PageHeader title="Customize" icon={icons.customize}>
+      <div class="wip-tag">
+        <iconify-icon icon={icons.wip}></iconify-icon>
+        Work In Progress
+      </div>
+    </PageHeader>
     <section>
       <ThemeManager client:only />
+    </section>
+    <section>
+      <h1 class="guide-title">
+        <iconify-icon icon={icons.guide}></iconify-icon>
+        Guide
+      </h1>
+      <div class="content">
+        <Guide />
+      </div>
+      <ThemeShowcase client:only />
+      <p><a href="/#contact-and-links">Share</a> any themes you would like to showcase!</p>
     </section>
   </main>
 </Layout>
@@ -21,7 +40,7 @@ import ThemeManager from "../components/themeManager";
     justify-content: center;
     min-height: 100vh;
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 1200px;
   }
 
   section {
@@ -31,5 +50,27 @@ import ThemeManager from "../components/themeManager";
     border-radius: var(--border-radius);
     padding: 2rem;
     border: var(--card-border);
+    margin-top: 2rem;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50ch;
+    margin: 0 0 2rem;
+    font-size: var(--font-size-base);
+  }
+
+  .guide-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: var(--font-size-xl);
+  }
+
+  .guide-title iconify-icon {
+    font-size: 2em;
   }
 </style>

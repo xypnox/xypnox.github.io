@@ -1,0 +1,77 @@
+# Theme manager/Editor/Designer
+
+(Name To Be Determined)
+
+The above widget allows you to choose between multiple themes (styles) and modes (dark/light).
+
+You can customize themes on the variables:
+
+- [Colors](#colors)
+- [Typography](#typography)
+- [Layout](#layout)
+
+Changes are auto-saved and persisted via localstorage, so browsing other pages will not reset the theme.
+
+Creating a new theme forks the currently applied theme and sets a randomized two word name. Change the name if you want.
+
+For inspiration browse the [Theme Showcase](#theme-showcase).
+
+
+## Colors
+
+There are currently five axis to adjust the color:
+
+- <span class="color_swatch" style="--color: var(--primary-color)" /> _Primary_ 
+  Similar to brand color, and is the most prominent color on the screen. 
+- <span class="color_swatch" style="--color: var(--secondary-color)" /> _Secondary_ 
+  Compliments primary color, for now only shades the gradient
+- <span class="color_swatch" style="--color: var(--surface)" /> _Surface_ 
+  The color of the surface of the cards
+  Tip: Bit of transparency helps in modals/poups blur
+- <span class="color_swatch" style="--color: var(--background)" />_Background_ 
+  The background of the page
+- <span class="color_swatch" style="--color: var(--text)" /> _Text_ 
+  The color of the text
+
+
+The rest of the colors, such as: border, shadow, color over primary, heading color, tertiary text color etc are generated from these fundamental five. Play around to see how each of these affects the rest of the colors.
+
+## Typography
+
+- _Font family_
+  Change the family of the fonts
+  
+All fonts from Google Fonts, and your local system fonts are supported.
+
+Recommended fonts are also shown. These recommendations are chosen for clarity and to depict various variations.
+
+You can browse all fonts at [Google Fonts](https://fonts.google.com/)
+
+> Note: Please use Title case or the exact example of the name Google Fonts suggests.
+
+
+## Layout
+
+- _Border Radius_
+  Change the base border radius
+  The border radius are applied in 0.5x 1x 1.5x 2x increments.
+  Setting to 0 removes all border-radii, squaring the corners.
+
+## Default Themes
+
+- Aster
+- Brutalist
+
+> Note: default themes cannot be removed
+
+---
+
+# <iconify-icon icon="xyp:customize" />
+
+---
+
+
+# Theme Showcase 
+
+The following themes are provided for experimentation, and showcase the possibilities with the theme engine.
+

@@ -42,7 +42,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   <slot name="end" />
 </div>
 
-<style define:vars={{ color: color }}>
+<style define:vars={{ color: 'var(--primary-color)' }}>
   .container-wrapper {
     display: flex;
     flex-direction: column;

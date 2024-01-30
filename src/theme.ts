@@ -463,6 +463,12 @@ export const defaultPalettes: ThemePalette[] = [
 ]
 
 const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
+
+  // verify if theme is dark or light by
+  // checking if background is dark or light
+  // and if text is dark or light
+  const isDark = tinycolor(palette.background).isDark()
+
   const betweenSurfaceAndBackground = tinycolor.mix(palette.surface, palette.background, 50).toString()
 
   return {
@@ -486,10 +492,13 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
       // Border color is between text and surface
       color: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 80).toString()
     },
-    heading: palette.text,
+    // brightten if dark, darken if light
+    heading: isDark ?
+      tinycolor(palette.text).brighten().toString() :
+      tinycolor(palette.text).darken().toString(),
     text: palette.text,
     fadeText: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 30).toString(),
-    cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
+    cardShadow: `0 6px 12px 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
 
     card: {
       border: '2px dashed var(--border-color)',

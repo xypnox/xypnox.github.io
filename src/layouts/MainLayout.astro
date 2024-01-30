@@ -101,4 +101,36 @@ const props = Astro.props;
     -webkit-text-fill-color: transparent;
     animation: backgroundMove 3s ease infinite;
   }
+
+  input:focus,
+  button:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.1rem var(--primary-color);
+  }
+
+  .wip-tag {
+    background: linear-gradient(
+      45deg,
+      var(--border-color) 25%,
+      var(--surface) 25%,
+      var(--surface) 50%,
+      var(--border-color) 50%,
+      var(--border-color) 75%,
+      var(--surface) 75%,
+      var(--surface)
+    );
+    color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: max-content;
+    iconify-icon {
+      font-size: var(--font-size-base);
+    }
+  }
 </style>

@@ -92,7 +92,15 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     return defaultPalettes.some(t => t.id === theme().id);
   })
 
+  const themeExists = (id: string) => {
+    return themesData.get().some(t => t.id === id);
+  }
+
   const addTheme = (theme: ThemePalette) => {
+    if (themesData.get().some(t => t.id === theme.id)) {
+      console.error(`Theme ${theme.id} already exists`);
+      return;
+    }
     themesData.set([theme, ...themesData.get()]);
   }
 
@@ -130,6 +138,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     isThemeDefault,
     themeConfig,
     themePalette,
+    themeExists,
   }
 }
 
