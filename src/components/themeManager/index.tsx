@@ -124,7 +124,7 @@ const ThemeManager = () => {
     // const theme = generateThemeFromPalette(themeName, nanoid(), defaultThemePalette);
 
     const themeId = nanoid();
-    const deepCloned = JSON.parse(JSON.stringify(defaultThemePalette));
+    const deepCloned = JSON.parse(JSON.stringify(themeState.themePalette()));
     themeState.addTheme({
       ...deepCloned,
       id: themeId,
