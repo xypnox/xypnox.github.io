@@ -95,19 +95,19 @@ const ButtonGroup = styled('div')`
     border-radius: 0;
     border: 0px solid transparent;
     border-right: 1px solid ${theme.border.color};
+    flex: 1;
     &:hover {
       background: var(--primary-color);
       color: var(--primary-contrast);
     }
     &:first-child {
       border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
-  }
+    }
     &:last-child {
       border-radius: 0 ${theme.border.radius} ${theme.border.radius} 0;
       border-right: none;
+    }
   }
-  }
-
 `
 
 const EditorWrapper = styled('div')`
@@ -367,6 +367,11 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     navigator.clipboard.writeText(paletteJson)
   }
 
+  const onCopyCss = () => {
+    const css = themeState.cssTheme()
+    navigator.clipboard.writeText(css)
+  }
+
 
   const updateFontLink = debounce((style: string) => {
     console.log('Update Font Link', { style })
@@ -482,7 +487,10 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       </Label>
     </ToggleSection>
 
-    <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
+    <ButtonGroup>
+      <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
+      <Button onClick={() => onCopyCss()}>Copy CSS</Button>
+    </ButtonGroup>
 
   </EditorWrapper>
 }
