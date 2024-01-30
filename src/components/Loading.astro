@@ -3,7 +3,7 @@
 
 <div id="loading">
   <span class="loader"></span>
-  <h1 style="color: #919DCF; font-size: 1.5rem; margin-top: 2rem;">Loading...</h1>
+  <h1 style="color: var(--text); font-size: 1.5rem; margin-top: 2rem;">Loading...</h1>
 </div>
 <script is:inline>
   window.addEventListener("load", function () {
@@ -68,7 +68,7 @@
   }
   .loader:before {
     transform-origin: 0 50%;
-    background: #919DCF40;
+    background: var(--surface);
     border: 2px var(--layout-border-style) var(--layout-border-color);
     animation: spin 2s linear infinite alternate;
   }
