@@ -5,12 +5,19 @@ import { theme, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
+import debounce from "lodash.debounce";
 
 
 const Label = styled('label')`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+
+const ColorLabel = styled(Label)`
   gap: 0.5rem;
+  align-items: center;
+  flex-direction: row;
 `
 
 const Colors = styled('div')`
@@ -61,6 +68,7 @@ const Button = styled('button')`
 
 // A horizontal group of buttons, with separator borders, and outside border radius
 const ButtonGroup = styled('div')`
+  align-self: stretch;
   display: flex;
   align-items: stretch;
   border-radius: ${theme.border.radius};
@@ -165,8 +173,8 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: true,
-    typography: false,
-    layout: false,
+    typography: true,
+    layout: true,
   })
 
   const toggleSection = (section: string) => {
@@ -191,6 +199,36 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
   }
 
 
+  const updateFontLink = debounce((style: string) => {
+    console.log('Update Font Link', { style })
+    if (!style) {
+      return
+    }
+    setThemePalette({
+      ...themePalette(),
+      base: {
+        ...themePalette().base,
+        font: {
+          ...themePalette().base.font,
+          family: style,
+        }
+      }
+    })
+    const getFirstFont = (style: string) => {
+      const font = style.split(',')[0];
+      return font.replace(/"/g, '');
+    }
+
+    const existingLink = document.getElementById('_fontFamily');
+    if (existingLink) {
+      existingLink.remove();
+    }
+    const link = document.createElement('link');
+    link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(style)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+    link.rel = 'stylesheet';
+    link.id = '_fontFamily';
+    document.head.appendChild(link);
+  }, 200)
 
   return <EditorWrapper>
     {/* <code> */}
@@ -214,7 +252,9 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
             <iconify-icon icon={icons.delete} />
           </Button>
         </Show>
-        <Button onClick={() => props.closeEditor()}>Close</Button>
+        <Button onClick={() => props.closeEditor()}>
+          <iconify-icon icon={icons.close} />
+        </Button>
       </ButtonGroup>
     </Row>
 
@@ -237,18 +277,12 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       toggleSection={() => toggleSection('typography')}
     >
       <Label>
-        Font Family
+        Font Family (Google Fonts)
         <Input type="text" value={themePalette().base.font.family}
-          onInput={(e) => setThemePalette({
-            ...themePalette(),
-            base: {
-              ...themePalette().base,
-              font: {
-                ...themePalette().base.font,
-                family: e.currentTarget.value
-              }
-            }
-          })}
+          onInput={(e) => {
+            const style = e.currentTarget.value
+            updateFontLink(style)
+          }}
         />
       </Label>
     </EditorSection>
@@ -333,14 +367,14 @@ const Pickers = (props: {
   return (<Colors>
     <For each={Object.entries(props.colors)}>
       {color => (
-        <Label>
+        <ColorLabel>
           <Swatch color={color[1]} />
           <ColorInput
             class="coloris"
             id={`coloris-picker-${color[0]}`}
             type="text" value={color[1]} />
           {color[0]}
-        </Label>
+        </ColorLabel>
       )}
     </For>
   </Colors>)

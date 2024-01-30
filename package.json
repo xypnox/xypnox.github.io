@@ -22,6 +22,7 @@
     "@solid-primitives/mouse": "^2.0.14",
     "astro": "^3.2.2",
     "iconify-icon": "^1.0.8",
+    "lodash.debounce": "^4.0.8",
     "nanoid": "^5.0.4",
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
@@ -30,6 +31,7 @@
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.9.3",
     "@types/tinycolor2": "^1.4.6",
     "husky": "^8.0.0",

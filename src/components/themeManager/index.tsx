@@ -1,14 +1,13 @@
 import { For, Show, createEffect, createSignal } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { defaultThemePalette, generateThemeFromPalette, theme } from "../../theme";
-import { defaultThemes } from "../../theme";
+import { theme, type ThemePalette } from "../../theme";
 import { capitalize } from "../../lib/text";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 
-const updateThemeStyle = (themeCss: string) => {
+const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
   // Find style element with id _themeVars
   let style = document.getElementById('_themeVars') as HTMLStyleElement;
   if (!style) {
@@ -91,28 +90,8 @@ const ThemeManager = () => {
   const [editing, setEditing] = createSignal(false);
   createEffect(() => {
     const theme = themeState.cssTheme;
-    updateThemeStyle(theme());
+    updateThemeStyle(theme(), themeState.themePalette());
   })
-
-  // const changeTheme = (theme: string) => {
-  //   const root = document.documentElement;
-  //   // root.style.transition = 'all 0.5s ease';
-  //   document.body.classList.add('all-transition');
-
-  //   themeState.changeTheme(theme);
-  //   setTimeout(() => {
-  //     // root.style.transition = '';
-  //     document.body.classList.remove('all-transition');
-  //   }, 500);
-  // }
-
-  // const changeMode = (mode: 'light' | 'dark') => {
-  //   // document.body.classList.add('all-transition');
-  //   themeState.changeMode(mode);
-  //   // setTimeout(() => {
-  //   //   document.body.classList.remove('all-transition');
-  //   // }, 500);
-  // }
 
   const newTheme = () => {
     // Generate 10 names
@@ -132,14 +111,8 @@ const ThemeManager = () => {
     });
     // console.log('New Theme', { themeName, theme });
     themeState.changeTheme(themeId);
+    setEditing(true);
   }
-
-  // createEffect(() => {
-  //   console.log('Theme State', {
-  //     themeState,
-  //     name: themeState.theme.name,
-  //   })
-  // })
 
   return (
     <ManagerWrapper>

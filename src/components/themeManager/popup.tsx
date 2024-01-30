@@ -28,8 +28,8 @@ export const ThemePopup = () => {
             <LazyComponent />
           </ContentWrapper>
           <PopupControls>
-            <div>Customize the look</div>
             <div>Suit your preferences</div>
+            <a href="/customize">Know More</a>
           </PopupControls>
         </PopupContent>
       </Show>
