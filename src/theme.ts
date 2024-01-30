@@ -391,12 +391,14 @@ const defaultPaletteColors = {
 type PaletteColors = typeof defaultPaletteColors
 
 export const defaultThemePalette = {
+  name: 'Aster',
+  id: 'default_aster',
   base: {
     border: {
       radius: '0.2rem',
     },
     font: {
-      family: 'Inter, sans-serif',
+      family: 'Jost, sans-serif',
       size: fontSizes,
     },
   },
@@ -421,7 +423,48 @@ export const defaultThemePalette = {
   }
 }
 
+const brutalistPalette: ThemePalette = {
+  name: 'Brutalist',
+  id: 'default_brutalist',
+  base: {
+    border: {
+      radius: '0',
+    },
+    font: {
+      family: 'Iosevka Term, monospace',
+      size: fontSizes,
+    },
+  },
+
+  vars: {
+    light: {
+      primary: '#222',
+      secondary: '#ff5370',
+
+      background: '#f0f0f0',
+      surface: '#e0e0e0',
+      text: '#333333',
+    },
+    dark: {
+      primary: '#fff',
+      secondary: '#ff5370',
+
+      background: '#000000',
+      surface: '#30303080',
+      text: '#cccccc',
+    },
+  }
+}
+export type ThemePalette = typeof defaultThemePalette
+
+export const defaultPalettes: ThemePalette[] = [
+  defaultThemePalette,
+  brutalistPalette,
+]
+
 const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
+  const betweenSurfaceAndBackground = tinycolor.mix(palette.surface, palette.background, 50).toString()
+
   return {
     primary: {
       color: palette.primary,
@@ -441,11 +484,11 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
     border: {
       style: 'solid',
       // Border color is between text and surface
-      color: tinycolor.mix(palette.text, palette.surface, 80).toString()
+      color: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 80).toString()
     },
     heading: palette.text,
     text: palette.text,
-    fadeText: tinycolor.mix(palette.text, palette.surface, 40).toString(),
+    fadeText: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 30).toString(),
     cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
 
     card: {
@@ -470,12 +513,11 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
   }
 }
 
-type ThemePalette = typeof defaultThemePalette
 
-export const generateThemeFromPalette = (name: string, id: string, palette: ThemePalette): UITheme => {
+export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
   const theme: UITheme = {
-    id,
-    name,
+    id: palette.id,
+    name: palette.name,
     base: {
       layout,
       ...palette.base,

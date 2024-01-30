@@ -121,12 +121,17 @@ const ThemeManager = () => {
 
     const themeName = generateName();
 
-    const theme = generateThemeFromPalette(themeName, nanoid(), defaultThemePalette);
+    // const theme = generateThemeFromPalette(themeName, nanoid(), defaultThemePalette);
 
-    themeState.addTheme(theme);
+    const themeId = nanoid();
+    const deepCloned = JSON.parse(JSON.stringify(defaultThemePalette));
+    themeState.addTheme({
+      ...deepCloned,
+      id: themeId,
+      name: themeName,
+    });
     // console.log('New Theme', { themeName, theme });
-    themeState.changeTheme(theme.id);
-
+    themeState.changeTheme(themeId);
   }
 
   // createEffect(() => {
@@ -148,7 +153,9 @@ const ThemeManager = () => {
       <Show when={!editing()}>
         <ButtonRow>
           <Button onClick={() => newTheme()}>New Theme</Button>
-          <Button onClick={() => setEditing(!editing())}>Edit</Button>
+          <Show when={!themeState.isThemeDefault()}>
+            <Button onClick={() => setEditing(!editing())}>Edit</Button>
+          </Show>
         </ButtonRow>
         <div>
           <h3>Theme</h3>

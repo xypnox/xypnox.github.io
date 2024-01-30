@@ -1,11 +1,10 @@
-import { Show, createSignal, type ParentProps, createEffect, onMount, For, createMemo, onCleanup, on } from "solid-js";
+import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme, defaultThemePalette, generateThemeFromPalette } from "../../theme";
+import { theme, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
-import { nanoid } from "nanoid";
 
 
 const Label = styled('label')`
@@ -108,12 +107,13 @@ const EditorSectionWrapper = styled('div')`
 const EditorSectionTitle = styled('div')`
   display: flex;
   align-items: center;
-  padding-right: 1px;
+  padding-right: 0.25rem;
   h3 {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     margin: 0;
     flex: 1;
     font-size: ${theme.font.size.base};
+    font-weight: 500;
   }
 
   button {
@@ -159,16 +159,14 @@ const EditorSection = (props: ParentProps & {
   </EditorSectionWrapper>
 }
 
-const [themePalette, setThemePalette] = createSignal({ ...defaultThemePalette });
+
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
+  const [themePalette, setThemePalette] = createSignal(themeState.themePalette())
 
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: true,
     typography: false,
-    spacing: false,
-    border: false,
-    shadows: false,
-    transitions: false,
+    layout: false,
   })
 
   const toggleSection = (section: string) => {
@@ -182,12 +180,15 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
   createEffect(on(themePalette, () => {
     const themeId = themeState.theme().id
-    const themeName = themeState.theme().name
-
-    const theme = generateThemeFromPalette(themeName, themeId, themePalette())
-
-    themeState.modifyTheme(themeId, theme)
+    themeState.modifyTheme(themeId, themePalette())
   }))
+
+  // Copy palette as json to clipboard
+  const onCopyPalette = () => {
+    const palette = themePalette()
+    const paletteJson = JSON.stringify(palette, null, 2)
+    navigator.clipboard.writeText(paletteJson)
+  }
 
 
 
@@ -202,7 +203,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         disabled={themeState.theme().id.startsWith('default')}
         onInput={(e) =>
           themeState.modifyTheme(themeState.theme().id, {
-            ...themeState.theme(),
+            ...themeState.themePalette(),
             name: e.currentTarget.value
           })
         }
@@ -222,24 +223,60 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       open={sectionCollapses().colors}
       toggleSection={() => toggleSection('colors')}
     >
-      <Pickers colors={themePalette().vars[themeState.themeConfig.get().mode]} />
+      <Pickers
+        colors={themePalette().vars[themeState.themeConfig.get().mode]}
+        themePalette={themePalette}
+        setThemePalette={setThemePalette}
+      />
     </EditorSection>
 
 
-    {/* <EditorSection */}
-    {/*   title="Typography" */}
-    {/*   open={sectionCollapses().typography} */}
-    {/*   toggleSection={() => toggleSection('typography')} */}
-    {/* > */}
-    {/* <Label> */}
-    {/*   Font Family */}
-    {/*   <Input type="text" value={theme.font.family} /> */}
-    {/* </Label> */}
-    {/* <Label> */}
-    {/*   Font Size */}
-    {/*   <Input type="text" value={theme.font.family} /> */}
-    {/* </Label> */}
-    {/* </EditorSection> */}
+    <EditorSection
+      title="Typography"
+      open={sectionCollapses().typography}
+      toggleSection={() => toggleSection('typography')}
+    >
+      <Label>
+        Font Family
+        <Input type="text" value={themePalette().base.font.family}
+          onInput={(e) => setThemePalette({
+            ...themePalette(),
+            base: {
+              ...themePalette().base,
+              font: {
+                ...themePalette().base.font,
+                family: e.currentTarget.value
+              }
+            }
+          })}
+        />
+      </Label>
+    </EditorSection>
+
+    <EditorSection
+      title="Layout"
+      open={sectionCollapses().layout}
+      toggleSection={() => toggleSection('layout')}
+    >
+      <Label>
+        Border Radius
+        <Input type="text" value={themePalette().base.border.radius}
+          onInput={(e) => setThemePalette({
+            ...themePalette(),
+            base: {
+              ...themePalette().base,
+              border: {
+                ...themePalette().base.border,
+                radius: e.currentTarget.value
+              }
+            }
+          })}
+        />
+      </Label>
+    </EditorSection>
+
+    <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
+
   </EditorWrapper>
 }
 
@@ -257,18 +294,25 @@ const ColorInput = styled(Input)`
   font-size: ${theme.font.size.base};
 `
 
-const Pickers = (props: { colors: Record<string, string> }) => {
+const Pickers = (props: {
+  colors: Record<string, string>,
+  themePalette: Accessor<ThemePalette>,
+  setThemePalette: (themePalette: ThemePalette) => void
+}) => {
 
-  const changeColor = (colorKey: string, color: string) => setThemePalette({
-    ...themePalette(),
-    vars: {
-      ...themePalette().vars,
-      [themeState.themeConfig.get().mode]: {
-        ...themePalette().vars[themeState.themeConfig.get().mode],
-        [colorKey]: color
+  const changeColor = (colorKey: string, color: string) => {
+    const themePalette = props.themePalette()
+    props.setThemePalette({
+      ...themePalette,
+      vars: {
+        ...themePalette.vars,
+        [themeState.themeConfig.get().mode]: {
+          ...themePalette.vars[themeState.themeConfig.get().mode],
+          [colorKey]: color
+        }
       }
-    }
-  })
+    })
+  }
 
   // console.log('Coloris', { props })
   Coloris.init()

@@ -2,7 +2,7 @@ import { createEffect, createMemo, on } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
 import { flattenObject } from "../../lib/objects";
-import { deepMerge, defaultThemes, type ThemeMode, type UITheme } from "../../theme"
+import { generateThemeFromPalette, deepMerge, type ThemeMode, type ThemePalette, type UITheme, defaultPalettes } from "../../theme"
 
 const cssConverter = (theme: UITheme, mode: ThemeMode) => {
   const cssVars = flattenObject(deepMerge(theme.vars[mode], theme.base), (keys: string[], value: string) => [
@@ -17,28 +17,33 @@ const cssConverter = (theme: UITheme, mode: ThemeMode) => {
 }
 
 
-export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: ThemeMode) => {
-  const themesData = createStoredStore<UITheme[]>('xypnox-themes', []);
+export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalist', initMode?: ThemeMode) => {
+  const themesData = createStoredStore<ThemePalette[]>('xypnox-themes', []);
 
   const themeConfig = createStoredStore<{
     mode: ThemeMode;
     theme: string;
   }>('xypnox-themeConfig', {
     mode: initMode ?? 'dark',
-    theme: initTheme ?? 'Studio',
+    theme: initTheme ?? 'default_aster',
   });
 
   const themes = createMemo(() => {
-    return [...themesData.get(), ...defaultThemes];
+    return [...themesData.get(), ...defaultPalettes];
   });
 
-  const theme = createMemo(() => {
+  const themePalette = createMemo(() => {
     const config = themeConfig.get();
-    const theme = themes().find(t => t.id === config.theme);
-    if (!theme) {
+    let themePalette = themes().find(t => t.id === config.theme);
+    if (!themePalette) {
       console.error(`Theme ${config.theme} is not available`);
-      return themes()[0];
+      themePalette = defaultPalettes[0];
     }
+    return themePalette;
+  })
+
+  const theme = createMemo(() => {
+    const theme = generateThemeFromPalette(themePalette());
     return theme;
   });
 
@@ -59,7 +64,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
 
 
   const changeTheme = (id: string) => {
-    const themes = [...themesData.get(), ...defaultThemes];
+    const themes = [...themesData.get(), ...defaultPalettes];
     const newTheme = themes.find(t => t.id === id);
     if (!newTheme) {
       console.error(`Theme ${id} is not available`);
@@ -84,10 +89,10 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
 
   // is the current theme one of the default theme?
   const isThemeDefault = createMemo(() => {
-    return defaultThemes.some(t => t.id === theme().id);
+    return defaultPalettes.some(t => t.id === theme().id);
   })
 
-  const addTheme = (theme: UITheme) => {
+  const addTheme = (theme: ThemePalette) => {
     themesData.set([theme, ...themesData.get()]);
   }
 
@@ -101,7 +106,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     themesData.set(themesData.get().filter(t => t.id !== id));
   }
 
-  const modifyTheme = (id: string, theme: UITheme) => {
+  const modifyTheme = (id: string, theme: ThemePalette) => {
     const themes = [...themesData.get()];
     const index = themes.findIndex(t => t.id === id);
     if (index === -1) {
@@ -124,6 +129,7 @@ export const createThemeState = (initTheme?: 'Studio' | 'Brutalist', initMode?: 
     modifyTheme,
     isThemeDefault,
     themeConfig,
+    themePalette,
   }
 }
 

@@ -99,6 +99,7 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
     flex-direction: column;
     padding: 0.5rem 1rem 0.66rem;
     width: 100%;
+    gap: 0.25rem;
     color: var(--text);
     text-decoration: none;
     border-radius: calc(2 * var(--border-radius));
@@ -131,13 +132,14 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
   .with-image {
     position: relative;
     padding-top: 4.5rem;
-    margin-top: 8rem;
+    margin-top: 8em;
     height: max-content;
   }
   .with-image > img {
     position: absolute;
-    height: 12rem;
-    top: -8rem;
+    height: 8em;
+    width: 8em;
+    top: -4rem;
   }
 
   @media (max-width: 768px) {
