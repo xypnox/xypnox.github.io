@@ -131,7 +131,7 @@ const layout = {
 const baseVars = {
   layout,
   font: {
-    family: 'Jost, sans-serif',
+    family: 'Jost',
     size: fontSizes,
   },
   border: {
@@ -194,7 +194,7 @@ export const poemThemeVars = {
     }
   },
   poems: {
-    fontFamily: 'EB Garamond, serif',
+    fontFamily: 'EB Garamond',
     headingFont: '"Cormorant Garamond", serif',
     background: '#ffffff',
 
@@ -278,7 +278,7 @@ const BrutalistTheme: UITheme = {
       radius: '0',
     },
     font: {
-      family: 'Iosevka Term, monospace',
+      family: 'Iosevka Term',
       size: fontSizes,
     },
   },
@@ -398,7 +398,7 @@ export const defaultThemePalette = {
       radius: '0.2rem',
     },
     font: {
-      family: 'Jost, sans-serif',
+      family: 'Jost',
       size: fontSizes,
     },
   },
@@ -431,7 +431,7 @@ const brutalistPalette: ThemePalette = {
       radius: '0',
     },
     font: {
-      family: 'Iosevka Term, monospace',
+      family: 'Iosevka Term',
       size: fontSizes,
     },
   },

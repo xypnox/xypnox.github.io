@@ -1,4 +1,4 @@
-import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor } from "solid-js";
+import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
 import { theme, type ThemePalette } from "../../theme";
@@ -7,8 +7,8 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 
-
 const Label = styled('label')`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -59,6 +59,18 @@ const Button = styled('button')`
   color: ${theme.text};
   transition: all 0.2s ease;
 
+  &.small {
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 0.25rem 0.5rem;
+    font-size: ${theme.font.size.sm};
+  }
+
+  &.selected {
+    border: 1px solid ${theme.primary.color};
+    color: ${theme.primary.color};
+  }
+
   &:hover {
     color: var(--primary-contrast);
     background: var(--primary-color);
@@ -104,12 +116,36 @@ const EditorWrapper = styled('div')`
   gap: 2rem;
 `
 
+const Dropdown = styled('div')`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+
+const DropdownContent = styled('div')`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: ${theme.surface};
+  border: 1px solid ${theme.border.color};
+  border-radius: ${theme.border.radius};
+  z-index: 200;
+  padding: 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+   
+  &.hidden {
+    display: none;
+  }
+`
+
 const EditorSectionWrapper = styled('div')`
   display: flex;
   flex-direction: column;
   border: 1px solid ${theme.border.color};
   border-radius: ${theme.border.radius};
-  overflow: hidden;
 `
 
 const EditorSectionTitle = styled('div')`
@@ -122,6 +158,12 @@ const EditorSectionTitle = styled('div')`
     flex: 1;
     font-size: ${theme.font.size.base};
     font-weight: 500;
+  }
+
+  &.small {
+    h3 {
+      font-size: ${theme.font.size.sm};
+    }
   }
 
   button {
@@ -147,15 +189,21 @@ const Row = styled('div')`
   width: 100%;
 `
 
-const EditorSection = (props: ParentProps & {
+const ToggleSection = (props: ParentProps & {
   title: string,
   open: boolean,
-  toggleSection: () => void
+  toggleSection: () => void,
+  small?: boolean,
 }) => {
   return <EditorSectionWrapper>
-    <EditorSectionTitle>
+    <EditorSectionTitle
+      classList={{
+        small: props.small
+      }}
+      onClick={() => props.toggleSection()}
+    >
       <h3>{props.title}</h3>
-      <Button onClick={() => props.toggleSection()}>
+      <Button>
         <iconify-icon icon={props.open ? icons.expand : icons.collapse} />
       </Button>
     </EditorSectionTitle>
@@ -167,6 +215,104 @@ const EditorSection = (props: ParentProps & {
   </EditorSectionWrapper>
 }
 
+const SelectedFamilies = [
+  'Inter',
+  'Jost',
+  'Outfit',
+  'Poppins',
+  'Roboto',
+  'Nunito',
+  'Acme',
+  'Barlow',
+  'Merriweather',
+  'Fraunces',
+  'Space Grotesk',
+  'Kalam',
+  'Patrick Hand',
+  'Crimson Text',
+  'VT323',
+  'Vollkorn',
+]
+
+const FontSelect = (props: {
+  value: string,
+  onChange: (value: string) => void,
+}) => {
+  const [focused, setFocused] = createSignal(false);
+  const [inpVal, setInpVal] = createSignal(props.value);
+  let input: HTMLInputElement;
+  const [families, setFamilies] = createSignal([...SelectedFamilies]);
+
+  createEffect(() => {
+    // console.log('Filter Families', { inpVal: inpVal(), value: props.value })
+    if (!inpVal()) {
+      setFamilies(SelectedFamilies)
+      return
+    }
+    if (!inpVal().length) {
+      setFamilies(SelectedFamilies)
+      return
+    }
+    if (SelectedFamilies.includes(inpVal())) {
+      setFamilies(SelectedFamilies)
+      return
+    }
+    return setFamilies(SelectedFamilies.filter(family => family.toLowerCase().includes(inpVal().toLowerCase())));
+  })
+
+  const onClickOutside = (e: MouseEvent) => {
+    if (input && !input.contains(e.target as Node)) {
+      setFocused(false)
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('click', onClickOutside)
+    return () => {
+      document.removeEventListener('click', onClickOutside)
+    }
+  })
+
+  return <Dropdown>
+    <Input
+      ref={input!}
+      type="text"
+      value={inpVal()}
+      onFocus={() => setFocused(true)}
+      onInput={(e) => {
+        setInpVal(e.currentTarget.value)
+        props.onChange(e.currentTarget.value)
+      }}
+    />
+    <DropdownContent
+      classList={{
+        hidden: !focused(),
+      }}
+    >
+      <Row style={{
+        'flex-wrap': 'wrap',
+      }}>
+        Recommended Fonts
+        <For each={families()}>
+          {family => (
+            <Button
+              class="small"
+              classList={{
+                selected: family === props.value
+              }}
+              onClick={() => {
+                setInpVal(family)
+                setFocused(false)
+                props.onChange(family)
+              }
+              }
+            >{family}</Button>
+          )}
+        </For>
+      </Row>
+    </DropdownContent>
+  </Dropdown>
+}
 
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
   const [themePalette, setThemePalette] = createSignal(themeState.themePalette())
@@ -174,6 +320,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: true,
     typography: true,
+    typography_family: false,
     layout: true,
   })
 
@@ -258,7 +405,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       </ButtonGroup>
     </Row>
 
-    <EditorSection
+    <ToggleSection
       title="Colors"
       open={sectionCollapses().colors}
       toggleSection={() => toggleSection('colors')}
@@ -268,26 +415,28 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         themePalette={themePalette}
         setThemePalette={setThemePalette}
       />
-    </EditorSection>
+    </ToggleSection>
 
 
-    <EditorSection
+    <ToggleSection
       title="Typography"
       open={sectionCollapses().typography}
       toggleSection={() => toggleSection('typography')}
     >
       <Label>
         Font Family (Google Fonts)
-        <Input type="text" value={themePalette().base.font.family}
-          onInput={(e) => {
-            const style = e.currentTarget.value
-            updateFontLink(style)
+        <FontSelect
+          value={themePalette().base.font.family}
+          onChange={(value) => {
+            if (!value) { return }
+            // console.log('Font Select onchange', { value })
+            updateFontLink(value)
           }}
         />
       </Label>
-    </EditorSection>
+    </ToggleSection>
 
-    <EditorSection
+    <ToggleSection
       title="Layout"
       open={sectionCollapses().layout}
       toggleSection={() => toggleSection('layout')}
@@ -307,7 +456,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
           })}
         />
       </Label>
-    </EditorSection>
+    </ToggleSection>
 
     <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
 
@@ -353,7 +502,7 @@ const Pickers = (props: {
   Coloris({
     el: '.coloris',
   });
-  Object.entries(props.colors).forEach(([colorKey, color]) => {
+  Object.entries(props.colors).forEach(([colorKey, _color]) => {
     Coloris.setInstance(
       `#coloris-picker-${colorKey}`,
       {
