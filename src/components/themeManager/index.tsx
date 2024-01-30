@@ -41,6 +41,20 @@ const ManagerWrapper = styled('div')`
     font-size: ${theme.font.size.md};
   }
 
+  .guide-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: ${theme.text};
+    padding: 0.5rem 1rem;
+    border-radius: ${theme.border.radius};
+    font-size: ${theme.font.size.sm};
+    iconify-icon {
+      font-size: ${theme.font.size.base};
+    }
+    border: 1px solid ${theme.border.color};
+  }
+
 `
 
 const Button = styled('button')`
@@ -108,9 +122,12 @@ const ThemeManager = (props: Props) => {
       <Show when={props.isPopup}>
         <ButtonRow>
           <h2>Customize</h2>
-          <a href="/customize">Know More</a>
+          <a class="guide-link" href="/customize">
+            <iconify-icon icon={icons.guide} />
+            Guide
+          </a>
           <span class="wip-tag">
-            <iconify-icon icon={icons.wip}></iconify-icon>
+            <iconify-icon icon={icons.wip} />
             Work In Progress
           </span>
         </ButtonRow>

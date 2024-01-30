@@ -15,6 +15,7 @@ const Label = styled('label')`
 `
 
 const ColorLabel = styled(Label)`
+  max-width: 14rem;
   gap: 0.5rem;
   align-items: center;
   flex-direction: row;
@@ -356,6 +357,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
   }
 
   createEffect(on(themePalette, () => {
+    // console.log('Theme Palette', { themePalette: themePalette() })
     const themeId = themeState.theme().id
     themeState.modifyTheme(themeId, themePalette())
   }))
@@ -425,7 +427,10 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       />
       <ButtonGroup>
         <Show when={!themeState.theme().id.startsWith('default')}>
-          <Button onClick={() => themeState.deleteTheme(themeState.theme().id)}>
+          <Button onClick={() => {
+            themeState.deleteTheme(themeState.theme().id)
+            props.closeEditor()
+          }}>
             <iconify-icon icon={icons.delete} />
           </Button>
         </Show>

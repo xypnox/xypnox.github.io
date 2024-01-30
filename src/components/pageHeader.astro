@@ -8,8 +8,10 @@ const { title, description, icon } = Astro.props;
 ---
 
 <header>
-  {icon && <iconify-icon icon={icon} class="title-icon" />}
-  <h1 class="text-gradient-fx">{title}</h1>
+  <h1 class="text-gradient-fx">
+    {icon && <iconify-icon icon={icon} class="title-icon" />}
+    {title}
+  </h1>
   {description && <p>{description}</p>}
   <slot />
 </header>
@@ -18,16 +20,17 @@ const { title, description, icon } = Astro.props;
   header {
     width: 100%;
     text-align: left;
+    margin-top: 2rem;
     margin-bottom: 1rem;
   }
   header h1 {
+    display: flex;
+    align-items: center;
     font-size: var(--font-size-xl);
     color: var(--heading);
   }
   header .title-icon {
-    font-size: 4rem;
+    font-size: 1.5em;
     color: var(--primary-color);
-    margin-top: 5rem;
   }
-
 </style>

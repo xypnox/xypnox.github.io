@@ -63,7 +63,7 @@ const showcaseThemes: ThemePalette[] = [
     },
     "vars": {
       "light": {
-        "primary": "#cc8b13",
+        "primary": "#ba621e",
         "secondary": "#c26125",
         "background": "#d9cfc4",
         "surface": "#c7b9a244",
@@ -75,6 +75,80 @@ const showcaseThemes: ThemePalette[] = [
         "background": "#0d0b14",
         "surface": "#6b52473f",
         "text": "#ab9b8a"
+      }
+    }
+  },
+  {
+    "name": "Glitch Pop",
+    "id": "kAwip9ICnYYva5ZJwoABC",
+    "base": {
+      "border": {
+        "radius": "0"
+      },
+      "font": {
+        "family": "Rubik Glitch",
+        "size": {
+          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
+        }
+      }
+    },
+    "vars": {
+      "light": {
+        "primary": "#ff0000",
+        "secondary": "#ff5370",
+        "background": "#ffea00",
+        "surface": "#d9b73170",
+        "text": "#000000"
+      },
+      "dark": {
+        "primary": "#00eaff",
+        "secondary": "#ff5370",
+        "background": "#000000",
+        "surface": "#30303080",
+        "text": "#fffb00"
+      }
+    }
+  },
+  {
+    "name": "Gitpup",
+    "id": "y7c6gC-IAkDd2GBtbhZSR",
+    "base": {
+      "border": {
+        "radius": "6px"
+      },
+      "font": {
+        "family": "Lato",
+        "size": {
+          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
+        }
+      }
+    },
+    "vars": {
+      "light": {
+        "primary": "#1971d6",
+        "secondary": "#18d9b9",
+        "background": "#ffffff",
+        "surface": "#f6f8fa",
+        "text": "#27292b"
+      },
+      "dark": {
+        "primary": "#f78166",
+        "secondary": "#ff5370",
+        "background": "#0d1218",
+        "surface": "#2b323b4c",
+        "text": "#aec3d4"
       }
     }
   }
@@ -133,7 +207,6 @@ const ColorSwatches = () =>
     <div class="swatch" style={`--color: var(--primary-color)`} />
     <div class="swatch" style="--color: var(--secondary-color)" />
     <div class="swatch" style="--color: var(--surface)" />
-    <div class="swatch" style="--color: var(--background)" />
     <div class="swatch" style="--color: var(--text)" />
   </>
 

@@ -56,7 +56,6 @@
 }
 
 .content table th {
-  font-family: "Jost", serif;
   border: 1px solid var(--border-color);
   border-bottom: 2px solid var(--heading);
   background-color: var(--surface);
