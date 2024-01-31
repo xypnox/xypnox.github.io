@@ -174,7 +174,7 @@ const showcaseThemes: ThemePalette[] = [
     },
     "vars": {
       "light": {
-        "primary": "#6e6154",
+        "primary": "#575244",
         "secondary": "#aba290",
         "background": "#e6e1df",
         "surface": "#b0a3802d",
