@@ -89,14 +89,18 @@ const ManagerWrapper = styled('div')`
 `
 
 const Button = styled('button')`
-    padding: 0.5rem 1rem;
-    border-radius: ${theme.border.radius};
-    font-size: ${theme.font.size.base};
-    border: 1px solid transparent;
-    background: ${theme.surface};
-    color: ${theme.text};
-    transition: all 0.2s ease;
-    font-family: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: ${theme.border.radius};
+  font-size: ${theme.font.size.base};
+  border: 1px solid transparent;
+  background: ${theme.surface};
+  color: ${theme.text};
+  transition: all 0.2s ease;
+  font-family: inherit;
+
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 
   &.active {
     color: var(--primary-color);
@@ -175,9 +179,15 @@ const ThemeManager = (props: Props) => {
       </Show>
       <Show when={!editing()}>
         <ButtonRow>
-          <Button onClick={() => newTheme()}>New Theme</Button>
+          <Button onClick={() => newTheme()}>
+            <iconify-icon icon={icons.new} />
+            New Theme
+          </Button>
           <Show when={!themeState.isThemeDefault()}>
-            <Button onClick={() => setEditing(!editing())}>Edit</Button>
+            <Button onClick={() => setEditing(!editing())}>
+              <iconify-icon icon={icons.edit} />
+              Edit
+            </Button>
           </Show>
         </ButtonRow>
         <div>
