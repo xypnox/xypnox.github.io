@@ -21,6 +21,18 @@ const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
       }
     `
   }
+
+  const getFirstFont = (style: string) => {
+    const font = style.split(',')[0];
+    return font.replace(/"/g, '');
+  }
+  if (palette.base.font.family) {
+    const link = document.createElement('link');
+    link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(palette.base.font.family)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+    link.rel = 'stylesheet';
+    link.id = '_fontFamily';
+    document.head.appendChild(link);
+  }
 }
 
 const ManagerWrapper = styled('div')`
