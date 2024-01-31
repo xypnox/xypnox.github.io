@@ -9,7 +9,14 @@ const { title, description, icon } = Astro.props;
 
 <header>
   <h1 class="text-gradient-fx">
-    {icon && <iconify-icon icon={icon} class="title-icon" />}
+    {
+      icon && (
+        <div class="title-icon">
+          <iconify-icon icon={icon} class="title-icon" />
+        </div>
+      )
+    }
+
     {title}
   </h1>
   {description && <p>{description}</p>}
@@ -27,10 +34,17 @@ const { title, description, icon } = Astro.props;
     display: flex;
     align-items: center;
     font-size: var(--font-size-xl);
+    gap: 0.5rem;
     color: var(--heading);
   }
   header .title-icon {
-    font-size: 2em;
-    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: var(--primary-color);
+    font-size: var(--font-size-xxl);
+    color: var(--primary-contrast);
+    border-radius: calc(var(--border-radius) * 4);
   }
 </style>

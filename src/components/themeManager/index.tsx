@@ -7,6 +7,7 @@ import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 import { icons } from "../icons";
+import { DebugModeButton } from "./debug";
 
 const addPrevFont = (prevFamily: string) => {
   const existingStyle = document.getElementById('_fontFamilyStyle');
@@ -209,7 +210,10 @@ const ThemeManager = (props: Props) => {
             )}
           </For>
         </ButtonRow>
+
       </div>
+
+      <DebugModeButton />
       {/* <Show when={!themeState.isThemeDefault()}> */}
       {/* </Show> */}
     </ManagerWrapper>

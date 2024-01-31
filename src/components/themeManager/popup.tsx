@@ -104,7 +104,7 @@ const PopupContent = styled('div')`
 
 const ContentWrapper = styled('div')`
   padding: 2rem 1rem;
-  padding-bottom: calc(var(--layout-nav-height) + 4rem);
+  padding-bottom: calc(var(--layout-nav-height) + 2rem);
   background: var(--card-background);
   width: 100%;
   height: 100%;

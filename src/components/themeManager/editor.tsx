@@ -7,17 +7,7 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 import { capitalize } from "../../lib/text";
-
-const baseElementStyles = `
-  font-family: inherit;
-  padding: 0.3rem 0.5rem;
-  border-radius: ${theme.border.radius};
-  font-size: ${theme.font.size.base};
-  border: 1px solid transparent;
-  iconify-icon {
-    font-size: 1.25rem;
-  }
-`
+import { Button, ButtonGroup, Input, baseElementStyles } from "../elements/atoms";
 
 const Label = styled('label')`
   width: 100%;
@@ -55,78 +45,6 @@ const Colors = styled('div')`
   gap: 0.5rem;
 `
 
-const Input = styled('input')`
-  ${baseElementStyles}
-  flex: 1;
-  border: 1px solid ${theme.border.color};
-  background: ${theme.surface};
-  color: ${theme.text};
-  transition: all 0.2s ease;
-  min-width: 10ch;
-`
-
-const Button = styled('button')`
-  ${baseElementStyles}
-  flex: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  justify-content: center;
-  border: 1px solid transparent;
-  background: ${theme.surface};
-  color: ${theme.text};
-  transition: all 0.2s ease;
-
-  &.small {
-    flex-grow: 1;
-    flex-shrink: 0;
-    line-height: 1;
-    max-width: max-content;
-    min-height: 2rem;
-    padding: 0.25rem 0.5rem;
-    font-size: ${theme.font.size.sm};
-  }
-
-  &.selected {
-    border: 1px solid ${theme.primary.color};
-    color: ${theme.primary.color};
-  }
-
-  &:hover {
-    color: var(--primary-contrast);
-    background: var(--primary-color);
-  }
-
-`
-
-// A horizontal group of buttons, with separator borders, and outside border radius
-const ButtonGroup = styled('div')`
-  align-self: stretch;
-  display: flex;
-  align-items: stretch;
-  border-radius: ${theme.border.radius};
-  border: 1px solid ${theme.border.color};
-  background: ${theme.surface};
-  transition: all 0.2s ease;
-  ${Button.class} {
-    background: transparent;
-    border-radius: 0;
-    border: 0px solid transparent;
-    border-right: 1px solid ${theme.border.color};
-    flex: 1;
-    &:hover {
-      background: var(--primary-color);
-      color: var(--primary-contrast);
-    }
-    &:first-child {
-      border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
-    }
-    &:last-child {
-      border-radius: 0 ${theme.border.radius} ${theme.border.radius} 0;
-      border-right: none;
-    }
-  }
-`
 
 const EditorWrapper = styled('div')`
   width: 100%;

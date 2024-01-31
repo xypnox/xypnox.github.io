@@ -1,4 +1,4 @@
-import { createEffect, createMemo, on } from "solid-js";
+import { createEffect, createMemo, createSignal, on } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
 import { flattenObject } from "../../lib/objects";
@@ -23,9 +23,11 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   const themeConfig = createStoredStore<{
     mode: ThemeMode;
     theme: string;
+    debug: boolean;
   }>('xypnox-themeConfig', {
     mode: initMode ?? 'dark',
     theme: initTheme ?? 'default_aster',
+    debug: false,
   });
 
   const themes = createMemo(() => {
@@ -125,6 +127,13 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     themesData.set(themes);
   }
 
+  const setDebugMode = (debug: boolean) => {
+    themeConfig.set({
+      ...themeConfig.get(),
+      debug,
+    });
+  }
+
   return {
     theme,
     themes,
@@ -139,6 +148,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     themeConfig,
     themePalette,
     themeExists,
+    setDebugMode,
   }
 }
 
