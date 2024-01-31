@@ -6,6 +6,7 @@ import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
+import { capitalize } from "../../lib/text";
 
 const baseElementStyles = `
   font-family: inherit;
@@ -26,8 +27,9 @@ const Label = styled('label')`
 `
 
 const ColorLabel = styled(Label)`
+  position: relative;
   max-width: max-content;
-  gap: 0.25rem;
+  gap: 0.5rem;
   align-items: center;
   flex-direction: row;
 
@@ -39,10 +41,10 @@ const ColorLabel = styled(Label)`
   border-radius: ${theme.border.radius};
 
   input[data-coloris] {
-    min-height: 0;
-    min-width: 0;
-    width: 1px !important;
-    padding: 0 !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     opacity: 0;
   }
 `
@@ -50,7 +52,7 @@ const ColorLabel = styled(Label)`
 const Colors = styled('div')`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
 `
 
 const Input = styled('input')`
@@ -507,7 +509,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 const Swatch = styled('div')`
   width: 1.25rem;
   height: 1.25rem;
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   background: ${props => props.color};
 `
 
@@ -571,7 +573,7 @@ const Pickers = (props: {
             data-coloris
             id={`coloris-picker-${color[0]}`}
             type="text" value={color[1]} />
-          {color[0]}
+          {capitalize(color[0])}
         </ColorLabel>
       )}
     </For>

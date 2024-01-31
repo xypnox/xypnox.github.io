@@ -151,6 +151,80 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#aec3d4"
       }
     }
+  },
+  {
+    "name": "PrePub",
+    "id": "2CsLmbibySLs",
+    "base": {
+      "border": {
+        "radius": "0.4rem"
+      },
+      "font": {
+        "family": "Cardo",
+        "size": {
+          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
+        }
+      }
+    },
+    "vars": {
+      "light": {
+        "primary": "#6e6154",
+        "secondary": "#aba290",
+        "background": "#e6e1df",
+        "surface": "#b0a3802d",
+        "text": "#87806b"
+      },
+      "dark": {
+        "primary": "#d4b9b9",
+        "secondary": "#7a6e6e",
+        "background": "#1a1919",
+        "surface": "#303030a0",
+        "text": "#8f8181"
+      }
+    }
+  },
+  {
+    "name": "Solarized",
+    "id": "k7KaNNhEe3jP",
+    "base": {
+      "border": {
+        "radius": "4px"
+      },
+      "font": {
+        "family": "JetBrains Mono",
+        "size": {
+          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
+        }
+      }
+    },
+    "vars": {
+      "light": {
+        "primary": "#a8810c",
+        "secondary": "#cb4b16",
+        "background": "#f0f0f0",
+        "surface": "#ccc4ab3d",
+        "text": "#596e75"
+      },
+      "dark": {
+        "primary": "#31c2b6",
+        "secondary": "#b58900",
+        "background": "#002b36",
+        "surface": "#657b834f",
+        "text": "#93a1a1"
+      }
+    }
   }
 ]
 
