@@ -1,6 +1,6 @@
 import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount } from "solid-js";
 import { themeState } from "./themeState";
-import { styled } from "solid-styled-components";
+import { keyframes, styled } from "solid-styled-components";
 import { theme, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
@@ -18,6 +18,7 @@ const Label = styled('label')`
 
 const ColorLabel = styled(Label)`
   position: relative;
+  cursor: pointer;
   max-width: max-content;
   gap: 0.5rem;
   align-items: center;
@@ -32,6 +33,7 @@ const ColorLabel = styled(Label)`
 
   input[data-coloris] {
     position: absolute;
+    cursor: pointer;
     top: 0;
     left: 0;
     width: 100%;
@@ -53,6 +55,17 @@ const EditorWrapper = styled('div')`
   flex-direction: column;
   font-size: ${theme.font.size.sm};
   gap: 2rem;
+
+  .edit-icon {
+    ${baseElementStyles}
+    border: 1px solid ${theme.border.color};
+    border-radius: ${theme.border.radius};
+    color: ${theme.fadeText};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+  }
 `
 
 const Dropdown = styled('div')`
@@ -103,6 +116,7 @@ const EditorSectionWrapper = styled('div')`
 `
 
 const EditorSectionTitle = styled('div')`
+  user-select: none;
   display: flex;
   align-items: center;
   padding-right: 0.25rem;
@@ -110,9 +124,20 @@ const EditorSectionTitle = styled('div')`
     padding: 0.5rem 0.5rem;
     margin: 0;
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: ${theme.font.size.base};
     font-weight: 500;
     color: ${theme.heading};
+  }
+
+  h3 > iconify-icon {
+    color: ${theme.fadeText};
+    font-size: 1.25rem;
+    &.open {
+      color: ${theme.primary.color};
+    }
   }
 
   &.small {
@@ -146,6 +171,7 @@ const Row = styled('div')`
 
 const ToggleSection = (props: ParentProps & {
   title: string,
+  icon?: string,
   open: boolean,
   toggleSection: () => void,
   small?: boolean,
@@ -157,7 +183,16 @@ const ToggleSection = (props: ParentProps & {
       }}
       onClick={() => props.toggleSection()}
     >
-      <h3>{props.title}</h3>
+      <h3>
+        {props.title}
+        <Show when={props.icon}>
+          <iconify-icon
+            classList={{
+              'open': props.open
+            }}
+            icon={props.icon!} />
+        </Show>
+      </h3>
       <Button>
         <iconify-icon icon={props.open ? icons.expand : icons.collapse} />
       </Button>
@@ -167,7 +202,7 @@ const ToggleSection = (props: ParentProps & {
         {props.children}
       </EditorSectionContent>
     </Show>
-  </EditorSectionWrapper>
+  </EditorSectionWrapper >
 }
 
 const SelectedFamilies = [
@@ -212,7 +247,11 @@ const FontSelect = (props: {
       setFamilies(SelectedFamilies)
       return
     }
-    return setFamilies(SelectedFamilies.filter(family => family.toLowerCase().includes(inpVal().toLowerCase())));
+    const filtered = SelectedFamilies.filter(family => family.toLowerCase().includes(inpVal().toLowerCase()))
+    if (filtered.length) {
+      setFamilies(filtered)
+      return
+    }
   })
 
   const onClickOutside = (e: MouseEvent) => {
@@ -335,6 +374,9 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     {/*   {JSON.stringify(themePalette(), null, 2)} */}
     {/* </code> */}
     <Row>
+      <div class="edit-icon">
+        <iconify-icon icon={icons.edit} />
+      </div>
       <Input
         type="text"
         value={themeState.theme().name}
@@ -363,6 +405,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
     <ToggleSection
       title="Colors"
+      icon={icons.colors}
       open={sectionCollapses().colors}
       toggleSection={() => toggleSection('colors')}
     >
@@ -376,6 +419,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
     <ToggleSection
       title="Typography"
+      icon={icons.typography}
       open={sectionCollapses().typography}
       toggleSection={() => toggleSection('typography')}
     >
@@ -396,6 +440,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
     <ToggleSection
       title="Layout"
+      icon={icons.layout}
       open={sectionCollapses().layout}
       toggleSection={() => toggleSection('layout')}
     >

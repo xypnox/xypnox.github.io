@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createSignal } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme, type ThemePalette } from "../../theme";
+import { theme } from "../../theme";
 import { capitalize } from "../../lib/text";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
