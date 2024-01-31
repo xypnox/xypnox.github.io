@@ -8,7 +8,37 @@ import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 import { icons } from "../icons";
 
-const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
+const addPrevFont = (prevFamily: string) => {
+  const existingStyle = document.getElementById('_fontFamilyStyle');
+  if (existingStyle) {
+    existingStyle.remove();
+  }
+  const newStyle = document.createElement('style');
+  newStyle.id = '_fontFamilyStyle';
+  newStyle.innerHTML = `html { --prevFontFamily: ${prevFamily}; }`;
+  document.head.appendChild(newStyle);
+}
+
+const attachFontLink = (newFamily: string) => {
+  const existingLinks = document.getElementsByClassName('_fontFamily');
+  const doesLinkExist = Array.from(existingLinks).some(link => {
+    const href = (link as HTMLLinkElement).href;
+    const encondedFont = href.split('=')[1].split(':')[0];
+    const font = decodeURIComponent(encondedFont);
+    return font == newFamily;
+  });
+  if (doesLinkExist) {
+    return;
+  }
+  const link = document.createElement('link');
+  link.href = `https://fonts.googleapis.com/css2?family=${(newFamily)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+  link.rel = 'stylesheet';
+  link.classList.add('_fontFamily');
+  document.head.appendChild(link);
+}
+
+
+const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
   let style = document.getElementById('_themeVars') as HTMLStyleElement;
   if (!style) {
@@ -20,18 +50,6 @@ const updateThemeStyle = (themeCss: string, palette: ThemePalette) => {
         ${themeCss}
       }
     `
-  }
-
-  const getFirstFont = (style: string) => {
-    const font = style.split(',')[0];
-    return font.replace(/"/g, '');
-  }
-  if (palette.base.font.family) {
-    const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(palette.base.font.family)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
-    link.rel = 'stylesheet';
-    link.id = '_fontFamily';
-    document.head.appendChild(link);
   }
 }
 
@@ -103,10 +121,20 @@ interface Props {
 
 const ThemeManager = (props: Props) => {
   const [editing, setEditing] = createSignal(false);
+  const [oldFont, setOldFont] = createSignal('');
+
   createEffect(() => {
     const theme = themeState.cssTheme;
-    updateThemeStyle(theme(), themeState.themePalette());
+    const newFont = themeState.themePalette().base.font.family;
+    if (oldFont() !== newFont) {
+      addPrevFont(oldFont());
+      setOldFont(newFont);
+      attachFontLink(newFont);
+    }
+    updateThemeStyle(theme());
   })
+
+
 
   const newTheme = () => {
     // Generate 10 names

@@ -7,26 +7,6 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 
-const Label = styled('label')`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`
-
-const ColorLabel = styled(Label)`
-  max-width: 14rem;
-  gap: 0.5rem;
-  align-items: center;
-  flex-direction: row;
-`
-
-const Colors = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-`
-
 const baseElementStyles = `
   font-family: inherit;
   padding: 0.3rem 0.5rem;
@@ -36,6 +16,41 @@ const baseElementStyles = `
   iconify-icon {
     font-size: 1.25rem;
   }
+`
+
+const Label = styled('label')`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+
+const ColorLabel = styled(Label)`
+  max-width: max-content;
+  gap: 0.25rem;
+  align-items: center;
+  flex-direction: row;
+
+  ${baseElementStyles}
+
+  background: ${theme.surface};
+  color: ${theme.text};
+  border-color: ${theme.border.color};
+  border-radius: ${theme.border.radius};
+
+  input[data-coloris] {
+    min-height: 0;
+    min-width: 0;
+    width: 1px !important;
+    padding: 0 !important;
+    opacity: 0;
+  }
+`
+
+const Colors = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 `
 
 const Input = styled('input')`
@@ -393,20 +408,6 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         }
       }
     })
-    const getFirstFont = (style: string) => {
-      const font = style.split(',')[0];
-      return font.replace(/"/g, '');
-    }
-
-    const existingLink = document.getElementById('_fontFamily');
-    if (existingLink) {
-      existingLink.remove();
-    }
-    const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(style)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
-    link.rel = 'stylesheet';
-    link.id = '_fontFamily';
-    document.head.appendChild(link);
   }, 200)
 
   return <EditorWrapper>
