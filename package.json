@@ -24,6 +24,7 @@
     "iconify-icon": "^1.0.8",
     "lodash.debounce": "^4.0.8",
     "nanoid": "^5.0.4",
+    "rehype-mermaid": "^2.1.0",
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
     "solid-js": "^1.7.7",
@@ -31,6 +32,7 @@
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
+    "@shikijs/rehype": "1.0.0-beta.2",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.9.3",
     "@types/tinycolor2": "^1.4.6",
