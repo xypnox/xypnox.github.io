@@ -225,6 +225,43 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#93a1a1"
       }
     }
+  },
+  {
+    "name": "Clayprint",
+    "id": "rOCyT2dTMWk4F",
+    "base": {
+      "border": {
+        "radius": "0.75rem"
+      },
+      "font": {
+        "family": "Bungee Inline",
+        "size": {
+          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
+        }
+      }
+    },
+    "vars": {
+      "light": {
+        "primary": "#129e89",
+        "secondary": "#18acd9",
+        "background": "#e1e8e5",
+        "surface": "#53967b19",
+        "text": "#276163"
+      },
+      "dark": {
+        "primary": "#65f7c9",
+        "secondary": "#54ccff",
+        "background": "#0a1a19",
+        "surface": "#1f45374c",
+        "text": "#4c8f8f"
+      }
+    }
   }
 ]
 
