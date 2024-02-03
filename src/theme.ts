@@ -151,9 +151,6 @@ export const modeVars = {
 
   colors: {
     purple: '#6b5eff',
-    dev: '#63f6ff',
-    design: '#ff5370',
-    literature: '#72ff80',
   },
 
   background: '#0f111a',
@@ -247,9 +244,6 @@ const lightTheme: ThemeVars = {
 
   colors: {
     purple: '#569867',
-    dev: '#008a93',
-    design: '#ac1a65',
-    literature: '#0e7718',
   },
 
   background: '#d7d7ea',
@@ -302,9 +296,6 @@ const BrutalistTheme: UITheme = {
 
       colors: {
         purple: '#2080ff',
-        dev: '#444',
-        design: '#444',
-        literature: '#444',
       },
 
       background: '#f0f0f0',
@@ -390,6 +381,30 @@ const defaultPaletteColors = {
 
 type PaletteColors = typeof defaultPaletteColors
 
+const defaultBasePalette = {
+  border: {
+    radius: '0.2rem',
+  },
+
+  font: {
+    family: 'Jost',
+    size: fontSizes,
+  },
+}
+
+type BasePalette = typeof defaultBasePalette
+
+export interface ThemePalette {
+  name: string;
+  id: string;
+  base: BasePalette;
+  vars: {
+    light: PaletteColors;
+    dark: PaletteColors;
+  }
+}
+
+
 export const defaultThemePalette = {
   name: 'Aster',
   id: 'default_aster',
@@ -455,7 +470,6 @@ const brutalistPalette: ThemePalette = {
     },
   }
 }
-export type ThemePalette = typeof defaultThemePalette
 
 export const defaultPalettes: ThemePalette[] = [
   defaultThemePalette,
@@ -466,41 +480,42 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
 
   // verify if theme is dark or light by
   // checking if background is dark or light
-  // and if text is dark or light
   const isDark = tinycolor(palette.background).isDark()
 
-  const betweenSurfaceAndBackground = tinycolor.mix(palette.surface, palette.background, 50).toString()
+  // the color between surface and background (middle earth)
+  const midErth = tinycolor.mix(palette.surface, palette.background, 50).toString()
 
   return {
     primary: {
       color: palette.primary,
-      contrast: tinycolor(palette.primary).isDark() ? '#ffffff' : '#000000',
+      // For now, between black and white depending on primary color
+      // This is used to set the color of the text over the surfaces with primary background
+      contrast: tinycolor(palette.primary).isDark()
+        ? '#ffffff'
+        : '#000000',
     },
-    secondary: {
-      color: palette.secondary,
-    },
-    colors: {
-      purple: palette.primary,
-      dev: tinycolor(palette.primary).spin(60).toString(),
-      design: tinycolor(palette.primary).spin(120).toString(),
-      literature: tinycolor(palette.primary).spin(180).toString(),
-    },
+    secondary: { color: palette.secondary, }, // Duh
+    colors: { purple: palette.primary, /* More could be added */ },
     background: palette.background,
     surface: palette.surface,
     border: {
       style: 'solid',
-      // Border color is between text and surface
-      color: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 80).toString()
+      // Border color is between text and midErth
+      color: tinycolor.mix(palette.text, midErth, 80).toString()
     },
-    // brightten if dark, darken if light
-    heading: isDark ?
-      tinycolor(palette.text).brighten().toString() :
-      tinycolor(palette.text).darken().toString(),
-    text: palette.text,
-    fadeText: tinycolor.mix(palette.text, betweenSurfaceAndBackground, 30).toString(),
-    cardShadow: `0 6px 12px 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
 
+    text: palette.text,
+    heading:
+      tinycolor(palette.text)[isDark ? 'brighten' : 'darken']().toString(),
+
+
+    // Fade with midErth
+    fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
+    cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
+
+    // We can use these inside new vars
     card: {
+      // The controls for the cards would be implemented later
       border: '2px dashed var(--border-color)',
       background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
       backgroundPosition: '90% 0',
@@ -509,15 +524,16 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
       backgroundPositionHover: '10% 20%',
     },
 
+    // For now we use the primary color, less noise
     bold: palette.primary,
     italic: palette.primary,
     strikethrough: palette.primary,
 
+    // Variables for variables.
     gradient: {
       'color-1': 'var(--primary-color)',
       'color-2': 'var(--colors-purple)',
     },
-
     'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
   }
 }

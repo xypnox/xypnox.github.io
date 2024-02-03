@@ -11,7 +11,7 @@ hidden: true
 
 You can try out themescura from the popup at the bottom right corner, or visit the [customize](/customize) page of this website for the [Guide](/customize#guide) and [Showcase](/customize#theme-showcase).
 
-Before reading the post, try to customize the look so that it matches your tastes. Remember, this post is only as beautiful as you can make it.
+Before reading the post, try to customize the look so that it matches your tastes. Remember, this post is only as beautiful as you can make it. Which of course by extension applies to this entire site.
 
 # What it does
 
@@ -27,17 +27,50 @@ Themescura takes a palette of initial variables and generates a set of CSS varia
 
 # Motivation
 
+During the past few years developing frontends for websites and webapps, I noticed repeating several basic steps again and again to iterate and maintain the styles and themes. And from the learnings I devised a few guidelines for myself to manage the complexities. And after testing out and implementing the system in different places, I feel confident to present a first draft.
+
+When asked why? I could take the easy way and answer Why not? But that would be dishonest.
+
+The current philosophy of software design and development goes something like this:
+
+The UX and Design folks determine the ideal layout and UX for the application, the brand styles if exist are used or new styles are developed and finally the Frontend is tasked with implementing the design. 
+
+
 With a single style you can only make a website look one way.
 
-Humans are not uni-themed.
 
-There is no perfect theme.
+
+The current customization abilities of software are limited to:
+1. Dark/Light Mode
+2. Primary Color Customization
+3. Few customizable Colors
+4. Browser based customizations via extensions
+   - Stylus
+   - Arc
+
+The current tools available for designing/iterating a theme include:
+
+1. Isolated design tools such as Color Palette pickers, font pickers, font scale makers, etc etc.
+2. Variables in Figma and such, but iterating over those requires expertise in the relatively new Figma features and money (Multiple themes and styles require pro plans, I am sorry but I am poor)
+3. Tools specific to frameworks, such as tailwind palette generators, bootstrap/etc themes.
+
+Humans are not uni-themed. We don't have a single static preference. We change our opinions and tastes often. There may be strong standing takes, but the minor details of most of our preferences remain in constant flux.
+
+There is no perfect theme. Long ago, I used to assume that there existed this elusive "one theme", that once found could be used for everything and no changes to themes would be needed.
+
+But there is no perfect theme. To assure you, assume that you do have a perfect theme. Then everyone should use that theme, and once everyone uses that theme, then what is even the point of a theme? Everything looks somewhat the same. Bland, white and sans-serifed, filled with adds and generic flat illustrations.
 
 Customization has been hard ever since. Could making it easier/more accessible change the way frontend and software is perceived?
 
-For a sense of control.
+Most tech folks that I talk to shy away from design/frontend for they assume they don't get it. But I suspect it is more because the tools to iterate and check whether something designed was "right"/"wrong" are very slow. The feedback mechanism is a snail.
 
-Every website should be customizable.
+Moreover, it seems there is a perception that for a thing to look good it has to be handed over to a designer, who will pick the perfect layout, fonts, colors etc to make it look good.
+
+Honestly though, how many tools need a "different" brand image to be useful? And does it make sense shoving the "uniqueness" down the throats of end users who are fed up (I hope) of the extremely fast evolution of modern web/app design. 
+
+For a sense of control. Giving options gives control. I feel more confident using a piece of software the more I feel that I am in control of it.
+
+Every website should be customizable. This one is a personal dream. And by every website I mean every-fucking-website.
 
 The problems with current customization.
 
@@ -46,6 +79,7 @@ A person who:
 - Doesn't know the details of typography
 - But can still determine by looking at something whether the font/colors make sense
 
+So that I can automate the way I design themes. I have designed several websites and applications and I have found that I can create the themes/styles/brand by defining the base parameters and then how everything else is defined related to them. Similar to how palette is used to define the theme.
 
 
 # How it works
@@ -53,3 +87,218 @@ A person who:
 Where AI
 
 Unfortunately, to the disappointment of several, there is no AI underneath. 
+
+Everything starts with the palette:
+
+```ts
+const defaultPaletteColors = {
+  primary: '#ff0000',
+  secondary: '#ffff00',
+
+  background: '#000000',
+  surface: '#222',
+  text: '#ffffff',
+}
+
+type PaletteColors = typeof defaultPaletteColors
+
+const defaultBasePalette = {
+  border: {
+    radius: '0.2rem',
+  },
+
+  font: {
+    family: 'Jost',
+    size: fontSizes,
+  },
+}
+
+type BasePalette = typeof defaultBasePalette
+
+export interface ThemePalette {
+  name: string;
+  id: string;
+  base: BasePalette;
+  vars: {
+    light: PaletteColors;
+    dark: PaletteColors;
+  }
+}
+```
+
+The palette is used to generate the colors:
+
+```ts
+
+const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
+
+  // verify if theme is dark or light by
+  // checking if background is dark or light
+  const isDark = tinycolor(palette.background).isDark()
+
+  // the color between surface and background (middle earth)
+  const midErth = tinycolor.mix(palette.surface, palette.background, 50).toString()
+
+  return {
+    primary: {
+      color: palette.primary,
+      // For now, between black and white depending on primary color
+      // This is used to set the color of the text over the surfaces with primary background
+      contrast: tinycolor(palette.primary).isDark()
+        ? '#ffffff'
+        : '#000000',
+    },
+    secondary: { color: palette.secondary, }, // Duh
+    colors: { purple: palette.primary, /* More could be added */ },
+    background: palette.background,
+    surface: palette.surface,
+    border: {
+      style: 'solid',
+      // Border color is between text and midErth
+      color: tinycolor.mix(palette.text, midErth, 80).toString()
+    },
+
+    text: palette.text,
+    heading:
+      tinycolor(palette.text)[isDark ? 'brighten' : 'darken']().toString(),
+
+
+    // Fade with midErth
+    fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
+    cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
+
+    // We can use these inside new vars
+    card: {
+      // The controls for the cards would be implemented later
+      border: '2px dashed var(--border-color)',
+      background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+      backgroundPosition: '90% 0',
+      backgroundSize: '200%',
+      borderHover: '2px solid var(--border-color)',
+      backgroundPositionHover: '10% 20%',
+    },
+
+    // For now we use the primary color, less noise
+    bold: palette.primary,
+    italic: palette.primary,
+    strikethrough: palette.primary,
+
+    // Variables for variables.
+    gradient: {
+      'color-1': 'var(--primary-color)',
+      'color-2': 'var(--colors-purple)',
+    },
+    'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
+  }
+}
+
+
+export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
+  const theme: UITheme = {
+    id: palette.id,
+    name: palette.name,
+    base: {
+      layout,
+      ...palette.base,
+    },
+    vars: {
+      light: generateModeVarsFromPaletteColors(palette.vars.light),
+      dark: generateModeVarsFromPaletteColors(palette.vars.dark),
+    }
+  }
+
+  return theme
+}
+```
+
+Note that the structure of the function could be anything, we can generate a lot of css variables dependent on each other, spacings, border radius, etc. We could have several naming schemes for a list of variables for example: _1. TShirt sizes_ (sm, md, base/regular, lg, xl, xxl ...) _2. Numeric_ (1,2,3) (100-200-900), and different scaling mechanisms: _1. Linear_ (2, 4, 6, 8, 10) _2. Geometric_ (2, 4, 8, 16, 32) etc.
+
+The generated theme object consists of the set of css variables and their values in the nested object.
+
+We could use this theme object directly to theme our css if we were using css in js, however, every time we change this object, the styles have to then be regenerated for every change. A better way would be to have a theme object that had instead of values, just "pointers" to the changing variables. Which are CSS Variables.
+
+So instead of using the generated theme with direct values we use another generated object that instead of having the values, we have css variables that will have those values.
+
+We separate the structure and the theme's values so we can change the values, and only care about it's structure during usage. The generated css variables are inserted in a single style tag and are applied to the root.
+
+
+
+Nested themes can also be declared in between via setting the variables on the parent element that will nest the objects that require the custom theme. An example of using different themes in children can be found in the examples shared in [Dark Modes](/blag/posts/dark-modes) blog post.
+
+
+
+## Apply and Edit
+
+It should be obvious that we should not load the theme editor every single time for every single page.
+
+We separate the code that is needed for applying the theme and for editing the theme.
+
+The application of the theme on page load happens by very small JS script:
+
+```js
+const themeCss = localStorage.getItem('xypnoxCssTheme');
+let style = document.getElementById('_themeVars');
+
+if (style && themeCss) {
+  const themeString = JSON.parse(themeCss);
+  // Insert the theme variables if they exist in localstorage
+  if (themeString) style.innerHTML = `:root { ${themeString} }`;
+} 
+
+const themes = localStorage.getItem('xypnox-themes');
+const themeConfig = localStorage.getItem('xypnox-themeConfig');
+
+if (themes && themeConfig) {
+  const themesPalette = JSON.parse(themes);
+  const themeConfigPalette = JSON.parse(themeConfig);
+  // find theme from config in palettes
+  const theme = themesPalette.find((theme) => theme.id === themeConfigPalette.theme);
+  const fontFamily = theme.base.font.family;
+  // console.log({ theme, fontFamily });
+
+  const getFirstFont = (style/* string */) => {
+    const font = style.split(',')[0];
+    return font.replace(/"/g, '');
+  }
+  // Insert font family link to load the theme font from google fonts
+  const link = document.createElement('link');
+  link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(fontFamily)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+  link.rel = 'stylesheet';
+  link.classList.add('_fontFamily');
+  document.head.appendChild(link);
+}
+```
+
+The editor is written with SolidJS to piggyback on the reactive system. The reactive state is replicated in localstorage and thus can be set and then used by the applying script.
+
+
+
+# What can be improved
+
+A lot honestly.
+
+There could be separate font families for different portions of the website, for example, a heading font and a post content font family.
+
+Although typescript helps a lot as the theme gets typed, using css variables by hand results in hard to maintain code, which could be improved by improving the developer tooling.
+
+There could be checks to ensure contrast ratios for the text and background and surface colors.
+
+There could be more intuitive controls in the form of contrast, saturation and tint etc instead of the five colors only.
+
+There could be component specific styles defined in the generated theme as well.
+
+The icons are fixed for now and it is hard to have a 1:1 icon pack replacements like we have 1:1 font replacements for most alphanumeric characters. 
+
+The themes could be pooled in a shared "registry", allowing people to share the themes with each other. (The current size of the palette is short enough to be shared just by copy pasting it's JSON).
+
+User defined preferences/palette could be shared across websites, so the user could theme multiple websites using their preferred palette of colors and fonts.
+
+More importantly there could be a representation of the theme generation step: how the palette effects the generated variables. Preferably in the form of a node graph editor instead of scripting it in code.
+
+
+# What changes
+
+The idea that a website's theme is static. The idea that user facing customization is hard.  The idea that to allow customization we need to save the themes/preferences on the server.
+
+
+
