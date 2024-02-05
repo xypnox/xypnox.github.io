@@ -1,6 +1,6 @@
 ---
 title: "Introducing Themescura"
-description: "A way to allow anyone to customize the styles of a webpage live."
+description: "Towards better tools for user facing customizations"
 date: 2024-02-02
 
 categories: ["draft"]
@@ -10,7 +10,7 @@ hidden: true
 ---
 
 
-# What it is
+## What it is
 
 import ThemeManagerAstro from '../../../components/themeManager/themeManager.astro'
 
@@ -22,19 +22,31 @@ You can also visit the [customize](/customize) page of this website for a [Guide
 
 Before reading the post, try to customize the look so that it matches your tastes. Remember, this post is only as beautiful as you make it. Which of course by extension applies to this entire site.
 
-# What it does
+## What it does
 
-Themescura takes a palette of initial variables and generates a set of CSS variables, due to its implementation it also generates artifacts, types/completion, that can be used to develop the frontend. You and the user can edit the palette in real time, and the theme palettes and generated variables are stored in localstorage so that theme can be applied without loading the editor and can be edited whenever needed.
+Themescura takes a palette and generates variables that are used to style the interface. It also types the themes of the generated variables, which are used to style the Frontend.
 
-# Where can it be used
+import ThemeBasic from "./theme_basic.svg.astro";
 
-- To experiment with fonts/colors
-- At the development stage to define/edit the theme
-- At the production stage to allow the user to change the app's theme
-  - At all axis
-  - With some limited options
+<ThemeBasic />
 
-# Motivation
+You, the user, can edit the palette in real time, and the palettes and generated css variables are stored locally on the browser so that theme can be applied without loading the editor and can be edited whenever needed.
+
+## Where can it be used
+
+It can be used to test out how fonts and color combinations look.
+
+It can be used to allow users to pick themes, from either limited set of options to full customizability. It can also be used to offer dark/light modes, with high contrast modes as well.
+
+## Motivation
+
+I have always loved customization. I was introduced to its true form with Linux.
+
+On most operating systems there is a set way of navigating and interacting with the interface. A default for _launching apps, navigating through files, handling windows, their layout, and switching between them etc._. There usually are themes,  limited to the system's ui and libraries that when used by other applications produce a native interface.
+
+On linux, instead of a default interface, there are several "flavors", different takes on the same problems. A linux user got choice. They could _choose_ which interface or system worked the best for them, or mould those that came near. And if none did, they had the freedom to create one. [^1]
+
+Here on the web however, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Only evolving with time.
 
 During the past few years developing frontends for websites and webapps, I noticed repeating several basic steps again and again to iterate and maintain the styles and themes. And from the learnings I devised a few guidelines for myself to manage the complexities. And after testing out and implementing the system in different places, I feel confident to present a first draft.
 
@@ -48,8 +60,8 @@ The UX and Design folks determine the ideal layout and UX for the application, t
 With a single style you can only make a website look one way.
 
 
-
 The current customization abilities of software are limited to:
+
 1. Dark/Light Mode
 2. Primary Color Customization
 3. Few customizable Colors
@@ -91,136 +103,31 @@ A person who:
 So that I can automate the way I design themes. I have designed several websites and applications and I have found that I can create the themes/styles/brand by defining the base parameters and then how everything else is defined related to them. Similar to how palette is used to define the theme.
 
 
-# How it works
+## How it works
 
-Where AI
+![Where AI](./whereai.png)
 
 Unfortunately, to the disappointment of several, there is no AI underneath. 
 
-Everything starts with the palette:
+Everything starts with the palette.
 
-```ts
-const defaultPaletteColors = {
-  primary: '#ff0000',
-  secondary: '#ffff00',
-
-  background: '#000000',
-  surface: '#222',
-  text: '#ffffff',
-}
-
-type PaletteColors = typeof defaultPaletteColors
-
-const defaultBasePalette = {
-  border: {
-    radius: '0.2rem',
-  },
-
-  font: {
-    family: 'Jost',
-    size: fontSizes,
-  },
-}
-
-type BasePalette = typeof defaultBasePalette
-
-export interface ThemePalette {
-  name: string;
-  id: string;
-  base: BasePalette;
-  vars: {
-    light: PaletteColors;
-    dark: PaletteColors;
-  }
-}
-```
-
-The palette is used to generate the colors:
-
-```ts
-
-const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
-
-  // verify if theme is dark or light by
-  // checking if background is dark or light
-  const isDark = tinycolor(palette.background).isDark()
-
-  // the color between surface and background (middle earth)
-  const midErth = tinycolor.mix(palette.surface, palette.background, 50).toString()
-
-  return {
-    primary: {
-      color: palette.primary,
-      // For now, between black and white depending on primary color
-      // This is used to set the color of the text over the surfaces with primary background
-      contrast: tinycolor(palette.primary).isDark()
-        ? '#ffffff'
-        : '#000000',
-    },
-    secondary: { color: palette.secondary, }, // Duh
-    colors: { purple: palette.primary, /* More could be added */ },
-    background: palette.background,
-    surface: palette.surface,
-    border: {
-      style: 'solid',
-      // Border color is between text and midErth
-      color: tinycolor.mix(palette.text, midErth, 80).toString()
-    },
-
-    text: palette.text,
-    heading:
-      tinycolor(palette.text)[isDark ? 'brighten' : 'darken']().toString(),
-
-
-    // Fade with midErth
-    fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
-    cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
-
-    // We can use these inside new vars
-    card: {
-      // The controls for the cards would be implemented later
-      border: '2px dashed var(--border-color)',
-      background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
-      backgroundPosition: '90% 0',
-      backgroundSize: '200%',
-      borderHover: '2px solid var(--border-color)',
-      backgroundPositionHover: '10% 20%',
-    },
-
-    // For now we use the primary color, less noise
-    bold: palette.primary,
-    italic: palette.primary,
-    strikethrough: palette.primary,
-
-    // Variables for variables.
-    gradient: {
-      'color-1': 'var(--primary-color)',
-      'color-2': 'var(--colors-purple)',
-    },
-    'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
-  }
-}
-
-
-export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
-  const theme: UITheme = {
-    id: palette.id,
-    name: palette.name,
-    base: {
-      layout,
-      ...palette.base,
-    },
-    vars: {
-      light: generateModeVarsFromPaletteColors(palette.vars.light),
-      dark: generateModeVarsFromPaletteColors(palette.vars.dark),
-    }
-  }
-
-  return theme
-}
-```
+The palette is used to generate the colors.
 
 Note that the structure of the function could be anything, we can generate a lot of css variables dependent on each other, spacings, border radius, etc. We could have several naming schemes for a list of variables for example: _1. TShirt sizes_ (sm, md, base/regular, lg, xl, xxl ...) _2. Numeric_ (1,2,3) (100-200-900), and different scaling mechanisms: _1. Linear_ (2, 4, 6, 8, 10) _2. Geometric_ (2, 4, 8, 16, 32) etc.
+
+The colors are constructed from the palette. Sometimes multiple are combined, sometimes they are lightend, brightened etc. 
+
+import ColorLinear from './color_linear.svg.astro';
+
+<ColorLinear />
+
+As we don't have the linear color mixing, the colors have to be mixed step by step. We can have intermediary colors:
+
+import ColorMixed from './color_mixed.svg.astro';
+
+<ColorMixed />
+
+The intermediary above is called `midErth` in code.
 
 The generated theme object consists of the set of css variables and their values in the nested object.
 
@@ -236,55 +143,23 @@ Nested themes can also be declared in between via setting the variables on the p
 
 
 
-## Apply and Edit
+### Apply and Edit
 
 It should be obvious that we should not load the theme editor every single time for every single page.
 
 We separate the code that is needed for applying the theme and for editing the theme.
 
-The application of the theme on page load happens by very small JS script:
-
-```js
-const themeCss = localStorage.getItem('xypnoxCssTheme');
-let style = document.getElementById('_themeVars');
-
-if (style && themeCss) {
-  const themeString = JSON.parse(themeCss);
-  // Insert the theme variables if they exist in localstorage
-  if (themeString) style.innerHTML = `:root { ${themeString} }`;
-} 
-
-const themes = localStorage.getItem('xypnox-themes');
-const themeConfig = localStorage.getItem('xypnox-themeConfig');
-
-if (themes && themeConfig) {
-  const themesPalette = JSON.parse(themes);
-  const themeConfigPalette = JSON.parse(themeConfig);
-  // find theme from config in palettes
-  const theme = themesPalette.find((theme) => theme.id === themeConfigPalette.theme);
-  const fontFamily = theme.base.font.family;
-  // console.log({ theme, fontFamily });
-
-  const getFirstFont = (style/* string */) => {
-    const font = style.split(',')[0];
-    return font.replace(/"/g, '');
-  }
-  // Insert font family link to load the theme font from google fonts
-  const link = document.createElement('link');
-  link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(fontFamily)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
-  link.rel = 'stylesheet';
-  link.classList.add('_fontFamily');
-  document.head.appendChild(link);
-}
-```
+The application of the theme on page load happens by very small JS script.
 
 The editor is written with SolidJS to piggyback on the reactive system. The reactive state is replicated in localstorage and thus can be set and then used by the applying script.
 
 
 
-# What can be improved
+## What can be improved
 
 A lot honestly.
+
+First there are the bugs. The slight glitch when loading the font. The broken themes of the cached browser pages revealed on back/forward navigation.
 
 There could be separate font families for different portions of the website, for example, a heading font and a post content font family.
 
@@ -304,10 +179,15 @@ User defined preferences/palette could be shared across websites, so the user co
 
 More importantly there could be a representation of the theme generation step: how the palette effects the generated variables. Preferably in the form of a node graph editor instead of scripting it in code.
 
+People have created tools to customize their themes on linux such that the colors match their wallpapers. Something similar also exists on Android. Mac blurs the background a little.
 
-# What changes
+
+## What changes
 
 The idea that a website's theme is static. The idea that user facing customization is hard.  The idea that to allow customization we need to save the themes/preferences on the server.
 
+It is one step in many towards better interfaces.
 
+---
 
+[^1]: There are themes for linux as well but different "flavors" are themed a little differently. 

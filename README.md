@@ -1,6 +1,15 @@
 # xypnox.com
 
+
 This is the source of [xypnox.com](https://xypnox.com)
+
+<div align="center">
+
+[![Deploy to GitHub Pages](https://github.com/xypnox/xypnox.github.io/actions/workflows/astro.yml/badge.svg)](https://github.com/xypnox/xypnox.github.io/actions/workflows/astro.yml)
+![Built with Astro](https://img.shields.io/badge/built_with-Astro-blue)
+![SolidJS](https://img.shields.io/badge/Solid-JS-blue)
+
+</div>
 
 - Redone in [astro](https://astro.build/) 
 - Now comes with blag
