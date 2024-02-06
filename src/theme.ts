@@ -239,29 +239,29 @@ const brutalistPalette: ThemePalette = {
   id: 'default_brutalist',
   base: {
     border: {
-      radius: '4px',
+      radius: '2px',
     },
     font: {
       family: 'sans-serif',
     },
   },
-  card: 'transparent',
+  card: 'solid',
 
   vars: {
     light: {
       primary: '#222',
-      secondary: '#ff5370',
+      secondary: '#ff0000',
 
       background: '#f0f0f0',
-      surface: '#d9d9d982',
+      surface: '#ffffff00',
       text: '#333333',
     },
     dark: {
-      primary: '#fff',
+      primary: '#ffffff',
       secondary: '#ff5370',
 
       background: '#000000',
-      surface: '#30303080',
+      surface: '#ffffff10',
       text: '#cccccc',
     },
   }
@@ -297,15 +297,19 @@ const getCard = (cardType: CardType) => {
         backgroundSize: 'initial',
         borderHover: '1px solid var(--border-color)',
         backgroundHover: 'var(--surface)',
+        backgroundPositionHover: 'initial',
       }
     }
   } else {
     return {
       card: {
-        border: '1px solid transparent',
-        background: 'transparent',
-        borderHover: '1px solid var(--border-color)',
-        backgroundHover: 'var(--surface)',
+        border: 'none',
+        background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+        backgroundHover: 'inherit',
+        backgroundPosition: '90% 0',
+        backgroundSize: '200%',
+        borderHover: 'none',
+        backgroundPositionHover: '0% 0%',
       }
     }
   }
@@ -336,7 +340,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
     border: {
       style: 'solid',
       // Border color is between text and midErth
-      color: tinycolor.mix(palette.text, palette.background, 80).toString()
+      color: tinycolor.mix(palette.text, palette.background, 75).toString()
     },
 
     text: palette.text,
