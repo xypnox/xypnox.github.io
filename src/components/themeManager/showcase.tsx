@@ -13,17 +13,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "Nunito",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'gradient',
     "vars": {
       "light": {
         "primary": "#b03d84",
@@ -49,18 +41,10 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0.25rem"
       },
       "font": {
-        "family": "Vollkorn",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+        "family": "Ibarra Real Nova",
+      },
     },
+    card: 'gradient',
     "vars": {
       "light": {
         "primary": "#ba621e",
@@ -87,17 +71,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "Rubik Glitch",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'solid',
     "vars": {
       "light": {
         "primary": "#ff0000",
@@ -124,17 +100,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "Lato",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'solid',
     "vars": {
       "light": {
         "primary": "#1971d6",
@@ -161,17 +129,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "Cardo",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'solid',
     "vars": {
       "light": {
         "primary": "#575244",
@@ -198,17 +158,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "JetBrains Mono",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'solid',
     "vars": {
       "light": {
         "primary": "#a8810c",
@@ -235,17 +187,9 @@ const showcaseThemes: ThemePalette[] = [
       },
       "font": {
         "family": "Bungee Inline",
-        "size": {
-          "sm": "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-          "base": "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-          "md": "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-          "lg": "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-          "xl": "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-          "xxl": "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-          "xxxl": "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)"
-        }
-      }
+      },
     },
+    card: 'solid',
     "vars": {
       "light": {
         "primary": "#129e89",
@@ -260,6 +204,35 @@ const showcaseThemes: ThemePalette[] = [
         "background": "#0a1a19",
         "surface": "#1f45374c",
         "text": "#4c8f8f"
+      }
+    }
+  },
+  {
+    "name": "Crayons on Walls",
+    "id": "E5eHa56DSllcLDk62R-UV",
+    "base": {
+      "border": {
+        "radius": "0.5rem"
+      },
+      "font": {
+        "family": "Gaegu",
+      },
+    },
+    card: 'solid',
+    "vars": {
+      "light": {
+        "primary": "#ff3838",
+        "secondary": "#ff5370",
+        "background": "#eec9ff",
+        "surface": "#b2b5ed5b",
+        "text": "#0b5978"
+      },
+      "dark": {
+        "primary": "#f2e89b",
+        "secondary": "#e892a2",
+        "background": "#542e51",
+        "surface": "#78407d3a",
+        "text": "#81d6d3"
       }
     }
   }

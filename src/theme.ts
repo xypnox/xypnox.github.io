@@ -100,22 +100,6 @@ const fontSizes = {
   xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
 }
 
-const technoCard = {
-  border: '2px dashed var(--border-color)',
-  background: 'linear-gradient(-45deg, var(--surface), var(--background), var(--background))',
-  backgroundSize: '200%',
-  borderHover: '2px solid var(--border-color)',
-  backgroundPositionHover: '-100% 0',
-}
-
-const card = {
-  border: '2px dashed var(--border-color)',
-  background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
-  backgroundPosition: '90% 0',
-  backgroundSize: '200%',
-  borderHover: '2px solid var(--border-color)',
-  backgroundPositionHover: '10% 20%',
-}
 
 const layout = {
   content: {
@@ -128,6 +112,8 @@ const layout = {
   },
 }
 
+export type CardType = 'gradient' | 'solid' | 'transparent'
+
 const baseVars = {
   layout,
   font: {
@@ -138,51 +124,6 @@ const baseVars = {
     radius: '0.5rem',
   }
 }
-
-export const modeVars = {
-  primary: {
-    color: '#ff5370',
-    contrast: '#0f111a',
-  },
-
-  secondary: {
-    color: '#CCA685',
-  },
-
-  colors: {
-    purple: '#6b5eff',
-  },
-
-  background: '#0f111a',
-  surface: '#1e2139a0',
-
-  border: {
-    style: 'dashed',
-    color: '#ffffff10'
-  },
-
-  heading: '#CCA685',
-  text: '#919DCF',
-  fadeText: '#919DCF9a',
-
-  cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.5)',
-
-  card,
-
-  bold: '#BB6170',
-  italic: '#CC64AD',
-  strikethrough: '#ff5370',
-
-  gradient: {
-    'color-1': 'var(--primary-color)',
-    'color-2': 'var(--colors-purple)',
-  },
-
-  'animated-gradient': 'linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2))'
-}
-
-export type ThemeVars = typeof modeVars
-
 
 export const poemThemeVars = {
   font: {
@@ -225,151 +166,6 @@ export interface UITheme {
   vars: Record<ThemeMode, ThemeVars>;
 }
 
-const lightTheme: ThemeVars = {
-  ...modeVars,
-  card: {
-    ...modeVars.card,
-    background: '#ffffff80',
-    border: '2px dashed #919DCF50',
-    borderHover: '2px solid #919DCFa0'
-  },
-  primary: {
-    color: '#6E49F2',
-    contrast: '#ffffff',
-  },
-
-  secondary: {
-    color: '#b55089',
-  },
-
-  colors: {
-    purple: '#569867',
-  },
-
-  background: '#d7d7ea',
-  surface: '#9797dd2e',
-
-  border: {
-    style: 'dashed',
-    color: '#2d3a6020',
-  },
-
-  heading: '#b55089',
-  text: '#2d3a60',
-  fadeText: '#687197',
-
-  cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
-}
-
-const BrutalistTheme: UITheme = {
-  name: 'Brutalist',
-  id: 'default_brutalist',
-  base: {
-    layout: {
-      ...layout,
-    },
-    border: {
-      radius: '0',
-    },
-    font: {
-      family: 'Iosevka Term',
-      size: fontSizes,
-    },
-  },
-  vars: {
-    light: {
-      ...modeVars,
-      card: {
-        ...modeVars.card,
-        background: '#ffffff80',
-        border: '1px solid #999',
-        borderHover: '1px solid #666'
-      },
-      primary: {
-        color: '#222',
-        contrast: '#fff',
-      },
-
-      secondary: {
-        color: '#ff5370',
-      },
-
-      colors: {
-        purple: '#2080ff',
-      },
-
-      background: '#f0f0f0',
-      surface: '#e0e0e0',
-
-      border: {
-        style: 'solid',
-        color: '#00000020'
-      },
-
-      heading: '#000000',
-      text: '#333333',
-      fadeText: '#666666',
-
-      cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
-    },
-    dark: {
-      ...modeVars,
-      card: {
-        ...modeVars.card,
-        background: '#33333380',
-        border: '1px solid #444',
-        borderHover: '1px solid #666'
-      },
-      primary: {
-        color: '#fff',
-        contrast: '#222',
-      },
-
-      secondary: {
-        color: '#ff5370',
-      },
-
-      colors: {
-        ...modeVars.colors,
-        purple: '#2080ff',
-      },
-
-      background: '#000000',
-      surface: '#30303080',
-
-      border: {
-        style: 'solid',
-        color: '#ffffff20'
-      },
-
-      heading: '#ffffff',
-      text: '#cccccc',
-      fadeText: '#999999',
-
-      cardShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.25)',
-    }
-  }
-
-}
-
-export const defaultThemes: UITheme[] = [
-  {
-    name: 'Aster',
-    id: 'default_aster',
-    base: baseVars,
-    vars: {
-      light: lightTheme,
-      dark: modeVars,
-    }
-  },
-  BrutalistTheme,
-]
-
-const defaultTheme = generateUITheme(defaultThemes[0], 'dark')
-export const themeCssVars = defaultTheme.themeCssVars
-export const theme = defaultTheme.theme
-
-
 const defaultPaletteColors = {
   primary: '#ff0000',
   secondary: '#ffff00',
@@ -388,7 +184,6 @@ const defaultBasePalette = {
 
   font: {
     family: 'Jost',
-    size: fontSizes,
   },
 }
 
@@ -398,6 +193,7 @@ export interface ThemePalette {
   name: string;
   id: string;
   base: BasePalette;
+  card: CardType;
   vars: {
     light: PaletteColors;
     dark: PaletteColors;
@@ -405,7 +201,7 @@ export interface ThemePalette {
 }
 
 
-export const defaultThemePalette = {
+export const defaultThemePalette: ThemePalette = {
   name: 'Aster',
   id: 'default_aster',
   base: {
@@ -414,9 +210,9 @@ export const defaultThemePalette = {
     },
     font: {
       family: 'Jost',
-      size: fontSizes,
     },
   },
+  card: 'gradient',
 
   vars: {
     light: {
@@ -443,13 +239,13 @@ const brutalistPalette: ThemePalette = {
   id: 'default_brutalist',
   base: {
     border: {
-      radius: '0',
+      radius: '4px',
     },
     font: {
-      family: 'Iosevka Term',
-      size: fontSizes,
+      family: 'sans-serif',
     },
   },
+  card: 'transparent',
 
   vars: {
     light: {
@@ -457,7 +253,7 @@ const brutalistPalette: ThemePalette = {
       secondary: '#ff5370',
 
       background: '#f0f0f0',
-      surface: '#e0e0e0',
+      surface: '#d9d9d982',
       text: '#333333',
     },
     dark: {
@@ -476,7 +272,46 @@ export const defaultPalettes: ThemePalette[] = [
   brutalistPalette,
 ]
 
-const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars => {
+
+const getCard = (cardType: CardType) => {
+  if (cardType === 'gradient') {
+    return {
+      // We can use these inside new vars
+      card: {
+        // The controls for the cards would be implemented later
+        border: '2px dashed var(--border-color)',
+        background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+        backgroundHover: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
+        backgroundPosition: '90% 0',
+        backgroundSize: '200%',
+        borderHover: '2px solid var(--border-color)',
+        backgroundPositionHover: '10% 20%',
+      }
+    }
+  } else if (cardType === 'solid') {
+    return {
+      card: {
+        border: '1px solid var(--border-color)',
+        background: 'var(--surface)',
+        backgroundPosition: 'initial',
+        backgroundSize: 'initial',
+        borderHover: '1px solid var(--border-color)',
+        backgroundHover: 'var(--surface)',
+      }
+    }
+  } else {
+    return {
+      card: {
+        border: '1px solid transparent',
+        background: 'transparent',
+        borderHover: '1px solid var(--border-color)',
+        backgroundHover: 'var(--surface)',
+      }
+    }
+  }
+}
+
+const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: CardType) => {
 
   // verify if theme is dark or light by
   // checking if background is dark or light
@@ -501,7 +336,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
     border: {
       style: 'solid',
       // Border color is between text and midErth
-      color: tinycolor.mix(palette.text, midErth, 80).toString()
+      color: tinycolor.mix(palette.text, palette.background, 80).toString()
     },
 
     text: palette.text,
@@ -514,15 +349,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
     cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
 
     // We can use these inside new vars
-    card: {
-      // The controls for the cards would be implemented later
-      border: '2px dashed var(--border-color)',
-      background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
-      backgroundPosition: '90% 0',
-      backgroundSize: '200%',
-      borderHover: '2px solid var(--border-color)',
-      backgroundPositionHover: '10% 20%',
-    },
+    ...getCard(cardType),
 
     // For now we use the primary color, less noise
     bold: palette.primary,
@@ -538,6 +365,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors): ThemeVars =>
   }
 }
 
+export type ThemeVars = ReturnType<typeof generateModeVarsFromPaletteColors>
 
 export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
   const theme: UITheme = {
@@ -546,12 +374,21 @@ export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
     base: {
       layout,
       ...palette.base,
+      font: {
+        family: palette.base.font.family,
+        size: fontSizes,
+      },
     },
     vars: {
-      light: generateModeVarsFromPaletteColors(palette.vars.light),
-      dark: generateModeVarsFromPaletteColors(palette.vars.dark),
+      light: generateModeVarsFromPaletteColors(palette.vars.light, palette.card),
+      dark: generateModeVarsFromPaletteColors(palette.vars.dark, palette.card),
     }
   }
 
+  // console.log('Generated theme', theme);
   return theme
 }
+
+const defaultTheme = generateUITheme(generateThemeFromPalette(defaultPalettes[0]), 'dark')
+export const themeCssVars = defaultTheme.themeCssVars
+export const theme = defaultTheme.theme

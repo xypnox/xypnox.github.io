@@ -1,7 +1,7 @@
 import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount } from "solid-js";
 import { themeState } from "./themeState";
-import { keyframes, styled } from "solid-styled-components";
-import { theme, type ThemePalette } from "../../theme";
+import { styled } from "solid-styled-components";
+import { theme, type CardType, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
@@ -223,6 +223,67 @@ const SelectedFamilies = [
   'VT323',
   'Vollkorn',
 ]
+
+const CardTypeOptions: CardType[] = ['gradient', 'solid', 'transparent']
+
+const CardTypeSelect = (props: {
+  value: CardType,
+  onChange: (value: CardType) => void,
+}) => {
+  const [focused, setFocused] = createSignal(false);
+  let input: HTMLInputElement;
+
+  const onClickOutside = (e: MouseEvent) => {
+    if (input && !input.contains(e.target as Node)) {
+      setFocused(false)
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('click', onClickOutside)
+    return () => {
+      document.removeEventListener('click', onClickOutside)
+    }
+  })
+
+  return <Dropdown>
+    <Input
+      ref={input!}
+      type="text"
+      value={props.value}
+      onFocus={() => setFocused(true)}
+      onInput={(e) => {
+        if (CardTypeOptions.includes(e.currentTarget.value as CardType)) {
+          props.onChange(e.currentTarget.value as CardType)
+        }
+      }}
+    />
+    <DropdownContent
+      classList={{
+        hidden: !focused(),
+      }}
+    >
+      <SelectOptions>
+        <For each={CardTypeOptions}>
+          {type => (
+            <Button
+              class="small"
+              classList={{
+                selected: type === props.value
+              }}
+              onClick={() => {
+                setFocused(false)
+                props.onChange(type)
+              }
+              }
+            >{type}</Button>
+          )}
+        </For>
+      </SelectOptions>
+    </DropdownContent>
+  </Dropdown>
+}
+
 
 const FontSelect = (props: {
   value: string,
@@ -458,6 +519,16 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
             }
           })}
         />
+      </Label>
+
+      <Label>
+        Card Type
+        <CardTypeSelect value={themePalette().card} onChange={(value) => {
+          setThemePalette({
+            ...themePalette(),
+            card: value
+          })
+        }} />
       </Label>
     </ToggleSection>
 

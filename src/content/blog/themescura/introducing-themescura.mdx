@@ -16,9 +16,9 @@ import ThemeManagerAstro from '../../../components/themeManager/themeManager.ast
 
 <ThemeManagerAstro />
 
-You can try out themescura from the popup at the bottom right corner.
+You can also open themescura from the popup at the bottom right corner.
 
-You can also visit the [customize](/customize) page of this website for a [Guide](/customize#guide) on how to use and the [Showcase](/customize#theme-showcase) for a few themes showcasing the variations and styles available.
+You can also visit the [customize](/customize) page of this website for a [Guide](/customize#guide) and the [Showcase](/customize#theme-showcase) for a few theme examples showcasing the variations and styles available.
 
 Before reading the post, try to customize the look so that it matches your tastes. Remember, this post is only as beautiful as you make it. Which of course by extension applies to this entire site.
 
@@ -34,7 +34,19 @@ You, the user, can edit the palette in real time, and the palettes and generated
 
 ## Where can it be used
 
-It can be used to test out how fonts and color combinations look.
+Usually a designer tests out several combinations of variables to arrive at a theme/brand and iterates over it to land on a definite design. Then it is handed over to frontend to setup the design system components and develop the interface. The evolution of the design system adds new styles and components. 
+
+Themescura can be used to:
+
+1. _Explore Style Space_
+   Test out fonts and color combinations quickly
+2. _Develop Design System_
+   Once a theme has been chosen as brand identity, we can develop it's design system with our generated variables.
+3. _Refine Theme_
+   The generated theme and the design system can be tweaked and iterated using the same controls. The relationship between the palette and the generated variables can be tweaked.
+4. _Offer User Facing Customizations_
+   Which can be limited to preset themes or allow extended customizations.
+   The user facing customization can be a part of the product, for example: Page builders, online marketplace themes, Blog builders, ui framework components, branding ui components such as forms, popups, notifications etc.
 
 It can be used to allow users to pick themes, from either limited set of options to full customizability. It can also be used to offer dark/light modes, with high contrast modes as well.
 
@@ -46,7 +58,7 @@ On most operating systems there is a set way of navigating and interacting with 
 
 On linux, instead of a default interface, there are several "flavors", different takes on the same problems. A linux user got choice. They could _choose_ which interface or system worked the best for them, or mould those that came near. And if none did, they had the freedom to create one. [^1]
 
-Here on the web however, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Only evolving with time.
+Here on the web however, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Evolving only with time. There are sites that offer a few themes to customize the appearance. There are extensions that apply custom CSS styles to websites, but they are cumbersome and require code. There are browsers, four extensions wearing a chromium trenchcoat, that offer "prepaired" styles via "boosts" https://arc.net/boosts, similar to Stylus, Stylebot etc. Although I admit the arc boosts are more thematic and also change the layout in some ways, but they will break with the next version of the website, and it will need the developer again to fix it. Also, they are there for only the most popular websites of the internet, the 
 
 During the past few years developing frontends for websites and webapps, I noticed repeating several basic steps again and again to iterate and maintain the styles and themes. And from the learnings I devised a few guidelines for myself to manage the complexities. And after testing out and implementing the system in different places, I feel confident to present a first draft.
 

@@ -10,14 +10,15 @@ import { icons } from "../icons";
 import { DebugModeButton } from "./debug";
 
 const addPrevFont = (prevFamily: string) => {
-  const existingStyle = document.getElementById('_fontFamilyStyle');
-  if (existingStyle) {
-    existingStyle.remove();
-  }
-  const newStyle = document.createElement('style');
-  newStyle.id = '_fontFamilyStyle';
-  newStyle.innerHTML = `html { --prevFontFamily: ${prevFamily}; }`;
-  document.head.appendChild(newStyle);
+  return
+  // const existingStyle = document.getElementById('_fontFamilyStyle');
+  // if (existingStyle) {
+  //   existingStyle.remove();
+  // }
+  // const newStyle = document.createElement('style');
+  // newStyle.id = '_fontFamilyStyle';
+  // newStyle.innerHTML = `html { --prevFontFamily: ${prevFamily}; }`;
+  // document.head.appendChild(newStyle);
 }
 
 const attachFontLink = (newFamily: string) => {
@@ -46,11 +47,7 @@ const updateThemeStyle = (themeCss: string) => {
     return;
   } else {
     // Update style element with new theme variables
-    style.innerHTML = `
-      :root {
-        ${themeCss}
-      }
-    `
+    style.innerHTML = `:root { ${themeCss} }`
   }
 }
 
@@ -126,16 +123,12 @@ interface Props {
 
 const ThemeManager = (props: Props) => {
   const [editing, setEditing] = createSignal(false);
-  const [oldFont, setOldFont] = createSignal('');
+  // const [oldFont, setOldFont] = createSignal('');
 
   createEffect(() => {
     const theme = themeState.cssTheme;
     const newFont = themeState.themePalette().base.font.family;
-    if (oldFont() !== newFont) {
-      addPrevFont(oldFont());
-      setOldFont(newFont);
-      attachFontLink(newFont);
-    }
+    attachFontLink(newFont);
     updateThemeStyle(theme());
   })
 
