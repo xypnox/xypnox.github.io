@@ -266,9 +266,40 @@ const brutalistPalette: ThemePalette = {
   }
 }
 
+const royalDecree = {
+  "name": "Royal Decree",
+  "id": "default_royal_decree",
+  "base": {
+    "border": {
+      "radius": "0.25rem"
+    },
+    "font": {
+      "family": "Ibarra Real Nova",
+    },
+  },
+  card: 'transparent',
+  "vars": {
+    "light": {
+      "primary": "#a6581d",
+      "secondary": "#c26125",
+      "background": "#d9cfc4",
+      "surface": "#a67f6c23",
+      "text": "#453531"
+    },
+    "dark": {
+      "primary": "#cf833c",
+      "secondary": "#ff5370",
+      "background": "#0d0b14",
+      "surface": "#6b52473f",
+      "text": "#ab9b8a"
+    }
+  }
+} as const;
+
 export const defaultPalettes: ThemePalette[] = [
   defaultThemePalette,
   brutalistPalette,
+  royalDecree,
 ]
 
 

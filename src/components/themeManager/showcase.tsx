@@ -34,35 +34,6 @@ const showcaseThemes: ThemePalette[] = [
     }
   },
   {
-    "name": "Royal Decree",
-    "id": "showcase-royal-decree",
-    "base": {
-      "border": {
-        "radius": "0.25rem"
-      },
-      "font": {
-        "family": "Ibarra Real Nova",
-      },
-    },
-    card: 'gradient',
-    "vars": {
-      "light": {
-        "primary": "#ba621e",
-        "secondary": "#c26125",
-        "background": "#d9cfc4",
-        "surface": "#c7b9a244",
-        "text": "#453b31"
-      },
-      "dark": {
-        "primary": "#cf833c",
-        "secondary": "#ff5370",
-        "background": "#0d0b14",
-        "surface": "#6b52473f",
-        "text": "#ab9b8a"
-      }
-    }
-  },
-  {
     "name": "Glitch Pop",
     "id": "kAwip9ICnYYva5ZJwoABC",
     "base": {
@@ -73,7 +44,7 @@ const showcaseThemes: ThemePalette[] = [
         "family": "Rubik Glitch",
       },
     },
-    card: 'solid',
+    card: 'transparent',
     "vars": {
       "light": {
         "primary": "#ff0000",

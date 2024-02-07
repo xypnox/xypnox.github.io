@@ -66,8 +66,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
 
 
   const changeTheme = (id: string) => {
-    const themes = [...themesData.get(), ...defaultPalettes];
-    const newTheme = themes.find(t => t.id === id);
+    const newTheme = themes().find(t => t.id === id);
     if (!newTheme) {
       console.error(`Theme ${id} is not available`);
       return;
@@ -99,6 +98,11 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   }
 
   const addTheme = (theme: ThemePalette) => {
+    const isDefault = defaultPalettes.some(t => t.id === theme.id);
+    if (isDefault) {
+      console.error(`Default theme cannot be added`);
+      return Error(`Default theme cannot be added`);
+    }
     const alreadyExists = themesData.get().some(t => t.id === theme.id);
     if (alreadyExists) {
       // console.error(`Theme already exists`);
@@ -108,13 +112,13 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   }
 
   const deleteTheme = (id: string) => {
+    themesData.set(themesData.get().filter(t => t.id !== id));
     if (themeConfig.get().theme === id) {
       themeConfig.set({
         ...themeConfig.get(),
-        theme: themesData.get()[0].id,
+        theme: themes()[0].id,
       })
     }
-    themesData.set(themesData.get().filter(t => t.id !== id));
   }
 
   const modifyTheme = (id: string, theme: ThemePalette) => {
