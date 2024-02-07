@@ -1,13 +1,13 @@
 import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount } from "solid-js";
 import { themeState } from "./themeState";
-import { styled } from "solid-styled-components";
+import { keyframes, styled } from "solid-styled-components";
 import { theme, type CardType, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 import { capitalize } from "../../lib/text";
-import { Button, ButtonGroup, Input, baseElementStyles } from "../elements/atoms";
+import { Text, Button, ButtonGroup, Input, baseElementStyles } from "../elements/atoms";
 
 const Label = styled('label')`
   width: 100%;
@@ -372,8 +372,119 @@ const FontSelect = (props: {
   </Dropdown>
 }
 
+
+const Swatch = styled('div')`
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--border-radius);
+  background: ${props => props.color};
+`
+
+const ColorInput = styled(Input)`
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  min-width: 10ch;
+  font-size: ${theme.font.size.base};
+`
+
+const Pickers = (props: {
+  colors: Record<string, string>,
+  themePalette: Accessor<ThemePalette>,
+  setThemePalette: (themePalette: ThemePalette) => void
+}) => {
+
+  const changeColor = (colorKey: string, color: string) => {
+    const themePalette = props.themePalette()
+    props.setThemePalette({
+      ...themePalette,
+      vars: {
+        ...themePalette.vars,
+        [themeState.themeConfig.get().mode]: {
+          ...themePalette.vars[themeState.themeConfig.get().mode],
+          [colorKey]: color
+        }
+      }
+    })
+  }
+
+  // console.log('Coloris', { props })
+  Coloris.init()
+  Object.entries(props.colors).forEach(([colorKey, _color]) => {
+    Coloris.setInstance(
+      `#coloris-picker-${colorKey}`,
+      {
+        onChange: (color: string) => {
+          // console.log('Coloris', { colorKey, color, el: `#coloris-picker-${colorKey}` })
+          changeColor(colorKey, color)
+        },
+        themeMode: themeState.themeConfig.get().mode,
+      })
+  })
+
+  createEffect(() => {
+    console.log('Coloris', { themeMode: themeState.themeConfig.get().mode })
+    Coloris.setInstance(
+      `.coloris`,
+      {
+        themeMode: themeState.themeConfig.get().mode,
+      }
+    )
+  })
+
+  return (<Colors>
+    <For each={Object.entries(props.colors)}>
+      {color => (
+        <ColorLabel>
+          <Swatch color={color[1]} />
+          <ColorInput
+            data-coloris
+            id={`coloris-picker-${color[0]}`}
+            type="text" value={color[1]} />
+          {capitalize(color[0])}
+        </ColorLabel>
+      )}
+    </For>
+  </Colors>)
+}
+
+const tooltipAnim = keyframes`
+  0% {
+    transform: translateY(-90%);
+    opacity: 0;
+  }
+  25% {
+    transform: translateY(-110%);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-110%);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+`
+
+const CopiedTooltip = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: max-content;
+  pointer-events: none;
+  background: ${theme.primary.color};
+  color: ${theme.primary.contrast};
+  padding: 0.5rem;
+  border-radius: ${theme.border.radius};
+  text-align: center;
+  transform: translateY(-100%);
+  animation: ${tooltipAnim} 1s ease-out forwards;
+`
+
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
   const [themePalette, setThemePalette] = createSignal(themeState.themePalette())
+  const [copied, setCopied] = createSignal(false)
 
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: true,
@@ -397,20 +508,30 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     themeState.modifyTheme(themeId, themePalette())
   }))
 
+  const notifyCopied = () => {
+    setCopied(true)
+    setTimeout(() => {
+      setCopied(false)
+    }, 1100)
+  }
+
   // Copy palette as json to clipboard
   const onCopyPalette = () => {
     const palette = themePalette()
     const paletteJson = JSON.stringify(palette, null, 2)
     navigator.clipboard.writeText(paletteJson)
+    notifyCopied()
   }
 
   const onCopyCss = () => {
     const css = themeState.cssTheme()
     navigator.clipboard.writeText(css)
+    notifyCopied()
   }
 
   const onCopyVars = () => {
     navigator.clipboard.writeText(JSON.stringify(theme, null, 2));
+    notifyCopied()
   }
 
   const updateFontLink = debounce((style: string) => {
@@ -533,84 +654,15 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     </ToggleSection>
 
     <ButtonGroup>
-      <Button onClick={() => onCopyPalette()}>Copy Palette</Button>
-      <Button onClick={() => onCopyCss()}>Copy CSS</Button>
-      <Button onClick={() => onCopyVars()}>Copy Vars</Button>
+      <Text>
+        <iconify-icon icon={icons.copy} />
+      </Text>
+      <Show when={copied()}>
+        <CopiedTooltip>Copied</CopiedTooltip>
+      </Show>
+      <Button onClick={() => onCopyPalette()}>Palette</Button>
+      <Button onClick={() => onCopyCss()}>CSS</Button>
+      <Button onClick={() => onCopyVars()}>Vars</Button>
     </ButtonGroup>
   </EditorWrapper>
 }
-
-const Swatch = styled('div')`
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: var(--border-radius);
-  background: ${props => props.color};
-`
-
-const ColorInput = styled(Input)`
-  flex: 0;
-  padding: 0.25rem 0.5rem;
-  min-width: 10ch;
-  font-size: ${theme.font.size.base};
-`
-
-const Pickers = (props: {
-  colors: Record<string, string>,
-  themePalette: Accessor<ThemePalette>,
-  setThemePalette: (themePalette: ThemePalette) => void
-}) => {
-
-  const changeColor = (colorKey: string, color: string) => {
-    const themePalette = props.themePalette()
-    props.setThemePalette({
-      ...themePalette,
-      vars: {
-        ...themePalette.vars,
-        [themeState.themeConfig.get().mode]: {
-          ...themePalette.vars[themeState.themeConfig.get().mode],
-          [colorKey]: color
-        }
-      }
-    })
-  }
-
-  // console.log('Coloris', { props })
-  Coloris.init()
-  Object.entries(props.colors).forEach(([colorKey, _color]) => {
-    Coloris.setInstance(
-      `#coloris-picker-${colorKey}`,
-      {
-        onChange: (color: string) => {
-          // console.log('Coloris', { colorKey, color, el: `#coloris-picker-${colorKey}` })
-          changeColor(colorKey, color)
-        },
-        themeMode: themeState.themeConfig.get().mode,
-      })
-  })
-
-  createEffect(() => {
-    console.log('Coloris', { themeMode: themeState.themeConfig.get().mode })
-    Coloris.setInstance(
-      `.coloris`,
-      {
-        themeMode: themeState.themeConfig.get().mode,
-      }
-    )
-  })
-
-  return (<Colors>
-    <For each={Object.entries(props.colors)}>
-      {color => (
-        <ColorLabel>
-          <Swatch color={color[1]} />
-          <ColorInput
-            data-coloris
-            id={`coloris-picker-${color[0]}`}
-            type="text" value={color[1]} />
-          {capitalize(color[0])}
-        </ColorLabel>
-      )}
-    </For>
-  </Colors>)
-}
-

@@ -18,25 +18,26 @@ import ThemeManagerAstro from '../../../components/themeManager/themeManager.ast
 
 You can also open themescura from the popup at the bottom right corner.
 
-You can also visit the [customize](/customize) page of this website for a [Guide](/customize#guide) and the [Showcase](/customize#theme-showcase) for a few theme examples showcasing the variations and styles available.
 
-Before reading the post, try to customize the look so that it matches your tastes. Remember, this post is only as beautiful as you make it. Which of course by extension applies to this entire site.
+Before reading the post, try to customize the look so that it matches your taste. Remember, this post will be only as beautiful as you can make it, which also applies to the entire site.
+
+Fear not, you can visit the [customize](/customize) page for a [Guide](/customize#guide) and the [Showcase](/customize#theme-showcase) for examples showcasing creativeness and flexibility. 
 
 ## What it does
 
-Themescura takes a palette and generates variables that are used to style the interface. It also types the themes of the generated variables, which are used to style the Frontend.
+_Themescura takes a palette and generates variables that are used to style the interface._ It also types the themes of the generated variables, which can be used in frontend.
 
 import ThemeBasic from "./theme_basic.svg.astro";
 
 <ThemeBasic />
 
-You, the user, can edit the palette in real time, and the palettes and generated css variables are stored locally on the browser so that theme can be applied without loading the editor and can be edited whenever needed.
+You, the user, can _edit the palette in real time_, and the palettes and generated css variables are _stored locally on the browser_ so that theme can be _applied without loading the editor_, and can be edited whenever needed.
 
 ## Where can it be used
 
-Usually a designer tests out several combinations of variables to arrive at a theme/brand and iterates over it to land on a definite design. Then it is handed over to frontend to setup the design system components and develop the interface. The evolution of the design system adds new styles and components. 
+Usually a designer tests out several combinations of variables to arrive at a theme/brand and iterates for a viable design. Then it is handed over to frontend to setup the components and develop the interface. The design system evolves, new styles and components are added and themes are slowly changed to match the zeitgeist. 
 
-Themescura can be used to:
+With reference to this process, themescura can be used to:
 
 1. _Explore Style Space_
    Test out fonts and color combinations quickly
@@ -46,9 +47,10 @@ Themescura can be used to:
    The generated theme and the design system can be tweaked and iterated using the same controls. The relationship between the palette and the generated variables can be tweaked.
 4. _Offer User Facing Customizations_
    Which can be limited to preset themes or allow extended customizations.
-   The user facing customization can be a part of the product, for example: Page builders, online marketplace themes, Blog builders, ui framework components, branding ui components such as forms, popups, notifications etc.
 
-It can be used to allow users to pick themes, from either limited set of options to full customizability. It can also be used to offer dark/light modes, with high contrast modes as well.
+User facing customization is usually a part of most digital products, for example: Page builders, online marketplace themes, Blog builders, ui framework components, branding ui components such as forms, popups, notifications etc. With themescura we can convert themes and templates from a static design to a flexible user configurable design.
+
+It can be used to allow users to pick themes, from either limited set of options or allow them full customizability.
 
 ## Motivation
 
@@ -58,7 +60,11 @@ On most operating systems there is a set way of navigating and interacting with 
 
 On linux, instead of a default interface, there are several "flavors", different takes on the same problems. A linux user got choice. They could _choose_ which interface or system worked the best for them, or mould those that came near. And if none did, they had the freedom to create one. [^1]
 
-Here on the web however, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Evolving only with time. There are sites that offer a few themes to customize the appearance. There are extensions that apply custom CSS styles to websites, but they are cumbersome and require code. There are browsers, four extensions wearing a chromium trenchcoat, that offer "prepaired" styles via "boosts" https://arc.net/boosts, similar to Stylus, Stylebot etc. Although I admit the arc boosts are more thematic and also change the layout in some ways, but they will break with the next version of the website, and it will need the developer again to fix it. Also, they are there for only the most popular websites of the internet, the 
+Here on the web however, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Evolving only with time.
+
+There are sites that offer a few themes to customize the appearance. There are extensions that apply custom CSS styles to websites, but they are cumbersome and require code. There are browsers, four extensions wearing a chromium trenchcoat, that offer "prepackaged" styles via ["boosts"](https://arc.net/boosts) [^2] similar to [Stylus](), etc. There is also a nice feature that allows styling the website based on a foreground and the background text.
+
+Furthermore, customizations are hard. What looks like a few colors are [dozens](https://gist.github.com/xypnox/f800d382bf551e73dc7bfa42302ac196) upon [dozens](https://gist.github.com/xypnox/062c4d04641f66489db3f86d54bece94) of shades and tints of colors. And generally a lack of understanding of how colors interact and behave makes it hard for someone to theme something.
 
 During the past few years developing frontends for websites and webapps, I noticed repeating several basic steps again and again to iterate and maintain the styles and themes. And from the learnings I devised a few guidelines for myself to manage the complexities. And after testing out and implementing the system in different places, I feel confident to present a first draft.
 
@@ -117,13 +123,11 @@ So that I can automate the way I design themes. I have designed several websites
 
 ## How it works
 
-![Where AI](./whereai.png)
+Source code: [`src/components/themeManager`](https://github.com/xypnox/xypnox.github.io/tree/v2/src/components/themeManager)  & [`src/theme.ts`](https://github.com/xypnox/xypnox.github.io/blob/v2/src/theme.ts)
 
-Unfortunately, to the disappointment of several, there is no AI underneath. 
+Everything starts with the palette. The palette is used to generate the colors. The generated colors and variables depend on the palette colors.
 
-Everything starts with the palette.
-
-The palette is used to generate the colors.
+For example, the color of text over a button with primary color is selected between white and black by comparing primary color's brightness. The color of heading and tertiary (fade) text is generated by lightening and darkening the text color. Border color is generated by mixing text and background. Etc. etc.
 
 Note that the structure of the function could be anything, we can generate a lot of css variables dependent on each other, spacings, border radius, etc. We could have several naming schemes for a list of variables for example: _1. TShirt sizes_ (sm, md, base/regular, lg, xl, xxl ...) _2. Numeric_ (1,2,3) (100-200-900), and different scaling mechanisms: _1. Linear_ (2, 4, 6, 8, 10) _2. Geometric_ (2, 4, 8, 16, 32) etc.
 
@@ -154,18 +158,21 @@ We separate the structure and the theme's values so we can change the values, an
 Nested themes can also be declared in between via setting the variables on the parent element that will nest the objects that require the custom theme. An example of using different themes in children can be found in the examples shared in [Dark Modes](/blag/posts/dark-modes) blog post.
 
 
+The lack of dependence on any framework for the theme to be applied means that as long as the styles depend on the generated variables, any frontend framework can be used. The editor can be used as is, or customized.
+
 
 ### Apply and Edit
 
 It should be obvious that we should not load the theme editor every single time for every single page.
 
-We separate the code that is needed for applying the theme and for editing the theme.
+We separate the code that is needed for applying the theme and for editing the theme. [A very small script](https://github.com/xypnox/xypnox.github.io/blob/v2/src/components/themeManager/loadTheme.astro) is used to apply the theme on page load. The editor is loaded lazily only when the user opens the popup.
 
-The application of the theme on page load happens by very small JS script.
-
-The editor is written with SolidJS to piggyback on the reactive system. The reactive state is replicated in localstorage and thus can be set and then used by the applying script.
+The [editor]() is written with [SolidJS](https://solidjs.com) to piggyback on the reactive system. It generates the styles and applies them when via a single style tag with id `_themeVars`. The state is replicated in localstorage and thus can be reused by the applying script.
 
 
+<figure>
+  ![Where AI](./whereai.png)<figcaption>Unfortunately, to the disappointment of several, there is no AI underneath. </figcaption>
+</figure>
 
 ## What can be improved
 
@@ -203,3 +210,6 @@ It is one step in many towards better interfaces.
 ---
 
 [^1]: There are themes for linux as well but different "flavors" are themed a little differently. 
+[^2]: Although I admit the arc boosts are more thematic and also change the layout in interesting ways (usually hiding the bloated cruft), but they will break with the next version of the website, and it will need the developer of the theme to fix it. 
+
+      Also, they are there for only the most popular websites of the internet.

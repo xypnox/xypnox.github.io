@@ -49,15 +49,30 @@ export const Button = styled('button')`
     color: ${theme.primary.color};
   }
 
-  &:hover {
+  &&:hover {
     color: var(--primary-contrast);
     background: var(--primary-color);
   }
+`
 
+export const Text = styled('div')`
+  ${baseElementStyles}
+  flex: 0 !important;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  border: 1px solid transparent;
+  background: ${theme.surface};
+  color: ${theme.text};
+  transition: all 0.2s ease;
+  padding: 0.3rem 1rem;
 `
 
 // A horizontal group of buttons, with separator borders, and outside border radius
 export const ButtonGroup = styled('div')`
+  position: relative;
   align-self: stretch;
   display: flex;
   align-items: stretch;
@@ -65,22 +80,21 @@ export const ButtonGroup = styled('div')`
   border: 1px solid ${theme.border.color};
   background: ${theme.surface};
   transition: all 0.2s ease;
-  ${Button.class} {
+  ${Button.class}, ${Text.class} {
     background: transparent;
     border-radius: 0;
     border: 0px solid transparent;
     border-right: 1px solid ${theme.border.color};
     flex: 1;
-    &:hover {
-      background: var(--primary-color);
-      color: var(--primary-contrast);
-    }
     &:first-child {
       border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
     }
     &:last-child {
       border-radius: 0 ${theme.border.radius} ${theme.border.radius} 0;
       border-right: none;
+    }
+    &:only-child {
+      border-radius: ${theme.border.radius};
     }
   }
 `

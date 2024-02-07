@@ -99,9 +99,10 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   }
 
   const addTheme = (theme: ThemePalette) => {
-    if (themesData.get().some(t => t.id === theme.id)) {
-      console.error(`Theme ${theme.id} already exists`);
-      return;
+    const alreadyExists = themesData.get().some(t => t.id === theme.id);
+    if (alreadyExists) {
+      // console.error(`Theme already exists`);
+      return Error(`Theme already exists`);
     }
     themesData.set([theme, ...themesData.get()]);
   }
@@ -121,7 +122,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     const index = themes.findIndex(t => t.id === id);
     if (index === -1) {
       console.error(`Theme ${id} is not available`);
-      return;
+      // return Error(`Theme ${id} is not available`);
     }
     themes[index] = theme;
     themesData.set(themes);

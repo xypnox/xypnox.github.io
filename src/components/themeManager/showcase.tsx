@@ -235,6 +235,35 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#81d6d3"
       }
     }
+  },
+  {
+    "name": "Stein",
+    "id": "BXvlN4dkUnadh9IqIXbm5",
+    "base": {
+      "border": {
+        "radius": "4px"
+      },
+      "font": {
+        "family": "Space Mono"
+      }
+    },
+    "card": "gradient",
+    "vars": {
+      "light": {
+        "primary": "#705c13",
+        "secondary": "#8abf76",
+        "background": "#e4edec",
+        "surface": "#c4c2af3f",
+        "text": "#5e5a4e"
+      },
+      "dark": {
+        "primary": "#ebc987",
+        "secondary": "#40a37c",
+        "background": "#14151f",
+        "surface": "#80726519",
+        "text": "#918087"
+      }
+    }
   }
 ]
 
@@ -294,21 +323,36 @@ const ColorSwatches = () =>
     <div class="swatch" style="--color: var(--text)" />
   </>
 
-export const ThemeShowcase = () => {
-  const addThemeAndSet = (palette: ThemePalette) => {
-    if (!themeState.themeExists(palette.id)) {
-      themeState.addTheme(palette)
-    }
-    themeState.changeTheme(palette.id)
+const addThemeAndSet = (palette: ThemePalette) => {
+  if (!themeState.themeExists(palette.id)) {
+    themeState.addTheme(palette)
   }
+  themeState.changeTheme(palette.id)
+}
 
+export const ThemeShowcase = () => {
+  return (
+    <>
+      <Showcase themes={showcaseThemes} clickAct='import' />
+      <hr />
+      <h2 id="current-themes">Current Themes</h2>
+      <Showcase themes={themeState.themes()} clickAct='apply' />
+    </>
+  )
+}
+
+export const Showcase = (props: { themes: ThemePalette[], clickAct: 'import' | 'apply' }) => {
   return (
     <ShowcaseGrid>
-      <For each={showcaseThemes}>
+      <For each={props.themes}>
         {(theme) => (
           <ShowcaseItem onClick={
             () => {
-              addThemeAndSet(JSON.parse(JSON.stringify(theme)))
+              if (props.clickAct === 'import') {
+                addThemeAndSet(JSON.parse(JSON.stringify(theme)))
+              } else {
+                themeState.changeTheme(theme.id)
+              }
             }
           }>
             <h2>{theme.name}</h2>

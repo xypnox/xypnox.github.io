@@ -249,12 +249,11 @@ const brutalistPalette: ThemePalette = {
 
   vars: {
     light: {
-      primary: '#222',
-      secondary: '#ff0000',
-
-      background: '#f0f0f0',
-      surface: '#ffffff00',
-      text: '#333333',
+      "primary": "#222",
+      "secondary": "#d93131",
+      "background": "#f0f0f0",
+      "surface": "#b8b8b844",
+      "text": "#333333"
     },
     dark: {
       primary: '#ffffff',

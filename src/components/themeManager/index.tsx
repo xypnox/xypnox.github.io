@@ -1,25 +1,13 @@
-import { For, Show, createEffect, createSignal } from "solid-js";
+import { For, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { themeState } from "./themeState";
-import { styled } from "solid-styled-components";
-import { theme } from "../../theme";
-import { capitalize } from "../../lib/text";
+import { keyframes, styled } from "solid-styled-components";
+import { theme, type ThemePalette } from "../../theme";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 import { icons } from "../icons";
 import { DebugModeButton } from "./debug";
-
-const addPrevFont = (prevFamily: string) => {
-  return
-  // const existingStyle = document.getElementById('_fontFamilyStyle');
-  // if (existingStyle) {
-  //   existingStyle.remove();
-  // }
-  // const newStyle = document.createElement('style');
-  // newStyle.id = '_fontFamilyStyle';
-  // newStyle.innerHTML = `html { --prevFontFamily: ${prevFamily}; }`;
-  // document.head.appendChild(newStyle);
-}
+import ModeSwitcher from "./modeSwitcher";
 
 const attachFontLink = (newFamily: string) => {
   const existingLinks = document.getElementsByClassName('_fontFamily');
@@ -117,12 +105,101 @@ const ButtonRow = styled('div')`
   align-items: center;
 `
 
+const slideDown = keyframes`
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`
+
+const ErrorMessage = styled('div')`
+  color: ${theme.secondary.color};
+  background: ${theme.surface};
+  padding: 1rem;
+  border: 1px solid ${theme.border.color};
+  border-radius: ${theme.border.radius};
+  animation: ${slideDown} 0.1s ease-out forwards;
+`
+
+const ImportWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: ${theme.surface};
+  border: 1px solid ${theme.border.color};
+  padding: 1rem;
+  border-radius: ${theme.border.radius};
+  animation: ${slideDown} 0.1s ease-out forwards;
+  h3 {
+    margin: 0;
+  }
+`
+
+const ImportPopup = (props: {
+  close: () => void;
+}) => {
+  const [error, setError] = createSignal('');
+  const listener = (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData('text');
+    if (text) {
+      importTheme(text);
+    }
+  }
+
+  onMount(() => {
+    window.addEventListener('paste', listener);
+  })
+
+  onCleanup(() => {
+    window.removeEventListener('paste', listener);
+  });
+
+  const importTheme = (text: string) => {
+    // Read from clipboard
+    // Parse JSON
+    try {
+      const theme: ThemePalette = JSON.parse(text);
+      try {
+        themeState.addTheme(theme);
+      } catch (e) {
+        setError(e as string);
+        console.error('Error adding theme', e);
+        return
+      }
+      themeState.changeTheme(theme.id);
+      props.close();
+    } catch (e) {
+      if (e instanceof SyntaxError) {
+        /// do nothing, JSON is wrong!
+        // console.error('Error parsing JSON', e);
+        setError('What\'s that JSON SON?');
+      } else {
+        console.error('Error importing theme', e);
+        setError('Error importing theme');
+      }
+    }
+  }
+
+  return (
+    <ImportWrapper>
+      <h3>Import Theme</h3>
+      Paste the theme palette's object to import theme.
+      <Show when={error()}>
+        <ErrorMessage>{error()}</ErrorMessage>
+      </Show>
+    </ImportWrapper>
+  )
+}
+
 interface Props {
   isPopup?: boolean;
 }
 
 const ThemeManager = (props: Props) => {
   const [editing, setEditing] = createSignal(false);
+  const [showImport, setShowImport] = createSignal(false);
   // const [oldFont, setOldFont] = createSignal('');
 
   createEffect(() => {
@@ -132,7 +209,17 @@ const ThemeManager = (props: Props) => {
     updateThemeStyle(theme());
   })
 
+  createEffect(() => {
+    if (themeState.isThemeDefault()) {
+      setEditing(false);
+    }
+  })
 
+  createEffect(() => {
+    if (editing() && showImport()) {
+      setShowImport(false);
+    }
+  });
 
   const newTheme = () => {
     // Generate 10 names
@@ -170,6 +257,9 @@ const ThemeManager = (props: Props) => {
           </span>
         </ButtonRow>
       </Show>
+      <Show when={showImport()}>
+        <ImportPopup close={() => setShowImport(false)} />
+      </Show>
       <Show when={!editing()}>
         <ButtonRow>
           <Button onClick={() => newTheme()}>
@@ -182,6 +272,10 @@ const ThemeManager = (props: Props) => {
               Edit
             </Button>
           </Show>
+          <Button onClick={() => setShowImport(i => !i)}>
+            <iconify-icon icon={icons.import} />
+            Import
+          </Button>
         </ButtonRow>
         <div>
           <h3>Theme</h3>
@@ -204,17 +298,9 @@ const ThemeManager = (props: Props) => {
           closeEditor={() => setEditing(false)}
         />
       </Show>
-      <div>
-        <h3>Mode</h3>
-        <ButtonRow>
-          <For each={['light', 'dark'] as const}>
-            {mode => (
-              <Button onClick={() => themeState.changeMode(mode)}>{capitalize(mode)}</Button>
-            )}
-          </For>
-        </ButtonRow>
-
-      </div>
+      <Show when={!props.isPopup}>
+        <ModeSwitcher />
+      </Show>
 
       <DebugModeButton />
       {/* <Show when={!themeState.isThemeDefault()}> */}

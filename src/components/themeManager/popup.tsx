@@ -3,7 +3,8 @@ import { keyframes, styled } from 'solid-styled-components';
 import { theme } from '../../theme';
 import { icons } from '../icons';
 
-const LazyComponent = lazy(() => import('./index'));
+export const LazyManagerComponent = lazy(() => import('./index'));
+export const LazyModeSwitcherComponent = lazy(() => import('./modeSwitcher'));
 
 export const ThemePopup = () => {
   const [show, setShow] = createSignal(false);
@@ -25,12 +26,12 @@ export const ThemePopup = () => {
           }}
         >
           <ContentWrapper>
-            <LazyComponent
-              isPopup
+            <LazyManagerComponent
+              isPopup={true}
             />
           </ContentWrapper>
           <PopupControls>
-            <div>Suit your preferences</div>
+            <LazyModeSwitcherComponent />
           </PopupControls>
         </PopupContent>
       </Show>

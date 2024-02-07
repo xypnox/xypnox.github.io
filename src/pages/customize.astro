@@ -15,7 +15,7 @@ import { icons } from "../components/icons";
         Work In Progress
       </div>
     </PageHeader>
-    <section>
+    <section class="theme-card">
       <ThemeManager client:only />
     </section>
     <section>
@@ -26,8 +26,12 @@ import { icons } from "../components/icons";
       <div class="content">
         <Guide />
       </div>
-      <ThemeShowcase client:only />
-      <p><a href="/#contact-and-links">Share</a> any themes you would like to showcase!</p>
+      <div class="showcase">
+        <ThemeShowcase client:only />
+        <p>
+          <a href="/#contact-and-links">Share</a> any themes you would like to showcase!
+        </p>
+      </div>
     </section>
   </main>
 </Layout>
@@ -72,5 +76,15 @@ import { icons } from "../components/icons";
 
   .guide-title iconify-icon {
     font-size: 2em;
+  }
+
+  .showcase {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    :global(h2) {
+      color: var(--heading);
+    }
   }
 </style>
