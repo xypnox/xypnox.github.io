@@ -95,7 +95,6 @@ Why? Why not?
 
 ## How it works
 
-Source code: [`src/components/themeManager`](https://github.com/xypnox/xypnox.github.io/tree/v2/src/components/themeManager)  & [`src/theme.ts`](https://github.com/xypnox/xypnox.github.io/blob/v2/src/theme.ts)
 
 import ThemeGenerate from './theme_generate.svg.astro';
 
@@ -105,6 +104,9 @@ import ThemeGenerate from './theme_generate.svg.astro';
     <figcaption>The palette is used to generate theme variables, which are then used to generate css variables and a generated theme object.</figcaption>
   </figure>
 </div>
+
+> Source code: [`src/components/themeManager`](https://github.com/xypnox/xypnox.github.io/tree/v2/src/components/themeManager)  & [`src/theme.ts`](https://github.com/xypnox/xypnox.github.io/blob/v2/src/theme.ts)
+> Parts of code are linked in relevant places for context.
 
 Everything starts with the [palette](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L204-L235). The palette consists of `base` tokens associated with layout and `vars` specific to dark and light mode.
 
