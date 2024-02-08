@@ -269,9 +269,13 @@ const showcaseThemes: ThemePalette[] = [
 
 const ShowcaseGrid = styled('div')`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  @media (max-width: 768px) {
+  width: 100%;
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
 `
@@ -290,6 +294,7 @@ const ShowcaseItem = styled('div')`
   max-width: 100%;
 
   h2 {
+    font-size: var(--font-size-base);
     margin: 0;
   }
 
@@ -340,6 +345,8 @@ export const ThemeShowcase = () => {
     </>
   )
 }
+
+export const DefaultShowcase = () => <Showcase themes={showcaseThemes} clickAct='import' />
 
 export const Showcase = (props: { themes: ThemePalette[], clickAct: 'import' | 'apply' }) => {
   return (

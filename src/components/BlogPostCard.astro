@@ -32,27 +32,29 @@ const dateFormatOption = {
           )}
         </div>
       )}
-      <h2>{blogPostEntry.data.title}</h2>
-      {blogPostEntry.data.description && (
-        <p class="description">{blogPostEntry.data.description}</p>
-      )}
-      <div class="details">
-        <time datetime={blogPostEntry.data.date.toISOString()}>
-          {blogPostEntry.data.date.toLocaleDateString(
-            "en-US",
-            dateFormatOption,
-          )}
-        </time>
-        {blogPostEntry.data.tags && (
-          <>
-            <span class="separator">•</span>
-            <div class="tags">
-              {blogPostEntry.data.tags.map((tag: string) => (
-                <span class="tag">#{tag}</span>
-              ))}
-            </div>
-          </>
+      <div class="card-content">
+        <h2>{blogPostEntry.data.title}</h2>
+        {blogPostEntry.data.description && (
+          <p class="description">{blogPostEntry.data.description}</p>
         )}
+        <div class="details">
+          <time datetime={blogPostEntry.data.date.toISOString()}>
+            {blogPostEntry.data.date.toLocaleDateString(
+              "en-US",
+              dateFormatOption,
+            )}
+          </time>
+          {blogPostEntry.data.tags && (
+            <>
+              <span class="separator">•</span>
+              <div class="tags">
+                {blogPostEntry.data.tags.map((tag: string) => (
+                  <span class="tag">#{tag}</span>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </a>
   )
@@ -63,7 +65,7 @@ const dateFormatOption = {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1rem;
     text-decoration: none;
     color: var(--text);
     width: 100%;
@@ -75,6 +77,13 @@ const dateFormatOption = {
 
   .blog-entry:hover {
     border-color: var(--primary-color);
+  }
+
+  .blog-entry .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
   }
 
   .blog-entry .coverImage {
@@ -113,14 +122,12 @@ const dateFormatOption = {
   }
 
   .blog-entry h2 {
-    margin-top: 0.5rem;
     font-size: var(--font-size-lg);
     color: var(--heading);
   }
 
   .blog-entry .details {
     color: var(--fadeText);
-    gap: 1rem;
     width: 100%;
     display: flex;
     flex-direction: row;

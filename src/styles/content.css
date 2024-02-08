@@ -106,6 +106,10 @@
   margin: 0 auto;
 }
 
+.content figure p img {
+  width: 100%;
+}
+
 @media (min-width: calc(1232px)) {
   .content p > img {
     max-width: calc(var(--layout-content-wide) - 32px);

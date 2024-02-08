@@ -28,6 +28,8 @@ export const parseLocalStorage = <T>(
   defaultValue: T,
   saveIfMissing = false
 ): T => {
+  // check if running in astro or browser
+  if (typeof localStorage === 'undefined') return defaultValue;
   if (!localStorage) return defaultValue;
   if (!localStorage.getItem(key) && saveIfMissing) {
     setLocalStorage(key, defaultValue);
@@ -38,6 +40,7 @@ export const parseLocalStorage = <T>(
 }
 
 export const setLocalStorage = <T>(key: string, value: T) => {
+  if (typeof localStorage === 'undefined') return;
   localStorage.setItem(key, JSON.stringify(value))
 }
 
@@ -56,7 +59,7 @@ export const createStoredStore = <T extends object>(
   key: string, defaultValue: T
 ): StoredStore<T> => {
 
-  const initialValue = localStorage ? parseLocalStorage(key, defaultValue, true) : defaultValue;
+  const initialValue = typeof localStorage === undefined ? defaultValue : parseLocalStorage(key, defaultValue, true);
   const [value, setValue] = createStore<T>(initialValue);
 
   const setNestedValueAndStore = (path: Path<T>, newValue: any) => {
