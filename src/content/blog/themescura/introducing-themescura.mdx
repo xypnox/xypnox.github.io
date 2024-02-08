@@ -34,31 +34,6 @@ import { DefaultShowcase } from "../../../components/themeManager/showcase";
   </figure>
 </div>
 
-## What it does
-
-_Themescura generates variables from a palette. These variables are used to style the interface._ It also types the themes of the generated variables, which can be used in the frontend.
-
-import ThemeBasic from "./theme_basic.svg.astro";
-
-<figure>
-  <ThemeBasic />
-  <figcaption>The palette is used to generate theme variables.</figcaption>
-</figure>
-
-
-You, the user, can _edit the themes in real time_ on every page. The palettes and generated css variables are _stored locally on the browser_ so that _theme is retained across pages_ and is _applied without loading the editor_.
-
-It can be used to:
-
-1. _Explore Style Space_
-   Test out fonts and color combinations quickly.
-2. _Develop Design System_
-   Once a theme has been selected, a design system can be developed using the generated variables.
-3. _Refine Theme_
-   The theme and the design system are iterated using the same tools. The relationship between the palette and the generated variables can also evolve with time.
-4. _Offer User-facing Customizations_
-   Can be limited to preset themes or allow extended customizations.
-
 ## Motivation
 
 I have always loved customization. I was introduced to its true form with Linux.
@@ -103,6 +78,32 @@ Some more "becauses", in no particular order:
 
 And finally,
 Why? Why not?
+
+## What it does
+
+_Themescura generates variables from a palette. These variables are used to style the interface._ It also types the themes of the generated variables, which can be used in the frontend.
+
+import ThemeBasic from "./theme_basic.svg.astro";
+
+<figure>
+  <ThemeBasic />
+  <figcaption>The palette is used to generate theme variables.</figcaption>
+</figure>
+
+
+You, the user, can _edit the themes in real time_ on every page. The palettes and generated css variables are _stored locally on the browser_ so that _theme is retained across pages_ and is _applied without loading the editor_.
+
+It can be used to:
+
+1. _Explore Style Space_
+   Test out fonts and color combinations quickly.
+2. _Develop Design System_
+   Once a theme has been selected, a design system can be developed using the generated variables.
+3. _Refine Theme_
+   The theme and the design system are iterated using the same tools. The relationship between the palette and the generated variables can also evolve with time.
+4. _Offer User-facing Customizations_
+   Can be limited to preset themes or allow extended customizations.
+
 
 ## How it works
 
