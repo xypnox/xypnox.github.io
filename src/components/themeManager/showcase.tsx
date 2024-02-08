@@ -235,6 +235,35 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#918087"
       }
     }
+  },
+  {
+    "name": "Delta Synchronotron",
+    "id": "nrRaOTz8IODCbFuapWC2y",
+    "base": {
+      "border": {
+        "radius": "0rem"
+      },
+      "font": {
+        "family": "VT323"
+      }
+    },
+    "card": "transparent",
+    "vars": {
+      "light": {
+        "primary": "#008a0e",
+        "secondary": "#50b575",
+        "background": "#d8ebcb",
+        "surface": "#338f523a",
+        "text": "#005906"
+      },
+      "dark": {
+        "primary": "#87ff54",
+        "secondary": "#00ffd9",
+        "background": "#080d08",
+        "surface": "#1e3823a0",
+        "text": "#50c710"
+      }
+    }
   }
 ]
 

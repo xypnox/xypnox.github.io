@@ -1,12 +1,13 @@
 ---
 title: "Introducing Themescura"
-description: "Towards better tools for user facing customizations"
-date: 2024-02-02
+description: "Towards better tools for user-facing customizations"
+date: 2024-02-08
 
 categories: ["draft"]
-tags: ["tech", "theme", "design", "draft"]
+tags: ["tech", "theme", "design"]
 
-hidden: true
+coverImage: "./theems.png"
+coverAlt: "A few icons of themescura colored in various colors with a overlay of a diagram."
 ---
 
 
@@ -18,78 +19,75 @@ import ThemeManagerAstro from '../../../components/themeManager/themeManager.ast
 
 You can also open themescura from the popup at the bottom right corner.
 
+Before reading the post, try to customize the look so that it matches your taste. Remember, this post is only as beautiful as you can make it, which also applies to the entire site.
 
-Before reading the post, try to customize the look so that it matches your taste. Remember, this post will be only as beautiful as you can make it, which also applies to the entire site.
-
-Fear not, you can visit the [customize](/customize) page for a [Guide](/customize#guide) and the [Showcase](/customize#theme-showcase) for examples showcasing creativeness and flexibility. 
+Fear not, you can visit the [customize](/customize) page for a [Guide](/customize#guide) and the [Showcase](/customize#theme-showcase) for examples showcasing creativity and flexibility. 
 
 ## What it does
 
-_Themescura takes a palette and generates variables that are used to style the interface._ It also types the themes of the generated variables, which can be used in the frontend.
+_Themescura generates variables from a palette. These variables are used to style the interface._ It also types the themes of the generated variables, which can be used in the frontend.
 
 import ThemeBasic from "./theme_basic.svg.astro";
 
-<ThemeBasic />
+<figure>
+  <ThemeBasic />
+  <figcaption>The palette is used to generate theme variables.</figcaption>
+</figure>
 
-You, the user, can _edit the palette in real time_, and the palettes and generated css variables are _stored locally on the browser_ so that theme can be _applied without loading the editor_, and can be edited whenever needed.
 
-## Where can it be used
+You, the user, can _edit the themes in real time_ on every page. The palettes and generated css variables are _stored locally on the browser_ so that _theme is retained across pages_ and is _applied without loading the editor_.
 
-Usually a designer tests out several combinations of variables to arrive at a theme/brand and iterates for a viable design. Then it is handed over to frontend to setup the components and develop the interface. The design system evolves, new styles and components are added and themes are slowly changed to match the zeitgeist. 
-
-With reference to this process, themescura can be used to:
+It can be used to:
 
 1. _Explore Style Space_
-   Test out fonts and color combinations quickly
+   Test out fonts and color combinations quickly.
 2. _Develop Design System_
-   Once a theme has been chosen as brand identity, we can develop it's design system with our generated variables.
+   Once a theme has been selected, a design system can be developed using the generated variables.
 3. _Refine Theme_
-   The generated theme and the design system can be tweaked and iterated using the same controls. The relationship between the palette and the generated variables can be tweaked.
-4. _Offer User Facing Customizations_
-   Which can be limited to preset themes or allow extended customizations.
-
-User facing customization is usually a part of most digital products, for example: Page builders, online marketplace themes, Blog builders, ui framework components, branding ui components such as forms, popups, notifications etc. With themescura we can convert themes and templates from a static design to a flexible user configurable design.
-
-It can be used to allow users to pick themes, from either limited set of options or allow them full customizability.
+   The theme and the design system are iterated using the same tools. The relationship between the palette and the generated variables can also evolve with time.
+4. _Offer User-facing Customizations_
+   Can be limited to preset themes or allow extended customizations.
 
 ## Motivation
 
 I have always loved customization. I was introduced to its true form with Linux.
 
-On most operating systems there is a set way of navigating and interacting with the interface. A default for _launching apps, navigating through files, handling windows, their layout, and switching between them etc._. There usually are themes,  limited to the system's ui and libraries that when used by other applications produce a native interface.
+On linux, instead of a default interface, there are [several](https://kde.org/) ["flavors"](https://www.gnome.org/) of [desktop enviornments](https://en.wikipedia.org/wiki/Desktop_environment), different takes on how apps are launched, files are navigated, app windows handled, etc. [^1] 
 
-On linux, instead of a default interface, there are several "flavors", different takes on the same problems. A linux user got choice. They could _choose_ which interface or system worked the best for them, or mould those that came near. And if none did, they had the freedom to create one. [^1] No interface was considered "better" just because it was the default one. Which meant that people could explore alternatives.
+A linux user got choice. They could _choose_ which interface or system worked the best for them, or mould those that came near. And if none did, they had the freedom to create one. No interface was considered "better" just because it was the default one. Which meant that people could explore alternatives. The customizations were usually dependent on the GUI frameworks. And it came at the cost of time and effort.
 
-Here on the web, _everything is allowed_. _But not everywhere_. Each page could contain different styles. Basic dark mode is offered by those who can add one, otherwise the style of a page is rather fixed. Evolving only with time.
+Here on the web, a lot can be styled and in a lot of ways. Sadly, _things are usually styled once_. Basic dark mode is offered by those who can add one, otherwise the style of a webpage is rather static. Evolving only with time. 
 
-There are sites that offer a few themes to customize the appearance. There are extensions that apply custom CSS styles to websites, but they are cumbersome and require code. There are browsers, four extensions wearing a chromium trenchcoat, that offer "prepackaged" styles via ["boosts"](https://arc.net/boosts) [^2] similar to [Stylus](), etc. There is also a nice feature that allows styling the website based on a foreground and the background text.
+There are sites that offer themes to customize the appearance, including [some that allow changing the main color](https://elk.zone). Some web apps like slack allow changing a bunch of colors, but the core interface still retains the static styles. There are [extensions](https://github.com/openstyles/stylus) [that apply](https://stylebot.dev/) custom CSS styles to websites, and they are cumbersome to use and require expertise in CSS. There are [browsers](https://arc.net), four extensions wearing a chromium trenchcoat, that offer "prepackaged" styles via ["boosts"](https://arc.net/boosts) [^2]. Most options for customization on web are offered as a playful tool for the "super-users".
 
-Furthermore, _customization is hard_. What looks like a few colors are dozens upon dozens of shades and tints for every border, background, and text, for every active hovered and disabled states [^3].
+Furthermore, _customization is hard_. What looks like a few colors are dozens upon dozens of shades and tints for every border, background, and text, for every active hovered and disabled states [^3]. _There are too many tokens_.
 
-A lack of understanding of how colors interact makes it hard to decide which is the right color. The problem is further exacerbated by the _lack of the mapping from a palette to the generated theme's final variables_. If someone wants to change a color they have to change it in all the "tokens". And with such a large amount of tokens, adding customization becomes insurmountable.
+When someone begins the path of customization, a lack of understanding of how colors interact makes it hard for them to decide which is the right color. The problem is further exacerbated by the _lack of the mapping from a palette to the generated theme's final variables_. If someone wants to change a color they have to change it in all the "tokens". And with such a large amount of tokens, adding customization becomes insurmountable.
 
-Designers often test out different themes for their designs. Usually their software has features to support themes. However, the complexity of the large amount of colors still persists. There is no way of _generating colors_ dependent on other pre-selected colors. _Each shade of each color had to be manually adjusted_. Or a plugin had to be used to do this generation for you. Regardless, the plugins had a fixed theme structure, making iterations a hassle.
+Designers often test out different themes for their designs. Usually their software has features to support themes. However, the complexity of the large amount of colors still persists. There is no way of _generating colors_ dependent on other pre-selected colors. _Each shade of each color has to be manually adjusted_. Or a plugin has to be used to do this generation for you. Regardless, the theme has a fixed structure, making iterations a hassle.
 
-Through the years of developing frontend, I found no promising system or framework that I could use to define the themes myself, that could be changed in real time and didn't hamper the developer experience.
+I found no promising tools, neither in frontend nor in design that would help me define the themes myself in a logical way and didn't hamper the developer experience. Just even for experimentation no tools existed that were fast and flexible enough. No figma didn't work either.
 
-The need also arose from the curiosity of how a webpage would look with different colors and fonts. My previous method was using the developer console, but lo and behold there lay the same problems.
+The need also arose from the curiosity of _how a webpage would look with different colors and fonts_. My previous method was to open the developer console and, lo and behold, stare at the same demon of too many tokens XD.
 
-I have bolted together a few chunks of code and a sprinkled a bit of magic to make this first iteration of themescura. It isn't the first implementation of the idea, as it was implemented and experimented with in different parts throughout the work I did in the past few years. But it is the first comprehensive implementation.
+I have bolted together a few chunks of code and a sprinkled a bit of magic to make this first iteration of themescura.
 
-I also made it so that I could talk about the idea of generative themes pointing at something that actually works.
+It isn't the first implementation of the idea, as it was experimented with in different amounts throughout the work I did in the past few years. But it is the first comprehensive implementation.
 
-Some more becauses, in no particular order:
+I also made it so that I could talk about the idea of generative themes while pointing at something that actually works.
+
+Some more "becauses", in no particular order:
 - For a sense of control.
   Giving options gives control.
-  I feel more confident using a piece of software the more I feel that I am in control of it.
+  I feel more confident using software that I feel am in control of.
 - For the people who have taste.
   But don't have the expertise to conjure up a design system.
 - For I wanted this website to be multi-themed.
-  With an opinionated definition of theme.
+  With an opinionated definition of what a theme is.
 - For there is no perfect theme.
   (if there is, please send me the palette copied from the editor)
-- So that I could automate the way I made themes
-  I know how I like to choose colors depending on the basic palette, I have codified the process and now I test out different stylistic ideas much much quickly. 
+- So that I could automate the way I made themes.
+  I have a good idea of how I want to choose colors based on the palette. Now, I have codified the process to do it faster.
   
 
 And finally,
@@ -102,33 +100,31 @@ Source code: [`src/components/themeManager`](https://github.com/xypnox/xypnox.gi
 import ThemeGenerate from './theme_generate.svg.astro';
 
 <div class="wide-wrapper">
-  <ThemeGenerate />
+  <figure>
+    <ThemeGenerate />
+    <figcaption>The palette is used to generate theme variables, which are then used to generate css variables and a generated theme object.</figcaption>
+  </figure>
 </div>
 
-Everything starts with the [palette](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L204-L235). The palette is used to [generate the theme variables](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L373C1-L393C2). For example, the color of text over a button with primary color, `--primary-contrast`, is selected between white and black by comparing primary color's brightness. 
+Everything starts with the [palette](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L204-L235). The palette consists of `base` tokens associated with layout and `vars` specific to dark and light mode.
 
-The [structure of the generated theme](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L317-L369) could be whatever we want. The generated theme object consists of the set of css variables and their values in the nested object.
+The palette is used to [generate the theme variables](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L373C1-L393C2). For example, the text color of a button with primary color as background, `--primary-contrast`, is selected by comparing primary color's brightness. 
 
-We could use this theme object directly to theme our css if we were using css in js, however, every time we change this object, the styles have to then be regenerated for every change. A better way would be to have a theme object that had instead of values, just "pointers" to the changing variables. Which are CSS Variables.
+The [structure of the generated theme](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L317-L369) can be whatever we want. The generated theme object consists of the set of css variables and their values in the nested object.
 
-So instead of using the generated theme with direct values we use [another generated object](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L82) that instead of having the values, has the names of css-variables that will have those values.
+We could use this theme object directly to theme our css if we were using css-in-js, however, every time we change this object, the styles have to be regenerated. A better way is to use [a generated theme object](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/theme.ts#L82) that instead of values, has just "pointers" to the changing variables. (which are CSS Variables)
 
 The generated css variables are [inserted in a single style tag](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/layouts/MainLayout.astro#L17C1-L17C52) and are later [updated via the manager](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/index.tsx#L31-L40).
 
 
-Nested themes, themes inside themes, can also be done by setting the variables on the parent element that will nest the elements that will be styled by the custom theme. An example of using different themes in children are the examples blocks in [Dark Modes](/blag/posts/dark-modes) post.
+Nested themes, themes inside themes, can also be built by setting the variables on the parent that will nest the themed elements. See the demo blocks in [Dark Modes](/blag/posts/dark-modes) post for an example.
+
+As themescura _doesn't depend on any framework_ to implement the styles in the frontend, it can be used with any website.
+
+It should be obvious that we should not load the theme editor every single time for every single page. We separate the code that is needed for applying the theme css variables and for editing/generating the theme. [A small script](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/loadTheme.astro#L6-L41) is used to apply the theme on page load. [The editor](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/editor.tsx) is loaded lazily when the user opens the popup. The editor is written with [SolidJS](https://solidjs.com) to piggyback on the [reactive state](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/themeStateDef.ts) for handling themes. 
 
 
-The lack of dependence on any framework for the theme to be applied means that as long as the styles depend on the generated variables, any frontend framework can be used. The editor can be used as is, or customized.
-
-It should be obvious that we should not load the theme editor every single time for every single page.
-
-We separate the code that is needed for applying the theme css variables and for editing/generating the theme. [A very small script](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/loadTheme.astro#L6-L41) is used to apply the theme on page load. The editor is loaded lazily when the user opens the popup. The [editor](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/editor.tsx) is written with [SolidJS](https://solidjs.com) to piggyback on the reactive system and  [state](https://github.com/xypnox/xypnox.github.io/blob/77cbbcdf1893f97f1468e52306edab22996a1632/src/components/themeManager/themeStateDef.ts) for handling themes. 
-
-
-<figure>
-  ![Where AI](./whereai.png)<figcaption>Unfortunately, to the disappointment of several, there is no AI underneath. </figcaption>
-</figure>
+<figure>![Where AI](./whereai.png)<figcaption>Unfortunately, to the disappointment of several, there is no AI underneath. </figcaption></figure>
 
 ## What can be improved
 
@@ -148,7 +144,7 @@ There could be _component specific styles_ defined in the generated theme simila
 
 The _icons could be thematic_. They are fixed for now as it is hard to have a 1:1 icon pack replacements similar to what we have for fonts. 
 
-Although typescript helps a lot as the theme gets typed, using css variables by hand results in hard to maintain code, which could be improved by _improving the developer tooling_.
+Although typescript helps a lot in css-in-js, using css variables directly results in hard to maintain code, which can be improved by _improving the developer tooling for CSS_.
 
 Colors could be _picked from images_. And the image could be set as the page background.
 
@@ -156,7 +152,7 @@ The themes could be pooled in a _shared registry_, allowing people to share the 
 
 User defined preferences/palette could be _shared across websites_, so the user could theme multiple websites using their preferred palette of colors and fonts.
 
-More importantly there could be _an interface for the theme generation: How the Palette effects the generated variables_. Preferably in the form of a node graph editor instead of scripting it in code.
+More importantly there could be _an interface for the theme generation: How the Palette effects the generated variables_. Preferably in the form of a node graph.
 
 I have planned more features, but I need time to gather feedback and to discuss the idea with others.
 
@@ -167,16 +163,19 @@ Themescura.
 
 ## What changes
 
-The idea that a website's theme is static. The idea that user facing customization is hard.  The idea that to allow customization we need to save the themes/preferences on the server.
+The idea that a website's theme is static.
+The idea that user facing customization is hard.
+The idea that to allow customization we need a server.
 
-It is one step in many towards better interfaces.
+This is one step of many towards interfaces that make interfaces.
 
 ---
 
-[^1]: There are themes for linux as well but different "flavors" are themed a little differently. 
+[^1]: There are themes for linux as well but [different "flavors"](https://store.kde.org/browse?cat=104) are [themed a little differently](https://www.gnome-look.org/). 
 [^2]: Although I admit the arc boosts are more thematic and also change the layout in interesting ways (usually hiding the bloated cruft), but they will break with the next version of the website, and it will need the developer of the theme to fix it. 
 
       Also, they are there for only the most popular websites of the internet.
+      There is also a nice feature that allows styling the website based on a foreground and the background text.
 [^3]: Variables inserted in the root in dark theme for:
     [Github](https://gist.github.com/xypnox/6d7ce7f450e03a0e9723e6f22a30c593) [YouTube](https://gist.github.com/xypnox/062c4d04641f66489db3f86d54bece94) and [Reddit](https://gist.github.com/xypnox/f800d382bf551e73dc7bfa42302ac196).
 

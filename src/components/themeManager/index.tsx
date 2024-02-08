@@ -302,7 +302,7 @@ const ThemeManager = (props: Props) => {
         <ModeSwitcher />
       </Show>
 
-      <DebugModeButton />
+      {/* <DebugModeButton /> */}
       {/* <Show when={!themeState.isThemeDefault()}> */}
       {/* </Show> */}
     </ManagerWrapper>
