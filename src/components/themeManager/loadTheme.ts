@@ -1,11 +1,22 @@
 import type { ThemePalette } from "../../theme";
+import { THEME_MANAGER_VERSION } from "./version";
 
 const themeCss = localStorage.getItem("xypnoxCssTheme");
 let style = document.getElementById("_themeVars");
 
 if (style && themeCss) {
   const themeString = JSON.parse(themeCss);
-  if (themeString) style.innerHTML = themeString;
+  const themeConfig = localStorage.getItem("xypnox-themeConfig");
+  if (themeConfig) {
+    const conf = JSON.parse(themeConfig);
+    const version = conf.version;
+    if (version && version === THEME_MANAGER_VERSION) {
+      if (themeString) style.innerHTML = themeString;
+    } else {
+      console.log("Theme Manager outdated, not loading theme, setting version");
+      localStorage.setItem("xypnox-themeConfig", JSON.stringify({ ...conf, version: THEME_MANAGER_VERSION }));
+    }
+  }
 }
 
 (() => {
@@ -13,7 +24,7 @@ if (style && themeCss) {
 
   if (themeConfig) {
     const conf = JSON.parse(themeConfig);
-    console.log({ conf });
+    // console.log({ conf });
     if (conf && conf.mode) {
       const mode = conf.mode;
       const root = document.documentElement;
@@ -42,7 +53,7 @@ if (style && themeCss) {
     );
     if (!theme) return;
     const fontFamily = theme.base.font.family;
-    console.log({ theme, fontFamily });
+    // console.log({ theme, fontFamily });
 
     const getFirstFont = (style: string) => {
       const font = style.split(",")[0];

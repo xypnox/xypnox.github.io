@@ -2,6 +2,7 @@ import { createEffect, createMemo, createSignal, on, onMount } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
 import { generateThemeFromPalette, type ThemeMode, type ThemePalette, defaultPalettes, cssConverter } from "../../theme"
+import { THEME_MANAGER_VERSION } from "./version";
 
 const getUserPreferenceMode = () => {
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -18,10 +19,12 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     mode: ThemeMode;
     theme: string;
     debug: boolean;
+    version: number;
   }>('xypnox-themeConfig', {
     mode: initMode ?? 'auto',
     theme: initTheme ?? 'default_aster',
     debug: false,
+    version: THEME_MANAGER_VERSION,
   });
 
   const themes = createMemo(() => {
