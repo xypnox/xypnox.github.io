@@ -7,7 +7,7 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 import { capitalize } from "../../lib/text";
-import { Text, Button, ButtonGroup, Input, baseElementStyles } from "../elements/atoms";
+import { Text, Button, ButtonGroup, Input, baseElementStyles, GroupSeparator } from "../elements/atoms";
 
 const Label = styled('label')`
   width: 100%;
@@ -447,19 +447,19 @@ const Pickers = (props: {
 
 const tooltipAnim = keyframes`
   0% {
-    transform: translateY(-90%);
+    transform: translateY(-100%);
     opacity: 0;
   }
   25% {
-    transform: translateY(-110%);
+    transform: translateY(-125%);
     opacity: 1;
   }
   75% {
-    transform: translateY(-110%);
+    transform: translateY(-125%);
     opacity: 0.75;
   }
   100% {
-    transform: translateY(-120%);
+    transform: translateY(-150%);
     opacity: 0;
   }
 `
@@ -471,13 +471,21 @@ const CopiedTooltip = styled.div`
   right: 0;
   width: max-content;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  iconify-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1.25rem;
+  }
   background: ${theme.primary.color};
   color: ${theme.primary.contrast};
   padding: 0.5rem;
   border-radius: ${theme.border.radius};
   text-align: center;
   transform: translateY(-100%);
-  animation: ${tooltipAnim} 1s ease-out forwards;
+  animation: ${tooltipAnim} 0.75s ease-out forwards;
 `
 
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
@@ -676,11 +684,17 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       <Text>
         <iconify-icon icon={icons.copy} />
       </Text>
+      <GroupSeparator />
       <Show when={copied()}>
-        <CopiedTooltip>Copied</CopiedTooltip>
+        <CopiedTooltip>
+          <iconify-icon icon={icons.done} />
+          Copied
+        </CopiedTooltip>
       </Show>
       <Button onClick={() => onCopyPalette()}>Palette</Button>
+      <GroupSeparator />
       <Button onClick={() => onCopyCss()}>CSS</Button>
+      <GroupSeparator />
       <Button onClick={() => onCopyVars()}>Vars</Button>
     </ButtonGroup>
   </EditorWrapper>
