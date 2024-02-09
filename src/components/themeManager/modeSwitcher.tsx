@@ -16,7 +16,7 @@ const Wrapper = styled(ButtonGroup)`
 const ModeSwitcher = () => {
   return (
     <Wrapper>
-      <For each={['light', 'dark'] as const}>
+      <For each={['light', 'dark', 'auto'] as const}>
         {mode => (
           <Button onClick={() => themeState.changeMode(mode)}>
             <iconify-icon icon={mode === 'light' ? icons.light : icons.dark} />

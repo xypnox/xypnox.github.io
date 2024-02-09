@@ -1,20 +1,8 @@
 import { createEffect, createMemo, createSignal, on } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
-import { flattenObject } from "../../lib/objects";
-import { generateThemeFromPalette, deepMerge, type ThemeMode, type ThemePalette, type UITheme, defaultPalettes } from "../../theme"
+import { generateThemeFromPalette, type ThemeMode, type ThemePalette, defaultPalettes, cssConverter } from "../../theme"
 
-const cssConverter = (theme: UITheme, mode: ThemeMode) => {
-  const cssVars = flattenObject(deepMerge(theme.vars[mode], theme.base), (keys: string[], value: string) => [
-    `${keys.join("-")}`,
-    value,
-  ]);
-  const cssVarsString = Object.entries(cssVars).map(([key, value]) => {
-    return `--${key}: ${value};`
-  }).join('\n');
-  // console.log({ cssVarsString })
-  return cssVarsString;
-}
 
 
 export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalist', initMode?: ThemeMode) => {
@@ -25,7 +13,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     theme: string;
     debug: boolean;
   }>('xypnox-themeConfig', {
-    mode: initMode ?? 'dark',
+    mode: initMode ?? 'auto',
     theme: initTheme ?? 'default_aster',
     debug: false,
   });
@@ -51,11 +39,11 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
 
   const cssTheme = createMemo(
     on(
-      () => ({ mode: themeConfig.get().mode, theme: theme() })
+      () => ({ theme: theme() })
       , (v) => {
         // console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
         // console.log('generating cssTheme for themeState', { v })
-        return cssConverter(v.theme, v.mode);
+        return cssConverter(v.theme);
       }
     )
   );
@@ -78,7 +66,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   }
 
   const changeMode = (mode: ThemeMode) => {
-    if (mode !== 'dark' && mode !== 'light') {
+    if (mode !== 'dark' && mode !== 'light' && mode !== 'auto') {
       console.error(`Mode ${mode} is not available`);
       return;
     }

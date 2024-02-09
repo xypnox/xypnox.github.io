@@ -31,5 +31,5 @@ export interface BaseLayoutProps {
   showLoading?: boolean;
   htmlClass?: string;
   hideNav?: boolean;
-  themeCssVars?: Record<string, string>;
+  themeCssVars?: string;
 }

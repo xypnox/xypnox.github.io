@@ -1,12 +1,11 @@
 import { For, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { themeState } from "./themeState";
 import { keyframes, styled } from "solid-styled-components";
-import { theme, type ThemePalette } from "../../theme";
+import { theme, type ThemeMode, type ThemePalette } from "../../theme";
 import { generateName } from "../../lib/nameGen";
 import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 import { icons } from "../icons";
-import { DebugModeButton } from "./debug";
 import ModeSwitcher from "./modeSwitcher";
 
 const attachFontLink = (newFamily: string) => {
@@ -27,6 +26,20 @@ const attachFontLink = (newFamily: string) => {
   document.head.appendChild(link);
 }
 
+// element Classes .dark-mode .light-mode
+const updateThemeMode = (mode: ThemeMode) => {
+  const root = document.documentElement;
+  if (mode === 'auto') {
+    root.classList.remove('dark-mode');
+    root.classList.remove('light-mode');
+  } else if (mode === 'light') {
+    root.classList.remove('dark-mode');
+    root.classList.add('light-mode');
+  } else if (mode === 'dark') {
+    root.classList.remove('light-mode');
+    root.classList.add('dark-mode');
+  }
+}
 
 const updateThemeStyle = (themeCss: string) => {
   // Find style element with id _themeVars
@@ -35,7 +48,7 @@ const updateThemeStyle = (themeCss: string) => {
     return;
   } else {
     // Update style element with new theme variables
-    style.innerHTML = `:root { ${themeCss} }`
+    style.innerHTML = themeCss;
   }
 }
 
@@ -207,6 +220,11 @@ const ThemeManager = (props: Props) => {
     const newFont = themeState.themePalette().base.font.family;
     attachFontLink(newFont);
     updateThemeStyle(theme());
+  })
+
+  createEffect(() => {
+    const mode = themeState.themeConfig.get().mode;
+    updateThemeMode(mode);
   })
 
   createEffect(() => {

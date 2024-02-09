@@ -3,7 +3,7 @@ import { flattenObject, forObjectReplace } from "./lib/objects";
 import tinycolor from 'tinycolor2'
 
 interface GeneratedTheme<T> {
-  themeCssVars: Record<string, string>;
+  themeCss: string;
   theme: T;
 }
 
@@ -16,7 +16,7 @@ export const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '
   const theme = forObjectReplace(vars, (keys) => `var(--${keys.join("-")})`)
 
   const generated: GeneratedTheme<T> = {
-    themeCssVars,
+    themeCss: Object.entries(themeCssVars).map(([k, v]) => `${k}: ${v};`).join('\n'),
     theme,
   }
 
@@ -43,6 +43,51 @@ export const deepMerge = <T extends Record<string, any>, U extends Record<string
     });
   }
   return output;
+}
+
+const newKey = (keys: string[], value: any) =>
+  [`--${keys.join("-")}`, value] as [string, any];
+
+const joinVariables = (vars: Record<string, any>) =>
+  Object.entries(vars).map(([k, v]) => `${k}: ${v};`).join('\n')
+
+/**
+ * Final css should be
+ * :root { // Base vars }
+ * .dark-mode {  // This is added to the body tag }
+ * .light-mode {  // This is added to the body tag }
+ * @media (prefers-color-scheme: dark) {
+ *   :root { // Dark mode vars }
+ * }
+ * @media (prefers-color-scheme: light) {
+ *   :root { // Light mode vars }
+ * }
+ */
+export const cssConverter = (theme: UITheme) => {
+  const baseCssVars = flattenObject(theme.base, newKey);
+  const modeVars = {
+    dark: flattenObject(theme.vars.dark, newKey),
+    light: flattenObject(theme.vars.light, newKey),
+  }
+
+  const cssVars = {
+    base: baseCssVars,
+    dark: modeVars.dark,
+    light: modeVars.light,
+  }
+
+  const cssVarsString = Object.entries(cssVars).map(([key, value]) => {
+    if (key === 'base') {
+      return ` :root { ${joinVariables(value)} } `
+    }
+    return `
+      @media (prefers-color-scheme: ${key}) { :root { ${joinVariables(value)} } }
+      .${key}-mode { ${joinVariables(value)} }
+    `
+  }).join('\n')
+
+  // console.log({ cssVarsString })
+  return cssVarsString;
 }
 
 /**
@@ -73,16 +118,12 @@ export const deepMerge = <T extends Record<string, any>, U extends Record<string
  */
 export const generateUITheme = (theme: UITheme, mode: ThemeMode, prefix = '') => {
   // Extends the base theme with the mode theme , add specific type from UITheme
-  const themeVars = deepMerge(theme.base, theme.vars[mode])
-  const themeCssVars = flattenObject(themeVars, (keys, value) => [
-    `${prefix}${keys.join("-")}`,
-    value,
-  ]);
+  const themeVars = deepMerge(theme.base, theme.vars['light'])
 
-  const generatedTheme = forObjectReplace(themeVars, (keys) => `var(--${keys.join("-")})`)
+  const generatedTheme = forObjectReplace(themeVars, (keys) => `var(--${prefix}${keys.join("-")})`)
 
   const generated: GeneratedTheme<typeof themeVars> = {
-    themeCssVars,
+    themeCss: cssConverter(theme),
     theme: generatedTheme,
   }
 
@@ -150,20 +191,23 @@ const poemThemeGen =
 
 /** Use for setting css variables in the parent
  * Ex: { 'poems-text' : '#444' } */
-export const poemThemeCssVars = poemThemeGen.themeCssVars
+export const poemThemeCssVars = poemThemeGen.themeCss
 
 /** Use for declaring css styles in css-in-js
  * Ex: { 'text': 'var(--poems-text)' } */
 export const poemTheme = poemThemeGen.theme
 
-export type ThemeMode = 'light' | 'dark'
+export type ThemeMode = 'auto' | 'light' | 'dark'
 export type BaseVars = typeof baseVars
 
 export interface UITheme {
   id: string;
   name: string;
   base: BaseVars;
-  vars: Record<ThemeMode, ThemeVars>;
+  vars: {
+    light: ThemeVars;
+    dark: ThemeVars;
+  }
 }
 
 const defaultPaletteColors = {
@@ -424,5 +468,5 @@ export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
 }
 
 const defaultTheme = generateUITheme(generateThemeFromPalette(defaultPalettes[0]), 'dark')
-export const themeCssVars = defaultTheme.themeCssVars
+export const themeCssVars = defaultTheme.themeCss
 export const theme = defaultTheme.theme

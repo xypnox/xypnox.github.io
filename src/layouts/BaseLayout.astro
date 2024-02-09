@@ -9,15 +9,6 @@ export interface Props extends BaseLayoutProps {}
 
 const { title, meta, showLoading, htmlClass, themeCssVars } = Astro.props;
 
-const themeVarsString = Object.entries(themeCssVars ?? {})
-  .map(([key, value]) => `--${key}: ${value};`)
-  .join("\n");
-
-const themeCssString = `
-  :root {
-    ${themeVarsString}
-  }
-`;
 ---
 
 <!doctype html>
@@ -29,7 +20,7 @@ const themeCssString = `
 
     <Meta {...meta} title={meta?.title ?? title} />
     <slot name="head" />
-    <style id="_themeVars" is:inline set:html={themeCssString}></style>
+    <style id="_themeVars" is:inline set:html={themeCssVars}></style>
   </head>
 
   <body>
