@@ -1,5 +1,5 @@
 import { createEffect, createMemo, createSignal, on, onMount } from "solid-js";
-import { createStoredStore, setLocalStorage } from "../../utils/localStore";
+import { createStoredStore, parseLocalStorage, setLocalStorage } from "../../utils/localStore";
 
 import { generateThemeFromPalette, type ThemeMode, type ThemePalette, defaultPalettes, cssConverter } from "../../theme"
 import { THEME_MANAGER_VERSION } from "./version";
@@ -11,9 +11,15 @@ const getUserPreferenceMode = () => {
   return 'light';
 }
 
-
 export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalist', initMode?: ThemeMode) => {
   const themesData = createStoredStore<ThemePalette[]>('xypnox-themes', []);
+
+  const defaultConfig = {
+    mode: initMode ?? 'auto',
+    theme: initTheme ?? 'default_aster',
+    debug: false,
+    version: THEME_MANAGER_VERSION,
+  }
 
   const themeConfig = createStoredStore<{
     mode: ThemeMode;
@@ -25,6 +31,23 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     theme: initTheme ?? 'default_aster',
     debug: false,
     version: THEME_MANAGER_VERSION,
+  }); // This is the default configuration
+
+  // If it is a old version, we need to update it, for now the structure remains same for config, no need to update it,
+  // and the css generators are functions that are updated as new version is shipped
+
+  onMount(() => {
+    const localConf = parseLocalStorage('xypnox-themeConfig', defaultConfig);
+    if (localConf.version !== THEME_MANAGER_VERSION) {
+      console.log("Theme Manager version mismatch, Updating version.", {
+        localVersion: localConf.version,
+        currentVersion: THEME_MANAGER_VERSION,
+      });
+      setLocalStorage('xypnox-themeConfig', {
+        ...localConf,
+        version: THEME_MANAGER_VERSION,
+      });
+    }
   });
 
   const themes = createMemo(() => {

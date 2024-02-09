@@ -13,8 +13,10 @@ if (style && themeCss) {
     if (version && version === THEME_MANAGER_VERSION) {
       if (themeString) style.innerHTML = themeString;
     } else {
-      console.log("Theme Manager outdated, not loading theme, setting version");
-      localStorage.setItem("xypnox-themeConfig", JSON.stringify({ ...conf, version: THEME_MANAGER_VERSION }));
+      console.warn("Theme Manager version mismatch, not loading theme, Open Theme editor again to update version.", {
+        localVersion: version,
+        currentVersion: THEME_MANAGER_VERSION,
+      });
     }
   }
 }
