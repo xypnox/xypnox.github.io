@@ -126,6 +126,7 @@ const PopupWrapper = styled('div')`
 const PopupControls = styled('div')`
   position: fixed;
   bottom: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
