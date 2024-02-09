@@ -70,24 +70,21 @@ export const cssConverter = (theme: UITheme) => {
     light: flattenObject(theme.vars.light, newKey),
   }
 
-  const cssVars = {
-    base: baseCssVars,
-    dark: modeVars.dark,
-    light: modeVars.light,
-  }
+  const baseStyles = `:root { ${joinVariables(baseCssVars)} }`
 
-  const cssVarsString = Object.entries(cssVars).map(([key, value]) => {
-    if (key === 'base') {
-      return ` :root { ${joinVariables(value)} } `
-    }
+  const modeVarsStyles = ['dark', 'light'].map(key => {
+    const value = modeVars[key as keyof typeof modeVars]
+    return ` .${key}-mode { ${joinVariables(value)} } `
+  }).join('\n')
+
+  const mediaVarsStyles = ['dark', 'light'].map(key => {
+    const value = modeVars[key as keyof typeof modeVars]
     return `
       @media (prefers-color-scheme: ${key}) { :root { ${joinVariables(value)} } }
-      .${key}-mode { ${joinVariables(value)} }
     `
   }).join('\n')
 
-  // console.log({ cssVarsString })
-  return cssVarsString;
+  return `${baseStyles} ${mediaVarsStyles} ${modeVarsStyles}`
 }
 
 /**

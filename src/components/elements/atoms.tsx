@@ -73,6 +73,7 @@ export const Text = styled('div')`
 // A horizontal group of buttons, with separator borders, and outside border radius
 export const ButtonGroup = styled('div')`
   position: relative;
+  z-index: 2;
   align-self: stretch;
   display: flex;
   align-items: stretch;
@@ -81,20 +82,32 @@ export const ButtonGroup = styled('div')`
   background: ${theme.surface};
   transition: all 0.2s ease;
   ${Button.class}, ${Text.class} {
+    &.selected {
+      border: none;
+    }
     background: transparent;
     border-radius: 0;
-    border: 0px solid transparent;
-    border-right: 1px solid ${theme.border.color};
+    border: none;
     flex: 1;
+    &:hover, &:focus, &:active {
+       box-shadow: none;
+    }
     &:first-child {
       border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
     }
     &:last-child {
       border-radius: 0 ${theme.border.radius} ${theme.border.radius} 0;
-      border-right: none;
     }
     &:only-child {
       border-radius: ${theme.border.radius};
     }
   }
+`
+
+export const GroupSeparator = styled('div')`
+  position: relative;
+  z-index: 1;
+  width: 1px;
+  flex-shrink: 0;
+  background: ${theme.border.color};
 `

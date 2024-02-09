@@ -1,4 +1,4 @@
-import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount } from "solid-js";
+import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount, onCleanup, createMemo } from "solid-js";
 import { themeState } from "./themeState";
 import { keyframes, styled } from "solid-styled-components";
 import { theme, type CardType, type ThemePalette } from "../../theme";
@@ -399,8 +399,8 @@ const Pickers = (props: {
       ...themePalette,
       vars: {
         ...themePalette.vars,
-        [themeState.themeConfig.get().mode]: {
-          ...themePalette.vars[themeState.themeConfig.get().mode],
+        [themeState.themeMode()]: {
+          ...themePalette.vars[themeState.themeMode()],
           [colorKey]: color
         }
       }
@@ -417,17 +417,15 @@ const Pickers = (props: {
           // console.log('Coloris', { colorKey, color, el: `#coloris-picker-${colorKey}` })
           changeColor(colorKey, color)
         },
-        themeMode: themeState.themeConfig.get().mode,
+        themeMode: themeState.themeMode()
       })
   })
 
   createEffect(() => {
-    console.log('Coloris', { themeMode: themeState.themeConfig.get().mode })
+    // console.log('Coloris', { themeMode: themeState.themeConfig.get().mode })
     Coloris.setInstance(
       `.coloris`,
-      {
-        themeMode: themeState.themeConfig.get().mode,
-      }
+      { themeMode: themeState.themeMode() }
     )
   })
 
@@ -551,6 +549,27 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     })
   }, 200)
 
+
+  const colors = createMemo(() => {
+    return themePalette().vars[themeState.themeMode()]
+  })
+
+  // Listener for updating colors
+  // if mode is auto and user changes color preference 
+  const colorPreferenceListener = (e: MediaQueryListEvent) => {
+    if (themeState.themeConfig.get().mode === 'auto') {
+      if (e.matches) {
+        themeState.setThemeMode('dark')
+      } else {
+        themeState.setThemeMode('light')
+      }
+    }
+  }
+
+  onMount(() => window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', colorPreferenceListener))
+
+  onCleanup(() => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', colorPreferenceListener))
+
   return <EditorWrapper>
     {/* <code> */}
     {/*   {JSON.stringify(themePalette(), null, 2)} */}
@@ -592,7 +611,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       toggleSection={() => toggleSection('colors')}
     >
       <Pickers
-        colors={themePalette().vars[themeState.themeConfig.get().mode]}
+        colors={colors()}
         themePalette={themePalette}
         setThemePalette={setThemePalette}
       />

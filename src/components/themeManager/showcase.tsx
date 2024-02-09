@@ -144,7 +144,7 @@ const showcaseThemes: ThemePalette[] = [
         "primary": "#31c2b6",
         "secondary": "#b58900",
         "background": "#002b36",
-        "surface": "#657b834f",
+        "surface": "#657b8328",
         "text": "#93a1a1"
       }
     }

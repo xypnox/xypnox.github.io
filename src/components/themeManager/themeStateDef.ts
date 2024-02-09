@@ -1,8 +1,14 @@
-import { createEffect, createMemo, createSignal, on } from "solid-js";
+import { createEffect, createMemo, createSignal, on, onMount } from "solid-js";
 import { createStoredStore, setLocalStorage } from "../../utils/localStore";
 
 import { generateThemeFromPalette, type ThemeMode, type ThemePalette, defaultPalettes, cssConverter } from "../../theme"
 
+const getUserPreferenceMode = () => {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+}
 
 
 export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalist', initMode?: ThemeMode) => {
@@ -120,6 +126,18 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     themesData.set(themes);
   }
 
+  const [themeMode, setThemeMode] = createSignal(initMode === 'auto' ? getUserPreferenceMode() : initMode ?? 'light');
+
+  createEffect((): 'light' | 'dark' => {
+    // console.log('themeMode', { themeConfig: themeConfig.get() })
+    const curMode = themeConfig.get().mode
+    if (curMode === 'auto') {
+      return setThemeMode(getUserPreferenceMode());
+    } else {
+      return setThemeMode(curMode);
+    }
+  });
+
   const setDebugMode = (debug: boolean) => {
     themeConfig.set({
       ...themeConfig.get(),
@@ -130,6 +148,8 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   return {
     theme,
     themes,
+    themeMode,
+    setThemeMode,
     changeTheme,
     changeMode,
     themesData,

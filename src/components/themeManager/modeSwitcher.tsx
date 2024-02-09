@@ -1,5 +1,5 @@
-import { For } from "solid-js"
-import { Button, ButtonGroup } from "../elements/atoms"
+import { For, Show } from "solid-js"
+import { Button, ButtonGroup, GroupSeparator } from "../elements/atoms"
 import { capitalize } from "../../lib/text"
 import { themeState } from "./themeState"
 import { icons } from "../icons"
@@ -13,15 +13,28 @@ const Wrapper = styled(ButtonGroup)`
   }
 `
 
+const modeIcons = {
+  light: icons.light,
+  dark: icons.dark,
+  auto: icons.auto
+}
+
 const ModeSwitcher = () => {
   return (
     <Wrapper>
       <For each={['light', 'dark', 'auto'] as const}>
-        {mode => (
-          <Button onClick={() => themeState.changeMode(mode)}>
-            <iconify-icon icon={mode === 'light' ? icons.light : icons.dark} />
-            {capitalize(mode)}
-          </Button>
+        {(mode, i) => (
+          <>
+            <Button
+              classList={{ selected: themeState.themeConfig.get().mode === mode }}
+              onClick={() => themeState.changeMode(mode)}>
+              <iconify-icon icon={modeIcons[mode]} />
+              {capitalize(mode)}
+            </Button>
+            <Show when={i() !== 2}>
+              <GroupSeparator />
+            </Show>
+          </>
         )}
       </For>
     </Wrapper>
