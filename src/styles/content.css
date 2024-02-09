@@ -137,7 +137,7 @@
 .content figure {
   margin: 1rem 0;
   padding: 1rem;
-  border-radius: calc(2 * var(--border-radius));
+  border-radius: calc(3 * var(--border-radius));
   border: 1px solid var(--border-color);
   background: var(--background);
   display: flex;
@@ -149,6 +149,10 @@
 
 .content figure p {
   margin: 0;
+}
+
+.content figure img {
+  border-radius: var(--border-radius);
 }
 .content figure figcaption {
   font-size: 0.95rem;

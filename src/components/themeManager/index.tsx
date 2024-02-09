@@ -73,15 +73,19 @@ const ManagerWrapper = styled('div')`
   .guide-link {
     display: flex;
     align-items: center;
+    text-decoration: none;
     gap: 0.5rem;
-    color: ${theme.text};
-    padding: 0.5rem 1rem;
-    border-radius: ${theme.border.radius};
+    color: ${theme.fadeText};
+    padding: 0.5rem 0.75rem;
     font-size: ${theme.font.size.sm};
+    border-radius: ${theme.border.radius};
+    background: ${theme.surface};
     iconify-icon {
       font-size: ${theme.font.size.base};
     }
-    border: 1px solid ${theme.border.color};
+    &:hover {
+      color: ${theme.text};
+    }
   }
 
 `
@@ -269,10 +273,6 @@ const ThemeManager = (props: Props) => {
             <iconify-icon icon={icons.guide} />
             Guide
           </a>
-          <span class="wip-tag">
-            <iconify-icon icon={icons.wip} />
-            Work In Progress
-          </span>
         </ButtonRow>
       </Show>
       <Show when={showImport()}>

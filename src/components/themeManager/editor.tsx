@@ -7,7 +7,9 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 import { capitalize } from "../../lib/text";
-import { Text, Button, ButtonGroup, Input, baseElementStyles, GroupSeparator } from "../elements/atoms";
+import { Button, ButtonGroup, GroupSeparator, Input, baseElementStyles } from "../elements/atoms";
+import { CopyButton } from "../elements/atoms/copyButton";
+import { DeleteButton } from "../elements/atoms/deleteButton";
 
 const Label = styled('label')`
   width: 100%;
@@ -149,6 +151,9 @@ const EditorSectionTitle = styled('div')`
   button {
     background: transparent;
   }
+  &:hover button {
+    color: ${theme.primary.color};
+  }
 `
 
 const EditorSectionContent = styled('div')`
@@ -169,11 +174,21 @@ const Row = styled('div')`
   width: 100%;
 `
 
+const ToggleButton = styled(Button)`
+  ${baseElementStyles}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.fadeText};
+  background: transparent;
+  border: none;
+`
+
 const ToggleSection = (props: ParentProps & {
   title: string,
   icon?: string,
   open: boolean,
-  toggleSection: () => void,
+  toggleSection?: () => void,
   small?: boolean,
 }) => {
   return <EditorSectionWrapper>
@@ -181,7 +196,7 @@ const ToggleSection = (props: ParentProps & {
       classList={{
         small: props.small
       }}
-      onClick={() => props.toggleSection()}
+      onClick={() => props.toggleSection && props.toggleSection()}
     >
       <h3>
         {props.title}
@@ -193,9 +208,11 @@ const ToggleSection = (props: ParentProps & {
             icon={props.icon!} />
         </Show>
       </h3>
-      <Button>
-        <iconify-icon icon={props.open ? icons.expand : icons.collapse} />
-      </Button>
+      <Show when={props.toggleSection !== undefined}>
+        <ToggleButton>
+          <iconify-icon icon={props.open ? icons.expand : icons.collapse} />
+        </ToggleButton>
+      </Show>
     </EditorSectionTitle>
     <Show when={props.open}>
       <EditorSectionContent>
@@ -445,58 +462,14 @@ const Pickers = (props: {
   </Colors>)
 }
 
-const tooltipAnim = keyframes`
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  25% {
-    transform: translateY(-125%);
-    opacity: 1;
-  }
-  75% {
-    transform: translateY(-125%);
-    opacity: 0.75;
-  }
-  100% {
-    transform: translateY(-150%);
-    opacity: 0;
-  }
-`
-
-const CopiedTooltip = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: max-content;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  iconify-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    font-size: 1.25rem;
-  }
-  background: ${theme.primary.color};
-  color: ${theme.primary.contrast};
-  padding: 0.5rem;
-  border-radius: ${theme.border.radius};
-  text-align: center;
-  transform: translateY(-100%);
-  animation: ${tooltipAnim} 0.75s ease-out forwards;
-`
-
 export const ThemeEditor = (props: { closeEditor: () => void }) => {
   const [themePalette, setThemePalette] = createSignal(themeState.themePalette())
-  const [copied, setCopied] = createSignal(false)
 
   const [sectionCollapses, setSectionCollapses] = createSignal({
     colors: true,
     typography: true,
-    typography_family: false,
     layout: true,
+    export: true,
   })
 
   const toggleSection = (section: string) => {
@@ -513,32 +486,6 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
     const themeId = themeState.theme().id
     themeState.modifyTheme(themeId, themePalette())
   }))
-
-  const notifyCopied = () => {
-    setCopied(true)
-    setTimeout(() => {
-      setCopied(false)
-    }, 1100)
-  }
-
-  // Copy palette as json to clipboard
-  const onCopyPalette = () => {
-    const palette = themePalette()
-    const paletteJson = JSON.stringify(palette, null, 2)
-    navigator.clipboard.writeText(paletteJson)
-    notifyCopied()
-  }
-
-  const onCopyCss = () => {
-    const css = themeState.cssTheme()
-    navigator.clipboard.writeText(css)
-    notifyCopied()
-  }
-
-  const onCopyVars = () => {
-    navigator.clipboard.writeText(JSON.stringify(theme, null, 2));
-    notifyCopied()
-  }
 
   const updateFontLink = debounce((style: string) => {
     console.log('Update Font Link', { style })
@@ -578,124 +525,125 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
 
   onCleanup(() => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', colorPreferenceListener))
 
-  return <EditorWrapper>
-    {/* <code> */}
-    {/*   {JSON.stringify(themePalette(), null, 2)} */}
-    {/* </code> */}
-    <Row>
-      <div class="edit-icon">
-        <iconify-icon icon={icons.edit} />
-      </div>
-      <Input
-        type="text"
-        value={themeState.theme().name}
-        disabled={themeState.theme().id.startsWith('default')}
-        onInput={(e) =>
-          themeState.modifyTheme(themeState.theme().id, {
-            ...themeState.themePalette(),
-            name: e.currentTarget.value
-          })
-        }
-      />
-      <ButtonGroup>
-        <Show when={!themeState.theme().id.startsWith('default')}>
-          <Button onClick={() => {
-            themeState.deleteTheme(themeState.theme().id)
-            props.closeEditor()
-          }}>
-            <iconify-icon icon={icons.delete} />
+  return (
+    <EditorWrapper>
+      <Row>
+        <div class="edit-icon">
+          <iconify-icon icon={icons.edit} />
+        </div>
+        <Input
+          type="text"
+          value={themeState.theme().name}
+          disabled={themeState.theme().id.startsWith('default')}
+          onInput={(e) =>
+            themeState.modifyTheme(themeState.theme().id, {
+              ...themeState.themePalette(),
+              name: e.currentTarget.value
+            })
+          }
+        />
+        <ButtonGroup>
+          <Show when={!themeState.theme().id.startsWith('default')}>
+            <DeleteButton
+              icon={icons.delete}
+              onConfirm={() => {
+                themeState.deleteTheme(themeState.theme().id)
+                props.closeEditor()
+              }}
+            />
+          </Show>
+          <GroupSeparator />
+          <CopyButton icon={icons.copy} copyText={() => JSON.stringify(themePalette(), null, 2)} />
+        </ButtonGroup>
+        <ButtonGroup>
+          <Button onClick={() => props.closeEditor()}>
+            <iconify-icon icon={icons.close} />
           </Button>
-        </Show>
-        <Button onClick={() => props.closeEditor()}>
-          <iconify-icon icon={icons.close} />
-        </Button>
-      </ButtonGroup>
-    </Row>
+        </ButtonGroup>
+      </Row>
 
-    <ToggleSection
-      title="Colors"
-      icon={icons.colors}
-      open={sectionCollapses().colors}
-      toggleSection={() => toggleSection('colors')}
-    >
-      <Pickers
-        colors={colors()}
-        themePalette={themePalette}
-        setThemePalette={setThemePalette}
-      />
-    </ToggleSection>
-
-
-    <ToggleSection
-      title="Typography"
-      icon={icons.typography}
-      open={sectionCollapses().typography}
-      toggleSection={() => toggleSection('typography')}
-    >
-      <Label>
-        <Row>
-          Font Family<a href="https://fonts.google.com/" target="_blank"> Browse All <iconify-icon icon={icons.external} /></a>
-        </Row>
-        <FontSelect
-          value={themePalette().base.font.family}
-          onChange={(value) => {
-            if (!value) { return }
-            // console.log('Font Select onchange', { value })
-            updateFontLink(value)
-          }}
+      <ToggleSection
+        title="Colors"
+        icon={icons.colors}
+        open={sectionCollapses().colors}
+        toggleSection={() => toggleSection('colors')}
+      >
+        <Pickers
+          colors={colors()}
+          themePalette={themePalette}
+          setThemePalette={setThemePalette}
         />
-      </Label>
-    </ToggleSection>
+      </ToggleSection>
 
-    <ToggleSection
-      title="Layout"
-      icon={icons.layout}
-      open={sectionCollapses().layout}
-      toggleSection={() => toggleSection('layout')}
-    >
-      <Label>
-        Border Radius
-        <Input type="text" value={themePalette().base.border.radius}
-          onInput={(e) => setThemePalette({
-            ...themePalette(),
-            base: {
-              ...themePalette().base,
-              border: {
-                ...themePalette().base.border,
-                radius: e.currentTarget.value
+
+      <ToggleSection
+        title="Typography"
+        icon={icons.typography}
+        open={sectionCollapses().typography}
+        toggleSection={() => toggleSection('typography')}
+      >
+        <Label>
+          <Row>
+            Font Family<a href="https://fonts.google.com/" target="_blank"> Browse All <iconify-icon icon={icons.external} /></a>
+          </Row>
+          <FontSelect
+            value={themePalette().base.font.family}
+            onChange={(value) => {
+              if (!value) { return }
+              // console.log('Font Select onchange', { value })
+              updateFontLink(value)
+            }}
+          />
+        </Label>
+      </ToggleSection>
+
+      <ToggleSection
+        title="Layout"
+        icon={icons.layout}
+        open={sectionCollapses().layout}
+        toggleSection={() => toggleSection('layout')}
+      >
+        <Label>
+          Border Radius
+          <Input type="text" value={themePalette().base.border.radius}
+            onInput={(e) => setThemePalette({
+              ...themePalette(),
+              base: {
+                ...themePalette().base,
+                border: {
+                  ...themePalette().base.border,
+                  radius: e.currentTarget.value
+                }
               }
-            }
-          })}
-        />
-      </Label>
+            })}
+          />
+        </Label>
 
-      <Label>
-        Card Type
-        <CardTypeSelect value={themePalette().card} onChange={(value) => {
-          setThemePalette({
-            ...themePalette(),
-            card: value
-          })
-        }} />
-      </Label>
-    </ToggleSection>
+        <Label>
+          Card Type
+          <CardTypeSelect value={themePalette().card} onChange={(value) => {
+            setThemePalette({
+              ...themePalette(),
+              card: value
+            })
+          }} />
+        </Label>
+      </ToggleSection>
 
-    <ButtonGroup>
-      <Text>
-        <iconify-icon icon={icons.copy} />
-      </Text>
-      <GroupSeparator />
-      <Show when={copied()}>
-        <CopiedTooltip>
-          <iconify-icon icon={icons.done} />
-          Copied
-        </CopiedTooltip>
-      </Show>
-      <Button onClick={() => onCopyPalette()}>Palette</Button>
-      <GroupSeparator />
-      <Button onClick={() => onCopyCss()}>CSS</Button>
-      <GroupSeparator />
-      <Button onClick={() => onCopyVars()}>Vars</Button>
-    </ButtonGroup>
-  </EditorWrapper>
+      <ToggleSection
+        title="Export"
+        icon={icons.copy}
+        open={sectionCollapses().export}
+        toggleSection={() => toggleSection('export')}
+      >
+        <ButtonGroup>
+          <CopyButton label="Palette" copyText={() => JSON.stringify(themePalette(), null, 2)} />
+          <GroupSeparator />
+          <CopyButton label="CSS" copyText={() => themeState.cssTheme()} />
+          <GroupSeparator />
+          <CopyButton label="Vars" copyText={() => JSON.stringify(theme, null, 2)} />
+        </ButtonGroup>
+      </ToggleSection>
+    </EditorWrapper>
+  )
 }

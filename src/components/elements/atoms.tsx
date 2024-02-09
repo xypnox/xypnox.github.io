@@ -2,6 +2,7 @@ import { styled } from "solid-styled-components"
 import { theme } from "../../theme"
 
 export const baseElementStyles = `
+  box-sizing: border-box;
   font-family: inherit;
   padding: 0.3rem 0.5rem;
   border-radius: ${theme.border.radius};
@@ -29,7 +30,7 @@ export const Button = styled('button')`
   align-items: center;
   gap: 0.5rem;
   justify-content: center;
-  border: 1px solid transparent;
+  border: 1px solid ${theme.border.color};
   background: ${theme.surface};
   color: ${theme.text};
   transition: all 0.2s ease;
@@ -81,7 +82,7 @@ export const ButtonGroup = styled('div')`
   border: 1px solid ${theme.border.color};
   background: ${theme.surface};
   transition: all 0.2s ease;
-  ${Button.class}, ${Text.class} {
+  & > ${Button.class}, & > ${Text.class} {
     &.selected {
       border: none;
     }

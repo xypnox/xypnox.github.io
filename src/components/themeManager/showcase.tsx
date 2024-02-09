@@ -286,7 +286,7 @@ const ShowcaseItem = styled('div')`
   color: var(--text);
   cursor: pointer;
   padding: 1rem;
-  border-radius: calc(4 * var(--border-radius));
+  border-radius: calc(2 * var(--border-radius));
   border: 2px solid var(--border-color);
   display: flex;
   flex-direction: column;
