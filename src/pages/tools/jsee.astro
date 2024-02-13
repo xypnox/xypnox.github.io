@@ -9,7 +9,7 @@ const meta = {
 }
 ---
 
-<Layout {...meta}>
+<Layout title={meta.title} meta={meta}>
   <PageHeader {...meta} />
   <main>
     <JSeeSolid client:load />
