@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { JSee as JSeeSolid } from "../../components/jsee";
+import PageHeader from "../../components/pageHeader.astro";
+---
+
+<Layout title="Home">
+  <PageHeader title="JSee" />
+  <main>
+    <JSeeSolid client:load />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 2rem;
+    width: 100%;
+  }
+</style>

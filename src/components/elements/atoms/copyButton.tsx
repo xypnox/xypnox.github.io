@@ -22,7 +22,7 @@ export const CopyButton = (props: CopyButtonProps) => {
 
   const onCopy = () => {
     const nowTime = Date.now() // in milliseconds
-    console.log('copying', nowTime)
+    // console.log('copying', nowTime)
     setCopyState([...copyState(), nowTime])
     navigator.clipboard.writeText(props.copyText())
     setTimeout(() => {

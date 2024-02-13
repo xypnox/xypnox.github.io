@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import PageHeader from "../../components/pageHeader.astro";
+import { icons } from "../../components/icons";
+
+const tools = [
+  {
+    name: "JSee",
+    path: "/tools/jsee",
+    description: "A tool to visualize JSON data in a tree view.",
+  },
+];
+---
+
+<Layout title="Home">
+  <PageHeader title="Tools" />
+  <main>
+    {
+      tools.map((tool) => (
+        <a href={tool.path} class="card">
+          <h2>{tool.name}</h2>
+          <p>{tool.description}</p>
+        </a>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 2rem;
+    width: 100%;
+  }
+</style>
