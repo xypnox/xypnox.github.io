@@ -73,6 +73,8 @@ const ValueEl = styled("div")`
   padding: 0.05rem 0.25rem;
   background-color: ${theme.surface};
   color: ${theme.fadeText};
+  max-width: 80ch;
+  word-break: break-all;
 `
 
 const JSeeValue = (props: { keys: string[], value: JSONValue }) => {
@@ -266,7 +268,6 @@ const JSeeRender = styled("div")`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  overflow-x: auto;
   padding-bottom: 1rem;
 `
 
