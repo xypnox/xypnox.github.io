@@ -5,7 +5,7 @@ import { Button, ButtonGroup, GroupSeparator, Text, baseElementStyles } from "..
 import { icons } from "../icons";
 import { CopyButton } from "../elements/atoms/copyButton";
 
-type JSONValue = string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue } | undefined
+type JSONValue = string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue }
 
 const defaultValue = {
   app: "JSee",
@@ -25,15 +25,20 @@ const defaultValue = {
       key4: true,
       key5: null,
       key6: {
-        key: "value",
-        key3: 124,
         key4: true,
         key5: null,
+        key6: {
+          key4: true,
+          key5: null,
+        },
+        key7: {
+          key4: true,
+          key5: null,
+        },
       },
     },
     defined: {
       isDefined: true,
-      isNotDefined: undefined,
     }
   }
 }
