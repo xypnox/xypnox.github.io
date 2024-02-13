@@ -2,10 +2,15 @@
 import Layout from "../../layouts/MainLayout.astro";
 import { JSee as JSeeSolid } from "../../components/jsee";
 import PageHeader from "../../components/pageHeader.astro";
+
+const meta = {
+  title: "JSee",
+  description: "The Json Seer with magic powers",
+}
 ---
 
-<Layout title="Home">
-  <PageHeader title="JSee" />
+<Layout {...meta}>
+  <PageHeader {...meta} />
   <main>
     <JSeeSolid client:load />
   </main>

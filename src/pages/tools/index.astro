@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
 import PageHeader from "../../components/pageHeader.astro";
-import { icons } from "../../components/icons";
 
 const tools = [
   {
@@ -10,28 +9,54 @@ const tools = [
     description: "A tool to visualize JSON data in a tree view.",
   },
 ];
+
+const meta = {
+  title: "Tools",
+  description: "A few useful tools for Make Benefit Glorious Nation of Web",
+};
 ---
 
-<Layout title="Home">
-  <PageHeader title="Tools" />
+<Layout {...meta}>
   <main>
-    {
-      tools.map((tool) => (
-        <a href={tool.path} class="card">
-          <h2>{tool.name}</h2>
-          <p>{tool.description}</p>
-        </a>
-      ))
-    }
-  </main>
-</Layout>
+    <PageHeader {...meta}/>
 
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    gap: 2rem;
-    width: 100%;
-  }
-</style>
+    <div class="tools">
+      {
+        tools.map((tool) => (
+          <a href={tool.path} class="tool">
+            <h2>{tool.name}</h2>
+            <p>{tool.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+
+  <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      gap: 2rem;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .tool {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      background-color: var(--surface);
+      h2,
+      p {
+        margin: 0;
+      }
+      p {
+        color: var(--text);
+      }
+    }
+  </style>
+</Layout>
