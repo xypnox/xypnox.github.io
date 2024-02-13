@@ -193,7 +193,7 @@ const JSeeElement = (props: { keys: string[], json: JSONValue }) => {
             {props.keys[props.keys.length - 1]}
           </Show>
           <Show when={props.keys.length === 0}>
-            Root
+            <span>Root</span>
           </Show>
           <Show when={showTypes()}>
             <ValueType>:{valueType()}</ValueType>
