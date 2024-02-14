@@ -113,8 +113,6 @@ const jsonString = createMemo(() => JSON.stringify(jsonObject(), null, indent())
 
 const [filter, setFilter] = createSignal({
   query: "",
-  matchKeys: true,
-  matchValues: true
 });
 const [showTypes, setShowTypes] = createSignal(true);
 const [showValues, setShowValues] = createSignal(true);
@@ -271,15 +269,11 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
       return true;
     }
     const query = filter().query;
-    const matchKeys = filter().matchKeys;
-    const matchValues = filter().matchValues;
-    if (matchKeys) {
-      if (props.keys.some(key => key.includes(query))) {
-        console.log("Key Matched", props.keys, props.json);
-        return true;
-      }
+    if (props.keys.some(key => key.includes(query))) {
+      console.log("Key Matched", props.keys, props.json);
+      return true;
     }
-    if (matchValues) {
+    if (showValues()) {
       if (JSON.stringify(props.json).includes(query)) {
         console.log("Value Matched", props.keys, props.json);
         return true;
