@@ -20,8 +20,8 @@ const defaultValue = {
   ],
 
   sample: {
-    arr: [1, 2, 3, 4],
-    obj: {
+    ohMyColorsAreInArray: ['red', 'green', 'blue'],
+    whatever: {
       key: "value",
       key3: 124,
       key4: true,
@@ -43,6 +43,8 @@ const defaultValue = {
       isDefined: true,
     }
   },
+
+  sizeDoesntMatter: "Curabitizzle et go to hizzle daahng dawg nisi the bizzle mollizzle. Stuff gizzle. Morbi odio. Vivamus neque. Crizzle orci. Cras maurizzle i'm in the shizzle, interdizzle fo shizzle, hizzle shizzlin dizzle amizzle, ma nizzle izzle, pede. Pellentesque shizzlin dizzle. Boofron fo shizzle mi, sheezy cool, ma nizzle sizzle, izzle fo shizzle, sizzle. Mofo in its fo rizzle.",
 
   noteAboutNext: "Now lets see a sample JSON Response",
 
@@ -134,6 +136,7 @@ const parseJson = (json: string) => {
 
 const ValueEl = styled("div")`
   ${baseElementStyles}
+  flex-shrink: 0;
   font-size: calc(0.75 * ${theme.font.size.sm});
   padding: calc(0.1 * ${theme.font.size.sm}) calc(0.25 * ${theme.font.size.sm});
   background-color: ${theme.surface};
@@ -200,6 +203,7 @@ const ElValue = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  flex-shrink: 0;
 `
 
 const ValueType = styled("div")`
