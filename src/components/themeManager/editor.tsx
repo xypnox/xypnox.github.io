@@ -1,6 +1,6 @@
 import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount, onCleanup, createMemo } from "solid-js";
 import { themeState } from "./themeState";
-import { keyframes, styled } from "solid-styled-components";
+import { styled } from "solid-styled-components";
 import { theme, type CardType, type ThemePalette } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
@@ -10,6 +10,7 @@ import { capitalize } from "../../lib/text";
 import { Button, ButtonGroup, GroupSeparator, Input, baseElementStyles } from "../elements/atoms";
 import { CopyButton } from "../elements/atoms/copyButton";
 import { DeleteButton } from "../elements/atoms/deleteButton";
+import { DropSelect } from "../elements/dropselect";
 
 const Label = styled('label')`
   width: 100%;
@@ -20,7 +21,6 @@ const Label = styled('label')`
 
 const ColorLabel = styled(Label)`
   position: relative;
-  cursor: pointer;
   max-width: max-content;
   gap: 0.5rem;
   align-items: center;
@@ -40,6 +40,10 @@ const ColorLabel = styled(Label)`
     left: 0;
     width: 100%;
     opacity: 0;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--primary-color);
   }
 `
 
@@ -68,46 +72,6 @@ const EditorWrapper = styled('div')`
     justify-content: center;
     align-self: stretch;
   }
-`
-
-const Dropdown = styled('div')`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`
-
-const DropdownContent = styled('div')`
-  position: absolute;
-  top: calc(100% + 0.25rem);
-  left: 0;
-  right: 0;
-  background: ${theme.surface};
-  border: 1px solid ${theme.border.color};
-  border-radius: ${theme.border.radius};
-  z-index: 200;
-  padding: 0.5rem;
-  box-shadow: ${theme.cardShadow};
-  backdrop-filter: blur(10px);
-   
-  &.hidden {
-    display: none;
-  }
-
-  a {
-    width: max-content;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    color: ${theme.text};
-  }
-`
-
-const SelectOptions = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 0.25rem;
 `
 
 const EditorSectionWrapper = styled('div')`
@@ -181,7 +145,6 @@ const ToggleButton = styled(Button)`
   justify-content: center;
   color: ${theme.fadeText};
   background: transparent;
-  border: none;
 `
 
 const ToggleSection = (props: ParentProps & {
@@ -243,153 +206,6 @@ const SelectedFamilies = [
 
 const CardTypeOptions: CardType[] = ['gradient', 'solid', 'transparent']
 
-const CardTypeSelect = (props: {
-  value: CardType,
-  onChange: (value: CardType) => void,
-}) => {
-  const [focused, setFocused] = createSignal(false);
-  let input: HTMLInputElement;
-
-  const onClickOutside = (e: MouseEvent) => {
-    if (input && !input.contains(e.target as Node)) {
-      setFocused(false)
-    }
-  }
-
-  onMount(() => {
-    document.addEventListener('click', onClickOutside)
-    return () => {
-      document.removeEventListener('click', onClickOutside)
-    }
-  })
-
-  return <Dropdown>
-    <Input
-      ref={input!}
-      type="text"
-      value={props.value}
-      onFocus={() => setFocused(true)}
-      onInput={(e) => {
-        if (CardTypeOptions.includes(e.currentTarget.value as CardType)) {
-          props.onChange(e.currentTarget.value as CardType)
-        }
-      }}
-    />
-    <DropdownContent
-      classList={{
-        hidden: !focused(),
-      }}
-    >
-      <SelectOptions>
-        <For each={CardTypeOptions}>
-          {type => (
-            <Button
-              class="small"
-              classList={{
-                selected: type === props.value
-              }}
-              onClick={() => {
-                setFocused(false)
-                props.onChange(type)
-              }
-              }
-            >{type}</Button>
-          )}
-        </For>
-      </SelectOptions>
-    </DropdownContent>
-  </Dropdown>
-}
-
-
-const FontSelect = (props: {
-  value: string,
-  onChange: (value: string) => void,
-}) => {
-  const [focused, setFocused] = createSignal(false);
-  const [inpVal, setInpVal] = createSignal(props.value);
-  let input: HTMLInputElement;
-  const [families, setFamilies] = createSignal([...SelectedFamilies]);
-
-  createEffect(() => {
-    // console.log('Filter Families', { inpVal: inpVal(), value: props.value })
-    if (!inpVal()) {
-      setFamilies(SelectedFamilies)
-      return
-    }
-    if (!inpVal().length) {
-      setFamilies(SelectedFamilies)
-      return
-    }
-    if (SelectedFamilies.includes(inpVal())) {
-      setFamilies(SelectedFamilies)
-      return
-    }
-    const filtered = SelectedFamilies.filter(family => family.toLowerCase().includes(inpVal().toLowerCase()))
-    if (filtered.length) {
-      setFamilies(filtered)
-      return
-    }
-  })
-
-  const onClickOutside = (e: MouseEvent) => {
-    if (input && !input.contains(e.target as Node)) {
-      setFocused(false)
-    }
-  }
-
-  onMount(() => {
-    document.addEventListener('click', onClickOutside)
-    return () => {
-      document.removeEventListener('click', onClickOutside)
-    }
-  })
-
-  return <Dropdown>
-    <Input
-      ref={input!}
-      type="text"
-      value={inpVal()}
-      onFocus={() => setFocused(true)}
-      onInput={(e) => {
-        setInpVal(e.currentTarget.value)
-        props.onChange(e.currentTarget.value)
-      }}
-    />
-    <DropdownContent
-      classList={{
-        hidden: !focused(),
-      }}
-    >
-      <SelectOptions>
-        <For each={families()}>
-          {family => (
-            <Button
-              class="small"
-              classList={{
-                selected: family === props.value
-              }}
-              onClick={() => {
-                setInpVal(family)
-                setFocused(false)
-                props.onChange(family)
-              }
-              }
-            >{family}</Button>
-          )}
-        </For>
-        <Row>
-          <a href="https://fonts.google.com/" target="_blank">
-            Browse All
-            <iconify-icon icon={icons.external} />
-          </a>
-        </Row>
-      </SelectOptions>
-    </DropdownContent>
-  </Dropdown>
-}
-
-
 const Swatch = styled('div')`
   width: 1.25rem;
   height: 1.25rem;
@@ -449,7 +265,13 @@ const Pickers = (props: {
   return (<Colors>
     <For each={Object.entries(props.colors)}>
       {color => (
-        <ColorLabel>
+        <ColorLabel
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.currentTarget.click()
+            }
+          }}
+        >
           <Swatch color={color[1]} />
           <ColorInput
             data-coloris
@@ -586,13 +408,23 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
           <Row>
             Font Family<a href="https://fonts.google.com/" target="_blank"> Browse All <iconify-icon icon={icons.external} /></a>
           </Row>
-          <FontSelect
+          <DropSelect
+            label="Font Family"
             value={themePalette().base.font.family}
+            options={SelectedFamilies.map((family: string) => ({ label: family, value: family }))}
             onChange={(value) => {
               if (!value) { return }
               // console.log('Font Select onchange', { value })
               updateFontLink(value)
             }}
+            Footer={() => (
+              <Row>
+                <a href="https://fonts.google.com/" target="_blank">
+                  Browse All
+                  <iconify-icon icon={icons.external} />
+                </a>
+              </Row>
+            )}
           />
         </Label>
       </ToggleSection>
@@ -619,15 +451,18 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
           />
         </Label>
 
-        <Label>
-          Card Type
-          <CardTypeSelect value={themePalette().card} onChange={(value) => {
+        <DropSelect
+          label="Card Type"
+          value={themePalette().card as string}
+          onlyFromOptions
+          options={CardTypeOptions.map((type: string) => ({ label: type, value: type }))}
+          onChange={(value) => {
             setThemePalette({
               ...themePalette(),
-              card: value
+              card: value as CardType
             })
-          }} />
-        </Label>
+          }}
+        />
       </ToggleSection>
 
       <ToggleSection

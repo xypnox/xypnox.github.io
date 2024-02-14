@@ -1,9 +1,11 @@
-import { For, Match, Show, Switch, createMemo, createSignal } from "solid-js";
+import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from "solid-js";
 import { styled } from "solid-styled-components";
 import { theme } from "../../theme";
-import { Button, ButtonGroup, GroupSeparator, Text, baseElementStyles } from "../elements/atoms";
+import { Button, ButtonGroup, GroupSeparator, IconInput, Input, Text, baseElementStyles } from "../elements/atoms";
 import { icons } from "../icons";
 import { CopyButton } from "../elements/atoms/copyButton";
+import debounce from "lodash.debounce";
+import type { JSX } from "solid-js/h/jsx-runtime";
 
 type JSONValue = string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue }
 
@@ -40,7 +42,65 @@ const defaultValue = {
     defined: {
       isDefined: true,
     }
+  },
+
+  noteAboutNext: "Now lets see a sample JSON Response",
+
+  response: {
+    "page": 1,
+    "per_page": 6,
+    "total": 12,
+    "total_pages": 2,
+    "data": [
+      {
+        "id": 1,
+        "name": "cerulean",
+        "year": 2000,
+        "color": "#98B2D1",
+        "pantone_value": "15-4020"
+      },
+      {
+        "id": 2,
+        "name": "fuchsia rose",
+        "year": 2001,
+        "color": "#C74375",
+        "pantone_value": "17-2031"
+      },
+      {
+        "id": 3,
+        "name": "true red",
+        "year": 2002,
+        "color": "#BF1932",
+        "pantone_value": "19-1664"
+      },
+      {
+        "id": 4,
+        "name": "aqua sky",
+        "year": 2003,
+        "color": "#7BC4C4",
+        "pantone_value": "14-4811"
+      },
+      {
+        "id": 5,
+        "name": "tigerlily",
+        "year": 2004,
+        "color": "#E2583E",
+        "pantone_value": "17-1456"
+      },
+      {
+        "id": 6,
+        "name": "blue turquoise",
+        "year": 2005,
+        "color": "#53B0AE",
+        "pantone_value": "15-5217"
+      }
+    ],
+    "support": {
+      "url": "https://reqres.in/#support-heading",
+      "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
   }
+
 }
 
 
@@ -49,6 +109,11 @@ const [jsonObject, setJsonObject] = createSignal(defaultValue);
 const jsonString = createMemo(() => JSON.stringify(jsonObject(), null, indent()));
 
 
+const [filter, setFilter] = createSignal({
+  query: "",
+  matchKeys: true,
+  matchValues: true
+});
 const [showTypes, setShowTypes] = createSignal(true);
 const [showValues, setShowValues] = createSignal(true);
 
@@ -69,8 +134,8 @@ const parseJson = (json: string) => {
 
 const ValueEl = styled("div")`
   ${baseElementStyles}
-  font-size: 0.8em;
-  padding: 0.05rem 0.25rem;
+  font-size: calc(0.75 * ${theme.font.size.sm});
+  padding: calc(0.1 * ${theme.font.size.sm}) calc(0.25 * ${theme.font.size.sm});
   background-color: ${theme.surface};
   color: ${theme.fadeText};
   max-width: 80ch;
@@ -92,7 +157,6 @@ const ElStyle = styled("div")`
   gap: 0.25rem;
   border-left: 1px solid ${theme.border.color};
   transition: all 0.2s ease-in-out;
-  font-size: ${theme.font.size.sm};
 
   &:hover {
     border-left: 1px solid ${theme.primary.color};
@@ -100,13 +164,17 @@ const ElStyle = styled("div")`
 `
 
 // Key title should be sticky to the top of the element
-const KeyTitle = styled("div")`
+const KeyTitle = styled("button")`
+  ${baseElementStyles}
+  color: ${theme.text};
+  background: transparent;
+  font-size: ${theme.font.size.sm};
   position: sticky;
   top: 0;
-  padding: 0rem 0.25rem;
+  padding: 0 calc(0.25 * ${theme.font.size.sm});
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.25em;
   z-index: 1;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -114,6 +182,7 @@ const KeyTitle = styled("div")`
   user-select: none;
 
   iconify-icon {
+    font-size: 1em;
     color: ${theme.fadeText};
     opacity: 0.5;
   }
@@ -121,7 +190,6 @@ const KeyTitle = styled("div")`
   &:hover {
     background-color: ${theme.surface};
     color: ${theme.primary.color};
-    padding: 0rem 0.25rem 0rem 0.25rem;
     iconify-icon {
       opacity: 1;
     }
@@ -139,7 +207,7 @@ const ValueType = styled("div")`
   color: ${theme.fadeText};
 `
 
-const JSeeElement = (props: { keys: string[], json: JSONValue }) => {
+const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) => {
   const valueType = createMemo(() => {
     if (props.json === null) {
       return "null";
@@ -191,58 +259,87 @@ const JSeeElement = (props: { keys: string[], json: JSONValue }) => {
     }
   }
 
+  const showElement = createMemo(() => {
+    if (filter().query === "") {
+      return true;
+    }
+    if (props.root) {
+      return true;
+    }
+    const query = filter().query;
+    const matchKeys = filter().matchKeys;
+    const matchValues = filter().matchValues;
+    if (matchKeys) {
+      if (props.keys.some(key => key.includes(query))) {
+        console.log("Key Matched", props.keys, props.json);
+        return true;
+      }
+    }
+    if (matchValues) {
+      if (JSON.stringify(props.json).includes(query)) {
+        console.log("Value Matched", props.keys, props.json);
+        return true;
+      }
+    }
+    return false;
+  })
+
 
   return (
     <ElStyle ref={ref!}>
-      <div onClick={onWrapperClick}>
-        <KeyTitle onClick={onClick}>
-          <Show when={props.keys.length > 0}>
-            {props.keys[props.keys.length - 1]}
-          </Show>
-          <Show when={props.keys.length === 0}>
-            <span>Root</span>
-          </Show>
-          <Show when={showTypes()}>
-            <ValueType>:{valueType()}</ValueType>
-          </Show>
-          <Show when={!expanded()}>
-            <iconify-icon icon={icons.collapse} />
-          </Show>
-        </KeyTitle>
-      </div>
-      <Show when={expanded()}>
-        <ElValue>
-          <Switch fallback={showValues() ? JSON.stringify(props.json) : ''}>
-            <Match when={valueType() === "array"}>
-              <For each={(props.json as Array<JSONValue>)}>
-                {(value, index) => {
-                  return <JSeeElement
-                    keys={[...props.keys, index().toString()]}
-                    json={value} />
-                }}
-              </For>
-            </Match>
-            <Match when={valueType() === "object"}>
-              <For each={Object.entries(props.json as { [key: string]: JSONValue })}>
-                {([key, value]) => {
-                  return <JSeeElement
-                    keys={[...props.keys, key]}
-                    json={value} />
-                }}
-              </For>
-            </Match>
-            <Match when={
-              showValues() &&
-              (valueType() === "string" ||
-                valueType() === "boolean" ||
-                valueType() === "number" ||
-                valueType() === "null" ||
-                valueType() === "undefined")
-            }>
-              <JSeeValue keys={props.keys} value={props.json} />
-            </Match>
-          </Switch>
-        </ElValue>
+      <Show when={showElement()}>
+        <div onClick={onWrapperClick}>
+          <KeyTitle onClick={onClick}>
+            <Show when={props.keys.length > 0}>
+              {props.keys[props.keys.length - 1]}
+            </Show>
+            <Show when={props.keys.length === 0}>
+              <span>Root</span>
+            </Show>
+            <Show when={showTypes()}>
+              <ValueType>:{valueType()}</ValueType>
+            </Show>
+            <Show when={!expanded()}>
+              <iconify-icon icon={icons.collapse} />
+            </Show>
+          </KeyTitle>
+        </div>
+        <Show when={expanded()}>
+          <ElValue>
+            <Switch fallback={showValues() ? JSON.stringify(props.json) : ''}>
+              <Match when={valueType() === "array"}>
+                <For each={(props.json as Array<JSONValue>)}>
+                  {(value, index) => {
+                    return <JSeeElement
+                      root={false}
+                      keys={[...props.keys, index().toString()]}
+                      json={value} />
+                  }}
+                </For>
+              </Match>
+              <Match when={valueType() === "object"}>
+                <For each={Object.entries(props.json as { [key: string]: JSONValue })}>
+                  {([key, value]) => {
+                    return <JSeeElement
+                      root={false}
+                      keys={[...props.keys, key]}
+                      json={value} />
+                  }}
+                </For>
+              </Match>
+              <Match when={
+                showValues() &&
+                (valueType() === "string" ||
+                  valueType() === "boolean" ||
+                  valueType() === "number" ||
+                  valueType() === "null" ||
+                  valueType() === "undefined")
+              }>
+                <JSeeValue keys={props.keys} value={props.json} />
+              </Match>
+            </Switch>
+          </ElValue>
+        </Show>
       </Show>
     </ElStyle>
   );
@@ -301,6 +398,16 @@ const ErrorMessage = styled(Text)`
 `
 
 export const JSee = () => {
+  createEffect(() => {
+    console.log("Filter", filter());
+  })
+
+  const updateQuery = (e: InputEvent & {
+    target: HTMLInputElement | null
+  }) => {
+    if (e.target !== null) setFilter(f => ({ ...f, query: e.target!.value }))
+  }
+
   return (
     <Wrapper>
       <Textarea
@@ -310,6 +417,10 @@ export const JSee = () => {
         }}
       />
       <Toolbar>
+        <IconInput>
+          <iconify-icon icon={icons.search} />
+          <Input placeholder="Filter" onInput={debounce(updateQuery, 500)} />
+        </IconInput>
         <ButtonGroup>
           <Button onClick={() => setShowTypes(e => !e)}>Toggle Types</Button>
           <GroupSeparator />
@@ -346,7 +457,7 @@ export const JSee = () => {
         </Show>
       </Toolbar>
       <JSeeRender>
-        <JSeeElement keys={[]} json={jsonObject()} />
+        <JSeeElement keys={[]} json={jsonObject()} root />
       </JSeeRender>
     </Wrapper>
   );

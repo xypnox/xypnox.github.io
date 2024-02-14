@@ -50,6 +50,11 @@ export const Button = styled('button')`
     color: ${theme.primary.color};
   }
 
+
+  &&:focus-visible {
+    outline: 2px solid var(--primary-color);
+  }
+
   &&:hover {
     color: var(--primary-contrast);
     background: var(--primary-color);
@@ -90,8 +95,13 @@ export const ButtonGroup = styled('div')`
     border-radius: 0;
     border: none;
     flex: 1;
-    &:hover, &:focus, &:active {
-       box-shadow: none;
+    z-index: 3;
+    &:hover, &:active {
+      box-shadow: none;
+    }
+    &:focus-visible {
+      outline: none;
+      box-shadow: inset 0px 0px 0px 2px var(--primary-color);
     }
     &:first-child {
       border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
@@ -111,4 +121,36 @@ export const GroupSeparator = styled('div')`
   width: 1px;
   flex-shrink: 0;
   background: ${theme.border.color};
+`
+
+export const IconInput = styled('div')`
+  ${baseElementStyles}
+  padding: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  border-radius: ${theme.border.radius};
+  border: 1px solid ${theme.border.color};
+  background: ${theme.surface};
+  transition: all 0.2s ease;
+
+  iconify-icon {
+    font-size: 1.25rem;
+    padding-left: 0.5rem;
+  }
+
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--primary-color);
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: ${theme.text};
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
 `

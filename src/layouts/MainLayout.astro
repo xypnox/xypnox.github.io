@@ -104,11 +104,8 @@ const props = Astro.props;
     animation: backgroundMove 3s ease infinite;
   }
 
-  input:focus,
-  button:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--primary-color);
+  *:focus-visible {
+    outline: 2px solid var(--primary-color);
   }
 
   .wip-tag {

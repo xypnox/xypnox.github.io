@@ -156,4 +156,9 @@ const PopupButton = styled('button')`
   iconify-icon {
     font-size: 2rem;
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+  }
 `

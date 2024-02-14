@@ -107,6 +107,11 @@ import NavLink from "./NavLink.astro";
     transition: all 0.2s ease-in-out;
   }
 
+  .navlinks:has(*:focus-visible) {
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+
   .navlinks:hover {
     color: var(--primary-color);
     transform: scale(1.1);
