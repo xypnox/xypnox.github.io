@@ -5,13 +5,12 @@ import { Button, ButtonGroup, GroupSeparator, IconInput, Input, Text, baseElemen
 import { icons } from "../icons";
 import { CopyButton } from "../elements/atoms/copyButton";
 import debounce from "lodash.debounce";
-import type { JSX } from "solid-js/h/jsx-runtime";
 
 type JSONValue = string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue }
 
 const defaultValue = {
   app: "JSee",
-  version: "0.1.0",
+  version: "0.1.1",
   about: "A Json Seer with magical powers",
   powers: [
     "It can show JSON in a pretty way",
@@ -102,7 +101,6 @@ const defaultValue = {
       "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
     }
   }
-
 }
 
 
@@ -261,6 +259,34 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
     }
   }
 
+  // All keys in json, of obj and nested objects 
+  // in form of [
+  // "app"
+  //  "sample.whatever.key"
+  // ]
+  const jsonKeys = createMemo(() => {
+    if (filter().query === "") {
+      return [];
+    }
+    const getDeepKeys = (obj: JSONValue, path: string[] = []): string[] => {
+      if (obj === null || obj === undefined) {
+        return [];
+      }
+      if (typeof obj === "object") {
+        return Object.entries(obj as Object).flatMap(([key, value]) => {
+          return getDeepKeys(value, [...path, key]);
+        });
+      }
+      if (Array.isArray(obj)) {
+        return (obj as JSONValue[]).flatMap((value, index) => {
+          return getDeepKeys(value, [...path, index.toString()]);
+        });
+      }
+      return [path.join(".")];
+    }
+    return [props.keys.join("."), ...getDeepKeys(props.json)];
+  });
+
   const showElement = createMemo(() => {
     if (filter().query === "") {
       return true;
@@ -269,13 +295,15 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
       return true;
     }
     const query = filter().query;
-    if (props.keys.some(key => key.includes(query))) {
-      console.log("Key Matched", props.keys, props.json);
+    const keyMatch = jsonKeys().some(key => key.includes(query));
+    // console.log("Key Matched", { keyMatch, key: props.keys.join("."), keys: jsonKeys() });
+    if (keyMatch) {
+      // console.log("Key Matched", props.keys);
       return true;
     }
     if (showValues()) {
       if (JSON.stringify(props.json).includes(query)) {
-        console.log("Value Matched", props.keys, props.json);
+        // console.log("Value Matched", props.keys, props.json);
         return true;
       }
     }
@@ -333,7 +361,8 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
                   valueType() === "null" ||
                   valueType() === "undefined")
               }>
-                <JSeeValue keys={props.keys} value={props.json} />
+                <JSeeValue
+                  keys={props.keys} value={props.json} />
               </Match>
             </Switch>
           </ElValue>
