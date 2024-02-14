@@ -207,6 +207,34 @@ const ValueType = styled("div")`
   color: ${theme.fadeText};
 `
 
+// All keys in json, of obj and nested objects 
+// in form of [
+// "app"
+//  "sample.whatever.key"
+// ]
+const jsonKeys = createMemo(() => {
+  if (filter().query === "") {
+    return [];
+  }
+  const getDeepKeys = (obj: JSONValue, path: string[] = []): string[] => {
+    if (obj === null || obj === undefined) {
+      return [];
+    }
+    if (typeof obj === "object") {
+      return Object.entries(obj as Object).flatMap(([key, value]) => {
+        return getDeepKeys(value, [...path, key]);
+      });
+    }
+    if (Array.isArray(obj)) {
+      return (obj as JSONValue[]).flatMap((value, index) => {
+        return getDeepKeys(value, [...path, index.toString()]);
+      });
+    }
+    return [path.join(".")];
+  }
+  return getDeepKeys(jsonObject());
+});
+
 const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) => {
   const valueType = createMemo(() => {
     if (props.json === null) {
@@ -259,34 +287,6 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
     }
   }
 
-  // All keys in json, of obj and nested objects 
-  // in form of [
-  // "app"
-  //  "sample.whatever.key"
-  // ]
-  const jsonKeys = createMemo(() => {
-    if (filter().query === "") {
-      return [];
-    }
-    const getDeepKeys = (obj: JSONValue, path: string[] = []): string[] => {
-      if (obj === null || obj === undefined) {
-        return [];
-      }
-      if (typeof obj === "object") {
-        return Object.entries(obj as Object).flatMap(([key, value]) => {
-          return getDeepKeys(value, [...path, key]);
-        });
-      }
-      if (Array.isArray(obj)) {
-        return (obj as JSONValue[]).flatMap((value, index) => {
-          return getDeepKeys(value, [...path, index.toString()]);
-        });
-      }
-      return [path.join(".")];
-    }
-    return [props.keys.join("."), ...getDeepKeys(props.json)];
-  });
-
   const showElement = createMemo(() => {
     if (filter().query === "") {
       return true;
@@ -295,7 +295,7 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
       return true;
     }
     const query = filter().query;
-    const keyMatch = jsonKeys().some(key => key.includes(query));
+    const keyMatch = jsonKeys().some(key => key.includes(query) && key.startsWith(props.keys.join(".")));
     // console.log("Key Matched", { keyMatch, key: props.keys.join("."), keys: jsonKeys() });
     if (keyMatch) {
       // console.log("Key Matched", props.keys);
