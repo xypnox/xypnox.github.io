@@ -140,7 +140,13 @@ export const IconInput = styled('div')`
   }
 
   &:has(input:focus-visible) {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid ${theme.primary.color};
+  }
+
+  &.active {
+    iconify-icon {
+      color: ${theme.primary.color};
+    }
   }
 
   input {

@@ -290,8 +290,8 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
 
 
   return (
-    <ElStyle ref={ref!}>
-      <Show when={showElement()}>
+    <Show when={showElement()}>
+      <ElStyle ref={ref!}>
         <div onClick={onWrapperClick}>
           <KeyTitle onClick={onClick}>
             <Show when={props.keys.length > 0}>
@@ -344,8 +344,8 @@ const JSeeElement = (props: { keys: string[], json: JSONValue, root: boolean }) 
             </Switch>
           </ElValue>
         </Show>
-      </Show>
-    </ElStyle>
+      </ElStyle>
+    </Show>
   );
 }
 
@@ -421,7 +421,7 @@ export const JSee = () => {
         }}
       />
       <Toolbar>
-        <IconInput>
+        <IconInput classList={{ active: filter().query !== "" }}>
           <iconify-icon icon={icons.search} />
           <Input placeholder="Filter" onInput={debounce(updateQuery, 500)} />
         </IconInput>
