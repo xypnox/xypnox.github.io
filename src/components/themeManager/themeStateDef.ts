@@ -152,6 +152,10 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     themesData.set(themes);
   }
 
+  /*
+   * This is the processed theme mode.
+   * If the mode is auto, it will be updated based on user preference
+   */
   const [themeMode, setThemeMode] = createSignal(initMode === 'auto' ? getUserPreferenceMode() : initMode ?? 'light');
 
   createEffect((): 'light' | 'dark' => {

@@ -1,7 +1,7 @@
 import { Show, createSignal, type ParentProps, createEffect, For, on, type Accessor, onMount, onCleanup, createMemo } from "solid-js";
 import { themeState } from "./themeState";
 import { styled } from "solid-styled-components";
-import { theme, type CardType, type ThemePalette } from "../../theme";
+import { theme, type CardType, type ThemePalette, CardTypes } from "../../theme";
 import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
@@ -204,8 +204,6 @@ const SelectedFamilies = [
   'Vollkorn',
 ]
 
-const CardTypeOptions: CardType[] = ['gradient', 'solid', 'transparent']
-
 const Swatch = styled('div')`
   width: 1.25rem;
   height: 1.25rem;
@@ -355,11 +353,10 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         </div>
         <Input
           type="text"
-          value={themeState.theme().name}
-          disabled={themeState.theme().id.startsWith('default')}
+          value={themePalette().name}
           onInput={(e) =>
-            themeState.modifyTheme(themeState.theme().id, {
-              ...themeState.themePalette(),
+            setThemePalette({
+              ...themePalette(),
               name: e.currentTarget.value
             })
           }
@@ -404,29 +401,24 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         open={sectionCollapses().typography}
         toggleSection={() => toggleSection('typography')}
       >
-        <Label>
-          <Row>
-            Font Family<a href="https://fonts.google.com/" target="_blank"> Browse All <iconify-icon icon={icons.external} /></a>
-          </Row>
-          <DropSelect
-            label="Font Family"
-            value={themePalette().base.font.family}
-            options={SelectedFamilies.map((family: string) => ({ label: family, value: family }))}
-            onChange={(value) => {
-              if (!value) { return }
-              // console.log('Font Select onchange', { value })
-              updateFontLink(value)
-            }}
-            Footer={() => (
-              <Row>
-                <a href="https://fonts.google.com/" target="_blank">
-                  Browse All
-                  <iconify-icon icon={icons.external} />
-                </a>
-              </Row>
-            )}
-          />
-        </Label>
+        <DropSelect
+          label="Font Family"
+          value={themePalette().base.font.family}
+          options={SelectedFamilies.map((family: string) => ({ label: family, value: family }))}
+          onChange={(value) => {
+            if (!value) { return }
+            // console.log('Font Select onchange', { value })
+            updateFontLink(value)
+          }}
+          Footer={() => (
+            <Row>
+              <a href="https://fonts.google.com/" target="_blank">
+                Browse All
+                <iconify-icon icon={icons.external} />
+              </a>
+            </Row>
+          )}
+        />
       </ToggleSection>
 
       <ToggleSection
@@ -455,7 +447,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
           label="Card Type"
           value={themePalette().card as string}
           onlyFromOptions
-          options={CardTypeOptions.map((type: string) => ({ label: type, value: type }))}
+          options={CardTypes.map((type: CardType) => ({ label: capitalize(type), value: type }))}
           onChange={(value) => {
             setThemePalette({
               ...themePalette(),

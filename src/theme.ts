@@ -54,14 +54,16 @@ const joinVariables = (vars: Record<string, any>) =>
 /**
  * Final css should be
  * :root { // Base vars }
- * .dark-mode {  // This is added to the body tag }
- * .light-mode {  // This is added to the body tag }
  * @media (prefers-color-scheme: dark) {
  *   :root { // Dark mode vars }
  * }
  * @media (prefers-color-scheme: light) {
  *   :root { // Light mode vars }
  * }
+ * .dark-mode {  // This is added to the body tag }
+ * .light-mode {  // This is added to the body tag }
+ * The class is selected last to override preference
+ * when it is set specifically by user
  */
 export const cssConverter = (theme: UITheme) => {
   const baseCssVars = flattenObject(theme.base, newKey);
@@ -150,7 +152,9 @@ const layout = {
   },
 }
 
-export type CardType = 'gradient' | 'solid' | 'transparent'
+// Create union from array
+export const CardTypes = ['gradient', 'solid', 'solid-border', 'border', 'transparent'] as const
+export type CardType = typeof CardTypes[number]
 
 const baseVars = {
   layout,
@@ -276,38 +280,36 @@ export const defaultThemePalette: ThemePalette = {
 }
 
 const brutalistPalette: ThemePalette = {
-  name: 'Brutalist',
-  id: 'default_brutalist',
-  base: {
-    border: {
-      radius: '2px',
+  "name": "Brutalist",
+  "id": "default_brutalist",
+  "base": {
+    "border": {
+      "radius": "0px"
     },
-    font: {
-      family: 'sans-serif',
-    },
+    "font": {
+      "family": "Inter"
+    }
   },
-  card: 'solid',
-
-  vars: {
-    light: {
+  "card": "border",
+  "vars": {
+    "light": {
       "primary": "#222",
-      "secondary": "#d93131",
+      "secondary": "#6e6e6e",
       "background": "#f0f0f0",
       "surface": "#b8b8b844",
-      "text": "#333333"
+      "text": "#000000"
     },
-    dark: {
-      primary: '#ffffff',
-      secondary: '#ff5370',
-
-      background: '#000000',
-      surface: '#ffffff10',
-      text: '#cccccc',
-    },
+    "dark": {
+      "primary": "#ffffff",
+      "secondary": "#999999",
+      "background": "#000000",
+      "surface": "#ffffff14",
+      "text": "#cccccc"
+    }
   }
 }
 
-const royalDecree = {
+const royalDecree: ThemePalette = {
   "name": "Royal Decree",
   "id": "default_royal_decree",
   "base": {
@@ -335,21 +337,50 @@ const royalDecree = {
       "text": "#ab9b8a"
     }
   }
-} as const;
+};
+
+const structured: ThemePalette = {
+  "name": "Structured",
+  "id": "default_structured",
+  "base": {
+    "border": {
+      "radius": "6px"
+    },
+    "font": {
+      "family": "Recursive"
+    }
+  },
+  "card": "solid",
+  "vars": {
+    "light": {
+      "primary": "#0f8a8c",
+      "secondary": "#ff5370",
+      "background": "#c5cde3",
+      "surface": "#ffffff2b",
+      "text": "#3c5266"
+    },
+    "dark": {
+      "primary": "#30a38a",
+      "secondary": "#4da6ff",
+      "background": "#1a1f29",
+      "surface": "#323f4f44",
+      "text": "#5c93ab"
+    }
+  }
+};
 
 export const defaultPalettes: ThemePalette[] = [
   defaultThemePalette,
-  brutalistPalette,
+  structured,
   royalDecree,
+  brutalistPalette,
 ]
 
 
 const getCard = (cardType: CardType) => {
   if (cardType === 'gradient') {
     return {
-      // We can use these inside new vars
       card: {
-        // The controls for the cards would be implemented later
         border: '2px dashed var(--border-color)',
         background: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
         backgroundHover: 'linear-gradient(-45deg, var(--background), var(--background), var(--surface))',
@@ -362,16 +393,41 @@ const getCard = (cardType: CardType) => {
   } else if (cardType === 'solid') {
     return {
       card: {
-        border: '1px solid var(--border-color)',
+        border: 'none',
         background: 'var(--surface)',
         backgroundPosition: 'initial',
         backgroundSize: 'initial',
-        borderHover: '1px solid var(--border-color)',
+        borderHover: 'none',
         backgroundHover: 'var(--surface)',
         backgroundPositionHover: 'initial',
       }
     }
+  } else if (cardType === 'solid-border') {
+    return {
+      card: {
+        border: '1px solid var(--border-color)',
+        background: 'var(--surface)',
+        backgroundPosition: 'initial',
+        backgroundHover: 'initial',
+        backgroundSize: 'initial',
+        borderHover: '1px solid var(--border-color)',
+        backgroundPositionHover: 'initial',
+      }
+    }
+  } else if (cardType === 'border') {
+    return {
+      card: {
+        border: '1px solid var(--border-color)',
+        background: 'var(--background)',
+        backgroundHover: 'var(--background)',
+        backgroundPosition: 'initial',
+        backgroundSize: 'initial',
+        borderHover: '1px solid var(--border-color)',
+        backgroundPositionHover: 'initial',
+      }
+    }
   } else {
+    // and also if (cardType === 'transparent')
     return {
       card: {
         border: 'none',
