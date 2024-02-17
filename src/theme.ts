@@ -260,12 +260,12 @@ export const defaultThemePalette: ThemePalette = {
   card: 'gradient',
 
   vars: {
-    light: {
-      primary: "#6E49F2",
-      secondary: "#b55089",
-      background: "#dfdfed",
-      surface: "#9f9fe02d",
-      text: "#262842"
+    "light": {
+      "primary": "#6E49F2",
+      "secondary": "#b55089",
+      "background": "#dfdfed",
+      "surface": "#9f9fe02d",
+      "text": "#343654"
     },
     dark: {
       primary: '#ff5370',
