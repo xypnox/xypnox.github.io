@@ -261,7 +261,7 @@ export const defaultThemePalette: ThemePalette = {
 
   vars: {
     "light": {
-      "primary": "#6E49F2",
+      "primary": "#613de3",
       "secondary": "#b55089",
       "background": "#dfdfed",
       "surface": "#9f9fe02d",
