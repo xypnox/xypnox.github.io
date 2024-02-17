@@ -1,5 +1,5 @@
 import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from "solid-js";
-import { styled } from "solid-styled-components";
+import { extractCss, styled } from "solid-styled-components";
 import { theme } from "../../theme";
 import { Button, ButtonGroup, GroupSeparator, IconInput, Input, Text, baseElementStyles } from "../elements/atoms";
 import { icons } from "../icons";
@@ -436,56 +436,59 @@ export const JSee = () => {
   }
 
   return (
-    <Wrapper>
-      <Textarea
-        value={jsonString()}
-        onInput={(e) => {
-          parseJson(e.currentTarget.value);
-        }}
-      />
-      <Toolbar>
-        <IconInput classList={{ active: filter().query !== "" }}>
-          <iconify-icon icon={icons.search} />
-          <Input placeholder="Filter" onInput={debounce(updateQuery, 500)} />
-        </IconInput>
-        <ButtonGroup>
-          <Button onClick={() => setShowTypes(e => !e)}>Toggle Types</Button>
-          <GroupSeparator />
-          <Button onClick={() => setShowValues(e => !e)}>Toggle Values</Button>
-          <GroupSeparator />
-          <CopyButton copyText={jsonString} icon={icons.copy} />
-        </ButtonGroup>
-        <ButtonGroup>
-          <Text>Indent</Text>
-          <GroupSeparator />
-          <For each={[2, 4, 8, undefined]}>
-            {(value, index) => {
-              return (
-                <>
-                  <Button
-                    classList={{ selected: indent() === value }}
-                    onClick={() => setIndent(value)}
-                  >
-                    {value ?? "None"}
-                  </Button>
-                  <Show when={index() < 3}>
-                    <GroupSeparator />
-                  </Show>
-                </>
-              );
-            }}
-          </For>
-        </ButtonGroup>
-        <Show when={errorMessage()}>
-          <ErrorMessage>
-            <iconify-icon icon={icons.error} />
-            {errorMessage()}
-          </ErrorMessage>
-        </Show>
-      </Toolbar>
-      <JSeeRender>
-        <JSeeElement keys={[]} json={jsonObject()} root />
-      </JSeeRender>
-    </Wrapper>
+    <>
+      <style innerHTML={extractCss()} id="_goober" />
+      <Wrapper>
+        <Textarea
+          value={jsonString()}
+          onInput={(e) => {
+            parseJson(e.currentTarget.value);
+          }}
+        />
+        <Toolbar>
+          <IconInput classList={{ active: filter().query !== "" }}>
+            <iconify-icon icon={icons.search} />
+            <Input placeholder="Filter" onInput={debounce(updateQuery, 500)} />
+          </IconInput>
+          <ButtonGroup>
+            <Button onClick={() => setShowTypes(e => !e)}>Toggle Types</Button>
+            <GroupSeparator />
+            <Button onClick={() => setShowValues(e => !e)}>Toggle Values</Button>
+            <GroupSeparator />
+            <CopyButton copyText={jsonString} icon={icons.copy} />
+          </ButtonGroup>
+          <ButtonGroup>
+            <Text>Indent</Text>
+            <GroupSeparator />
+            <For each={[2, 4, 8, undefined]}>
+              {(value, index) => {
+                return (
+                  <>
+                    <Button
+                      classList={{ selected: indent() === value }}
+                      onClick={() => setIndent(value)}
+                    >
+                      {value ?? "None"}
+                    </Button>
+                    <Show when={index() < 3}>
+                      <GroupSeparator />
+                    </Show>
+                  </>
+                );
+              }}
+            </For>
+          </ButtonGroup>
+          <Show when={errorMessage()}>
+            <ErrorMessage>
+              <iconify-icon icon={icons.error} />
+              {errorMessage()}
+            </ErrorMessage>
+          </Show>
+        </Toolbar>
+        <JSeeRender>
+          <JSeeElement keys={[]} json={jsonObject()} root />
+        </JSeeRender>
+      </Wrapper>
+    </>
   );
 }
