@@ -24,7 +24,7 @@ const links = [
     <div class="footer-content">
       <div class="links">
         {links.map((link) => (
-          <a href={link.link} target="_blank">{link.name}</a>
+          <a href={link.link}>{link.name}</a>
         ))}
       </div>
       <p>
@@ -67,6 +67,12 @@ const links = [
   .links {
     display: flex;
     gap: 1rem;
+    font-size: var(--font-size-md);
+  }
+
+  .links a {
+    text-decoration: none;
+    font-weight: 500;
   }
 
   .navbar-helper {

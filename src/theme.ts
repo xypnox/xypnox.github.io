@@ -320,7 +320,7 @@ const royalDecree: ThemePalette = {
       "family": "Ibarra Real Nova",
     },
   },
-  card: 'transparent',
+  card: 'border',
   "vars": {
     "light": {
       "primary": "#a6581d",
