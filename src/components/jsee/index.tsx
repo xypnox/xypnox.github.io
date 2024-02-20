@@ -1,4 +1,4 @@
-import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from "solid-js";
+import { For, Match, Show, Switch, createMemo, createSignal } from "solid-js";
 import { extractCss, styled } from "solid-styled-components";
 import { theme } from "../../theme";
 import { Button, ButtonGroup, GroupSeparator, IconInput, Input, Text, baseElementStyles } from "../elements/atoms";
@@ -425,10 +425,6 @@ const ErrorMessage = styled(Text)`
 `
 
 export const JSee = () => {
-  createEffect(() => {
-    console.log("Filter", filter());
-  })
-
   const updateQuery = (e: InputEvent & {
     target: HTMLInputElement | null
   }) => {
@@ -440,14 +436,14 @@ export const JSee = () => {
       <style innerHTML={extractCss()} id="_goober" />
       <Wrapper>
         <Textarea
-          value={jsonString()}
           onInput={(e) => {
+            console.log("Input", e.currentTarget.value);
             parseJson(e.currentTarget.value);
           }}
-        />
+        >{jsonString()}</Textarea>
         <Toolbar>
           <IconInput classList={{ active: filter().query !== "" }}>
-            <iconify-icon icon={icons.search} />
+            <iconify-icon icon={icons.filter} />
             <Input placeholder="Filter" onInput={debounce(updateQuery, 500)} />
           </IconInput>
           <ButtonGroup>
