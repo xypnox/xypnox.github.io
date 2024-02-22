@@ -1,7 +1,7 @@
 import { createEffect, createMemo, createSignal, on, onMount } from "solid-js";
 import { createStoredStore, parseLocalStorage, setLocalStorage } from "../../utils/localStore";
 
-import { generateThemeFromPalette, type ThemeMode, type ThemePalette, defaultPalettes, cssConverter } from "../../theme"
+import { type ThemeMode } from "../../theme"
 import { THEME_MANAGER_VERSION } from "./version";
 
 const getUserPreferenceMode = () => {
@@ -11,12 +11,28 @@ const getUserPreferenceMode = () => {
   return 'light';
 }
 
-export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalist', initMode?: ThemeMode) => {
-  const themesData = createStoredStore<ThemePalette[]>('xypnox-themes', []);
+type NestedObject = Record<string, any>;
+
+export const createThemeState = <Palette extends {
+  id: string;
+  name: string;
+}, Theme extends {
+  id: string;
+  name: string;
+  vars: Record<"light" | "dark", NestedObject>;
+}>(
+  stateid: string,
+  defaultPalettes: Palette[],
+  generateTheme: (palette: Palette) => Theme,
+  convertCss: (theme: Theme) => string,
+  initTheme?: string,
+  initMode?: ThemeMode,
+) => {
+  const themesData = createStoredStore<Palette[]>(`${stateid}-themes`, []);
 
   const defaultConfig = {
     mode: initMode ?? 'auto',
-    theme: initTheme ?? 'default_aster',
+    theme: initTheme ?? defaultPalettes[0].id,
     debug: false,
     version: THEME_MANAGER_VERSION,
   }
@@ -26,24 +42,19 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     theme: string;
     debug: boolean;
     version: number;
-  }>('xypnox-themeConfig', {
-    mode: initMode ?? 'auto',
-    theme: initTheme ?? 'default_aster',
-    debug: false,
-    version: THEME_MANAGER_VERSION,
-  }); // This is the default configuration
+  }>(`${stateid}-themeConfig`, defaultConfig); // This is the default configuration
 
   // If it is a old version, we need to update it, for now the structure remains same for config, no need to update it,
   // and the css generators are functions that are updated as new version is shipped
 
   onMount(() => {
-    const localConf = parseLocalStorage('xypnox-themeConfig', defaultConfig);
+    const localConf = parseLocalStorage(`${stateid}-themeConfig`, defaultConfig);
     if (localConf.version !== THEME_MANAGER_VERSION) {
       console.log("Theme Manager version mismatch, Updating version.", {
         localVersion: localConf.version,
         currentVersion: THEME_MANAGER_VERSION,
       });
-      setLocalStorage('xypnox-themeConfig', {
+      setLocalStorage(`${stateid}-themeConfig`, {
         ...localConf,
         version: THEME_MANAGER_VERSION,
       });
@@ -54,7 +65,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     return [...themesData.get(), ...defaultPalettes];
   });
 
-  const themePalette = createMemo(() => {
+  const themePalette: () => Palette = createMemo(() => {
     const config = themeConfig.get();
     let themePalette = themes().find(t => t.id === config.theme);
     if (!themePalette) {
@@ -65,7 +76,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
   })
 
   const theme = createMemo(() => {
-    const theme = generateThemeFromPalette(themePalette());
+    const theme = generateTheme(themePalette());
     return theme;
   });
 
@@ -75,13 +86,13 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
       , (v) => {
         // console.log('generating cssTheme for themeState', { theme: theme(), v, currentMode: themeConfig.get().mode })
         // console.log('generating cssTheme for themeState', { v })
-        return cssConverter(v.theme);
+        return convertCss(v.theme);
       }
     )
   );
 
   createEffect(() => {
-    setLocalStorage('xypnoxCssTheme', cssTheme());
+    setLocalStorage(`${stateid}CssTheme`, cssTheme());
   })
 
 
@@ -117,7 +128,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     return themesData.get().some(t => t.id === id);
   }
 
-  const addTheme = (theme: ThemePalette) => {
+  const addTheme = (theme: Palette) => {
     const isDefault = defaultPalettes.some(t => t.id === theme.id);
     if (isDefault) {
       console.error(`Default theme cannot be added`);
@@ -141,7 +152,7 @@ export const createThemeState = (initTheme?: 'default_aster' | 'default_brutalis
     }
   }
 
-  const modifyTheme = (id: string, theme: ThemePalette) => {
+  const modifyTheme = (id: string, theme: Palette) => {
     const themes = [...themesData.get()];
     const index = themes.findIndex(t => t.id === id);
     if (index === -1) {

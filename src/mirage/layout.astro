@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+// import { poemThemeCssVars } from "./theme";
+import type { BaseLayoutProps } from "../dataTypes";
+
+interface Props extends BaseLayoutProps {}
+
+const props = Astro.props;
+---
+
+<BaseLayout
+  {...props}
+  hideNav
+  showLoading={false}
+  htmlClass="poems-root"
+  meta={{
+    ...props.meta,
+    image: "/poems-social.png",
+  }}
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <p>
+      <a href="/poems">Poems</a> by <a href="/">xypnox</a>
+      | <a href="/poems/rss.xml">RSS</a>
+    </p>
+  </footer>
+</BaseLayout>
+
+<style is:global>
+  html.poems-root {
+    font-size: var(--font-size-base);
+    background-color: var(--poems-background);
+    color: var(--poems-text);
+  }
+
+  html.poems-root main,
+  html.poems-root footer {
+    font-family: var(--poems-fontFamily);
+    max-width: 800px;
+    margin: 8rem auto 2rem;
+  }
+
+  html.poems-root footer {
+    margin-top: 4rem;
+    padding: 2rem 0;
+    border-top: 2px dashed var(--poems-border);
+  }
+
+  .headingFont {
+    font-family: var(--poems-headingFont);
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  html.poems-root a {
+    color: var(--poems-text);
+    font-family: var(--poems-fontFamily);
+    &:hover {
+      color: var(--poems-heading);
+    }
+  }
+</style>

@@ -16,7 +16,7 @@ export const generateTheme = <T extends Record<string, any>>(vars: T, prefix = '
   const theme = forObjectReplace(vars, (keys) => `var(--${keys.join("-")})`)
 
   const generated: GeneratedTheme<T> = {
-    themeCss: Object.entries(themeCssVars).map(([k, v]) => `${k}: ${v};`).join('\n'),
+    themeCss: `:root { ${Object.entries(themeCssVars).map(([k, v]) => `--${k}: ${v};`).join('\n')} }`,
     theme,
   }
 
