@@ -11,15 +11,13 @@ const getUserPreferenceMode = () => {
   return 'light';
 }
 
-type NestedObject = Record<string, any>;
-
 export const createThemeState = <Palette extends {
   id: string;
   name: string;
 }, Theme extends {
   id: string;
   name: string;
-  vars: Record<"light" | "dark", NestedObject>;
+  vars: Record<"light" | "dark", any>;
 }>(
   stateid: string,
   defaultPalettes: Palette[],

@@ -1,0 +1,103 @@
+---
+import Layout from './layout.astro'
+import Card from './card.astro'
+import DownSurfaceElement from './downSurfaceElement.astro';
+
+const Button = DownSurfaceElement;
+---
+
+<Layout title="Mirage">
+  <main>
+    <div id="hero" class="hero">
+      <h1>Mirage</h1>
+      <p>The theme for the next generation of interfaces</p>
+    </div>
+
+    <Card element="article">
+      <h2 id="introduction">
+        Introduction
+      </h2>
+      <p>
+        Mirage is a design system for building modern web applications. It is a
+        collection of reusable components and styles that can be used to build
+        applications that are consistent and accessible.
+      </p>
+    </Card>
+
+    <Card element="article">
+      <h2 id="colors">
+        Colors
+      </h2>
+      <p>
+        The color palette for Mirage is designed to be accessible and easy to use.
+        It is based on a set of primary and secondary colors that can be used to
+        create a consistent look and feel across an application.
+      </p>
+    </Card>
+
+    <Card element="article">
+      <h2 id="typography">
+        Typography
+      </h2>
+    </Card>
+
+
+    <Card element="article">
+      <h2 id="components">
+        Components
+      </h2>
+      <Card element="div">
+        <h3 id="buttons">
+          Buttons
+        </h3>
+        <p>
+          Buttons are used to trigger actions or events in an application. They
+          can be used to submit forms, navigate to different pages, or perform
+          other actions.
+        </p>
+        <Button element="button">Primary</Button>
+        <Button element="button">Primary</Button>
+      </Card>
+    </Card>
+  </main>
+
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  main  * {
+    scroll-margin-top: 10rem;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    background-color: var(--surface);
+    border-radius: 1rem;
+    -webkit-backdrop-filter: var(--blur-lg);
+    backdrop-filter: var(--blur-lg);
+  }
+
+  .hero h1, .hero p {
+    margin: 0;
+  }
+
+  main :global(article .inner) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-// import { poemThemeCssVars } from "./theme";
+import Nav from "./nav.astro";
+import { defaultCss } from "./theme";
 import type { BaseLayoutProps } from "../dataTypes";
 
 interface Props extends BaseLayoutProps {}
@@ -17,57 +18,83 @@ const props = Astro.props;
     ...props.meta,
     image: "/poems-social.png",
   }}
+  themeCssVars={defaultCss}
 >
-  <Fragment slot="head">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=EB+Garamond:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
-  </Fragment>
-  <main>
-    <slot />
-  </main>
+  <Fragment slot="head"></Fragment>
+  <div class="background"></div>
+  <Nav />
+  <slot />
   <footer>
-    <p>
-      <a href="/poems">Poems</a> by <a href="/">xypnox</a>
-      | <a href="/poems/rss.xml">RSS</a>
-    </p>
+    <a href="/mirage">Mirage</a> by <a href="/">xypnox</a>
   </footer>
 </BaseLayout>
 
 <style is:global>
-  html.poems-root {
+  html {
+    font-family: var(--font-family);
+    color: var(--text);
+    background-color: #000;
     font-size: var(--font-size-base);
-    background-color: var(--poems-background);
-    color: var(--poems-text);
+    min-height: 100vh;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0 auto;
+    max-width: var(--layout-content-wide);
+    min-height: 100vh;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font-size: 100%;
+    font-family: var(--font-family);
+    color: var(--text);
   }
 
-  html.poems-root main,
-  html.poems-root footer {
-    font-family: var(--poems-fontFamily);
-    max-width: 800px;
-    margin: 8rem auto 2rem;
+  footer {
+    margin: 2rem 1rem 12rem;
+    text-align: center;
   }
 
-  html.poems-root footer {
-    margin-top: 4rem;
-    padding: 2rem 0;
-    border-top: 2px dashed var(--poems-border);
+  a {
+    color: var(--primary);
   }
 
-  .headingFont {
-    font-family: var(--poems-headingFont);
-    font-weight: 700;
-    font-style: italic;
+  *:focus-visible {
+    outline: 2px solid var(--primary-color);
   }
 
-  html.poems-root a {
-    color: var(--poems-text);
-    font-family: var(--poems-fontFamily);
-    &:hover {
-      color: var(--poems-heading);
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.2;
+  }
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    z-index: -1;
+    background: linear-gradient(
+        120deg,
+        rgba(40, 30, 60, 0.8),
+        rgba(0, 0, 0, 0.2)
+      );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 </style>

@@ -1,0 +1,40 @@
+---
+interface Props {
+  class?: string;
+  element: 'nav' | 'div' | 'article'
+}
+
+const props = Astro.props;
+
+const Element = props.element || 'div';
+---
+
+<Element class={props.class + " container"}>
+  <div class="inner">
+    <slot />
+  </div>
+</Element>
+
+<style>
+  .container {
+    border-radius: 1rem;
+    background: linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 100%);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .container:hover {
+    border-color: #ffffff20;
+  }
+
+  .container > * {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--surface);
+    border-radius: 1rem;
+    -webkit-backdrop-filter: var(--blur-lg);
+    backdrop-filter: var(--blur-lg);
+  }
+</style>
