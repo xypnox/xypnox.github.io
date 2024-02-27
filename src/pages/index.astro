@@ -150,6 +150,12 @@ import LatestBlog from "../components/latestBlog.astro";
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 
+  @media (max-width: 400px) {
+    .containers {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .blog-and-links {
     display: flex;
     flex-direction: column;

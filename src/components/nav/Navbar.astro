@@ -21,7 +21,7 @@ import NavLink from "./NavLink.astro";
     <NavLink href="https://x5z.studio">x5z</NavLink>
   </div>
   <div class="mobile-menu-button navButton navSurface">
-    <iconify-icon icon={icons.menu} />
+    <iconify-icon icon={icons.menu}></iconify-icon>
   </div>
   <div id="themePopupSection">
     <ThemePopup client:only />
@@ -74,6 +74,7 @@ import NavLink from "./NavLink.astro";
   .navbar > .navSurface {
     display: flex;
     align-items: center;
+    color: var(--text);
     border-radius: calc(var(--border-radius) * 2);
     background: var(--background);
     padding: 0 0.5rem;
@@ -81,6 +82,27 @@ import NavLink from "./NavLink.astro";
     box-shadow: var(--cardShadow);
     transition: all 0.2s ease-in-out;
     animation: borderFlash 3s;
+  }
+
+  .navbar :global(.navButton) {
+    padding: 0.5rem;
+    width: 4rem;
+    border-radius: calc(var(--border-radius) * 2);
+    color: var(--primary-contrast);
+    background: var(--primary-color);
+    border: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    iconify-icon {
+      font-size: 2rem;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 3px;
+    }
   }
 
   .navbar .mobile-menu,
@@ -148,12 +170,6 @@ import NavLink from "./NavLink.astro";
     }
     .navbar .navlinks {
       display: none;
-    }
-    .navbar :global(.navButton) {
-      width: 4rem;
-      display: flex;
-      font-size: 2rem;
-      cursor: pointer;
     }
 
     .navbar .mobile-menu-button {

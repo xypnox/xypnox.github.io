@@ -142,23 +142,5 @@ const PopupControls = styled('div')`
 `
 
 const PopupButton = styled('button')`
-  padding: 0.5rem;
-  width: 4rem;
-  border-radius: calc(${theme.border.radius} * 2);
-  color: var(--primary-contrast);
-  background: var(--primary-color);
-  border: none;
-  position: relative;
   z-index: 120;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  iconify-icon {
-    font-size: 2rem;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 3px;
-  }
 `
