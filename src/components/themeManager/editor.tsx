@@ -6,7 +6,7 @@ import { icons } from "../icons";
 import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
-import { capitalize } from "../../lib/text";
+import { capitalize, padChar, stripChar } from "../../lib/text";
 import { Button, ButtonGroup, GroupSeparator, Input, baseElementStyles } from "../elements/atoms";
 import { CopyButton } from "../elements/atoms/copyButton";
 import { DeleteButton } from "../elements/atoms/deleteButton";
@@ -308,8 +308,13 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
   }))
 
   const updateFontLink = debounce((style: string) => {
-    console.log('Update Font Link', { style })
     if (!style) {
+      return
+    }
+    const stripped = stripChar(style, " ")
+    const padded = padChar(stripped, "\"")
+    console.log('Update Font Link', { style, stripped, padded })
+    if (padded === themePalette().base.font.family) {
       return
     }
     setThemePalette({
@@ -318,7 +323,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
         ...themePalette().base,
         font: {
           ...themePalette().base.font,
-          family: style,
+          family: padded
         }
       }
     })
@@ -403,7 +408,7 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
       >
         <DropSelect
           label="Font Family"
-          value={themePalette().base.font.family}
+          value={stripChar(themePalette().base.font.family, "\"")}
           options={SelectedFamilies.map((family: string) => ({ label: family, value: family }))}
           onChange={(value) => {
             if (!value) { return }

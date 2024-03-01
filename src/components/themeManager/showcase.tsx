@@ -264,6 +264,151 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#50c710"
       }
     }
+  },
+  {
+    "name": "MinimalX",
+    "id": "Uvkn1idMYppP3rFleE__u",
+    "base": {
+      "border": {
+        "radius": "6px"
+      },
+      "font": {
+        "family": "Inter"
+      }
+    },
+    "card": "transparent",
+    "vars": {
+      "light": {
+        "primary": "#222",
+        "secondary": "#6e6e6e",
+        "background": "#dbdbdb",
+        "surface": "#ffffff3d",
+        "text": "#474747"
+      },
+      "dark": {
+        "primary": "#ffffff",
+        "secondary": "#999999",
+        "background": "#1f1e1e",
+        "surface": "#47474751",
+        "text": "#cccccc"
+      }
+    }
+  },
+  {
+    "name": "utopia-fyi",
+    "id": "a9Vh89uIGdiRB_AXV5-4S",
+    "base": {
+      "border": {
+        "radius": "0px"
+      },
+      "font": {
+        "family": "EB Garamond"
+      }
+    },
+    "card": "border",
+    "vars": {
+      "light": {
+        "primary": "#857047",
+        "secondary": "#002b47",
+        "background": "#ffffff",
+        "surface": "#a9b6c435",
+        "text": "#032b45"
+      },
+      "dark": {
+        "primary": "#cca762",
+        "secondary": "#e5e9eb",
+        "background": "#001f35",
+        "surface": "#ffffff14",
+        "text": "#93a7b5"
+      }
+    }
+  },
+  {
+    "name": "Faleded",
+    "id": "s2Ge1q8g97SYUhZfZ8qI7",
+    "base": {
+      "border": {
+        "radius": "6px"
+      },
+      "font": {
+        "family": "Averia Sans Libre"
+      }
+    },
+    "card": "solid",
+    "vars": {
+      "light": {
+        "primary": "#b55800",
+        "secondary": "#c4632b",
+        "background": "#d4d4d4",
+        "surface": "#ffffff2b",
+        "text": "#636363"
+      },
+      "dark": {
+        "primary": "#ed834e",
+        "secondary": "#eb6565",
+        "background": "#1a1a1a",
+        "surface": "#3b3b3b4c",
+        "text": "#7d7d7d"
+      }
+    }
+  },
+  {
+    "name": "Audiotronic",
+    "id": "VSfIWJbTLjYs4CEjTQWeR",
+    "base": {
+      "border": {
+        "radius": "6px"
+      },
+      "font": {
+        "family": "\"Audiowide\""
+      }
+    },
+    "card": "gradient",
+    "vars": {
+      "light": {
+        "primary": "#d90b31",
+        "secondary": "#7c77e0",
+        "background": "#f0deee",
+        "surface": "#defdc8",
+        "text": "#4805a6"
+      },
+      "dark": {
+        "primary": "#ff0033",
+        "secondary": "#ff5370",
+        "background": "#0b0326",
+        "surface": "#9900ff1c",
+        "text": "#b095d4"
+      }
+    }
+  },
+  {
+    "name": "Aesthetics",
+    "id": "mEcmdGSc0aWVV5u_qBniU",
+    "base": {
+      "border": {
+        "radius": "0.2rem"
+      },
+      "font": {
+        "family": "\"Questrial\""
+      }
+    },
+    "card": "solid",
+    "vars": {
+      "light": {
+        "primary": "#4957f2",
+        "secondary": "#b5507d",
+        "background": "#d7d7ea",
+        "surface": "#b5b5d92d",
+        "text": "#3a4359"
+      },
+      "dark": {
+        "primary": "#c46bff",
+        "secondary": "#ff00ae",
+        "background": "#0f111a",
+        "surface": "#1e2139a0",
+        "text": "#919DCF"
+      }
+    }
   }
 ]
 
@@ -346,7 +491,7 @@ export const ThemeShowcase = () => {
   )
 }
 
-export const DefaultShowcase = () => <Showcase themes={showcaseThemes} clickAct='import' />
+export const DefaultShowcase = () => <Showcase themes={showcaseThemes.slice(0, 9)} clickAct='import' />
 
 export const Showcase = (props: { themes: ThemePalette[], clickAct: 'import' | 'apply' }) => {
   return (

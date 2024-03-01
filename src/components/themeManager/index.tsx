@@ -7,6 +7,7 @@ import { ThemeEditor } from "./editor";
 import { nanoid } from "nanoid";
 import { icons } from "../icons";
 import ModeSwitcher from "./modeSwitcher";
+import { stripChar } from "../../lib/text";
 
 const attachFontLink = (newFamily: string) => {
   const existingLinks = document.getElementsByClassName('_fontFamily');
@@ -222,7 +223,7 @@ const ThemeManager = (props: Props) => {
   createEffect(() => {
     const theme = themeState.cssTheme;
     const newFont = themeState.themePalette().base.font.family;
-    attachFontLink(newFont);
+    attachFontLink(stripChar(newFont, "\""));
     updateThemeStyle(theme());
   })
 

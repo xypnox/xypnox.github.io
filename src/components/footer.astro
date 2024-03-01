@@ -3,16 +3,16 @@ const year = new Date().getFullYear();
 
 const links = [
   {
-    name: "xypnox",
-    link: "/",
-  },
-  {
     name: "Blag",
     link: "/blag",
   },
   {
     name: "Rss",
     link: "/rss.xml",
+  },
+  {
+    name: "Source",
+    link: "https://github.com/xypnox/xypnox.github.io",
   },
 ];
 ---
@@ -22,6 +22,8 @@ const links = [
     <div class="navLogo"></div>
     <div class="footer-content">
       <div class="links">
+        <a href="/">xypnox</a>
+        <span>|</span>
         {
           links.map((link, i) => (
             <>
@@ -53,14 +55,17 @@ const links = [
   }
 
   .footer-content {
-    width: 100%;
+    width: max-content;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    max-width: 100%;
   }
   .footer-row {
     display: flex;
     align-items: center;
+    width: max-content;
+    max-width: 100%;
     flex-wrap: wrap;
     gap: 1rem;
   }
@@ -70,14 +75,20 @@ const links = [
   .links {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     color: var(--fadeText);
+    max-width: 100%;
   }
 
   .links a {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
     text-decoration: none;
     font-weight: 500;
+  }
+
+  .links a:first-child {
+    font-size: 2rem;
   }
 
   .navbar-helper {
