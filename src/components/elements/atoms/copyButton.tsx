@@ -35,7 +35,9 @@ export const CopyButton = (props: CopyButtonProps) => {
       <Show when={props.icon}>
         <iconify-icon icon={props.icon!} />
       </Show>
-      {props.label}
+      <div>
+        {props.label ?? "Copy"}
+      </div>
       <For each={copyState()}>
         {(st) => <EntryTopTooltip id={`tooltip_${st}`}>
           <iconify-icon icon={icons.done} />

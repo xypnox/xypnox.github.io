@@ -50,6 +50,11 @@ export const icons = {
   "search": "ph:magnifying-glass",
 
   "filter": "ph:funnel-duotone",
+
+  "fav": "ph:star-duotone",
+  "favAnim": "line-md:star-pulsating-twotone-loop",
+
+  "shuffle": "ph:shuffle-duotone",
 }
 
 const CustomizeIcon = `<path d="M4 10h8v1.47c0 .3-.24.53-.53.53H4.53a.53.53 0 0 1-.53-.53V10Z" fill="currentColor"/><rect opacity=".5" x="7" y="10" width="2" height="4" rx=".53" fill="currentColor"/><path opacity=".75" d="M4 6.53c0-.3.24-.53.53-.53H6v2.47c0 .3-.24.53-.53.53h-.94A.53.53 0 0 1 4 8.47V6.53Z" fill="currentColor"/><path opacity=".5" d="M4 2.53c0-.3.24-.53.53-.53h.94c.3 0 .53.24.53.53V5H4.53A.53.53 0 0 1 4 4.47V2.53Z" fill="currentColor"/><path opacity=".75" d="M7 2.53c0-.3.24-.53.53-.53h.94c.3 0 .53.24.53.53V6H7V2.53Z" fill="currentColor"/><path d="M7 7h2v1.47c0 .3-.24.53-.53.53h-.94A.53.53 0 0 1 7 8.47V7Z" fill="currentColor"/><path opacity=".75" d="M10 6h1.47c.3 0 .53.24.53.53v1.94c0 .3-.24.53-.53.53h-.94a.53.53 0 0 1-.53-.53V6Z" fill="currentColor"/><path opacity=".5" d="M10 2.53c0-.3.24-.53.53-.53h.94c.3 0 .53.24.53.53v1.94c0 .3-.24.53-.53.53H10V2.53Z" fill="currentColor"/>`

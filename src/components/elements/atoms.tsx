@@ -41,6 +41,7 @@ export const Button = styled('button')`
   background: ${theme.surface};
   color: ${theme.text};
   transition: all 0.2s ease;
+  white-space: nowrap;
 
   &.small {
     flex-grow: 1;
@@ -50,6 +51,10 @@ export const Button = styled('button')`
     min-height: 2rem;
     padding: 0.25rem 0.5rem;
     font-size: ${theme.font.size.sm};
+
+    iconify-icon {
+      font-size: ${theme.font.size.sm};
+    }
   }
 
   &.selected {
@@ -126,6 +131,8 @@ export const GroupSeparator = styled('div')`
   position: relative;
   z-index: 1;
   width: 1px;
+  min-height: 100%;
+  min-width: 1px;
   flex-shrink: 0;
   background: ${theme.border.color};
 `
