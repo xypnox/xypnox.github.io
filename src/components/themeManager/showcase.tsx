@@ -12,7 +12,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "6px"
       },
       "font": {
-        "family": "Nunito",
+        "family": "\"Nunito\"",
       },
     },
     card: 'gradient',
@@ -41,7 +41,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0"
       },
       "font": {
-        "family": "Rubik Glitch",
+        "family": "\"Rubik Glitch\"",
       },
     },
     card: 'transparent',
@@ -70,7 +70,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "6px"
       },
       "font": {
-        "family": "Lato",
+        "family": "\"Lato\"",
       },
     },
     card: 'solid',
@@ -99,7 +99,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0.4rem"
       },
       "font": {
-        "family": "Cardo",
+        "family": "\"Cardo\"",
       },
     },
     card: 'solid',
@@ -128,7 +128,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "4px"
       },
       "font": {
-        "family": "JetBrains Mono",
+        "family": "\"JetBrains Mono\"",
       },
     },
     card: 'solid',
@@ -157,7 +157,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0.75rem"
       },
       "font": {
-        "family": "Bungee Inline",
+        "family": "\"Bungee Inline\"",
       },
     },
     card: 'solid',
@@ -186,7 +186,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0.5rem"
       },
       "font": {
-        "family": "Gaegu",
+        "family": "\"Gaegu\"",
       },
     },
     card: 'solid',
@@ -215,7 +215,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "4px"
       },
       "font": {
-        "family": "Space Mono"
+        "family": "\"Space Mono\""
       }
     },
     "card": "gradient",
@@ -244,7 +244,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0rem"
       },
       "font": {
-        "family": "VT323"
+        "family": "\"VT323\""
       }
     },
     "card": "transparent",
@@ -273,7 +273,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "6px"
       },
       "font": {
-        "family": "Inter"
+        "family": "\"Inter\""
       }
     },
     "card": "transparent",
@@ -302,7 +302,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0px"
       },
       "font": {
-        "family": "EB Garamond"
+        "family": "\"EB Garamond\""
       }
     },
     "card": "border",
@@ -331,7 +331,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "6px"
       },
       "font": {
-        "family": "Averia Sans Libre"
+        "family": "\"Averia Sans Libre\""
       }
     },
     "card": "solid",
