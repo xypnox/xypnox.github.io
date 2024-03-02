@@ -1,5 +1,5 @@
 import { For, Show, createEffect, createMemo, createResource, createSignal } from "solid-js"
-import { Input, Label } from "../../components/elements/atoms"
+import { Button, Input, Label } from "../../components/elements/atoms"
 import { styled } from "solid-styled-components"
 import { theme } from "../../theme"
 import { capitalize } from "../../lib/text"
@@ -47,8 +47,13 @@ const [wordList] = createResource(fetchWordList)
 const [wordConfig, setWordConfig] = createSignal({
   count: 100,
   sections: 2,
-  maxLengthAllowed: 6
+  maxLengthAllowed: 6,
+  seed: 0
 })
+
+const changeConfig = (keyname: 'count' | 'sections' | 'maxLengthAllowed', value: string) => {
+  setWordConfig({ ...wordConfig(), [keyname]: parseInt(value), seed: wordConfig().seed + 1 })
+}
 
 const names = createMemo(() => {
   if (wordList.loading) {
@@ -57,16 +62,23 @@ const names = createMemo(() => {
   if (!wordList()) {
     return ["Error: No wordlist"]
   }
+
   return generateNames(wordConfig().count, wordConfig().sections, wordConfig().maxLengthAllowed, wordList()!)
 })
 
 const Toolbar = styled('div')`
   display: flex;
-  gap: 2rem;
+  gap: 1rem 2rem;
   flex-wrap: wrap;
-  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
   & > label {
     max-width: 13ch;
+  }
+  & button {
+    height: max-content;
   }
 `
 
@@ -74,6 +86,7 @@ const Names = styled('div')`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  justify-content: center;
 `
 
 const Name = styled('div')`
@@ -81,21 +94,23 @@ const Name = styled('div')`
   background: ${theme.surface};
   border-radius: calc(2 * ${theme.border.radius});
   font-size: ${theme.font.size.md};
+  width: var(--maxWordLength);
 `
 
 const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  gap: 2rem;
   background: ${theme.surface};
   padding: 1rem;
 `
 
 export const Nameman = () => {
-  createEffect(() => {
-    console.log('wordConfig', wordConfig())
-    console.log('names', names())
-  })
+  // createEffect(() => {
+  //   console.log('wordConfig', wordConfig())
+  //   console.log('names', names())
+  // })
   return (
     <Wrapper class="theme-card">
       <Show when={wordList.loading}>Loading...</Show>
@@ -106,20 +121,28 @@ export const Nameman = () => {
         </p></div>
       </Show>
       <Toolbar>
-        <Label>Count
-          <Input type="number" value={wordConfig().count} onInput={e => setWordConfig({ ...wordConfig(), count: parseInt(e.currentTarget.value) })} />
+        <Label>
+          Total Generated
+          <Input type="number" value={wordConfig().count} onInput={e => changeConfig('count', e.currentTarget.value)} />
         </Label>
         <Label>
-          Sections
-          <Input type="number" value={wordConfig().sections} onInput={e => setWordConfig({ ...wordConfig(), sections: parseInt(e.currentTarget.value) })} />
+          Words joined
+          <Input type="number" value={wordConfig().sections} onInput={e => changeConfig('sections', e.currentTarget.value)} />
         </Label>
         <Label>
           Max Length
-          <Input type="number" value={wordConfig().maxLengthAllowed} onInput={e => setWordConfig({ ...wordConfig(), maxLengthAllowed: parseInt(e.currentTarget.value) })} />
+          <Input type="number" value={wordConfig().maxLengthAllowed} onInput={e => changeConfig('maxLengthAllowed', e.currentTarget.value)} />
         </Label>
+        <Button onClick={() => setWordConfig({ ...wordConfig(), seed: wordConfig().seed + 1 })}>
+          <iconify-icon icon="mdi:refresh" />
+          Regenerate</Button>
       </Toolbar>
 
-      <Names>
+      <Names
+        style={{
+          '--maxWordLength': (names().reduce((max, name) => name.length > max ? name.length : max, 0) + 2) + 'ch'
+        }}
+      >
         <For each={names()}>{name => <Name>{name}</Name>}</For>
       </Names>
     </Wrapper>
