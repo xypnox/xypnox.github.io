@@ -304,7 +304,7 @@ const ThemeManager = (props: Props) => {
                 <Button
                   // class={`${theme.name === themeState.theme().name ? 'active' : ''}`}
                   classList={{
-                    active: themeState.theme().name === theme.name
+                    active: themeState.theme().id === theme.id
                   }}
                   onClick={() => themeState.changeTheme(theme.id)}>{theme.name}</Button>
               )}

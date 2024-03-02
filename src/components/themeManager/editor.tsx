@@ -7,17 +7,10 @@ import "@melloware/coloris/dist/coloris.css";
 import Coloris from "@melloware/coloris";
 import debounce from "lodash.debounce";
 import { capitalize, padChar, stripChar } from "../../lib/text";
-import { Button, ButtonGroup, GroupSeparator, Input, baseElementStyles } from "../elements/atoms";
+import { Button, ButtonGroup, GroupSeparator, Input, Label, baseElementStyles } from "../elements/atoms";
 import { CopyButton } from "../elements/atoms/copyButton";
 import { DeleteButton } from "../elements/atoms/deleteButton";
 import { DropSelect } from "../elements/dropselect";
-
-const Label = styled('label')`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`
 
 const ColorLabel = styled(Label)`
   position: relative;

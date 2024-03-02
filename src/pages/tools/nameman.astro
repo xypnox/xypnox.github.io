@@ -1,18 +1,18 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
-import { JSee as JSeeSolid } from "../../components/jsee";
+import { Nameman as NamemanSolid } from "../../tools/nameman";
 import PageHeader from "../../components/pageHeader.astro";
 
 const meta = {
-  title: "JSee",
-  description: "The Json Seer with magic powers",
+  title: "NamemaN",
+  description: "The word Generator",
 }
 ---
 
 <Layout title={meta.title} meta={meta}>
   <PageHeader {...meta} />
   <main>
-    <JSeeSolid client:only />
+    <NamemanSolid client:only />
   </main>
 </Layout>
 

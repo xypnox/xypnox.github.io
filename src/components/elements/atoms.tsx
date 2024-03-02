@@ -13,6 +13,13 @@ export const baseElementStyles = `
   }
 `
 
+export const Label = styled('label')`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+
 export const Input = styled('input')`
   ${baseElementStyles}
   flex: 1;

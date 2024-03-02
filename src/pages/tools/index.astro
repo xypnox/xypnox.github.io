@@ -8,6 +8,11 @@ const tools = [
     path: "/tools/jsee",
     description: "A tool to visualize JSON data in a tree view.",
   },
+  {
+    name: "NamemaN",
+    path: "/tools/nameman",
+    description: "A tool to generate random names.",
+  }
 ];
 
 const meta = {
@@ -37,10 +42,15 @@ const meta = {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      gap: 2rem;
+      gap: 1rem;
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
+    }
+    .tools {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
     .tool {
       text-decoration: none;
