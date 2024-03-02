@@ -364,7 +364,10 @@ export const Nameman = () => {
           <Button
             classList={{ selected: showFavWords() }}
             onClick={() => setShowFavWords(!showFavWords())}>
-            <iconify-icon icon={icons.favAnim}></iconify-icon>
+            <iconify-icon
+              width="1.5rem"
+              height="1.5rem"
+              icon={icons.favAnim}></iconify-icon>
             {favWords().length} favs
           </Button>
         </Show>
