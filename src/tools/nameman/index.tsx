@@ -91,6 +91,10 @@ const removeFavWord = (word: string) => {
   }
   localStorage.setItem(favWordsCacheName, favWords().join(','))
 }
+const clearFavWords = () => {
+  setFavWords([])
+  localStorage.removeItem(favWordsCacheName)
+}
 
 const [showFavWords, setShowFavWords] = createSignal(false)
 
@@ -181,8 +185,19 @@ const NameWrapper = styled('div')`
   width: calc(var(--maxWordLength) + 6rem);
   max-width: 100%;
   word-break: break-all;
+  outline: 2px solid transparent;
+  transition: outline 0.25s ease-in-out;
+
+  &.active .name-div {
+    color: ${theme.primary.color};
+  }
+
+  &:hover {
+    outline: 2px solid ${theme.primary.color};
+  }
 
   .name-div {
+    transition: all 0.25s ease-in-out;
     flex: 1;
     padding: 0.25rem 0;
   }
@@ -224,7 +239,14 @@ const FavButton = styled(Button)`
 const Name = (props: { name: string, icon?: string }) => {
   const { name } = props
   return (
-    <NameWrapper>
+    <NameWrapper onClick={(e) => {
+      console.log(e)
+      if (e.target instanceof HTMLDivElement && e.target.classList.contains('name-div')) {
+        toggleFavWord(name)
+      }
+    }}
+      classList={{ active: favWords().includes(name) }}
+    >
       <div class="name-div">{name}</div>
       <FavButton
         title={favWords().includes(name) ? 'Remove from favorites' : 'Add to favorites'}
@@ -300,7 +322,15 @@ export const Nameman = () => {
               <CopyButton
                 icon={icons.copy}
                 label="Copy as - List" copyText={() => favWords().map(w => `- ${w}`).join('\n')} />
+              <GroupSeparator />
+
+              <Button
+                onClick={clearFavWords}>
+                <iconify-icon icon={icons.delete}></iconify-icon>
+                Clear
+              </Button>
             </FavActions>
+
           </Toolbar>
         </Show>
       </Show>
