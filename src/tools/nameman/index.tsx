@@ -127,6 +127,7 @@ const Toolbar = styled('div')`
   flex-grow: 1;
   align-items: flex-end;
   width: 100%;
+  border-radius: calc(2 * ${theme.border.radius});
 
 
   & > ${Row.class} {
@@ -251,6 +252,13 @@ const FavActions = styled(ButtonGroup)`
   }
 `
 
+const WordList = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+`
+
 export const Nameman = () => {
   // createEffect(() => {
   //   console.log('wordConfig', wordConfig())
@@ -302,12 +310,24 @@ export const Nameman = () => {
 
       <Toolbar class="theme-card">
         <Row>
-          <Show when={wordList()}>
-            <div><p>Loaded: {wordList()!.length} words</p>
-              <a href={word_list_url} target="_blank" rel="noreferrer">Source</a>
-            </div>
-          </Show>
+          <Button onClick={() => setWordConfig({ ...wordConfig(), seed: wordConfig().seed + 1 })}>
+            <iconify-icon icon={icons.shuffle}></iconify-icon>
+            Regenerate
+          </Button>
 
+          <Show when={wordList()}>
+            <WordList>
+              <div> <a href={word_list_url} target="_blank" rel="noreferrer">List</a>: {wordList()!.length} words </div>
+              <Label title="Restrict length of words to take from wordlist">
+                Word Length
+                <Input
+                  type="checkbox"
+                  checked={wordConfig().restrictLength}
+                  onInput={() => setWordConfig({ ...wordConfig(), restrictLength: !wordConfig().restrictLength, seed: wordConfig().seed + 1 })}
+                />
+              </Label>
+            </WordList>
+          </Show>
           <Label title="Number of names to generate">
             Total Generated
             <Input
@@ -337,18 +357,7 @@ export const Nameman = () => {
             />
           </Label>
 
-          <Label title="Restrict length of words to take from wordlist">
-            Restrict Length
-            <Input
-              type="checkbox"
-              checked={wordConfig().restrictLength}
-              onInput={() => setWordConfig({ ...wordConfig(), restrictLength: !wordConfig().restrictLength, seed: wordConfig().seed + 1 })}
-            />
-          </Label>
 
-          <Button onClick={() => setWordConfig({ ...wordConfig(), seed: wordConfig().seed + 1 })}>
-            <iconify-icon icon={icons.shuffle}></iconify-icon>
-            Regenerate</Button>
 
         </Row>
         <Show when={favWords().length > 0}>
@@ -356,7 +365,7 @@ export const Nameman = () => {
             classList={{ selected: showFavWords() }}
             onClick={() => setShowFavWords(!showFavWords())}>
             <iconify-icon icon={icons.favAnim}></iconify-icon>
-            Favourites
+            {favWords().length} favs
           </Button>
         </Show>
 
