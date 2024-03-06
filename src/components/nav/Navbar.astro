@@ -1,6 +1,7 @@
 ---
 import { icons } from "../../components/icons";
 import { ThemePopup } from "../themeManager/popup";
+import { AudioButton } from "./audioButton";
 import NavLink from "./NavLink.astro";
 ---
 
@@ -23,7 +24,8 @@ import NavLink from "./NavLink.astro";
   <div class="mobile-menu-button navButton navSurface">
     <iconify-icon icon={icons.menu}></iconify-icon>
   </div>
-  <div id="themePopupSection">
+  <div id="SitePreferences">
+    <AudioButton client:load />
     <ThemePopup client:only />
   </div>
 </nav>
@@ -86,7 +88,7 @@ import NavLink from "./NavLink.astro";
 
   .navbar :global(.navButton) {
     padding: 0.5rem;
-    width: 4rem;
+    width: 3rem;
     border-radius: calc(var(--border-radius) * 2);
     color: var(--primary-contrast);
     background: var(--primary-color);
@@ -103,7 +105,26 @@ import NavLink from "./NavLink.astro";
       outline: 2px solid var(--primary-color);
       outline-offset: 3px;
     }
+
+    &#audioButton {
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--fadeText);
+      padding: 0.75rem;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+
+      &.playing {
+        color: var(--primary-color);
+      }
+      iconify-icon {
+        font-size: 1.5rem;
+      }
+    }
   }
+
 
   .navbar .mobile-menu,
   .navbar .mobile-menu-button {
@@ -113,11 +134,13 @@ import NavLink from "./NavLink.astro";
   nav.navbar > div:hover {
   }
 
-  #themePopupSection {
-    width: 4rem;
+  #SitePreferences {
+    width: 3rem;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 1rem;
+    overflow: visible;
   }
 
   .navbar .navlinks {
