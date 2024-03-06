@@ -58,6 +58,8 @@ export const AudioButton = () => {
 
   //pr = play repeat only
   const playAudio = async (pr = false) => {
+    intro.volume = 0.5
+    repeat.volume = 0.5
     if (pr) {
       try {
         intro.pause()
@@ -68,8 +70,6 @@ export const AudioButton = () => {
         throw new Error("Failed to play audio")
       }
     }
-    intro.volume = 0.5
-    repeat.volume = 0.5
     intro.onended = () => {
       repeat.loop = true
       repeat.play()
