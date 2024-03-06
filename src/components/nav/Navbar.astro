@@ -87,6 +87,7 @@ import NavLink from "./NavLink.astro";
   }
 
   .navbar :global(.navButton) {
+    cursor: pointer;
     padding: 0.5rem;
     width: 3rem;
     border-radius: calc(var(--border-radius) * 2);
@@ -114,6 +115,7 @@ import NavLink from "./NavLink.astro";
 
       &:hover {
         color: var(--primary-color);
+        background: var(--surface2);
       }
 
       &.playing {
@@ -135,7 +137,7 @@ import NavLink from "./NavLink.astro";
   }
 
   #SitePreferences {
-    width: 3rem;
+    width: 4rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;

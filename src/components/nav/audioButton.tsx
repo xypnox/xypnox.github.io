@@ -1,6 +1,6 @@
 import { Portal } from "solid-js/web"
 import { icons } from "../icons"
-import { createSignal, onMount } from "solid-js"
+import { createSignal, onCleanup, onMount } from "solid-js"
 
 const lastPlayingTimestampKey = "xyp-lastPlayingTimestamp"
 
@@ -16,11 +16,13 @@ export const AudioButton = () => {
   let repeat: HTMLAudioElement;
 
   const saveLastPlayingTimestamp = () => {
-    localStorage.setItem(lastPlayingTimestampKey, new Date().getTime().toString())
+    // console.log("Saving last playing timestamp")
+    if (playing()) localStorage.setItem(lastPlayingTimestampKey, new Date().getTime().toString())
   }
 
   onMount(() => {
     const lastPlayingTimestamp = localStorage.getItem(lastPlayingTimestampKey)
+    console.log("Last playing timestamp", { lastPlayingTimestamp })
     if (lastPlayingTimestamp) {
       const now = new Date().getTime()
       const diff = now - parseInt(lastPlayingTimestamp)
@@ -38,27 +40,31 @@ export const AudioButton = () => {
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        if (playing()) saveLastPlayingTimestamp()
+        // Pause audio if it was playing before
         pauseAudio()
+      } else {
+        // Start playing audio if it was playing before
+        if (playing()) playAudio(true)
       }
+      saveLastPlayingTimestamp()
     })
+  })
 
-    document.addEventListener("beforeunload", () => {
-      if (playing()) saveLastPlayingTimestamp()
-    })
+  let interval: NodeJS.Timeout | undefined = setInterval(saveLastPlayingTimestamp, 10000)
+
+  onCleanup(() => {
+    if (interval) clearInterval(interval)
   })
 
   //pr = play repeat only
   const playAudio = async (pr = false) => {
     if (pr) {
       try {
-        console.log("Playing audio")
         intro.pause()
         repeat.loop = true
-        console.log("Playing repeat")
         return repeat.play()
       } catch (e) {
-        console.error("Failed to play audio")
+        console.error("Failed to play audio", e)
         throw new Error("Failed to play audio")
       }
     }
@@ -74,6 +80,7 @@ export const AudioButton = () => {
   const pauseAudio = () => {
     intro.pause()
     repeat.pause()
+    localStorage.removeItem(lastPlayingTimestampKey)
   }
 
   const toggleAudio = () => {
@@ -81,6 +88,7 @@ export const AudioButton = () => {
       pauseAudio()
     } else {
       playAudio()
+      saveLastPlayingTimestamp()
     }
     setPlaying(p => !p)
   }

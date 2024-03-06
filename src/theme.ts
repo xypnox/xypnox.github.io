@@ -449,7 +449,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
 
   // the color between surface and background (middle earth)
   const midErth = tinycolor.mix(palette.surface, palette.background, 50).toString()
-
+  const borderColor = tinycolor.mix(palette.text, palette.background, 75).toString()
   return {
     primary: {
       color: palette.primary,
@@ -463,10 +463,11 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
     colors: { purple: palette.primary, /* More could be added */ },
     background: palette.background,
     surface: palette.surface,
+    surface2: tinycolor.mix(palette.surface, borderColor, 25).toString(),
     border: {
       style: 'solid',
       // Border color is between text and midErth
-      color: tinycolor.mix(palette.text, palette.background, 75).toString()
+      color: borderColor,
     },
 
     text: palette.text,
