@@ -33,6 +33,8 @@ const env = {
   // cdn: process.env.IMAGE_CDN_URL
 };
 
+console.log(env.region, env.bucket, env.url)
+
 // Step 2: The s3Client function validates your request and directs it to your Space's specified endpoint using the AWS SDK.
 const s3Client = new S3Client({
   endpoint: env.url, // Find your endpoint in the control panel, under Settings. Prepend "https://".
