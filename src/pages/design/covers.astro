@@ -1,22 +1,67 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
-import { Covers as coversData } from "../../data/coverData";
+import { CDNCovers as coversData } from "../../data/coverData";
 import { ImageCollage } from "../../components/imageGrid";
-import PageHeader from '../../components/pageHeader.astro'
-import PageNav from '../../components/nav/pageNav.astro'
+import PageHeader from "../../components/pageHeader.astro";
+import PageNav from "../../components/nav/pageNav.astro";
+import { checkImages, thumbImages } from "../../utils/images";
 
 const covers = coversData.map((coverCollection) => ({
   ...coverCollection,
   slug: coverCollection.name.toLowerCase().replace(" ", "-"),
   covers: coverCollection.covers.map((cover) => ({
-    name: cover.replace(".webp", ""),
-    thumbName: `/covers/thumbnails/${cover}`,
+    name: cover.replace(".png", ""),
     path: `/covers/${cover}`,
+  })),
+}));
+
+const coversWithNoImage = await checkImages(
+  covers.map((col) => col.covers.map((c) => c.path)).flat(),
+);
+
+if (coversWithNoImage.length > 0) {
+  console.log(JSON.stringify({ coversWithNoImage }, null, 2));
+  throw new Error(
+    `Not all images exist in glob: "src/assets/covers/*.{jpeg,jpg,png,gif}"`,
+  );
+}
+const collages = covers.map((col) => ({
+  title: col.name,
+  description: col.description,
+  id: col.slug,
+  images: col.covers.map((cov) => ({
+    url: "../src/assets" + cov.path,
+    title: cov.name,
+    alt: cov.name,
+    link: cov.path,
+  })),
+}));
+
+// For each of collages, generate thumbnails
+
+const thumbnails: string[] = collages.reduce(
+  (p, col, i) => [
+    ...p,
+    ...col.images.reduce((p2, img) => [...p2, img.url], [] as string[]),
+  ],
+  [] as string[],
+);
+
+console.log({ thumbnails });
+
+// resolve all promises and then render the page
+const allThumbnails = await thumbImages(thumbnails);
+
+const collagesWithThumbnails = collages.map((col) => ({
+  ...col,
+  images: col.images.map((img) => ({
+    ...img,
+    thumbnail: allThumbnails[img.url],
   })),
 }));
 ---
 
-<Layout title="Covers">
+<Layout showLoading={false} title="Covers">
   <PageHeader title="Covers" />
   <PageNav
     links={covers.map((col) => ({
@@ -24,21 +69,7 @@ const covers = coversData.map((coverCollection) => ({
       slug: `#${col.slug}`,
     }))}
   />
-  <ImageCollage
-    client:load
-    collages={covers.map((col) => ({
-      title: col.name,
-      description: col.description,
-      id: col.slug,
-      images: col.covers.map((cov) => ({
-        url: cov.path,
-        thumbnail: cov.thumbName,
-        title: cov.name,
-        alt: cov.name,
-        link: cov.path,
-      })),
-    }))}
-  />
+  <ImageCollage client:load collages={collagesWithThumbnails} />
 </Layout>
 
 <style>

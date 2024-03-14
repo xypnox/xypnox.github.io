@@ -172,3 +172,39 @@ export const Covers: CoverCollection[] = [
 
 
 ]
+
+export const CDNCovers: CoverCollection[] = [
+  {
+    name: "CDN",
+    covers: [
+      "2023.01.ii.png",
+      "2023.02.i.png",
+      "2023.02.ii.png",
+      "2023.03.i.png",
+      "2023.03.ii.png",
+      "2023.04.i.png",
+      "2023.04.ii.png",
+      "2023.05.i.png",
+      "2023.05.ii.png",
+      "2023.06.i.png",
+      "2023.06.ii.png",
+      "2023.07.i.png",
+      "2023.07.ii.png",
+      "2023.08.i.png",
+      "2023.08.ii.png",
+      "2023.09.i.png",
+      "2023.09.ii.png",
+      "2023.10.i.png",
+      "2023.10.ii.png",
+      "2023.11.i.png",
+      "2023.11.ii(1).png",
+      "2023.12.i.png",
+      "2023.12.ii.png",
+      "2023.png",
+      "2024.01.ii.png",
+      "2024.02.i.png",
+      "2024.02.ii.png",
+      "Rep.png",
+    ]
+  }
+]

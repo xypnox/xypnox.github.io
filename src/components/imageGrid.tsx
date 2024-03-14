@@ -6,9 +6,9 @@ import { theme, } from "../theme"
 interface Image {
   // URL of the image
   url: string
-  thumbnail?: string
   alt: string
   title: string
+  thumbnail?: string
   description?: string
 
   // Alternate link to go to instead of the image
@@ -17,6 +17,7 @@ interface Image {
 
 interface ImageGridProps {
   images: Image[]
+  count?: number
 }
 
 
@@ -42,6 +43,12 @@ const GridItem = styled("div")`
   width: 100%;
 
   transition: all 0.3s ease-in-out;
+  .imgContainer {
+    width: 100%;
+    height: 100%;
+    border-radius: ${theme.border.radius};
+    overflow: hidden;
+  }
   img {
     width: 100%;
     height: auto;
@@ -53,13 +60,14 @@ const GridItem = styled("div")`
 export const ImageGrid = (props: ImageGridProps) => {
   const hasLink = (img: Image) => img.link && img.link.length > 0
 
+
   return (
     <GridWrapper>
       <For each={props.images}>
         {(img) => (
           <GridItem>
-            <Dynamic component={hasLink(img) ? 'a' : 'div'} href={img.link ?? img.url} target="_blank" rel="noopener noreferrer">
-              <img src={img.thumbnail ?? img.url} loading="lazy" alt={img.title} />
+            <Dynamic class="imgContainer" component={hasLink(img) ? 'a' : 'div'} href={img.url} target="_blank" rel="noopener noreferrer">
+              <img src={(props.count && props.count > 5) ? img.thumbnail ?? img.url : img.url} loading="lazy" alt={img.title} />
             </Dynamic>
             {/* Capitalize the name */}
             <p class="img-name">{img.title}</p>
@@ -217,10 +225,11 @@ export const ImageCollage = (props: ImageCollageProps) => {
             <Show when={collage.description}>
               <p class="description">{collage.description}</p>
             </Show>
-            <ImageGrid images={collage.images} />
+            <ImageGrid count={imageCount()} images={collage.images} />
           </Wrapper>
         )}
       </For>
     </CollageWrapper>
   )
 }
+

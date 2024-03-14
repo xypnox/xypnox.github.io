@@ -1,0 +1,43 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { Books as RawBooksData, type Book } from "../../data/books";
+
+const ReadBooks = RawBooksData.filter(book => book["Read Count"] > 0).map(
+  (book: Book) => ({
+    ...book,
+    // Remove the starting =
+    ISBN: book.ISBN?.replace(/^=\"/, ""),
+  }
+  )
+
+)
+
+// https://covers.openlibrary.org/b/isbn/0385472579-S.jpg 
+---
+
+<Layout title="Books">
+  <h1>Books</h1>
+  <div class="shelf">
+    {ReadBooks.map(book => (
+      <div>
+        {book["ISBN"]
+          && <img src={`https://covers.openlibrary.org/b/isbn/${book["ISBN"]}-M.jpg`} alt={`Cover of ${book.Title}`} />
+        }
+        <p><strong>{book.Title}</strong></p>
+        <p>{book.Author}</p>
+        {book["My Rating"]
+          && book["My Rating"] !== 0
+          && <p>My Rating: {book["My Rating"]}</p>
+        }
+      </div>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .shelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+</style>

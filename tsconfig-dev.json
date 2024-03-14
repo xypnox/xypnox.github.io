@@ -4,11 +4,11 @@
     "target": "es2018",
     "strict": true,
     "esModuleInterop": true,
-    "outDir": "dist",
+    "outDir": ".buildScripts",
     "rootDir": "src"
   },
   "include": [
-    "src/buildChecks/*.ts",
+    "src/buildScripts/*.ts",
     "src/theme.ts",
     "src/lib/objects.ts"
   ],
