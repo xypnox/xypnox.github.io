@@ -104,7 +104,9 @@ export const ImageGrid = (props: ImageGridProps) => {
               class="imgContainer"
               component={hasLink(img) ? 'a' : 'div'}
               {...(hasLink(img) ? imgLinkProps(img) : {
-                onclick: props.onImageClick ? () => { props.onImageClick!(props.images.indexOf(img)) } : undefined
+                onclick: props.onImageClick ? () => { props.onImageClick!(props.images.indexOf(img)) } : undefined,
+                role: "button",
+                title: img.title
               })}>
               <Show when={img.image}>
                 <Image img={img.image} alt={img.alt} count={props.count} />
