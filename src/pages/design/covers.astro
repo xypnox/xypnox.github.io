@@ -1,10 +1,12 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
-import { CDNCovers as coversData } from "../../data/coverData";
+import { Covers as coversData } from "../../data/coverData";
+import { findMyPlaylist } from "../../data/spotifyPlaylists";
 import { ImageCollage } from "../../components/imageGrid";
 import PageHeader from "../../components/pageHeader.astro";
 import PageNav from "../../components/nav/pageNav.astro";
 import { checkImages, optimizeImages } from "../../utils/images";
+import type { Image } from "../../dataTypes";
 
 const covers = coversData.map((cover) => ({
   ...cover,
@@ -30,9 +32,10 @@ const collagesRaw = covers.map((col) => ({
   description: col.description,
   id: col.slug,
   images: col.covers.map((cov) => ({
-    path: '../assets' + cov.path,
+    path: "../assets" + cov.path,
     title: cov.name,
     alt: cov.name,
+    spotifyLink: findMyPlaylist(cov.name)?.external_urls?.spotify,
   })),
 }));
 

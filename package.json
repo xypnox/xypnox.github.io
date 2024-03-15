@@ -37,7 +37,8 @@
     "sharp": "^0.32.6",
     "solid-js": "^1.8.5",
     "solid-styled-components": "^0.28.5",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+    "undici": "^6.9.0"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",

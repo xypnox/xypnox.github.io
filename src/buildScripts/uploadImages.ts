@@ -12,6 +12,7 @@ const uploadFile = async (file: string, bucketName: string) => {
     Bucket: bucketName, // Your bucket name
     Key: key, // File name you want to save as in S3
     Body: fileStream,
+    ACL: 'public-read' as const
   };
 
   try {

@@ -1,5 +1,7 @@
 import { promises as fs, createWriteStream } from 'fs';
 import { XMLParser } from "fast-xml-parser";
+import { fetch, Agent } from "undici";
+
 
 import { CDN_URL, IMAGE_DIRECTORY } from "../lib/s3";
 import path from 'path';
@@ -21,7 +23,9 @@ const fetchCdnImage = async (cdnBucketUrl: string, image: string, directory: str
 
     try {
       // This will be a image, save the stream to the file in the directory
-      const response = await fetch(`${cdnBucketUrl}${image}`);
+      const response = await fetch(`${cdnBucketUrl}${image}`, {
+        dispatcher: new Agent({ connectTimeout: 20000 })
+      });
       // check responses type. it should not be xml
       if (response.headers.get('content-type')?.includes('xml')) {
         console.warn('Response is xml', await response.text());
@@ -48,7 +52,7 @@ const fetchCdnImage = async (cdnBucketUrl: string, image: string, directory: str
         }
       });
     } catch (error) {
-      console.error('Error fetching image:', error);
+      console.error('Error fetching image:', error, image);
       reject(error);
     }
   })
@@ -91,7 +95,14 @@ const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string) =
       return await fetchCdnImage(cdnBucketUrl, imagePath, directory);
     });
 
-    await Promise.all(promises);
+    // await Promise.all(promises);
+    // Instead of all promises at the same time, only call first 25 and then and then
+    for (let i = 0; i < promises.length; i += 25) {
+      const chunk = promises.slice(i, i + 25);
+      // Sleep
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await Promise.all(chunk);
+    }
     return
   } catch (error) {
     console.error('Error fetching images:', error);

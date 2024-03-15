@@ -1,20 +1,24 @@
 import type { GetImageResult } from "astro"
-import { For, Show, createSignal, type Accessor } from "solid-js"
+import { For, Show, createSignal, type Accessor, type JSX } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
 import type { Image } from "../dataTypes"
 import { ImageSlider, createSliderState } from "./imageSlider"
 import { icons } from "./icons"
+import { baseElementStyles } from "./elements/atoms"
 
-interface CoverImage extends Image {
+interface GridImage extends Image {
   title: string
   link?: string
+  // Show button to spotify
+  spotifyLink?: string
   description?: string
 }
 
 interface ImageGridProps {
-  images: CoverImage[]
+  images: GridImage[]
+  onImageClick?: (index: number) => void
   count?: Accessor<number>
 }
 
@@ -46,10 +50,11 @@ const GridItem = styled("div")`
     height: 100%;
     border-radius: ${theme.border.radius};
     overflow: hidden;
+    cursor: pointer;
   }
   img {
     width: 100%;
-    height: auto;
+    /* height: auto; */
     border-radius: ${theme.border.radius};
   }
 `
@@ -84,19 +89,14 @@ const Image = (props: {
 
 
 export const ImageGrid = (props: ImageGridProps) => {
-  const hasLink = (img: CoverImage) => img.link && img.link.length > 0
-  const imgLinkProps = (img: CoverImage) => ({
+  const hasLink = (img: GridImage) => img.link && img.link.length > 0
+  const imgLinkProps = (img: GridImage) => ({
     href: img.link,
     target: "_blank",
     rel: "noopener noreferrer"
   })
-  const sliderState = createSliderState(0, props.images.length)
   return (
     <GridWrapper>
-      <ImageSlider
-        sliderState={sliderState}
-        images={props.images}
-      />
       <For each={props.images}>
         {(img) => (
           <GridItem>
@@ -104,10 +104,7 @@ export const ImageGrid = (props: ImageGridProps) => {
               class="imgContainer"
               component={hasLink(img) ? 'a' : 'div'}
               {...(hasLink(img) ? imgLinkProps(img) : {
-                onclick: () => {
-                  sliderState.current[1](props.images.indexOf(img))
-                  sliderState.toggle()
-                }
+                onclick: props.onImageClick ? () => { props.onImageClick!(props.images.indexOf(img)) } : undefined
               })}>
               <Show when={img.image}>
                 <Image img={img.image} alt={img.alt} count={props.count} />
@@ -129,11 +126,12 @@ export interface Collage {
   title: string
   description?: string
   id: string
-  images: CoverImage[]
+  images: GridImage[]
 }
 
-interface ImageCollageProps {
+interface ImageCollageProps<T extends GridImage> {
   collages: Collage[]
+  Alt?: (props: { image: T }) => JSX.Element
 }
 
 // @keyframes curtain {
@@ -230,14 +228,68 @@ const Wrapper = styled("div")`
     font-size: ${theme.font.size.base};
   }
 `
-export const ImageCollage = (props: ImageCollageProps) => {
+
+const AltContainer = styled("a")`
+  ${baseElementStyles}
+  text-decoration: none;
+  color: ${theme.text};
+  opacity: 0.75;
+  gap: 0.75rem;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  background: ${theme.background};
+  border-radius: ${theme.border.radius};
+  font-size: ${theme.font.size.sm};
+  transition: all 0.3s ease-in-out;
+  p {
+    margin: 0;
+  }
+  iconify-icon {
+    font-size: ${theme.font.size.md};
+  }
+
+  &:hover {
+    background: ${theme.primary.color};
+    color: ${theme.primary.contrast};
+    iconify-icon {
+      color: ${theme.primary.contrast};
+    }
+  }
+`
+
+const DefaultAlt = (props: { image: GridImage }) => (
+  <AltContainer class="altText" href={props.image.spotifyLink} target="_blank" rel="noopener noreferrer">
+    <p>Play on Spotify</p>
+    <iconify-icon icon={icons.spotify} />
+  </AltContainer>
+)
+
+export const ImageCollage = (props: ImageCollageProps<GridImage>) => {
   const [showControls, setShowControls] = createSignal(true);
 
   const [imageCount, setImageCount] = createSignal(5)
+  const imageCounts = () => {
+    // All images inside all covers
+    const allImageCount = props.collages.map((collage) => collage.images.length)
+    return allImageCount
+  }
+
+  const allImages = () => {
+    return props.collages.reduce((acc, collage) => acc.concat(collage.images), [] as GridImage[])
+  }
+
+  const sliderState = createSliderState(0, imageCounts().reduce((acc, count) => acc + count, 0))
 
   return (
     <>
       <ControlWrapper>
+        <ImageSlider<GridImage>
+          sliderState={sliderState}
+          images={allImages()}
+          Alt={props.Alt ?? DefaultAlt}
+        />
         <Controls>
           <Control
             title="Show/Hide Controls"
@@ -276,7 +328,7 @@ export const ImageCollage = (props: ImageCollageProps) => {
       </ControlWrapper>
       <CollageWrapper>
         <For each={props.collages}>
-          {(collage) => (
+          {(collage, colIndex) => (
             <Wrapper
               style={{
                 "--count": imageCount(),
@@ -286,7 +338,14 @@ export const ImageCollage = (props: ImageCollageProps) => {
               <Show when={collage.description}>
                 <p class="description">{collage.description}</p>
               </Show>
-              <ImageGrid count={imageCount} images={collage.images} />
+              <ImageGrid
+                count={imageCount}
+                images={collage.images}
+                onImageClick={(index) => {
+                  sliderState.setCurrent(index + imageCounts().slice(0, colIndex()).reduce((acc, count) => acc + count, 0))
+                  sliderState.toggle()
+                }}
+              />
             </Wrapper>
           )}
         </For>

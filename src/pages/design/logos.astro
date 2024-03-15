@@ -33,8 +33,12 @@ const icons = iconsData.map((iconCol) => ({
         url: cov.path,
         thumbnail: cov.path,
         title: cov.name,
+        image: {
+          src: cov.path,
+          srcSet: cov.path,
+          alt: cov.name,
+        } as any,
         alt: cov.name,
-        link: cov.path,
       })),
     }))}
   />

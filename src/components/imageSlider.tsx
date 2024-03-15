@@ -1,4 +1,4 @@
-import { createSignal, Show, type Accessor, type Signal, createEffect } from "solid-js"
+import { createSignal, Show, type Accessor, type Signal, createEffect, type Component, type JSX } from "solid-js"
 import type { Image } from "../dataTypes"
 import { Portal } from "solid-js/web"
 import { styled } from "solid-styled-components"
@@ -16,9 +16,10 @@ interface SliderState {
   toggle: () => void
 }
 
-interface ImageSliderProps {
-  images: Image[]
+interface ImageSliderProps<T> {
+  images: T[]
   sliderState: SliderState
+  Alt?: (props: { image: T }) => JSX.Element
 }
 
 export const createSliderState = (initial: number, max: number) => {
@@ -27,6 +28,7 @@ export const createSliderState = (initial: number, max: number) => {
   const setCurrent = current[1]
   return {
     current,
+    setCurrent,
 
     visible: visible,
     toggle: () => setVisible((prev) => !prev),
@@ -59,6 +61,7 @@ const Backdrop = styled("div")`
 `
 
 const SliderContents = styled("div")`
+  width: 100%;
   max-width: 100%;
   pointer-events: none;
 `
@@ -66,14 +69,15 @@ const SliderContents = styled("div")`
 const ImageContents = styled("div")`
   position: relative;
   width: 100%;
-  height: calc(100% - 7rem);
+  height: calc(100vh - 7rem);
   max-width: 100%;
   z-index: 2001;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 1rem;
+  padding: 0 1rem;
   pointer-events: none;
   & > * {
     pointer-events: all;
@@ -94,8 +98,8 @@ const Thumbnails = styled("div")`
   display: flex;
   align-items: center;
   height: 6rem;
-  left: var(--left);
-  transition: left 0.5s ease-out;
+  transform: translateX(var(--left));
+  transition: transform 0.5s ease-out;
   & > * {
     pointer-events: all;
   }
@@ -122,14 +126,25 @@ const Thumbnail = styled("img")`
 `
 
 const ImageWrapper = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   position: relative;
   max-width: 100%;
   max-height: 100%;
+  padding: 1rem;
+
+  &:hover .altText {
+    opacity: 1;
+  }
+  
 `
 
 const ImageElement = styled("img")`
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `
 
 const SliderButton = styled(Button)`
@@ -150,8 +165,9 @@ const SliderButton = styled(Button)`
 
 
 
-export const ImageSlider = (props: ImageSliderProps) => {
+export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
   const current = props.sliderState.current[0]
+  const Alt = props.Alt!
   const onBackdropClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget) {
       props.sliderState.toggle()
@@ -186,6 +202,9 @@ export const ImageSlider = (props: ImageSliderProps) => {
               </SliderButton>
               <ImageWrapper>
                 <ImageElement src={props.images[current()].image.src} alt={props.images[current()].alt} />
+                <Show when={Alt}>
+                  <Alt image={props.images[current()]} />
+                </Show>
               </ImageWrapper>
               <SliderButton onClick={() => props.sliderState.next()}>
                 <iconify-icon icon={icons.next} />

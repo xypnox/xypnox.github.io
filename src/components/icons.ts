@@ -6,6 +6,7 @@ export const icons = {
   "email": "ic:round-mail",
   "telegram": "fa-brands:telegram",
   "goodreads": "fa-brands:goodreads",
+  "spotify": "fa6-brands:spotify",
 
   "lit": "ph:pen-nib-duotone",
   "design": "ph:paint-brush-duotone",
