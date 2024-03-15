@@ -131,8 +131,8 @@ const ImageWrapper = styled("div")`
   align-items: center;
   gap: 1rem;
   position: relative;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   padding: 1rem;
 
   &:hover .altText {
@@ -143,7 +143,7 @@ const ImageWrapper = styled("div")`
 
 const ImageElement = styled("img")`
   width: 100%;
-  height: 100%;
+  height: 90%;
   object-fit: contain;
 `
 
