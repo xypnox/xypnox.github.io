@@ -99,8 +99,6 @@ const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string) =
     // Instead of all promises at the same time, only call first 25 and then and then
     for (let i = 0; i < promises.length; i += 25) {
       const chunk = promises.slice(i, i + 25);
-      // Sleep
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       await Promise.all(chunk);
     }
     return
