@@ -6,10 +6,10 @@ import PageHeader from "../../components/pageHeader.astro";
 import PageNav from "../../components/nav/pageNav.astro";
 import { checkImages, optimizeImages } from "../../utils/images";
 
-const covers = coversData.map((coverCollection) => ({
-  ...coverCollection,
-  slug: coverCollection.name.toLowerCase().replace(" ", "-"),
-  covers: coverCollection.covers.map((cover) => ({
+const covers = coversData.map((cover) => ({
+  ...cover,
+  slug: cover.name.toLowerCase().replace(" ", "-"),
+  covers: cover.covers.map((cover) => ({
     name: cover.replace(".png", ""),
     path: `/covers/${cover}`,
   })),
@@ -30,10 +30,9 @@ const collagesRaw = covers.map((col) => ({
   description: col.description,
   id: col.slug,
   images: col.covers.map((cov) => ({
-    url: "../src/assets" + cov.path,
+    path: '../assets' + cov.path,
     title: cov.name,
     alt: cov.name,
-    link: cov.path,
   })),
 }));
 
@@ -42,12 +41,12 @@ const collagesRaw = covers.map((col) => ({
 const thumbnails: string[] = collagesRaw.reduce(
   (p, col, i) => [
     ...p,
-    ...col.images.reduce((p2, img) => [...p2, img.url], [] as string[]),
+    ...col.images.reduce((p2, img) => [...p2, img.path], [] as string[]),
   ],
   [] as string[],
 );
 
-console.log({ thumbnails });
+// console.log({ thumbnails });
 
 const opImgs = await optimizeImages(thumbnails);
 
@@ -55,7 +54,7 @@ const collages = collagesRaw.map((col) => ({
   ...col,
   images: col.images.map((img) => ({
     ...img,
-    image: opImgs[img.url],
+    image: opImgs[img.path],
   })),
 }));
 ---

@@ -478,6 +478,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
     // Fade with midErth
     fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
     cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
+    smallShadow: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.5 : 0.2})`,
 
     // We can use these inside new vars
     ...getCard(cardType),

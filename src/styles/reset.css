@@ -39,3 +39,12 @@ h3 {
   line-height: 1.2;
 }
 
+
+/* Inherit font for inputs and buttons */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}

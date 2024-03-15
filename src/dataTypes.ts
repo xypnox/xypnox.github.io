@@ -1,3 +1,4 @@
+import type { GetImageResult } from "astro";
 
 export interface Heading {
   depth: number;
@@ -33,3 +34,10 @@ export interface BaseLayoutProps {
   hideNav?: boolean;
   themeCssVars?: string;
 }
+
+export interface Image {
+  // URL of the image
+  alt?: string
+  image: GetImageResult
+}
+

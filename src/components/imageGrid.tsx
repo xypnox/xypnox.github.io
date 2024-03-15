@@ -3,21 +3,18 @@ import { For, Show, createSignal, type Accessor } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
+import type { Image } from "../dataTypes"
+import { ImageSlider, createSliderState } from "./imageSlider"
+import { icons } from "./icons"
 
-interface Image {
-  // URL of the image
-  url: string
-  alt: string
+interface CoverImage extends Image {
   title: string
-  image: GetImageResult
-  description?: string
-
-  // Alternate link to go to instead of the image
   link?: string
+  description?: string
 }
 
 interface ImageGridProps {
-  images: Image[]
+  images: CoverImage[]
   count?: Accessor<number>
 }
 
@@ -59,7 +56,7 @@ const GridItem = styled("div")`
 
 const Image = (props: {
   img: GetImageResult
-  alt: string
+  alt?: string
   count?: Accessor<number>
 }) => {
   const sizes = () => {
@@ -87,13 +84,31 @@ const Image = (props: {
 
 
 export const ImageGrid = (props: ImageGridProps) => {
-  const hasLink = (img: Image) => img.link && img.link.length > 0
+  const hasLink = (img: CoverImage) => img.link && img.link.length > 0
+  const imgLinkProps = (img: CoverImage) => ({
+    href: img.link,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  })
+  const sliderState = createSliderState(0, props.images.length)
   return (
     <GridWrapper>
+      <ImageSlider
+        sliderState={sliderState}
+        images={props.images}
+      />
       <For each={props.images}>
         {(img) => (
           <GridItem>
-            <Dynamic class="imgContainer" component={hasLink(img) ? 'a' : 'div'} href={img.url} target="_blank" rel="noopener noreferrer">
+            <Dynamic
+              class="imgContainer"
+              component={hasLink(img) ? 'a' : 'div'}
+              {...(hasLink(img) ? imgLinkProps(img) : {
+                onclick: () => {
+                  sliderState.current[1](props.images.indexOf(img))
+                  sliderState.toggle()
+                }
+              })}>
               <Show when={img.image}>
                 <Image img={img.image} alt={img.alt} count={props.count} />
               </Show>
@@ -114,7 +129,7 @@ export interface Collage {
   title: string
   description?: string
   id: string
-  images: Image[]
+  images: CoverImage[]
 }
 
 interface ImageCollageProps {
@@ -135,8 +150,7 @@ const CollageWrapper = styled("div")`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  margin: 2rem auto;
-  padding: 0 2rem;
+  margin: 4rem auto;
 
   transition: all 0.3s ease-in-out;
   width: 100%;
@@ -146,47 +160,59 @@ const CollageWrapper = styled("div")`
   }
 `
 
-
-const Controls = styled("div")`
+const ControlWrapper = styled("div")`
   position: sticky;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: max-content;
   top: 1rem;
-  height: 3rem;
-  background-color: ${theme.surface};
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid ${theme.border.color};
-  padding: 0 1rem;
-  border-radius: ${theme.border.radius};
-
-  & > svg {
-    width: 2rem;
-    height: 2rem;
-  }
+  height: 0rem;
+  margin-top: -2rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 
   @media (max-width: 768px) {
     display: none;
   }
 `
 
-const Control = styled("div")`
+
+const Controls = styled("div")`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   align-items: center;
-  padding: 1rem;
+  gap: 0.25rem;
+  width: max-content;
+  height: 3rem;
+  padding: 0rem 0.5rem;
+  background: ${theme.background};
+  border: 1px solid ${theme.border.color};
+  border-radius: calc(2 * ${theme.border.radius});
+  box-shadow: ${theme.cardShadow};
+
+  & > svg {
+    width: 2rem;
+    height: 2rem;
+  }
+`
+
+const Control = styled("button")`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
   border-radius: calc(${theme.border.radius} * 2);
+  border: none;
+  background: transparent;
+  color: ${theme.fadeText};
   &:hover {
-    background-color: ${theme.surface};
     transform: scale(1.1);
+    color: ${theme.text};
+  }
+  &:active {
+    transform: scale(0.9);
+    transition: all 0.2s ease-out;
   }
   transition: all 0.3s ease-in-out;
-  svg {
-    width: 1rem;
-    height: 1rem;
+  iconify-icon {
+    font-size: ${theme.font.size.md};
   }
 `
 const Wrapper = styled("div")`
@@ -210,55 +236,62 @@ export const ImageCollage = (props: ImageCollageProps) => {
   const [imageCount, setImageCount] = createSignal(5)
 
   return (
-    <CollageWrapper>
-      <Controls>
-        <svg
-          onClick={() => setShowControls(c => !c)}
-          xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g fill="currentColor"><g opacity=".2"><path d="M5 5.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-12a.5.5 0 0 1-.5-.5v-12Z" /><path fill-rule="evenodd" d="M6.5 6.5v10h10v-10h-10ZM5.5 5a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5h-12Z" clip-rule="evenodd" /></g><path fill-rule="evenodd" d="M4.5 4.5v4h4v-4h-4Zm-.5-1a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5H4Zm7.5 1v4h4v-4h-4Zm-.5-1a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5h-5Zm-6.5 8v4h4v-4h-4Zm-.5-1a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H4Zm7.5 1v4h4v-4h-4Zm-.5-1a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-5Z" clip-rule="evenodd" /></g></svg>
-        <Show when={showControls()}>
+    <>
+      <ControlWrapper>
+        <Controls>
           <Control
-            role="button"
-            aria-roledescription="decrease count"
-            classList={{
-              "disabled": imageCount() === 1
-            }}
-            onClick={() => {
-              //decrease by one
-              if (imageCount() > 1) {
-                setImageCount(imageCount() - 1)
-              }
-            }}
+            title="Show/Hide Controls"
+            onClick={() => setShowControls(c => !c)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="M228 128a12 12 0 0 1-12 12h-76v76a12 12 0 0 1-24 0v-76H40a12 12 0 0 1 0-24h76V40a12 12 0 0 1 24 0v76h76a12 12 0 0 1 12 12Z" /></svg>
+            <iconify-icon
+              icon={showControls() ? icons.controls : icons.controlsCollapsed}
+            />
           </Control>
-          <Control
-            role="button"
-            aria-roledescription="increase count"
-            classList={{
-              "disabled": imageCount() >= 4
-            }}
-            onClick={() => { setImageCount(imageCount() + 1) }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="M228 128a12 12 0 0 1-12 12H40a12 12 0 0 1 0-24h176a12 12 0 0 1 12 12Z" /></svg>
-          </Control>
-        </Show>
-      </Controls>
-      <For each={props.collages}>
-        {(collage) => (
-          <Wrapper
-            style={{
-              "--count": imageCount(),
-            }}
-          >
-            <h2 id={collage.id} class="title">{collage.title}</h2>
-            <Show when={collage.description}>
-              <p class="description">{collage.description}</p>
-            </Show>
-            <ImageGrid count={imageCount} images={collage.images} />
-          </Wrapper>
-        )}
-      </For>
-    </CollageWrapper>
+          <Show when={showControls()}>
+            <Control
+              title="Zoom in"
+              classList={{
+                "disabled": imageCount() === 1
+              }}
+              onClick={() => {
+                //decrease by one
+                if (imageCount() > 1) {
+                  setImageCount(imageCount() - 1)
+                }
+              }}
+            >
+              <iconify-icon icon={icons.zoomIn} />
+            </Control>
+            <Control
+              title="Zoom out"
+              classList={{
+                "disabled": imageCount() >= 4
+              }}
+              onClick={() => { setImageCount(imageCount() + 1) }}
+            >
+              <iconify-icon icon={icons.zoomOut} />
+            </Control>
+          </Show>
+        </Controls>
+      </ControlWrapper>
+      <CollageWrapper>
+        <For each={props.collages}>
+          {(collage) => (
+            <Wrapper
+              style={{
+                "--count": imageCount(),
+              }}
+            >
+              <h2 id={collage.id} class="title">{collage.title}</h2>
+              <Show when={collage.description}>
+                <p class="description">{collage.description}</p>
+              </Show>
+              <ImageGrid count={imageCount} images={collage.images} />
+            </Wrapper>
+          )}
+        </For>
+      </CollageWrapper>
+    </>
   )
 }
 
