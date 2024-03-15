@@ -26,6 +26,9 @@ dependencies:
   '@melloware/coloris':
     specifier: ^0.22.0
     version: 0.22.0
+  '@solid-primitives/keyboard':
+    specifier: ^1.2.8
+    version: 1.2.8(solid-js@1.8.5)
   '@solid-primitives/mouse':
     specifier: ^2.0.14
     version: 2.0.14(solid-js@1.8.5)
@@ -2000,6 +2003,26 @@ packages:
       solid-js: 1.8.5
     dev: false
 
+  /@solid-primitives/event-listener@2.3.3(solid-js@1.8.5):
+    resolution: {integrity: sha512-DAJbl+F0wrFW2xmcV8dKMBhk9QLVLuBSW+TR4JmIfTaObxd13PuL7nqaXnaYKDWOYa6otB00qcCUIGbuIhSUgQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.5)
+      solid-js: 1.8.5
+    dev: false
+
+  /@solid-primitives/keyboard@1.2.8(solid-js@1.8.5):
+    resolution: {integrity: sha512-pJtcbkjozS6L1xvTht9rPpyPpX55nAkfBzbFWdf3y0Suwh6qClTibvvObzKOf7uzQ+8aZRDH4LsoGmbTKXtJjQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/event-listener': 2.3.3(solid-js@1.8.5)
+      '@solid-primitives/rootless': 1.4.5(solid-js@1.8.5)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.5)
+      solid-js: 1.8.5
+    dev: false
+
   /@solid-primitives/mouse@2.0.14(solid-js@1.8.5):
     resolution: {integrity: sha512-96qRl1LNMglIyBiiZdNG/4e4QSp6CFfW/l81wBKes9HMwPNZcF9TNcrZMQfMteFte1AyjXY4oiO4fqhlsKp2Gw==}
     peerDependencies:
@@ -2021,6 +2044,15 @@ packages:
       solid-js: 1.8.5
     dev: false
 
+  /@solid-primitives/rootless@1.4.5(solid-js@1.8.5):
+    resolution: {integrity: sha512-GFJE9GC3ojx0aUKqAUZmQPyU8fOVMtnVNrkdk2yS4kd17WqVSpXpoTmo9CnOwA+PG7FTzdIkogvfLQSLs4lrww==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.5)
+      solid-js: 1.8.5
+    dev: false
+
   /@solid-primitives/static-store@0.0.4(solid-js@1.8.5):
     resolution: {integrity: sha512-NcLtDNA6H+Z9LmqaUe4SKfMx0YbszIMXEqfV15cB34t5XyEeOM5TihYwsVJ/dpkmpHYzflm0SwAL+P9uwyzvWQ==}
     peerDependencies:
@@ -2032,6 +2064,14 @@ packages:
 
   /@solid-primitives/utils@6.2.2(solid-js@1.8.5):
     resolution: {integrity: sha512-11ypVbp987XxETeRqY5Y3OmmTpm8/jZqJXRvo6AyqBthzkvvjEdReuUMU2yVb+pwWGxfZpWHZ6EUCcGXUMhfwg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.8.5
+    dev: false
+
+  /@solid-primitives/utils@6.2.3(solid-js@1.8.5):
+    resolution: {integrity: sha512-CqAwKb2T5Vi72+rhebSsqNZ9o67buYRdEJrIFzRXz3U59QqezuuxPsyzTSVCacwS5Pf109VRsgCJQoxKRoECZQ==}
     peerDependencies:
       solid-js: ^1.6.12
     dependencies:

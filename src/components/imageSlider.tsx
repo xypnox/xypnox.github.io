@@ -6,6 +6,7 @@ import { theme } from "../theme"
 import { icons } from "./icons"
 import { Button } from "./elements/atoms"
 import { enableScroll, disableScroll } from "../utils/scroll"
+import { createShortcut } from "@solid-primitives/keyboard"
 
 interface SliderState {
   current: Signal<number>
@@ -58,13 +59,15 @@ const Backdrop = styled("div")`
 `
 
 const SliderContents = styled("div")`
+  max-width: 100%;
   pointer-events: none;
 `
 
 const ImageContents = styled("div")`
   position: relative;
   width: 100%;
-  height: calc(100% - 4rem);
+  height: calc(100% - 7rem);
+  max-width: 100%;
   z-index: 2001;
   display: flex;
   flex-direction: row;
@@ -75,21 +78,24 @@ const ImageContents = styled("div")`
   & > * {
     pointer-events: all;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const ThumbnailWrapper = styled("div")`
   pointer-events: all;
+  overflow-x: hidden;
 `
 
 const Thumbnails = styled("div")`
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: -2rem;
   height: 6rem;
   left: var(--left);
-  transition: left 0.3s ease-in-out;
+  transition: left 0.5s ease-out;
   & > * {
     pointer-events: all;
   }
@@ -99,22 +105,32 @@ const Thumbnail = styled("img")`
   width: 4rem;
   height: 4rem;
   object-fit: cover;
-  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+  transition: width 0.25s ease-in-out, height 0.25s ease-in-out, opacity 0.25s ease-in-out;
+  opacity: 0.5;
 
   &:hover {
+    opacity: 1;
     width: 6rem;
     height: 6rem;
   }
 
   &.active {
+    opacity: 1;
     width: 6rem;
     height: 6rem;
   }
 `
 
-const ImageWrapper = styled("div")``
+const ImageWrapper = styled("div")`
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+`
 
-const ImageElement = styled("img")``
+const ImageElement = styled("img")`
+  max-width: 100%;
+  max-height: 100%;
+`
 
 const SliderButton = styled(Button)`
   padding: 1rem;
@@ -144,12 +160,21 @@ export const ImageSlider = (props: ImageSliderProps) => {
   createEffect(() => {
     if (props.sliderState.visible()) {
       disableScroll()
+      createShortcut(["Escape"], () => {
+        props.sliderState.toggle()
+      })
+      createShortcut(["ArrowLeft"], () => {
+        props.sliderState.prev()
+      })
+      createShortcut(["ArrowRight"], () => {
+        props.sliderState.next()
+      })
     } else {
       enableScroll()
     }
   })
   // Use currernt index to determine how many to subtract from the center
-  const leftPad = () => `calc(50% - ${current() * 4.5}rem)`
+  const leftPad = () => `calc(50% - ${current() * 4 + 3}rem)`
   return (
     <Portal>
       <Show when={props.sliderState.visible()}>

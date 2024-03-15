@@ -25,6 +25,7 @@
     "@astrojs/solid-js": "^4.0.1",
     "@aws-sdk/client-s3": "^3.533.0",
     "@melloware/coloris": "^0.22.0",
+    "@solid-primitives/keyboard": "^1.2.8",
     "@solid-primitives/mouse": "^2.0.14",
     "astro": "^4.4.0",
     "dotenv": "^16.4.5",
