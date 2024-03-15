@@ -1,5 +1,5 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { s3Client, env, IMAGE_DIRECTORY } from '../lib/s3'
+import { s3Client, Env, IMAGE_DIRECTORY } from '../lib/s3'
 import { promises as fs, createReadStream } from 'fs';
 import path from 'path';
 
@@ -15,7 +15,8 @@ const uploadFile = async (file: string, bucketName: string) => {
   };
 
   try {
-    const data = await s3Client.send(new PutObjectCommand(uploadParams));
+    const client = s3Client(Env);
+    const data = await client.send(new PutObjectCommand(uploadParams));
     console.log(`Successfully uploaded ${file} to ${bucketName}/${key}`);
     return data;
   } catch (err) {
@@ -48,7 +49,7 @@ const uploadImagesFromDirectory = async (directory: string) => {
     console.error('Directory does not exist:', directory)
   }
   const folderContents = await fs.readdir(directory)
-  console.log('Folder:', folderContents, env)
+  console.log('Folder:', folderContents, Env)
 
   // Ensure each item is a folder which can have multiple files inside
   for (const item of folderContents) {
@@ -60,7 +61,7 @@ const uploadImagesFromDirectory = async (directory: string) => {
     }
   }
 
-  await uploadImagesFromDirectoryRecur(directory, env.bucket!).then(() => {
+  await uploadImagesFromDirectoryRecur(directory, Env.bucket!).then(() => {
     console.log('Images uploaded')
   }).catch((error) => {
     console.error('Error:', error)

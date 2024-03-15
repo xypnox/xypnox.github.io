@@ -2,6 +2,7 @@ import { S3Client } from '@aws-sdk/client-s3';
 import dotenv from 'dotenv'
 
 export const IMAGE_DIRECTORY = 'src/assets/';
+export const CDN_URL = 'https://xyp-images.blr1.cdn.digitaloceanspaces.com/';
 
 dotenv.config();
 
@@ -24,26 +25,31 @@ dotenv.config();
 })((process.env));
 
 
-const env = {
-  url: process.env.IMAGE_API_URL,
-  region: process.env.IMAGE_API_REGION,
-  bucket: process.env.IMAGE_API_BUCKET,
-  key: process.env.IMAGE_API_ACCESS_KEY,
-  secret: process.env.IMAGE_API_ACCESS_SECRET,
+const Env = {
+  url: process.env.IMAGE_API_URL!,
+  region: process.env.IMAGE_API_REGION!,
+  bucket: process.env.IMAGE_API_BUCKET!,
+  accessKey: process.env.IMAGE_API_ACCESS_KEY!,
+  secret: process.env.IMAGE_API_ACCESS_SECRET!,
   // cdn: process.env.IMAGE_CDN_URL
 };
 
-console.log(env.region, env.bucket, env.url)
+// console.log(env.region, env.bucket, env.url)
 
 // Step 2: The s3Client function validates your request and directs it to your Space's specified endpoint using the AWS SDK.
-const s3Client = new S3Client({
+const s3Client = (env: {
+  url: string,
+  region: string,
+  accessKey: string,
+  secret: string
+}) => new S3Client({
   endpoint: env.url, // Find your endpoint in the control panel, under Settings. Prepend "https://".
   forcePathStyle: false, // Configures to use subdomain/virtual calling format.
   region: env.region, // Must be "us-east-1" when creating new Spaces. Otherwise, use the region in your endpoint (for example, nyc3).
   credentials: {
-    accessKeyId: process.env.IMAGE_API_ACCESS_KEY!, // Access key ID defined through an environment variable.
-    secretAccessKey: process.env.IMAGE_API_ACCESS_SECRET! // Secret access key defined through an environment variable.
+    accessKeyId: env.accessKey, // Access key ID defined through an environment variable.
+    secretAccessKey: env.secret // Secret access key defined through an environment variable.
   }
 });
 
-export { s3Client, env }
+export { s3Client, Env }
