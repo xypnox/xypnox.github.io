@@ -150,7 +150,7 @@ const CollageWrapper = styled("div")`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  margin: 4rem auto;
+  margin: 6rem auto;
 
   transition: all 0.3s ease-in-out;
   width: 100%;
@@ -164,7 +164,7 @@ const ControlWrapper = styled("div")`
   position: sticky;
   top: 1rem;
   height: 0rem;
-  margin-top: -2rem;
+  margin-bottom: -2rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -176,6 +176,7 @@ const ControlWrapper = styled("div")`
 
 
 const Controls = styled("div")`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -215,6 +216,7 @@ const Control = styled("button")`
     font-size: ${theme.font.size.md};
   }
 `
+
 const Wrapper = styled("div")`
   display: flex;
   flex-direction: column;
@@ -233,40 +235,64 @@ const Wrapper = styled("div")`
 
 const AltContainer = styled("a")`
   ${baseElementStyles}
+  pointer-events: auto;
+
+  position: absolute;
+
+  width: max-content;
+  z-index: 1002;
+
   text-decoration: none;
   color: ${theme.text};
-  opacity: 0.75;
-  gap: 0.75rem;
+
   display: flex;
-  width: max-content;
+  flex-shrink: 0;
+  gap: 0.5rem;
   align-items: center;
-  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  padding: 0.5rem 1rem; 
   background: ${theme.background};
   border-radius: ${theme.border.radius};
-  font-size: ${theme.font.size.sm};
+  border: 1px solid ${theme.border.color};
   transition: all 0.3s ease-in-out;
+  opacity: 0;
+  bottom: 2rem;
+
   p {
     margin: 0;
   }
   iconify-icon {
-    font-size: ${theme.font.size.md};
+    font-size: 1.25em;
   }
 
   &:hover {
+    opacity: 1;
     background: ${theme.primary.color};
     color: ${theme.primary.contrast};
+    border-color: ${theme.primary.color};
+    transform: scale(1.1);
     iconify-icon {
       color: ${theme.primary.contrast};
     }
   }
+
+  &:active {
+    transform: scale(0.9);
+    transition: all 0.2s ease-out;
+  }
+
+
+  @media (max-width: 600px) {
+    opacity: 1;
+    bottom: 0;
+  }
 `
 
-const DefaultAlt = (props: { image: GridImage }) => (
+const DefaultAlt = (props: { image: GridImage }) => props.image.spotifyLink ? (
   <AltContainer class="altText" href={props.image.spotifyLink} target="_blank" rel="noopener noreferrer">
-    <p>Play on Spotify</p>
     <iconify-icon icon={icons.spotify} />
+    <p>Play</p>
   </AltContainer>
-)
+) : <></>
 
 export const ImageCollage = (props: ImageCollageProps<GridImage>) => {
   const [showControls, setShowControls] = createSignal(true);
@@ -286,12 +312,12 @@ export const ImageCollage = (props: ImageCollageProps<GridImage>) => {
 
   return (
     <>
+      <ImageSlider<GridImage>
+        sliderState={sliderState}
+        images={allImages()}
+        Alt={props.Alt ?? DefaultAlt}
+      />
       <ControlWrapper>
-        <ImageSlider<GridImage>
-          sliderState={sliderState}
-          images={allImages()}
-          Alt={props.Alt ?? DefaultAlt}
-        />
         <Controls>
           <Control
             title="Show/Hide Controls"

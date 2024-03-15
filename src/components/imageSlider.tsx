@@ -47,6 +47,8 @@ const Backdrop = styled("div")`
   height: 100%;
   display: flex;
   justify-content: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
   &::before {
     content: "";
@@ -79,16 +81,16 @@ const ImageContents = styled("div")`
   gap: 1rem;
   padding: 0 1rem;
   pointer-events: none;
-  & > * {
-    pointer-events: all;
-  }
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 1rem 0;
   }
 `
 
 const ThumbnailWrapper = styled("div")`
+  width: 100%;
+  max-width: 100%;
   pointer-events: all;
   overflow-x: hidden;
 `
@@ -125,42 +127,56 @@ const Thumbnail = styled("img")`
   }
 `
 
-const ImageWrapper = styled("div")`
+const Contents = styled("div")`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 7rem);
   padding: 1rem;
-
-  &:hover .altText {
-    opacity: 1;
+  .altText {
+    z-index: 1002;
+    pointer-events: all;
   }
-  
+  &:has(img:hover) {
+    .altText {
+      opacity: 1;
+    }
+  }
+`
+const ImageWrapper = styled("div")`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-grow: 1;
+
+  z-index: 1001;
+  max-width: 100%;
+  height: 100%;
+  max-height: max-content;
 `
 
 const ImageElement = styled("img")`
   width: 100%;
-  height: 90%;
+  max-height: 100%;
+  max-width: 100%;
+  width: max-content;
+  height: auto;
   object-fit: contain;
+  pointer-events: all;
 `
 
 const SliderButton = styled(Button)`
+  pointer-events: all;
   padding: 1rem;
   border-radius: 50%;
   background: ${theme.background};
   box-shadow: ${theme.smallShadow};
-  &:hover {
-    transform: scale(1.1);
-    color: ${theme.text};
-  }
-  &:active {
-    transform: scale(0.9);
-    transition: all 0.2s ease-out;
-  }
-  transition: all 0.3s ease-in-out;
 `
 
 
@@ -200,16 +216,21 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
               <SliderButton onClick={() => props.sliderState.prev()}>
                 <iconify-icon icon={icons.prev} />
               </SliderButton>
-              <ImageWrapper>
-                <ImageElement src={props.images[current()].image.src} alt={props.images[current()].alt} />
-                <Show when={Alt}>
-                  <Alt image={props.images[current()]} />
-                </Show>
-              </ImageWrapper>
+
+              <Contents>
+                <ImageWrapper>
+                  <ImageElement src={props.images[current()].image.src} alt={props.images[current()].alt} />
+                  <Show when={Alt}>
+                    <Alt image={props.images[current()]} />
+                  </Show>
+                </ImageWrapper>
+              </Contents>
+
               <SliderButton onClick={() => props.sliderState.next()}>
                 <iconify-icon icon={icons.next} />
               </SliderButton>
             </ImageContents>
+
             <ThumbnailWrapper style={{
               '--left': leftPad(),
             }}>

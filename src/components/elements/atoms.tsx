@@ -68,9 +68,16 @@ export const Button = styled('button')`
   }
 
   &&:hover {
+    transform: scale(1.1);
     color: var(--primary-contrast);
     background: var(--primary-color);
+    border-color: var(--primary-color);
   }
+  &&:active {
+    transform: scale(0.9);
+    transition: all 0.2s ease-out;
+  }
+  transition: all 0.3s ease-in-out;
 `
 
 export const Text = styled('div')`
