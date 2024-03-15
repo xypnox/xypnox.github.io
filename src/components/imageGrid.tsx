@@ -1,4 +1,5 @@
-import { For, Show, createSignal } from "solid-js"
+import type { GetImageResult } from "astro"
+import { For, Show, createSignal, type Accessor } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { styled } from "solid-styled-components"
 import { theme, } from "../theme"
@@ -8,7 +9,7 @@ interface Image {
   url: string
   alt: string
   title: string
-  thumbnail?: string
+  image: GetImageResult
   description?: string
 
   // Alternate link to go to instead of the image
@@ -17,7 +18,7 @@ interface Image {
 
 interface ImageGridProps {
   images: Image[]
-  count?: number
+  count?: Accessor<number>
 }
 
 
@@ -56,18 +57,46 @@ const GridItem = styled("div")`
   }
 `
 
+const Image = (props: {
+  img: GetImageResult
+  alt: string
+  count?: Accessor<number>
+}) => {
+  const sizes = () => {
+    if (!props.count) {
+      return `(min-width: 1200px) 1200px, 512px`;
+    }
+    const count = props.count()
+    if (count >= 5) {
+      return `(min-width: 1200px) 512px, 256px`;
+    } else if (count >= 3) {
+      return `(min-width: 1200px) 1200px, 512px`;
+    } else {
+      return `(min-width: 1200px) 1200px, 1200px`;
+    }
+  }
+  // console.log(props)
+
+  return <img
+    src={props.img.src}
+    srcset={props.img.srcSet.attribute}
+    sizes={sizes()}
+    loading="lazy" alt={props.alt}
+  />
+}
+
 
 export const ImageGrid = (props: ImageGridProps) => {
   const hasLink = (img: Image) => img.link && img.link.length > 0
-
-
   return (
     <GridWrapper>
       <For each={props.images}>
         {(img) => (
           <GridItem>
             <Dynamic class="imgContainer" component={hasLink(img) ? 'a' : 'div'} href={img.url} target="_blank" rel="noopener noreferrer">
-              <img src={(props.count && props.count > 5) ? img.thumbnail ?? img.url : img.url} loading="lazy" alt={img.title} />
+              <Show when={img.image}>
+                <Image img={img.image} alt={img.alt} count={props.count} />
+              </Show>
             </Dynamic>
             {/* Capitalize the name */}
             <p class="img-name">{img.title}</p>
@@ -225,7 +254,7 @@ export const ImageCollage = (props: ImageCollageProps) => {
             <Show when={collage.description}>
               <p class="description">{collage.description}</p>
             </Show>
-            <ImageGrid count={imageCount()} images={collage.images} />
+            <ImageGrid count={imageCount} images={collage.images} />
           </Wrapper>
         )}
       </For>

@@ -1,3 +1,4 @@
+import type { GetImageResult } from "astro"
 import { getImage } from "astro:assets"
 
 export const checkImages = async (paths: string[]) => {
@@ -17,9 +18,9 @@ export const checkImages = async (paths: string[]) => {
   return missingImages
 }
 
-export const thumbImages = async (paths: string[]) => {
+export const optimizeImages = async (paths: string[]) => {
   const assetImages = import.meta.glob('../../src/assets/**/*')
-  const thumbImages: Record<string, string> = {}
+  const images: Record<string, GetImageResult> = {}
 
   console.log('assetImages', { assetImages, paths })
 
@@ -28,17 +29,9 @@ export const thumbImages = async (paths: string[]) => {
     const assetPath = path.replace('/src/', '/')
     const ogImg = await assetImages[assetPath]()
     console.log('assetPath', assetPath, { ogImg })
-    const thumb = await getImage({ src: (ogImg as any).default as any, width: 200 })
-    thumbImages[path] = thumb.src
+    const i = await getImage({ src: (ogImg as any).default as any, widths: [256, 512, 1200] })
+    images[path] = i
   }
 
-  return thumbImages
+  return images
 }
-// const thumbnails = collages.reduce((p, col, i) => ({
-//   ...p,
-//   ...col.images.reduce((p, img) => ({
-//     ...p,
-//     [img.url]: getImage({ src: img.url, width: 200 }),
-//   }), {}),
-// }), {} as Record<string, string>);
-
