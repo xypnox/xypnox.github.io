@@ -48,7 +48,7 @@ export const Projects: ProjectData[] = [
     content: [
       'Meant to be the viewing and exploratory medium to my heirarchal interlinked notes.',
       'Several personal learnings from past experiences went into it\'s creation.',
-      'It has been worked on and used contiuously, almost every single day, for the past couple of years.',
+      'It has been worked on and used contiuously, almost every day, for the past couple of years.',
       'Currently private but I hope to release it someday far into the future.',
       'I also use it\'s codebase to test out new interactions and ideas with note taking.',
       'All of the design and code was handcrafted with pain sweat and tears.',

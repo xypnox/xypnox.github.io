@@ -105,11 +105,10 @@ export const ProjectImages = (props: ProjectImagesProps) => {
 }
 
 const Images = styled("div")`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
     gap: 4rem;
   }
 
@@ -117,33 +116,34 @@ const Images = styled("div")`
 
 const Image = styled("div")`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
+  height: max-content;
+  width: 100%;
+  padding: 0 4rem;
   &:nth-child(2n) {
-    margin-top: 50%;
-    margin-bottom: -50%;
-  }
-  &:last-child {
-    margin-bottom: 0;
+    flex-direction: row-reverse;
   }
   .imageWrapper {
     cursor: zoom-in;
     transition: all 0.3s ease-in-out;
+    flex-grow: 0;
+    flex-shrink: 1;
     &:hover {
       transform: scale(1.05);
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    padding: 0;
     &:nth-child(2n) {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    &:last-child {
-      margin-bottom: 0;
+      flex-direction: column;
     }
   }
   img {
+    flex-grow: 0;
+    flex-shrink: 0;
     width: 100%;
     border-radius: calc(var(--border-radius) * 2);
     box-shadow: var(--mediumShadow);
@@ -151,7 +151,8 @@ const Image = styled("div")`
 `
 
 const ImageInfo = styled("div")`
-  padding: 1.5rem 2rem;
+  min-width: 20rem;
+  padding: 1.5rem;
   background-color: var(--surface);
   display: flex;
   flex-direction: column;
@@ -159,7 +160,7 @@ const ImageInfo = styled("div")`
   max-width: 60ch;
   border-radius: calc(var(--border-radius) * 2);
   h3 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     font-weight: 400;
     color: var(--secondary-color);
     margin: 0;
@@ -176,5 +177,9 @@ const ImageInfo = styled("div")`
   li {
     font-size: var(--font-size-base);
     margin: 0;
+  }
+  @media (max-width: 1200px) {
+    min-width: 100%;
+    max-width: 100%;
   }
 `

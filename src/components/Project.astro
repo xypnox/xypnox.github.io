@@ -85,7 +85,7 @@ const { project, images, coverImage } = Astro.props;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     gap: 2rem;
-    @media (max-width: 1400px) {
+    @media (max-width: 1440px) {
       grid-template-columns: 1fr 1fr;
     }
     @media (max-width: 768px) {
@@ -96,9 +96,8 @@ const { project, images, coverImage } = Astro.props;
   .content-block {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     padding: 2rem;
     border-radius: calc(var(--border-radius) * 4);
     height: 100%;
@@ -129,6 +128,6 @@ const { project, images, coverImage } = Astro.props;
     padding: 0.5rem 2rem;
     border-radius: calc(var(--border-radius) * 4);
     background: var(--surface);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
   }
 </style>
