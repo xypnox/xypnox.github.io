@@ -176,7 +176,7 @@ const SliderButton = styled(Button)`
   padding: 1rem;
   border-radius: 50%;
   background: ${theme.background};
-  box-shadow: ${theme.smallShadow};
+  box-shadow: ${theme.mediumShadow};
 `
 
 

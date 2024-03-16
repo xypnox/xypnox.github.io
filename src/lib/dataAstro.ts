@@ -1,4 +1,5 @@
 import { getCollection } from "astro:content";
+import { Projects } from "../content/projects";
 
 const blogEntriesAll = await getCollection("blog");
 
@@ -67,6 +68,8 @@ const tagStaticPaths = blogEntries
 
 const filteredByTag = (tag: string) => blogEntriesFiltered.filter(e => e.data.tags && e.data.tags.includes(tag))
 
+// ---------------------------------
+
 const poems = await getCollection("poems");
 
 const filteredPoems = poems.filter(p => p.data.hidden !== true);
@@ -86,6 +89,26 @@ const poemsStaticPaths = poems.map((poem) => ({
   props: { poem, poemEntryList },
 }));
 
+// ---------------------------------
+
+
+const projectEntryList = Projects.map((project) => ({
+  slug: project.slug,
+  data: project,
+}));
+
+const projectStaticPaths = Projects.map((project) => ({
+  params: { slug: project.slug },
+  props: { project, projectEntryList },
+}));
+
+
+
+
+
+
+
+
 export {
   blogEntriesAll,
   blogEntriesFiltered,
@@ -97,6 +120,7 @@ export {
   sortedTags,
   tagStaticPaths,
   blogStaticPaths,
+  projectStaticPaths,
   filteredByTag,
   poemsStaticPaths,
   sortedPoems,

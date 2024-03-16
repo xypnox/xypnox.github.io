@@ -48,7 +48,7 @@ const GridItem = styled("div")`
   transition: all 0.3s ease-in-out;
   .imgContainer {
     --grid-width: calc(100vh - 2rem - 1rem * ( var(--count, 5) - 1 ));
-    --img-width: calc((var(--grid-width) / var(--count, 5)) );
+    --img-width: var(--image-width-raw, calc((var(--grid-width) / var(--count, 5)) ));
     display: flex;
     border-radius: ${theme.border.radius};
     overflow: hidden;

@@ -269,7 +269,7 @@ export const defaultThemePalette: ThemePalette = {
     },
     dark: {
       primary: '#ff5370',
-      secondary: '#ffff00',
+      secondary: '#5d86ff',
 
       background: '#0f111a',
       surface: '#1e2139a0',
@@ -478,7 +478,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
     // Fade with midErth
     fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
     cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
-    smallShadow: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.5 : 0.2})`,
+    mediumShadow: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.4 : 0.2})`,
 
     // We can use these inside new vars
     ...getCard(cardType),

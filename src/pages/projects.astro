@@ -3,12 +3,8 @@ import Layout from "../layouts/MainLayout.astro";
 import { Projects as projectsData } from "../content/projects";
 import PageHeader from "../components/pageHeader.astro";
 import PageNav from "../components/nav/pageNav.astro";
-import WebLink from "../components/elements/link.astro";
 
-const ProjectsWithSlug = projectsData.map((p) => ({
-  ...p,
-  slug: p.title.toLowerCase().replace(/ /g, "-"),
-}));
+const ProjectsWithSlug = projectsData;
 ---
 
 <Layout title="Projects">
@@ -25,21 +21,19 @@ const ProjectsWithSlug = projectsData.map((p) => ({
       </div>
       {
         ProjectsWithSlug.map((p) => (
-          <div id={p.slug} class="projectCard theme-card">
+          <a
+            id={p.slug}
+            href={"/project/" + p.slug}
+            class="projectCard theme-card"
+          >
             <img src={p.image} alt={p.title} />
             <div class="cardContent">
               <h1>{p.title}</h1>
               {p.description.map((d) => (
                 <p>{d}</p>
               ))}
-              {p.link && <WebLink href={p.link} icon="ph:globe-duotone" />}
-              <p class="projectTags">
-                {p.tags.map((t) => (
-                  <span>{t}</span>
-                ))}
-              </p>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>
@@ -56,6 +50,8 @@ const ProjectsWithSlug = projectsData.map((p) => ({
   }
 
   .projectCard {
+    text-decoration: none;
+    color: var(--text);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -86,17 +82,6 @@ const ProjectsWithSlug = projectsData.map((p) => ({
     margin: 0;
   }
 
-  .projectTags {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-
-  .projectTags span {
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius);
-    background: var(--surface);
-  }
 
   @media (max-width: 768px) {
     .projectCard {

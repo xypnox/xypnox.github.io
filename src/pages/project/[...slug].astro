@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import Project from "../../components/Project.astro";
+import { projectStaticPaths } from "../../lib/dataAstro";
+import { checkImages, optimizeImages } from "../../utils/images";
+import type { GetImageResult } from "astro";
+import type { RawProjectImage } from "../../content/projects";
+
+export async function getStaticPaths() {
+  return projectStaticPaths;
+}
+const { project } = Astro.props;
+
+const projectImagesRaw: RawProjectImage[] = project.images;
+
+const pathToProjectImage = (path: string) =>
+  `/projects/${project.slug}/${path}`;
+
+let projectImages;
+let coverImage: GetImageResult | undefined = undefined;
+
+// console.log({ project, projectImagesRaw });
+
+if (projectImagesRaw && projectImagesRaw.length > 0) {
+  const projectNoImages = await checkImages(
+    projectImagesRaw
+      .map((i: { path: string }) => pathToProjectImage(i.path))
+      .flat(),
+  );
+  if (projectNoImages.length > 0) {
+    throw new Error(
+      `Not all images exist in glob: "src/assets/covers/*.{jpeg,jpg,png,gif}" ${projectNoImages.join(" , ")}`,
+    );
+  }
+  const optImages = await optimizeImages(
+    projectImagesRaw.map((i) => pathToProjectImage(i.path)),
+  );
+  projectImages = projectImagesRaw
+    .filter((i) => !!i)
+    .map((i) => ({
+      ...i,
+      image: optImages[pathToProjectImage(i.path)],
+    }));
+}
+
+if (project.cover) {
+  const coverPath = pathToProjectImage(project.cover);
+  const coverCheck = await checkImages([coverPath]);
+
+  if (coverCheck.length !== 0) {
+    throw new Error(
+      `Image does not exist in glob: ${pathToProjectImage(project.cover)}`,
+    );
+  }
+  coverImage = (await optimizeImages([coverPath]))[coverPath];
+}
+---
+
+<Layout
+  title={project?.title ?? "Project"}
+  meta={{ description: project?.description.join("\n") ?? "Project" }}
+>
+  {
+    project && (
+      <Project
+        coverImage={
+          coverImage
+            ? {
+                image: coverImage,
+              }
+            : undefined
+        }
+        project={{ ...project }}
+        images={projectImages ?? []}
+      />
+    )
+  }
+</Layout>
+
+<style>
+  .covers-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    gap: 1rem;
+  }
+</style>

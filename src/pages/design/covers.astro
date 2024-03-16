@@ -6,7 +6,6 @@ import { ImageCollage } from "../../components/imageGrid";
 import PageHeader from "../../components/pageHeader.astro";
 import PageNav from "../../components/nav/pageNav.astro";
 import { checkImages, optimizeImages } from "../../utils/images";
-import type { Image } from "../../dataTypes";
 
 const covers = coversData.map((cover) => ({
   ...cover,
@@ -27,12 +26,13 @@ if (coversWithNoImage.length > 0) {
     `Not all images exist in glob: "src/assets/covers/*.{jpeg,jpg,png,gif}"`,
   );
 }
+
 const collagesRaw = covers.map((col) => ({
   title: col.name,
   description: col.description,
   id: col.slug,
   images: col.covers.map((cov) => ({
-    path: "../assets" + cov.path,
+    path: cov.path,
     title: cov.name,
     alt: cov.name,
     spotifyLink: findMyPlaylist(cov.name)?.external_urls?.spotify,

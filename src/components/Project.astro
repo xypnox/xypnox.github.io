@@ -1,0 +1,134 @@
+---
+import { type ProjectData, type ProjectImage } from "../content/projects";
+import type { Image } from "../dataTypes";
+import { ProjectImages } from "./projectImages";
+
+interface Props {
+  project: ProjectData;
+  coverImage?: Image;
+  images: ProjectImage[];
+}
+
+const { project, images, coverImage } = Astro.props;
+---
+
+<div class="project">
+  <div class="intro">
+    <h1 class="title text-gradient-fx">{project.title}</h1>
+    <h2 class="subtitle">{project.description.join("\n")}</h2>
+    {
+      coverImage && (
+        <div class="cover-image">
+          <img src={coverImage.image.src} alt={coverImage.alt} />
+          <p>{coverImage.alt}</p>
+        </div>
+      )
+    }
+    <p class="projectTags">
+      {project.tags.map((t) => <span>{t}</span>)}
+    </p>
+  </div>
+  <div class="content">
+    {
+      project.content &&
+        project.content.length > 0 &&
+        project.content?.map((content) => (
+          <div
+            class={
+              "content-block theme-card " +
+              (content.length > 70 ? "isLarge" : "")
+            }
+          >
+            <p>{content}</p>
+          </div>
+        ))
+    }
+  </div>
+  <ProjectImages images={images} client:load />
+</div>
+
+<style>
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    padding: 1rem;
+    @media (max-width: 1200px) {
+      padding: 0;
+    }
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .title {
+    font-size: var(--font-size-xxxl);
+    margin: 0;
+  }
+  .subtitle {
+    font-size: var(--font-size-xl);
+    font-weight: 400;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 2rem;
+    @media (max-width: 1400px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .content-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-lg);
+    padding: 2rem;
+    border-radius: calc(var(--border-radius) * 4);
+    height: 100%;
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .cover-image {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 2rem;
+    img {
+      width: 100%;
+      box-shadow: var(--cardShadow);
+    }
+  }
+
+  .projectTags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .projectTags span {
+    padding: 0.5rem 2rem;
+    border-radius: calc(var(--border-radius) * 4);
+    background: var(--surface);
+    font-size: var(--font-size-lg);
+  }
+</style>
