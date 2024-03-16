@@ -43,19 +43,25 @@ const GridItem = styled("div")`
   align-items: center;
   max-width: 100%;
   width: 100%;
+  min-width: 100px;
 
   transition: all 0.3s ease-in-out;
   .imgContainer {
-    width: 100%;
-    height: 100%;
+    --grid-width: calc(100vh - 2rem - 1rem * ( var(--count, 5) - 1 ));
+    --img-width: calc((var(--grid-width) / var(--count, 5)) );
+    display: flex;
     border-radius: ${theme.border.radius};
     overflow: hidden;
     cursor: pointer;
-  }
-  img {
-    width: 100%;
-    /* height: auto; */
-    border-radius: ${theme.border.radius};
+    img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: ${theme.border.radius};
+      min-width: var(--img-width);
+      min-height: var(--img-width);
+    }
   }
 `
 
@@ -81,8 +87,13 @@ const Image = (props: {
 
   return <img
     src={props.img.src}
-    srcset={props.img.srcSet.attribute}
+    srcset={props.img.srcSet?.attribute}
     sizes={sizes()}
+    width={props.img.attributes?.width ?? undefined}
+    height={props.img.attributes?.height ?? undefined}
+    style={{
+      '--count': props.count ? props.count() : '5'
+    }}
     loading="lazy" alt={props.alt}
   />
 }
