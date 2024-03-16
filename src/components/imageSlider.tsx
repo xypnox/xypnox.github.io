@@ -61,6 +61,7 @@ export const createSliderState = (initial: number, max: number, duration = 0.3):
       setCurrent(i); // We set the current image immediately
       return // And exit
     }
+    setQuickChange(false);
     setChanging(true);
     setNewIm(i);
     setLastChanged(Date.now())
@@ -162,7 +163,7 @@ const Thumbnails = styled("div")`
   align-items: center;
   height: 6rem;
   transform: translateX(var(--left));
-  transition: transform 0.5s ease-out;
+  transition: transform var(--duration, 0.5s) ease-out;
   & > * {
     pointer-events: all;
   }
@@ -346,6 +347,7 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
 
             <ThumbnailWrapper style={{
               '--left': leftPad(),
+              '--duration': props.sliderState.quickChange() ? '0s' : '0.5s'
             }}>
               <Thumbnails>
                 <For each={props.images}>
