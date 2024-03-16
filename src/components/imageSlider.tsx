@@ -61,7 +61,6 @@ export const createSliderState = (initial: number, max: number, duration = 0.3):
       setCurrent(i); // We set the current image immediately
       return // And exit
     }
-    setQuickChange(false);
     setChanging(true);
     setNewIm(i);
     setLastChanged(Date.now())
@@ -212,18 +211,16 @@ const Contents = styled("div")`
 const ImageWrapper = styled("div")`
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 1rem;
 
   z-index: 1001;
   max-width: 100%;
-  height: max-content;
+  max-height: 100%;
 
   &.newWrapper {
     position: absolute;
-    width: max-content;
-    height: max-content;
+    display: flex;
     z-index: 1002;
     padding: 1rem;
   }
@@ -243,15 +240,9 @@ const FadeZoomIn = keyframes`
 const ImageElement = styled("img")`
   max-height: 100%;
   max-width: 100%;
-  width: 100%;
-  height: 100%;
   object-fit: contain;
   pointer-events: all;
   animation: ${FadeZoomIn} 0.3s ease-out;
-
-  &.newImage {
-    z-index: 1002;
-  }
 `
 
 const HiddenImage = styled("img")`
@@ -359,7 +350,7 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
                         srcSet={image.image.srcSet.attribute}
                         sizes={'256px'}
                         alt={image.alt}
-                        onClick={() => props.sliderState.current[1](i)}
+                        onClick={() => props.sliderState.changeCurrent(i())}
                       />
                     )}
                 </For>
