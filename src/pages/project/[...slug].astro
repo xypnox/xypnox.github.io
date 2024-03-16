@@ -2,7 +2,7 @@
 import Layout from "../../layouts/MainLayout.astro";
 import Project from "../../components/Project.astro";
 import { projectStaticPaths } from "../../lib/dataAstro";
-import { checkImages, optimizeImages } from "../../utils/images";
+import { getImages } from "../../utils/images";
 import type { GetImageResult } from "astro";
 import type { RawProjectImage } from "../../content/projects";
 
@@ -22,18 +22,10 @@ let coverImage: GetImageResult | undefined = undefined;
 // console.log({ project, projectImagesRaw });
 
 if (projectImagesRaw && projectImagesRaw.length > 0) {
-  const projectNoImages = await checkImages(
+  const optImages = await getImages(
     projectImagesRaw
       .map((i: { path: string }) => pathToProjectImage(i.path))
       .flat(),
-  );
-  if (projectNoImages.length > 0) {
-    throw new Error(
-      `Not all images exist in glob: "src/assets/covers/*.{jpeg,jpg,png,gif}" ${projectNoImages.join(" , ")}`,
-    );
-  }
-  const optImages = await optimizeImages(
-    projectImagesRaw.map((i) => pathToProjectImage(i.path)),
   );
   projectImages = projectImagesRaw
     .filter((i) => !!i)
@@ -45,14 +37,7 @@ if (projectImagesRaw && projectImagesRaw.length > 0) {
 
 if (project.cover) {
   const coverPath = pathToProjectImage(project.cover);
-  const coverCheck = await checkImages([coverPath]);
-
-  if (coverCheck.length !== 0) {
-    throw new Error(
-      `Image does not exist in glob: ${pathToProjectImage(project.cover)}`,
-    );
-  }
-  coverImage = (await optimizeImages([coverPath]))[coverPath];
+  coverImage = (await getImages([coverPath]))[coverPath];
 }
 ---
 

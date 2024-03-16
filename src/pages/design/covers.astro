@@ -20,7 +20,6 @@ const images = await getImages(
   covers.map((col) => col.covers.map((c) => c.path)).flat(),
 );
 
-
 const collagesRaw = covers.map((col) => ({
   title: col.name,
   description: col.description,
@@ -32,9 +31,6 @@ const collagesRaw = covers.map((col) => ({
     spotifyLink: findMyPlaylist(cov.name)?.external_urls?.spotify,
   })),
 }));
-
-// For each of collages, generate thumbnails
-
 
 const collages = collagesRaw.map((col) => ({
   ...col,
