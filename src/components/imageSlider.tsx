@@ -1,7 +1,7 @@
-import { createSignal, Show, type Accessor, type Signal, createEffect, type Component, type JSX } from "solid-js"
+import { createSignal, Show, type Accessor, type Signal, createEffect, type Component, type JSX, createMemo, For } from "solid-js"
 import type { Image } from "../dataTypes"
 import { Portal } from "solid-js/web"
-import { styled } from "solid-styled-components"
+import { keyframes, styled } from "solid-styled-components"
 import { theme } from "../theme"
 import { icons } from "./icons"
 import { Button } from "./elements/atoms"
@@ -10,10 +10,23 @@ import { createShortcut } from "@solid-primitives/keyboard"
 
 interface SliderState {
   current: Signal<number>
-  next: () => void
-  prev: () => void
+  setCurrent: (i: number) => void
+
   visible: Accessor<boolean>
   toggle: () => void
+
+  newIm: Accessor<number>
+
+  nextImage: () => number
+  prevImage: () => number
+
+  changing: Accessor<boolean>
+  changeCurrent: (i: number) => void
+
+  next: () => void
+  prev: () => void
+
+  quickChange: Accessor<boolean>
 }
 
 interface ImageSliderProps<T> {
@@ -22,19 +35,67 @@ interface ImageSliderProps<T> {
   Alt?: (props: { image: T }) => JSX.Element
 }
 
-export const createSliderState = (initial: number, max: number) => {
-  const current = createSignal(initial)
-  const [visible, setVisible] = createSignal(false)
-  const setCurrent = current[1]
+export const createSliderState = (initial: number, max: number, duration = 0.3): SliderState => {
+  const current = createSignal(initial);
+  const [visible, setVisible] = createSignal(false);
+  const [changing, setChanging] = createSignal(false);
+  const [lastChanged, setLastChanged] = createSignal(0);
+  const setCurrent = current[1];
+  const [quickChange, setQuickChange] = createSignal(false);
+  const [changeTimeout, setChangeTimeout] = createSignal<any | null>(null);
+
+  const [newIm, setNewIm] = createSignal(initial);
+
+  const nextImage = () => (current[0]() + 1) % max;
+  const prevImage = () => (current[0]() - 1 + max) % max;
+
+  const changeCurrent = (i: number) => {
+    // This determines if the change was made before the transition was done
+    if (Date.now() - lastChanged() < duration * 1000) {
+      if (changeTimeout()) {
+        clearTimeout(changeTimeout());
+      }
+      setChanging(false);
+      setQuickChange(true); // We enter the quick change mode
+      setNewIm(i); // We set the new image
+      setCurrent(i); // We set the current image immediately
+      return // And exit
+    }
+    setChanging(true);
+    setNewIm(i);
+    setLastChanged(Date.now())
+    setChangeTimeout(setTimeout(() => {
+      setCurrent(i)
+      setChanging(false)
+      // console.log("done")
+      setQuickChange(false);
+    }, duration * 1000))
+  }
+
   return {
     current,
-    setCurrent,
+    setCurrent: (i: number) => { setCurrent(i); setNewIm(i) },
 
     visible: visible,
     toggle: () => setVisible((prev) => !prev),
 
-    next: () => setCurrent((prev) => (prev + 1) % max),
-    prev: () => setCurrent((prev) => (prev - 1 + max) % max),
+    newIm,
+
+    changing,
+    changeCurrent,
+
+    nextImage,
+    prevImage,
+
+    quickChange,
+
+    next: () => {
+      changeCurrent(nextImage())
+    },
+
+    prev: () => {
+      changeCurrent(prevImage())
+    },
   }
 }
 
@@ -153,22 +214,50 @@ const ImageWrapper = styled("div")`
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  flex-grow: 1;
 
   z-index: 1001;
   max-width: 100%;
-  height: 100%;
-  max-height: max-content;
+  height: max-content;
+
+  &.newWrapper {
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    z-index: 1002;
+    padding: 1rem;
+  }
+`
+
+const FadeZoomIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 `
 
 const ImageElement = styled("img")`
-  width: 100%;
   max-height: 100%;
   max-width: 100%;
-  width: max-content;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   pointer-events: all;
+  animation: ${FadeZoomIn} 0.3s ease-out;
+
+  &.newImage {
+    z-index: 1002;
+  }
+`
+
+const HiddenImage = styled("img")`
+  display: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
 `
 
 const SliderButton = styled(Button)`
@@ -206,7 +295,10 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
     }
   })
   // Use currernt index to determine how many to subtract from the center
-  const leftPad = () => `calc(50% - ${current() * 4 + 3}rem)`
+  const newImage = () => props.images[props.sliderState.newIm()].image
+  const leftPad = createMemo(() => `calc(50% - ${props.sliderState.newIm() * 4 + 3}rem)`)
+  const currentimage = () => props.images[current()].image
+
   return (
     <Portal>
       <Show when={props.sliderState.visible()}>
@@ -218,8 +310,29 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
               </SliderButton>
 
               <Contents>
+                <Show when={props.sliderState.changing() && !props.sliderState.quickChange()}>
+                  <ImageWrapper class="newWrapper">
+                    <ImageElement
+                      class="newImage"
+                      src={newImage().src}
+                      width={newImage().attributes?.width ?? undefined}
+                      style={{
+                        'max-width': newImage().attributes?.width,
+                        'max-height': newImage().attributes?.height,
+                      }}
+                      alt={props.images[props.sliderState.newIm()].alt}
+                    />
+                  </ImageWrapper>
+                </Show>
                 <ImageWrapper>
-                  <ImageElement src={props.images[current()].image.src} alt={props.images[current()].alt} />
+                  <HiddenImage src={props.images[props.sliderState.nextImage()].image.src} />
+                  <HiddenImage src={props.images[props.sliderState.prevImage()].image.src} />
+                  {/* Show the new image if we are changing and not in quick change mode */}
+                  <ImageElement
+                    src={currentimage().src}
+                    width={currentimage().attributes?.width ?? undefined}
+                    alt={props.images[current()].alt}
+                  />
                   <Show when={Alt}>
                     <Alt image={props.images[current()]} />
                   </Show>
@@ -235,16 +348,19 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
               '--left': leftPad(),
             }}>
               <Thumbnails>
-                {props.images.map((image, i) => (
-                  <Thumbnail
-                    classList={{ active: i === current() }}
-                    src={image.image.src}
-                    srcSet={image.image.srcSet.attribute}
-                    sizes={'256px'}
-                    alt={image.alt}
-                    onClick={() => props.sliderState.current[1](i)}
-                  />
-                ))}
+                <For each={props.images}>
+                  {
+                    (image, i) => (
+                      <Thumbnail
+                        classList={{ active: i() === props.sliderState.newIm() }}
+                        src={image.image.src}
+                        srcSet={image.image.srcSet.attribute}
+                        sizes={'256px'}
+                        alt={image.alt}
+                        onClick={() => props.sliderState.current[1](i)}
+                      />
+                    )}
+                </For>
               </Thumbnails>
             </ThumbnailWrapper>
           </SliderContents>

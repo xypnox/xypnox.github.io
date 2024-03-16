@@ -47,20 +47,28 @@ const GridItem = styled("div")`
 
   transition: all 0.3s ease-in-out;
   .imgContainer {
-    --grid-width: calc(100vh - 2rem - 1rem * ( var(--count, 5) - 1 ));
-    --img-width: var(--image-width-raw, calc((var(--grid-width) / var(--count, 5)) ));
+    --grid-num: calc(var(--count, 5));
+    --grid-width: calc(100vw - 2rem - 1rem * var(--grid-num));
+    --img-width: var(--image-width-raw, calc(var(--grid-width) / var(--count, 5)));
     display: flex;
     border-radius: ${theme.border.radius};
     overflow: hidden;
     cursor: pointer;
+    
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.05) translateY(-2.5%);
+    }
     img {
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
       border-radius: ${theme.border.radius};
-      min-width: var(--img-width);
-      min-height: var(--img-width);
+      width: var(--img-width);
+      height: var(--img-width);
+    }
+
+    @media (max-width: 768px) {
+      --grid-num: 0;
+      --grid-width: 100%;
+      --img-width: 100%;
     }
   }
 `
@@ -161,7 +169,7 @@ const CollageWrapper = styled("div")`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  margin: 6rem auto;
+  margin: 2rem auto;
 
   transition: all 0.3s ease-in-out;
   width: 100%;
@@ -173,9 +181,8 @@ const CollageWrapper = styled("div")`
 
 const ControlWrapper = styled("div")`
   position: sticky;
+  margin-top: 1rem;
   top: 1rem;
-  height: 0rem;
-  margin-bottom: -2rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;

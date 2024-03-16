@@ -22,7 +22,7 @@ export const checkImages = async (paths: string[]) => {
   return missingImages
 }
 
-export const optimizeImages = async (paths: string[]) => {
+export const optimizeImages = async (paths: string[], widths: number[]) => {
   const assetImages = import.meta.glob('../../src/assets/**/*')
   const images: Record<string, GetImageResult> = {}
 
@@ -37,9 +37,18 @@ export const optimizeImages = async (paths: string[]) => {
     }
     const ogImg = await assetImages[assetPath]()
     // console.log('assetPath', assetPath, { ogImg })
-    const i = await getImage({ src: (ogImg as any).default as any, widths: [256, 512, 1200] })
+    const i = await getImage({ src: (ogImg as any).default as any, widths })
     images[path] = i
   }
 
+  return images
+}
+
+export const getImages = async (paths: string[], widths: number[] = [256, 512, 1200]) => {
+  const missingImages = await checkImages(paths)
+  if (missingImages.length !== 0) {
+    throw new Error(`Missing images: ${missingImages}`)
+  }
+  const images = await optimizeImages(paths, widths)
   return images
 }

@@ -13,7 +13,7 @@ export interface ProjectImage extends Image {
 
 export interface ProjectData {
   title: string
-  slug?: string
+  slug: string
   year?: string
   description: string[]
   content?: string[]

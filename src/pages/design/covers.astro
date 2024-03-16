@@ -5,7 +5,7 @@ import { findMyPlaylist } from "../../data/spotifyPlaylists";
 import { ImageCollage } from "../../components/imageGrid";
 import PageHeader from "../../components/pageHeader.astro";
 import PageNav from "../../components/nav/pageNav.astro";
-import { checkImages, optimizeImages } from "../../utils/images";
+import { getImages } from "../../utils/images";
 
 const covers = coversData.map((cover) => ({
   ...cover,
@@ -16,16 +16,10 @@ const covers = coversData.map((cover) => ({
   })),
 }));
 
-const coversWithNoImage = await checkImages(
+const images = await getImages(
   covers.map((col) => col.covers.map((c) => c.path)).flat(),
 );
 
-if (coversWithNoImage.length > 0) {
-  console.log(JSON.stringify({ coversWithNoImage }, null, 2));
-  throw new Error(
-    `Not all images exist in glob: "src/assets/covers/*.{jpeg,jpg,png,gif}"`,
-  );
-}
 
 const collagesRaw = covers.map((col) => ({
   title: col.name,
@@ -41,23 +35,12 @@ const collagesRaw = covers.map((col) => ({
 
 // For each of collages, generate thumbnails
 
-const thumbnails: string[] = collagesRaw.reduce(
-  (p, col, i) => [
-    ...p,
-    ...col.images.reduce((p2, img) => [...p2, img.path], [] as string[]),
-  ],
-  [] as string[],
-);
-
-// console.log({ thumbnails });
-
-const opImgs = await optimizeImages(thumbnails);
 
 const collages = collagesRaw.map((col) => ({
   ...col,
   images: col.images.map((img) => ({
     ...img,
-    image: opImgs[img.path],
+    image: images[img.path],
   })),
 }));
 ---
