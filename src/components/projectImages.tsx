@@ -151,13 +151,14 @@ const Image = styled("div")`
 `
 
 const ImageInfo = styled("div")`
+  width: 100%;
   min-width: 20rem;
   padding: 1.5rem;
   background-color: var(--surface);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 60ch;
+  max-width: 70ch;
   border-radius: calc(var(--border-radius) * 2);
   h3 {
     font-size: var(--font-size-md);

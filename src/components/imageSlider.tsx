@@ -145,7 +145,7 @@ const ImageContents = styled("div")`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    padding: 1rem 0;
+    padding: 0;
   }
 `
 
@@ -219,10 +219,10 @@ const ImageWrapper = styled("div")`
   max-height: 100%;
 
   &.newWrapper {
+    padding: 0.9rem;
     position: absolute;
     display: flex;
     z-index: 1002;
-    padding: 1rem;
   }
 `
 
