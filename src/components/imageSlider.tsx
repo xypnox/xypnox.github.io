@@ -253,11 +253,20 @@ const HiddenImage = styled("img")`
 `
 
 const SliderButton = styled(Button)`
-  pointer-events: all;
-  padding: 1rem;
-  border-radius: 50%;
-  background: ${theme.background};
-  box-shadow: ${theme.mediumShadow};
+  && {
+    pointer-events: all;
+    padding: 1rem;
+    border-radius: 50%;
+    background: ${theme.background};
+    box-shadow: ${theme.mediumShadow};
+  }
+
+  &.top-right {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border-radius: 50%;
+  }
 `
 
 
@@ -297,6 +306,11 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
         <Backdrop onClick={onBackdropClick}>
           <SliderContents>
             <ImageContents>
+              <SliderButton
+                class="top-right"
+                onClick={() => props.sliderState.toggle()}>
+                <iconify-icon icon={icons.close} />
+              </SliderButton>
               <SliderButton onClick={() => props.sliderState.prev()}>
                 <iconify-icon icon={icons.prev} />
               </SliderButton>
