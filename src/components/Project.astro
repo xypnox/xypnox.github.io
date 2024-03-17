@@ -88,6 +88,15 @@ const { project, images, coverImage } = Astro.props;
       flex-direction: column;
       gap: 0.5rem;
     }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      img {
+        width: 128px;
+        height: 128px;
+      }
+    }
   }
 
   .title {
