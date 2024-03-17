@@ -36,7 +36,7 @@ if (projectImagesRaw && projectImagesRaw.length > 0) {
 }
 
 if (project.cover) {
-  const coverPath = pathToProjectImage(project.cover);
+  const coverPath = pathToProjectImage(project.cover.src);
   coverImage = (await getImages([coverPath]))[coverPath];
 }
 ---
@@ -52,6 +52,7 @@ if (project.cover) {
           coverImage
             ? {
                 image: coverImage,
+                alt: project.cover.alt,
               }
             : undefined
         }

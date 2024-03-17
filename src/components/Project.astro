@@ -15,7 +15,7 @@ const { project, images, coverImage } = Astro.props;
 <div class="project">
   <div class="intro">
     <div class="project-info">
-      <img src={project.image} />
+      <img src={project.image} alt={`Icon of ${project.title}.`} />
       <div>
         <h1 class="title text-gradient-fx">
           {project.title}
@@ -142,16 +142,22 @@ const { project, images, coverImage } = Astro.props;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 1rem;
     width: 100%;
     img {
       width: 100%;
       box-shadow: var(--cardShadow);
+    }
+    p {
+      font-size: var(--font-size-base);
+      text-align: center;
     }
   }
 
   .projectTags {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 2rem;
   }

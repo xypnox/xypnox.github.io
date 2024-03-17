@@ -18,7 +18,10 @@ export interface ProjectData {
   description: string[]
   content?: string[]
   image: string
-  cover?: string
+  cover?: {
+    src: string
+    alt: string
+  }
   images?: RawProjectImage[]
   link?: string
   award?: string
@@ -54,7 +57,7 @@ export const Projects: ProjectData[] = [
       'All of the design and code was handcrafted with pain sweat and tears.',
     ],
     image: '/icons/Notes.svg',
-    cover: 'notes-project.png',
+    cover: { src: 'notes-project.png', alt: 'The notes project note rendered inside notes project.' },
     images: [
       /*
         design-concept.png

@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
-import { Projects as projectsData, type ProjectImage } from "../content/projects";
+import { Projects as projectsData } from "../content/projects";
 import PageHeader from "../components/pageHeader.astro";
 import { getImages } from "../utils/images";
 import type { GetImageResult } from "astro";
@@ -12,7 +12,7 @@ const projectCoverImagesRaw = projectsData
   .filter((p) => p.cover)
   .map((p) => ({
     slug: p.slug,
-    path: p.cover!,
+    path: p.cover!.src,
   }));
 
 let projectCoverImages: Record<string, GetImageResult> | undefined = undefined;
@@ -44,7 +44,7 @@ export const frontMatter = {
           {( projectCoverImages && p.cover ) ? (
             <img
               class="cover-image"
-              src={projectCoverImages[pathToProjectImage(p.slug, p.cover!)].src}
+              src={projectCoverImages[pathToProjectImage(p.slug, p.cover.src!)].src}
               alt={p.title}
             />
           ): <div></div>}
