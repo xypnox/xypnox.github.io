@@ -4,7 +4,7 @@ import Project from "../../components/Project.astro";
 import { projectStaticPaths } from "../../lib/dataAstro";
 import { getImages } from "../../utils/images";
 import type { GetImageResult } from "astro";
-import type { RawProjectImage } from "../../content/projects";
+import type { RawProjectImage } from "../../content/projects/types";
 
 export async function getStaticPaths() {
   return projectStaticPaths;
