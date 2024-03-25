@@ -1,6 +1,8 @@
 import { addIcon } from "iconify-icon";
 
 export const icons = {
+  "home": "ph:house-duotone",
+
   "github": "fa-brands:github",
   "mastodon": "fa-brands:mastodon",
   "email": "ic:round-mail",
@@ -59,6 +61,7 @@ export const icons = {
 
   "musicMute": "ph:speaker-none-duotone",
   "music": "ph:speaker-high-duotone",
+  "musicNotes": "ph:music-notes-duotone",
 
   "next": "ph:skip-forward-duotone",
   "prev": "ph:skip-back-duotone",

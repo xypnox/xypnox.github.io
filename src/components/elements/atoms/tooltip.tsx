@@ -30,7 +30,7 @@ export const Tooltip = styled.div`
   gap: 0.25rem;
   font-size: ${theme.font.size.sm};
   color: ${theme.text};
-  background: ${theme.background};
+  background: ${theme.tooltip};
   padding: 0.5rem;
   border-radius: ${theme.border.radius};
   text-align: center;

@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 const { project } = Astro.props;
 
-const projectImagesRaw: RawProjectImage[] = project.images;
+const projectImagesRaw: RawProjectImage[] = project.images ?? [];
 
 const pathToProjectImage = (path: string) =>
   `/projects/${project.slug}/${path}`;
@@ -49,7 +49,7 @@ if (project.cover) {
     project && (
       <Project
         coverImage={
-          coverImage
+          project.cover && coverImage
             ? {
                 image: coverImage,
                 alt: project.cover.alt,

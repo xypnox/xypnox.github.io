@@ -1,5 +1,5 @@
 import { styled } from "solid-styled-components";
-import type { ProjectImage } from "../content/projects";
+import type { ProjectImage } from "../content/projects/types";
 import { ImageSlider, createSliderState } from "./imageSlider";
 import { For } from "solid-js";
 import { baseElementStyles } from "./elements/atoms";
@@ -34,7 +34,7 @@ const AltContainer = styled("div")`
 
   & > div {
     background: ${theme.background};
-    box-shadow: ${theme.mediumShadow};
+    box-shadow: ${theme.shadow.medium};
     border: 1px solid ${theme.border.color};
     h3 {
       font-size: ${theme.font.size.md};
@@ -66,7 +66,8 @@ export const ProjectImages = (props: ProjectImagesProps) => {
   const sliderState = createSliderState(0, props.images.length)
   return props.images.length > 0 && (
     <Images>
-      <ImageSlider images={props.images}
+      <ImageSlider
+        images={props.images}
         sliderState={sliderState}
         Alt={DefaultAlt}
       />
@@ -145,8 +146,8 @@ const Image = styled("div")`
     flex-grow: 0;
     flex-shrink: 0;
     width: 100%;
-    border-radius: calc(var(--border-radius) * 2);
-    box-shadow: var(--mediumShadow);
+    border-radius: calc(${theme.border.radius} * 2);
+    box-shadow: ${theme.shadow.medium};
   }
 `
 

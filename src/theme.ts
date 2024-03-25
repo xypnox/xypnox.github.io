@@ -450,6 +450,9 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
   // the color between surface and background (middle earth)
   const midErth = tinycolor.mix(palette.surface, palette.background, 50).toString()
   const borderColor = tinycolor.mix(palette.text, palette.background, 75).toString()
+
+  const tooltip = tinycolor.mix(palette.background, tinycolor(palette.text).setAlpha(1), 15).toString()
+
   return {
     primary: {
       color: palette.primary,
@@ -464,6 +467,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
     background: palette.background,
     surface: palette.surface,
     surface2: tinycolor.mix(palette.surface, borderColor, 25).toString(),
+    tooltip,
     border: {
       style: 'solid',
       // Border color is between text and midErth
@@ -477,8 +481,11 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
 
     // Fade with midErth
     fadeText: tinycolor.mix(palette.text, midErth, 30).toString(),
-    cardShadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
-    mediumShadow: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.4 : 0.2})`,
+    shadow: {
+      card: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
+      medium: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.3 : 0.15})`,
+      small: `0 0.1rem 0.2rem 0 rgba(0, 0, 0, ${isDark ? 0.3 : 0.3})`,
+    },
 
     // We can use these inside new vars
     ...getCard(cardType),

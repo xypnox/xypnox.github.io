@@ -7,6 +7,7 @@ import type { Image } from "../dataTypes"
 import { ImageSlider, createSliderState } from "./imageSlider"
 import { icons } from "./icons"
 import { baseElementStyles } from "./elements/atoms"
+import { TooltipElement } from "./elements/tooltip"
 
 interface GridImage extends Image {
   title: string
@@ -204,7 +205,7 @@ const Controls = styled("div")`
   background: ${theme.background};
   border: 1px solid ${theme.border.color};
   border-radius: calc(2 * ${theme.border.radius});
-  box-shadow: ${theme.cardShadow};
+  box-shadow: ${theme.shadow.card};
 
   & > svg {
     width: 2rem;
@@ -337,14 +338,19 @@ export const ImageCollage = (props: ImageCollageProps<GridImage>) => {
       />
       <ControlWrapper>
         <Controls>
-          <Control
-            title="Show/Hide Controls"
-            onClick={() => setShowControls(c => !c)}
+
+          <TooltipElement
+            element={Control}
+            props={{ onClick: () => setShowControls(c => !c) }}
+            tooltip={
+              showControls() ? "Hide Controls" : "Show Controls"
+            } placement="bottom"
           >
             <iconify-icon
               icon={showControls() ? icons.controls : icons.controlsCollapsed}
             />
-          </Control>
+          </TooltipElement>
+
           <Show when={showControls()}>
             <Control
               title="Zoom in"

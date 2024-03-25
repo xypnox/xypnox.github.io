@@ -1,14 +1,18 @@
 ---
 import { icons } from "../../components/icons";
 import { ThemePopup } from "../themeManager/popup";
+import { Tooltip } from "../elements/tooltip";
 import { AudioButton } from "./audioButton";
 import NavLink from "./NavLink.astro";
 ---
 
 <nav class="navbar">
-  <a href="/" aria-label="Home" class="navSurface">
-    <div class="navLogo"></div>
-  </a>
+  <Tooltip placement="top" icon={icons.home} id="home-tooltip" client:load>
+    <a href="/" aria-label="Home" class="navSurface">
+      <div class="navLogo"></div>
+    </a>
+    <span slot="tooltip">Home</span>
+  </Tooltip>
   <div class="navlinks navSurface">
     <NavLink href="/blag">Blag</NavLink>
     <NavLink href="/projects">Projects</NavLink>
@@ -25,7 +29,15 @@ import NavLink from "./NavLink.astro";
     <iconify-icon icon={icons.menu}></iconify-icon>
   </div>
   <div id="SitePreferences">
-    <AudioButton client:load />
+    <Tooltip
+      placement="top"
+      icon={icons.musicNotes}
+      id="music-tooltip"
+      client:load
+    >
+      <AudioButton client:load />
+      <span slot="tooltip">Music</span>
+    </Tooltip>
     <ThemePopup client:only />
   </div>
 </nav>
@@ -73,7 +85,7 @@ import NavLink from "./NavLink.astro";
     }
   }
 
-  .navbar > .navSurface {
+  .navbar .navSurface {
     display: flex;
     align-items: center;
     color: var(--text);
@@ -81,8 +93,9 @@ import NavLink from "./NavLink.astro";
     background: var(--background);
     padding: 0 0.5rem;
     border: 1px solid var(--border-color);
-    box-shadow: var(--cardShadow);
+    box-shadow: var(--shadow-card);
     transition: all 0.2s ease-in-out;
+    height: 100%;
     animation: borderFlash 3s;
   }
 
@@ -126,7 +139,6 @@ import NavLink from "./NavLink.astro";
       }
     }
   }
-
 
   .navbar .mobile-menu,
   .navbar .mobile-menu-button {

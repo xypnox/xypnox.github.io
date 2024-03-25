@@ -7,6 +7,7 @@ import { icons } from "./icons"
 import { Button } from "./elements/atoms"
 import { enableScroll, disableScroll } from "../utils/scroll"
 import { createShortcut } from "@solid-primitives/keyboard"
+import { TooltipElement } from "./elements/tooltip"
 
 interface SliderState {
   current: Signal<number>
@@ -257,8 +258,9 @@ const SliderButton = styled(Button)`
     pointer-events: all;
     padding: 1rem;
     border-radius: 50%;
+    position: relative;
     background: ${theme.background};
-    box-shadow: ${theme.mediumShadow};
+    box-shadow: ${theme.shadow.medium};
   }
 
   &.top-right {
@@ -306,14 +308,20 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
         <Backdrop onClick={onBackdropClick}>
           <SliderContents>
             <ImageContents>
-              <SliderButton
-                class="top-right"
-                onClick={() => props.sliderState.toggle()}>
+              <TooltipElement
+                element={SliderButton}
+                props={{ onClick: () => props.sliderState.toggle(), class: "top-right" }}
+                tooltip="Close" placement="bottom"
+              >
                 <iconify-icon icon={icons.close} />
-              </SliderButton>
-              <SliderButton onClick={() => props.sliderState.prev()}>
+              </TooltipElement>
+              <TooltipElement
+                element={SliderButton}
+                props={{ onClick: () => props.sliderState.prev() }}
+                tooltip="Previous" placement="bottom"
+              >
                 <iconify-icon icon={icons.prev} />
-              </SliderButton>
+              </TooltipElement>
 
               <Contents>
                 <Show when={props.sliderState.changing() && !props.sliderState.quickChange()}>
@@ -345,9 +353,13 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
                 </ImageWrapper>
               </Contents>
 
-              <SliderButton onClick={() => props.sliderState.next()}>
+              <TooltipElement
+                element={SliderButton}
+                props={{ onClick: () => props.sliderState.next() }}
+                tooltip="Next" placement="bottom"
+              >
                 <iconify-icon icon={icons.next} />
-              </SliderButton>
+              </TooltipElement>
             </ImageContents>
 
             <ThumbnailWrapper style={{

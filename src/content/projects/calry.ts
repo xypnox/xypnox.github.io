@@ -1,33 +1,5 @@
 import type { ProjectData } from "./types";
 
-/* Images
-product-link.png
-product-webhooks.png
-fancy-product-design.png
-product-with-lines.png
-all-components.png
-wireframe-ai.png
-wireframe entities.png
-product-ai.png
-outline-flows.png
-product-hospitality-integration.png
-product-hospitality-accounts.png
-product-api-keys.png
-product-sync-destinations.png
-website-sync.png
-social-sync.png
-assets-sync.png
-website-colors.png
-font-selection.png
-website-sync-raw.png
-ticket-mobile.png
-website-full.png
-website-pricing.png
-ticket-desktop.png
-website-hero.png
-website-docs.png
- */
-
 export const CalryProject: ProjectData = {
   title: 'Calry',
   year: '2023',
@@ -36,8 +8,9 @@ export const CalryProject: ProjectData = {
     'Makes hospitality hospitable for developers.',
   ],
   content: [
-    'I was a founding member & handled the design and frontend',
+    'As a founding member, I handle the design and frontend in entirety.',
     'Spanning ideation, wireframing, the website, the branding, product design and development',
+    'Through various ideations, iterations, and changes of heart.'
   ],
   image: '/icons/Calry.svg',
   link: 'https://calry.app',
@@ -48,124 +21,139 @@ export const CalryProject: ProjectData = {
   },
   images: [
     {
-      path: 'product-link.png',
-      title: 'Product Link',
-      description: ['The product link page.']
-    },
-    {
-      path: 'product-webhooks.png',
-      title: 'Product Webhooks',
-      description: ['The product webhooks page.']
-    },
-    {
-      path: 'fancy-product-design.png',
-      title: 'Fancy Product Design',
-      description: ['The fancy product design page.']
-    },
-    {
-      path: 'product-with-lines.png',
-      title: 'Product with Lines',
-      description: ['The product with lines page.']
-    },
-    {
-      path: 'all-components.png',
-      title: 'All Components',
-      description: ['The all components page.']
-    },
-    {
-      path: 'wireframe-ai.png',
-      title: 'Wireframe AI',
-      description: ['The wireframe AI page.']
-    },
-    {
-      path: 'wireframe entities.png',
-      title: 'Wireframe Entities',
-      description: ['The wireframe entities page.']
-    },
-    {
-      path: 'product-ai.png',
-      title: 'Product AI',
-      description: ['The product AI page.']
-    },
-    {
-      path: 'outline-flows.png',
-      title: 'Outline Flows',
-      description: ['The outline flows page.']
-    },
-    {
-      path: 'product-hospitality-integration.png',
-      title: 'Product Hospitality Integration',
-      description: ['The product hospitality integration page.']
-    },
-    {
-      path: 'product-hospitality-accounts.png',
-      title: 'Product Hospitality Accounts',
-      description: ['The product hospitality accounts page.']
-    },
-    {
-      path: 'product-api-keys.png',
-      title: 'Product API Keys',
-      description: ['The product API keys page.']
-    },
-    {
-      path: 'product-sync-destinations.png',
-      title: 'Product Sync Destinations',
-      description: ['The product sync destinations page.']
-    },
-    {
-      path: 'website-sync.png',
-      title: 'Website Sync',
-      description: ['The website sync page.']
-    },
-    {
-      path: 'social-sync.png',
-      title: 'Social Sync',
-      description: ['The social sync page.']
-    },
-    {
-      path: 'assets-sync.png',
-      title: 'Assets Sync',
-      description: ['The assets sync page.']
+      path: 'website-sync-raw.png',
+      title: 'It wasn\'t always like this',
+      description: [
+        'It started with very basic layouts.',
+        'A group of cards, some images, some text.',
+        'Only as style much as necessary.'
+      ]
     },
     {
       path: 'website-colors.png',
-      title: 'Website Colors',
-      description: ['The website colors page.']
+      // title: 'Website Colors',
+      description: [
+        'It took us some time to find the colors',
+        'There were so many options',
+        'And so many opinions'
+      ]
     },
     {
       path: 'font-selection.png',
-      title: 'Font Selection',
-      description: ['The font selection page.']
+      description: [
+        'And the fonts faced the same fate.',
+        'At least we tested a lot of them.'
+      ]
     },
     {
-      path: 'website-sync-raw.png',
-      title: 'Website Sync Raw',
-      description: ['The website sync raw page.']
+      path: 'website-sync-yellow.png',
+      description: [
+        'Continuously, we iterated over the idea and the design',
+        'Which resulted in iterations of the website.',
+        '(and the product, discussed later)'
+      ]
     },
     {
-      path: 'ticket-mobile.png',
-      title: 'Ticket Mobile',
-      description: ['The ticket mobile page.']
+      path: 'assets-sync.png',
+      // title: 'Assets Sync',
+      description: [
+        'And there were assets created for each iteration.',
+        'Only to be used for a short while. :(',
+        'But that is the price of iteration.']
+    },
+    {
+      path: 'website-sync-blue.png',
+      description: ['Again.', 'And again.', '...']
+    },
+    {
+      path: 'website-hero.png',
+      description: ['Till we found correct messaging and apt design.']
     },
     {
       path: 'website-full.png',
-      title: 'Website Full',
-      description: ['The website full page.']
+      title: 'Website',
+      description: [
+        'Yeah this is a hella long screenshot.',
+        'But it is the recent website\'s landing page, it its entirety.'
+      ]
     },
     {
       path: 'website-pricing.png',
-      title: 'Website Pricing',
-      description: ['The website pricing page.']
+      // title: 'Website Pricing',
+      description: [
+        'Pages like pricing were also designed.',
+        '(and redesigned)',
+        'It used to have a calculator once.'
+      ]
     },
     {
       path: 'ticket-desktop.png',
-      title: 'Ticket Desktop',
-      description: ['The ticket desktop page.']
+      // title: 'Ticket Desktop',
+      description: ['Each element of the page had to be responsive.', 'On all screen sizes.']
+    },
+    {
+      path: 'ticket-mobile.png',
+      // title: 'Ticket Mobile',
+      description: ['And yet look like it was designed only for that screen.']
+    },
+    {
+      path: 'fancy-product-design.png',
+      title: 'And always there was the Product',
+      description: ['Designed and developed in parallel.', 'With each iteration of the idea.']
+    },
+    {
+      path: 'wireframe entities.png',
+      description: ['Due to their simplicity wireframes allowed for wider explorations.', 'We could discuss the ideas more freely.']
+    },
+    {
+      path: 'wireframe-ai.png',
+      // title: 'Wireframe AI',
+      description: ['Including the hot new things.', 'Like LLM assistants.']
+    },
+    {
+      path: 'product-with-lines.png',
+      // title: '',
+      description: ['Initially it was a lot "prototype-y".', 'With flesh, the bones gained a bit of refinement.']
+    },
+    {
+      path: 'all-components.png',
+      // title: 'All Components',
+      description: ['Until we designed it properly.', 'With all the components.']
+    },
+    {
+      path: 'outline-flows.png',
+      title: 'ALL THE COMPONENTS',
+      description: ['Each purple outline is instance of a component in figma.', 'And this shows two flows.', 'We made several.']
+    },
+    {
+      path: 'product-ai.png',
+      // title: 'Product AI',
+      description: ['And it looked pretty good.', 'Until we pivoted.', 'Again.']
+    },
+    {
+      path: 'product-api-keys.png',
+      // title: 'Product API Keys',
+      description: ['Of course there were iterations on the product too.', 'And there were multiple pages and flows.']
+    },
+    {
+      path: 'product-sync-destinations.png',
+      // title: 'Product Sync Destinations',
+      description: ['That matched the style and theme of the website.', 'At that point in time.']
+    },
+    {
+      path: 'product-webhooks.png',
+      // title: 'Product Webhooks',
+      description: ['The recent (in production) product looks decent enough.', 'Even in the complex forms.']
+    },
+    {
+      path: 'product-link.png',
+      // title: 'Product Link',
+      description: ['The link page is the one seen by most.', 'And it looks good.']
     },
     {
       path: 'website-docs.png',
-      title: 'Website Docs',
-      description: ['The website docs page.']
+      // title: 'Website Docs',
+      description: ['And finally there are also the docs.', 'Minimal, clean and to the point.']
     },
   ],
 }

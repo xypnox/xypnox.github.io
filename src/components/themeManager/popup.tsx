@@ -2,6 +2,7 @@ import { Show, createSignal, lazy } from 'solid-js';
 import { keyframes, styled } from 'solid-styled-components';
 import { theme } from '../../theme';
 import { icons } from '../icons';
+import { Tooltip } from '../elements/tooltip';
 
 export const LazyManagerComponent = lazy(() => import('./index'));
 export const LazyModeSwitcherComponent = lazy(() => import('./modeSwitcher'));
@@ -35,20 +36,22 @@ export const ThemePopup = () => {
           </PopupControls>
         </PopupContent>
       </Show>
-      <PopupButton
-        class="navButton"
-        aria-label={show() ? 'Close Theme Manager' : 'Open Theme Manager'}
-        onClick={
-          () => {
-            if (show()) {
-              hide();
-            } else {
-              setShow(true);
+      <Tooltip id="themescura-tooltip" icon={icons.colors} tooltip={<span>{show() ? "Close Themescura" : "Customize Theme"}</span>} placement="top">
+        <PopupButton
+          class="navButton"
+          aria-label={show() ? 'Close Theme Manager' : 'Open Theme Manager'}
+          onClick={
+            () => {
+              if (show()) {
+                hide();
+              } else {
+                setShow(true);
+              }
             }
-          }
-        }>
-        <iconify-icon icon={icons.customize} />
-      </PopupButton>
+          }>
+          <iconify-icon icon={icons.customize} />
+        </PopupButton>
+      </Tooltip>
     </PopupWrapper>
   )
 }
@@ -84,11 +87,11 @@ const PopupContent = styled('div')`
   max-height: 800px;
   overflow: hidden;
 
-  color: var(--text);
-  background: var(--background);
-  box-shadow: var(--cardShadow);
+  color: ${theme.text};
+  background: ${theme.background};
+  box-shadow: ${theme.shadow.card};
   border-radius: calc(${theme.border.radius} * 2);
-  border: 2px solid var(--primary-color);
+  border: 2px solid ${theme.primary.color};
 
   display: flex;
   flex-direction: column;
@@ -105,7 +108,7 @@ const PopupContent = styled('div')`
 
 const ContentWrapper = styled('div')`
   padding: 2rem 1rem;
-  padding-bottom: calc(var(--layout-nav-height) + 2rem);
+  padding-bottom: calc(${theme.layout.nav.height} + 2rem);
   background: var(--card-background);
   width: 100%;
   height: 100%;

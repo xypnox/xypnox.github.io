@@ -41,7 +41,7 @@ const DropdownContent = styled('div')`
   border-radius: ${theme.border.radius};
   z-index: 200;
   padding: 0.5rem;
-  box-shadow: ${theme.cardShadow};
+  box-shadow: ${theme.shadow.medium};
   backdrop-filter: blur(10px);
 
   display: flex;
