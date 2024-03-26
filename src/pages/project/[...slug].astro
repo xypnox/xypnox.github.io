@@ -43,7 +43,10 @@ if (project.cover) {
 
 <Layout
   title={project?.title ?? "Project"}
-  meta={{ description: project?.description.join("\n") ?? "Project" }}
+  meta={{
+    description: project?.description.join("\n") ?? "Project",
+    image: coverImage?.src,
+  }}
 >
   {
     project && (
