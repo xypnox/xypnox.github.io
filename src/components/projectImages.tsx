@@ -147,7 +147,8 @@ const Image = styled("div")`
     flex-shrink: 0;
     width: 100%;
     border-radius: calc(${theme.border.radius} * 2);
-    box-shadow: ${theme.shadow.medium};
+    -webkit-filter: drop-shadow(${theme.shadow.cardDrop});
+    filter: drop-shadow(${theme.shadow.cardDrop});
   }
 `
 

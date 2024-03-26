@@ -1,6 +1,7 @@
 ---
 import { type ProjectData, type ProjectImage } from "../content/projects/types";
 import type { Image } from "../dataTypes";
+import { icons } from "./icons";
 import { ProjectImages } from "./projectImages";
 
 interface Props {
@@ -33,6 +34,9 @@ const { project, images, coverImage } = Astro.props;
     }
     <p class="projectTags">
       {project.tags.map((t) => <span>{t}</span>)}
+      <span>
+        <iconify-icon icon={icons.image}></iconify-icon>
+        {images.length}</span>
     </p>
   </div>
   <div class="content">
@@ -146,7 +150,8 @@ const { project, images, coverImage } = Astro.props;
     width: 100%;
     img {
       width: 100%;
-      box-shadow: var(--shadow-card);
+      -webkit-filter: drop-shadow(var(--shadow-cardDrop));
+      filter: drop-shadow(var(--shadow-cardDrop));
     }
     p {
       font-size: var(--font-size-base);
@@ -163,7 +168,10 @@ const { project, images, coverImage } = Astro.props;
   }
 
   .projectTags span {
-    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
     border-radius: calc(var(--border-radius) * 4);
     background: var(--surface);
     font-size: var(--font-size-base);

@@ -12,6 +12,20 @@ export const MargProject: ProjectData = {
     'I worked on the design and frontend of the application.'
   ],
   award: 'Gold @ InterIIT Tech 2020 in Coding hackathon',
-  image: '/projects/marg.png',
-  tags: ['React', 'Typescript']
+  image: '/icons/marg.svg',
+  tags: ['React', 'Typescript'],
+  cover: {
+    src: "app-pages.png",
+    alt: "Marg",
+  },
+  images: [
+    {
+      path: 'app-pages.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'award.png',
+      description: ['The landing page of the platform.'],
+    },
+  ]
 }

@@ -485,6 +485,7 @@ const generateModeVarsFromPaletteColors = (palette: PaletteColors, cardType: Car
       card: `0 1rem 2rem 0 rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
       medium: `0 0.5rem 1rem 0 rgba(0, 0, 0, ${isDark ? 0.3 : 0.15})`,
       small: `0 0.1rem 0.2rem 0 rgba(0, 0, 0, ${isDark ? 0.3 : 0.3})`,
+      cardDrop: `0 1rem 2rem rgba(0, 0, 0, ${isDark ? 0.6 : 0.2})`,
     },
 
     // We can use these inside new vars

@@ -13,5 +13,39 @@ export const LttkgpProject: ProjectData = {
     'It gathers dust these days.'
   ],
   image: '/icons/lttkp.svg',
-  tags: ['React', 'Typescript']
+  tags: ['React', 'Typescript'],
+  cover: {
+    src: "dark-home.png",
+    alt: "LTTKGP",
+  },
+  images: [
+    {
+      path: 'dark-home.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'dark-and-mobile.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'dark-menu.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'gallery.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'home.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'player.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'social.png',
+      description: ['The landing page of the platform.'],
+    },
+  ]
 }

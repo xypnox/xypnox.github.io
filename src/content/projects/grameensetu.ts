@@ -13,5 +13,20 @@ export const GrameenSetuProject: ProjectData = {
   ],
   award: 'Gold @ InterIIT Tech 2021 in Drishtee’s Tech-led Innovation for Rural Entrepreneurs',
   image: '/projects/GrameenSetu.svg',
-  tags: ['React', 'Typescript']
+  tags: ['React', 'Typescript'],
+  cover: {
+    alt: 'Grameen Setu',
+    src: 'green-proto.png',
+  },
+  images: [
+    {
+      description: ['The landing page of the platform.'],
+      path: 'blue-proto.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'green-proto.png',
+    },
+  ],
+
 }

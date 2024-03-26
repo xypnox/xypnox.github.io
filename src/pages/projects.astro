@@ -52,7 +52,7 @@ export const frontMatter = {
             <div class="cardContent">
               <img class="logoBlur" src={p.image} alt={p.title} />
               <img class="logo" src={p.image} alt={p.title} />
-              <h1>{p.title}</h1>
+              <h2>{p.title}</h2>
               {p.description.map((d) => (
                 <p>{d}</p>
               ))}
@@ -86,14 +86,22 @@ export const frontMatter = {
     line-height: 1.5;
     transition: all 0.5s ease-in-out;
     height: max-content;
+    overflow: hidden;
   }
 
   .projectCard:hover {
+    border-color: var(--primary-color);
+    h2 {
+      color: var(--primary-color);
+    }
     .logo {
       transform: scale(1.05);
     }
     .logoBlur {
       transform: scale(1.1);
+    }
+    .cover-image {
+      transform: scale(1.05);
     }
   }
 
@@ -110,6 +118,7 @@ export const frontMatter = {
     width: 100%;
     max-width: 128px;
     margin-top: calc(-140px - 1rem);
+    margin-bottom: 0.5rem;
     z-index: 4;
     border-radius: calc(2 * var(--border-radius));
     transition: all 0.5s ease-in-out;
@@ -131,11 +140,12 @@ export const frontMatter = {
     height: 200px;
     object-fit: cover;
     object-position: top;
+    transition: all 0.5s ease-in-out;
     border-radius: calc(2 * var(--border-radius));
   }
 
   .projectCard p,
-  .projectCard h1 {
+  .projectCard h2 {
     margin: 0;
   }
 
