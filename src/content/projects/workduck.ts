@@ -41,7 +41,7 @@ export const WorkduckProject: ProjectData = {
       description: [
         'The platform was designed to test mobile apps.',
         'It ran built versions of apps on emulator and simulated user interactions in flows.',
-        'It required no local instalation and the testing and reporting happened in the cloud.'
+        'It required no local installation and the testing and reporting happened in the cloud.'
       ],
     },
     {
@@ -174,9 +174,10 @@ export const WorkduckProject: ProjectData = {
       path: 'mex-landing.png',
       description: [
         'It was supposed to be the next core tool for modern product teams.',
-        'But it never took off. The implementation complexity was too much for a small team.',
-        'And even if you could build it all, the users were not ready for such a tool.',
-        'So many want to use a tool that solves everything, but no one wants to adapt to such a tool.'
+        'But it never took off. The complexities introduced from feature stacking became overbearing.',
+        'And even if you could build it all, the users were not ready for such a tool, we had yet to find them.',
+        'So many want to use a tool that solves everything, but no one wants to adapt to such a tool.',
+        'And for a tool that could do so much, finding a initial target customer became a challenge, which was never really solved.'
       ],
     },
     {
