@@ -38,6 +38,7 @@ const TooltipWrapper = styled(TooltipWrapperBase)`
   &.visible {
     z-index: 2009;
     display: flex;
+    gap: 0.5rem;
   }
 `;
 

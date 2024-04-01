@@ -5,7 +5,7 @@ export const GrameenSetuProject: ProjectData = {
   slug: 'grameen-setu',
   year: '2021',
   description: [
-    'GrameenSetu was an entry for InterIIT Tech 2021 as an all-in-one platform designed for rural producers to connect with SMEs.',
+    'An all-in-one platform designed for rural producers to connect with SMEs.',
   ],
   content: [
     'The platform offers a user-friendly interface, an improved e-marketplace tailored to their needs, and promotes collaborations among rural producers to enhance the rural economy.',
