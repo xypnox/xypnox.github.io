@@ -5,15 +5,72 @@ export const FifthtryProject: ProjectData = {
   slug: 'fifthtry',
   year: '2020',
   description: [
-
-    'I worked at fifthry when it was a documentation tool that integrated with Github Pull Request, to ensure that no code goes live without being updated in the documentation.',
-
+    'A documentation tool that matched code changes with documentation updates.',
   ],
   content: [
-    "I worked on both the backend and frontend of the application. Written in Rust and Elm, in the specialized Realm framework. I worked in change requests, a feature similar to pull requests where I had to deal with versioning and diff of a text document.",
-    "I also contributed to the data and performance analytics stack for the backend that collected details of all calls made, with the functions that were called, in the order they were called, and what time they took."
+    'I interned at fifthry when it was a documentation tool that ensured that no code went live without being updated in the documentation.',
+    "I worked on change requests, similar to pull requests, with versioning and diff of a text document.",
+    "I also contributed to the data and performance analytics stack that collected details of all function calls made for a request.",
   ],
   image: '/icons/Fifthtry.svg',
   link: 'https://fifthtry.com',
-  tags: ['Rust', 'Elm']
+  tags: ['Rust', 'Elm', 'Realm'],
+  cover: {
+    src: 'prototype.png',
+    alt: 'Fifthtry\'s Documentation Tool, Prototype',
+  },
+  images: [
+    {
+      path: 'editor-prototype.png',
+      description: ['The editor of the platform.'],
+    },
+    {
+      path: 'toolbar.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'web-home.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'web-email-confirm.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'web-beta-list.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'certificate.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'cr-ui.png',
+      description: ['The interface for change requests.'],
+    },
+    {
+      path: 'cr-template.png',
+      description: ['The template for change requests.'],
+    },
+    {
+      path: 'subscribe-mobile.png',
+      description: ['The mobile view of a page with subscribe option.'],
+    },
+    {
+      path: 'likes-ui.png',
+      description: ['The interface for likes.'],
+    },
+    {
+      path: 'diff-cr-ui.png',
+      description: ['The interface for diffing change requests.'],
+    },
+    {
+      path: 'page-ui.png',
+      description: ['The interface for the page.'],
+    },
+    {
+      path: 'page-ui-old.png',
+      description: ['The old interface for the page.'],
+    },
+  ]
 }

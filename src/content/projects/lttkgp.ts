@@ -47,5 +47,31 @@ export const LttkgpProject: ProjectData = {
       path: 'social.png',
       description: ['The landing page of the platform.'],
     },
+    //  lttkgp-dark.png
+    //  lttkgp-gallery-dark.png
+    //  lttkgp-gallery-light.png
+    //  lttkgp-player.png
+    //  player-dark.png
+    {
+      path: 'lttkgp-dark.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'lttkgp-gallery-dark.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'lttkgp-gallery-light.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'lttkgp-player.png',
+      description: ['The landing page of the platform.'],
+    },
+    {
+      path: 'player-dark.png',
+      description: ['The landing page of the platform.'],
+    },
+
   ]
 }

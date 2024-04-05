@@ -23,6 +23,7 @@ if (projectCoverImagesRaw && projectCoverImagesRaw.length > 0) {
   // We check if the asset images exist for the names defined in the data
   projectCoverImages = await getImages(
     projectCoverImagesRaw.map((i) => pathToProjectImage(i.slug, i.path)).flat(),
+    [1200],
   );
 }
 
@@ -49,7 +50,11 @@ export const frontMatter = {
               src={
                 projectCoverImages[pathToProjectImage(p.slug, p.cover.src!)].src
               }
-              alt={p.title}
+              srcset={
+                projectCoverImages[pathToProjectImage(p.slug, p.cover.src!)]
+                  .srcSet.attribute
+              }
+              alt={p.cover.alt || p.title}
             />
           ) : (
             <div />

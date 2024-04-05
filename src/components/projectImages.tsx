@@ -1,11 +1,12 @@
 import { styled } from "solid-styled-components";
 import type { ProjectImage } from "../content/projects/types";
 import { ImageSlider, createSliderState } from "./imageSlider";
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { baseElementStyles } from "./elements/atoms";
 import { theme } from "../theme";
 
 interface ProjectImagesProps {
+  cover?: ProjectImage;
   images: ProjectImage[];
 }
 
@@ -63,41 +64,44 @@ const DefaultAlt = (props: { image: ProjectImage }) => (
 
 
 export const ProjectImages = (props: ProjectImagesProps) => {
-  const sliderState = createSliderState(0, props.images.length)
-  return props.images.length > 0 && (
+  const images = props.cover ? [...props.images, props.cover] : props.images
+  const sliderState = createSliderState(0, images.length)
+  return images.length > 0 && (
     <Images>
       <ImageSlider
-        images={props.images}
+        images={images}
         sliderState={sliderState}
         Alt={DefaultAlt}
       />
-      <For each={props.images}>
+      <For each={images}>
         {(image, index) => {
           const title = image.title ?? image.alt;
           return (
-            <Image>
-              <div
-                class="imageWrapper"
-                onClick={() => {
-                  sliderState.setCurrent(index())
-                  sliderState.toggle()
-                }}
-              >
-                <img
-                  src={image.image.src}
-                  alt={title ?? image.description.join(" ")}
-                  loading="lazy"
-                />
-              </div>
-              <ImageInfo>
-                {title && <h3>{title}</h3>}
-                <ul>
-                  {image.description.map((desc) => (
-                    <li>{desc}</li>
-                  ))}
-                </ul>
-              </ImageInfo>
-            </Image>
+            <Show when={props.cover ? index() !== images.length - 1 : true}>
+              <Image>
+                <div
+                  class="imageWrapper"
+                  onClick={() => {
+                    sliderState.setCurrent(index())
+                    sliderState.toggle()
+                  }}
+                >
+                  <img
+                    src={image.image.src}
+                    alt={title ?? image.description.join(" ")}
+                    loading="lazy"
+                  />
+                </div>
+                <ImageInfo>
+                  {title && <h3>{title}</h3>}
+                  <ul>
+                    {image.description.map((desc) => (
+                      <li>{desc}</li>
+                    ))}
+                  </ul>
+                </ImageInfo>
+              </Image>
+            </Show>
           );
         }}
       </For>

@@ -27,6 +27,59 @@ export const GrameenSetuProject: ProjectData = {
       description: ['The landing page of the platform.'],
       path: 'green-proto.png',
     },
+    /*
+     *
+           branding.png
+           dash-app.png
+           dashboard-figma.png
+           logistics-app.png
+           pipe-app.png
+           product-app.png
+           search app.png
+           sellers-app.png
+           slide-tech.png
+           tender-figma.png
+     */
+    {
+      description: ['The landing page of the platform.'],
+      path: 'branding.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'dash-app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'logistics-app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'pipe-app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'product-app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'search app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'sellers-app.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'slide-tech.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'dashboard-figma.png',
+    },
+    {
+      description: ['The landing page of the platform.'],
+      path: 'tender-figma.png',
+    },
   ],
 
 }
