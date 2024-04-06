@@ -28,15 +28,17 @@ const links = [
           links.map((link, i) => (
             <>
               <a href={link.link}>{link.name}</a>
-              {i !== links.length - 1 && <span>|</span>}
+              <span>|</span>
             </>
           ))
-        }
+        }© {year}
       </div>
+      <p>
+        <a href="/about">About this website</a>
+      </p>
       <p>
         <em>The content is 100% human generated.</em>
       </p>
-      <p>© {year}</p>
     </div>
   </div>
   <div class="navbar-helper">And this is the navbar</div>
@@ -51,7 +53,7 @@ const links = [
     margin: 4em 0 0;
     gap: 1rem;
     padding: 4rem 0 0;
-    border-top: 2px var(--border-style) var(--border-color);
+    border-top: 1px var(--border-style) var(--border-color);
   }
 
   .footer-content {
@@ -100,7 +102,7 @@ const links = [
     padding-left: 5rem;
     border-radius: calc(var(--border-radius) * 2);
     color: var(--fadeText);
-    border: 2px var(--border-style) var(--border-color);
+    border: 1px var(--border-style) var(--border-color);
   }
 
   .navLogo {

@@ -107,30 +107,17 @@ export const ButtonGroup = styled('div')`
   background: ${theme.surface};
   transition: all 0.2s ease;
   & > ${Button.class}, & > ${Text.class} {
-    &.selected {
-      border: none;
-    }
     background: transparent;
     border-radius: 0;
     border: none;
     flex: 1;
     z-index: 3;
-    &:hover, &:active {
-      box-shadow: none;
-    }
-    &:focus-visible {
-      outline: none;
-      box-shadow: inset 0px 0px 0px 2px var(--primary-color);
-    }
-    &:first-child {
-      border-radius: ${theme.border.radius} 0 0 ${theme.border.radius};
-    }
-    &:last-child {
-      border-radius: 0 ${theme.border.radius} ${theme.border.radius} 0;
-    }
-    &:only-child {
-      border-radius: ${theme.border.radius};
-    }
+  }
+  & > ${Button.class}:hover {
+    transform: scale(1);
+  }
+  & > ${Button.class}:active {
+    transform: scale(0.9);
   }
 `
 

@@ -41,6 +41,9 @@ dependencies:
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
+  en-pos:
+    specifier: ^1.0.16
+    version: 1.0.16
   fast-xml-parser:
     specifier: ^4.3.5
     version: 4.3.5
@@ -2686,6 +2689,10 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /cities-list@1.0.3:
+    resolution: {integrity: sha512-UadgzcZiV38TvJXlGymITRvvxaR5PtlrS2M+RJICyvRNp3TnOCPA/5ZZuRn8yG6SexKy1x9I+IwFctZ39XbI/Q==}
+    dev: false
+
   /cli-boxes@3.0.0:
     resolution: {integrity: sha512-/lzGpEWL/8PfI0BmBOPRwp0c/wFNX1RdUML3jK/RcSBA9T8mZDdQpqYBKtCFTOfQbwPqWEOpjqW+Fnayc0969g==}
     engines: {node: '>=10'}
@@ -2894,6 +2901,31 @@ packages:
 
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
+    dev: false
+
+  /en-inflectors@1.0.12:
+    resolution: {integrity: sha512-G9wwJMx9DQQzwom8J8e8ErVpI6h/Z5BpYusJCE2Q/2NfgBNYCesyNaCOOskZAhOrw2nmR4D8nYAv4Xv/INIbzw==}
+    dependencies:
+      en-stemmer: 1.0.3
+    dev: false
+
+  /en-lexicon@1.0.11:
+    resolution: {integrity: sha512-eanOw9551H6jMRpRK023+Nlss5qnuAi99drXcSUzQySsMrB43teDNbin/AbpOfnemQiTtuZChXYm2kEIR1Mhmg==}
+    dependencies:
+      en-inflectors: 1.0.12
+    dev: false
+
+  /en-pos@1.0.16:
+    resolution: {integrity: sha512-b/tYA8NNl2fuXn55deB81RwW6S9bJqgYjNMVmltUZxT1JZEzNsWvkZpKiXfOe4RlsB2t5O3s1B/BgnXDOAO1Zw==}
+    dependencies:
+      cities-list: 1.0.3
+      en-inflectors: 1.0.12
+      en-lexicon: 1.0.11
+      humannames: 1.0.5
+    dev: false
+
+  /en-stemmer@1.0.3:
+    resolution: {integrity: sha512-sBeYsHLqZWACn/mTRLAMdYb/A53s55r4/nCB2UjKK96EBuRQ4t4GKl4V1pW/0hvzdncfYlZRT+JSIRxCtoYqbA==}
     dev: false
 
   /end-of-stream@1.4.4:
@@ -3355,6 +3387,10 @@ packages:
   /human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
+    dev: false
+
+  /humannames@1.0.5:
+    resolution: {integrity: sha512-FArOOhsfu1Rzc6wj8TZWTEpO/+TQOqhU0YNx+IyRaScE7HVanOwn8knN1OjjUngJOLaRqFSLjX0EzvMiNnT7zw==}
     dev: false
 
   /husky@8.0.0:

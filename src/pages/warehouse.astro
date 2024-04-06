@@ -2,6 +2,7 @@
 import Layout from "../layouts/MainLayout.astro";
 import PageHeader from "../components/pageHeader.astro";
 import { Tooltip } from "../components/elements/tooltip";
+import { WarehouseSolidJS } from "../components/warehouse/index";
 ---
 
 <Layout title="Warehouse">
@@ -10,13 +11,17 @@ import { Tooltip } from "../components/elements/tooltip";
     Hello <div slot="tooltip">world</div>
   </Tooltip>
   <Tooltip id="Hello" placement="right" client:only>
-    <div>DivHello</div> <div slot="tooltip">world</div>
+    <div>DivHello</div>
+    <div slot="tooltip">world</div>
   </Tooltip>
   <Tooltip id="Hello" placement="right" client:only>
-    <button>DivHello</button> <div slot="tooltip">world</div>
+    <button>DivHello</button>
+    <div slot="tooltip">world</div>
   </Tooltip>
 
   <Tooltip id="Hello" placement="bottom" client:only>
-    <h1>HelloH1</h1> <div slot="tooltip">world</div>
+    <h1>HelloH1</h1>
+    <div slot="tooltip">world</div>
   </Tooltip>
+  <WarehouseSolidJS client:load />
 </Layout>

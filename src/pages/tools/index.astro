@@ -12,7 +12,12 @@ const tools = [
     name: "NamemaN",
     path: "/tools/nameman",
     description: "A tool to generate random names.",
-  }
+  },
+  {
+    name: "EnHigh",
+    path: "/tools/enhigh",
+    description: "English Highlighter",
+  },
 ];
 
 const meta = {
@@ -23,7 +28,7 @@ const meta = {
 
 <Layout title={meta.title} meta={meta}>
   <main>
-    <PageHeader {...meta}/>
+    <PageHeader {...meta} />
 
     <div class="tools">
       {

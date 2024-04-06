@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { EnHigh as EnHighSolid } from "../../tools/enhigh/index";
+import PageHeader from "../../components/pageHeader.astro";
+
+const meta = {
+  title: "EnHigh",
+  description: "English Highlighter that highlights english language text.",
+}
+---
+
+<Layout title={meta.title} meta={meta}>
+  <main>
+    <PageHeader {...meta} />
+    <EnHighSolid client:only />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 2rem;
+    width: 100%;
+    max-width: 80ch;
+    margin: 0 auto;
+  }
+</style>
