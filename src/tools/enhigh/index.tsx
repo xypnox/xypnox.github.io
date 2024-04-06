@@ -15,6 +15,7 @@ const Textarea = styled("textarea")`
   padding: 0.5rem;
   min-height: 10rem;
   background-color: ${theme.surface};
+  width: 100%;
   color: ${theme.fadeText};
 `
 
@@ -361,7 +362,7 @@ const Toolbar = styled("div")`
   border-radius: ${theme.border.radius};
   & > * {
     min-width: 8rem;
-    max-width: 10rem;
+    max-width: 12rem;
   }
   @media (max-width: 600px) {
     flex-direction: column;
