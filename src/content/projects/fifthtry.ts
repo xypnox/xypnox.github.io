@@ -21,56 +21,58 @@ export const FifthtryProject: ProjectData = {
   },
   images: [
     {
-      path: 'editor-prototype.png',
-      description: ['The editor of the platform.'],
-    },
-    {
-      path: 'toolbar.png',
-      description: ['The landing page of the platform.'],
-    },
-    {
       path: 'web-home.png',
-      description: ['The landing page of the platform.'],
+      description: ['I designed and developed a few landing pages and registration flow.'],
     },
     {
       path: 'web-email-confirm.png',
-      description: ['The landing page of the platform.'],
+      description: ['The email confirmation page with similar design to the landing page and a welcoming illustration.'],
     },
     {
       path: 'web-beta-list.png',
-      description: ['The landing page of the platform.'],
-    },
-    {
-      path: 'certificate.png',
-      description: ['The landing page of the platform.'],
-    },
-    {
-      path: 'cr-ui.png',
-      description: ['The interface for change requests.'],
-    },
-    {
-      path: 'cr-template.png',
-      description: ['The template for change requests.'],
+      description: ['The admins could browse the list of beta users and send them invites.'],
     },
     {
       path: 'subscribe-mobile.png',
-      description: ['The mobile view of a page with subscribe option.'],
+      description: ['We added a subscription feature to the websites.', 'Here is a mobile view for the popup for subscribing to a page or website.'],
     },
     {
-      path: 'likes-ui.png',
-      description: ['The interface for likes.'],
+      path: 'cr-template.png',
+      description: ['We ideated the journey for change requests in Figma.', 'The pages started with a very simple layout.'],
+    },
+    {
+      path: 'editor-prototype.png',
+      description: ['CRs were simpler and intuitive versions of github\'s pull requests.', 'We prototyped the entire flow before development.'],
+    },
+    {
+      path: 'cr-ui.png',
+      description: ['We prototyped the menus and the diff view for change requests.'],
     },
     {
       path: 'diff-cr-ui.png',
-      description: ['The interface for diffing change requests.'],
+      description: ['The implemented interface for the diff view of change requests resulted in a bit more complex layout.', 'Later syntax highlighting was added to the diffs to make them much more palpable. (not shown here)'],
     },
     {
-      path: 'page-ui.png',
-      description: ['The interface for the page.'],
+      path: 'likes-ui.png',
+      description: ['I developed several features during the internship.', 'One of them was the likes feature for comments.', 'Shown here is the liked by page for a specific page in the storybook of realm.',],
+    },
+    {
+      path: 'toolbar.png',
+      description: [
+        'I redesigned the toolbar as the number of features increased.',
+        'And the old design was neither scalable nor pretty.'],
     },
     {
       path: 'page-ui-old.png',
-      description: ['The old interface for the page.'],
+      description: ['The interface of a page before I started working on the front of the frontend.'],
+    },
+    {
+      path: 'page-ui.png',
+      description: ['The interface of a page after I had finished my first few iterations on the frontend design.'],
+    },
+    {
+      path: 'certificate.png',
+      description: ['I even designed the certificate of internship that I was awarded.'],
     },
   ]
 }

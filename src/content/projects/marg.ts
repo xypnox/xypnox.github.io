@@ -5,7 +5,7 @@ export const MargProject: ProjectData = {
   slug: 'marg',
   year: '2020',
   description: [
-    'Monitor Assess Report Guide was a complete ecosystem for the citizens and government to for road maintenance and progress checking.',
+    'Monitor Assess Report Guide was a complete ecosystem for the citizens and government for road maintenance and progress checking.',
   ],
   content: [
     'We incorporated a sense of ownership towards public infrastructure in the users.',
