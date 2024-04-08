@@ -5,6 +5,7 @@ import { theme } from "../../theme"
 import { capitalize } from "../../lib/text"
 import { icons } from "../../components/icons"
 import { CopyButton } from "../../components/elements/atoms/copyButton"
+import { RangeInput } from "../../components/elements/range"
 
 const word_list_url = 'https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-no-swears.txt'
 const wordListCacheName = 'nameman-wordList'
@@ -154,6 +155,7 @@ const Toolbar = styled('div')`
       max-width: 1rem;
     }
   }
+
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: center;
@@ -161,7 +163,6 @@ const Toolbar = styled('div')`
       flex: 1;
       justify-content: center;
     }
-
   }
 `
 
@@ -358,34 +359,38 @@ export const Nameman = () => {
               </Label>
             </WordList>
           </Show>
-          <Label title="Number of names to generate">
-            Total Generated
-            <Input
-              type="number"
-              value={wordConfig().count} onInput={e => changeConfig('count', e.currentTarget.value)}
-            />
-          </Label>
 
-          <Label title="Number of words to join from wordlist">
-            Words joined
-            <Input
-              type="number"
-              value={wordConfig().sections}
-              onInput={e => changeConfig('sections', e.currentTarget.value)}
-            />
-          </Label>
+          <RangeInput
+            label="Names"
+            showValue
+            value={wordConfig().count}
+            onChange={e => changeConfig('count', e.currentTarget.value)}
+            min={8}
+            max={100}
+            step={1}
+          />
 
-          <Label title={wordConfig().restrictLength ? `Max length of words to take from wordlist` : `Cut the word taken from wordlist to Slice Length`}>
-            {
-              wordConfig().restrictLength ? 'Max' : 'Slice'
-            } Length
-            <Input
-              type="number"
+          <RangeInput
+            label="Words to join"
+            showValue
+            value={wordConfig().sections}
+            onChange={e => changeConfig('sections', e.currentTarget.value)}
+            min={1}
+            max={5}
+            step={1}
+          />
 
-              value={wordConfig().maxLengthAllowed}
-              onInput={e => changeConfig('maxLengthAllowed', e.currentTarget.value)}
-            />
-          </Label>
+
+          <RangeInput
+            // label={wordConfig().restrictLength ? `Max length of words to take from wordlist` : `Cut the word taken from wordlist to Slice Length`}
+            label={wordConfig().restrictLength ? `Max Length` : `Slice Length`}
+            showValue
+            value={wordConfig().maxLengthAllowed}
+            onChange={e => changeConfig('maxLengthAllowed', e.currentTarget.value)}
+            min={1}
+            max={12}
+            step={1}
+          />
 
 
 
