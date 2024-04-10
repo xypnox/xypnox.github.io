@@ -1,0 +1,159 @@
+---
+title: "Website Updates 1"
+date: 2024-04-09
+description: "A review of a few small and large changes made to this website."
+
+categories: ["design", "tech"]
+tags: ["design", "tech"]
+coverAlt: 'One of the wallpaper images made by xypnox.'
+coverImage: "./cover.png"
+hidden: true
+---
+
+There has been a lot of time between [when I last covered](/blag/posts/migrating-to-zola) how I made this website. And a lot has changed since then. The website changed from [Zola]() to [Astro](). I went from using [React]() to [SolidJS](). And in the meantime found a lot more to what a website could be.
+
+## Project and Design Updates
+
+I have added more detailed projects pages. You can browse them at the [Projects](/projects) page.
+
+### **Sliders**
+
+There are nice Image sliders in [Project pages (ex: Notes)](/project/notes) and [Covers](/design/covers) etc.
+
+I could not find a good slider with themable styles so I had to write one from scratch. It has all the niceties such as keybindings, thumbnais etc.
+
+Moreover, the alt text/description paragraphs can be customized. For [Covers](/design/covers) the alt in slider becomes the link to the playlist. So to open a playlist from the covers pages, you can open the slider and click on the "Play" alt.
+
+
+The code isn't too complex either. Here for example are code sections taken from Project Images.
+
+```tsx
+const sliderState = createSliderState(0, images.length)
+
+const DefaultAlt = (props: { image: ProjectImage }) => (
+  <AltContainer class="altText">
+    <ImageInfo>
+      {props.image.title && <h3>{props.image.title}</h3>}
+      <ul>
+        {props.image.description.map((desc) => (
+          <li>{desc}</li>
+        ))}
+      </ul>
+    </ImageInfo>
+  </AltContainer>
+)
+
+<ImageSlider
+  images={images}
+  sliderState={sliderState}
+  Alt={DefaultAlt}
+/>
+
+<div
+  class="imageWrapper"
+  onClick={() => {
+    sliderState.setCurrent(index())
+    sliderState.toggle()
+  }}
+>
+  <img
+    src={image.image.src}
+    alt={title ?? image.description.join(" ")}
+    loading="lazy"
+  />
+</div>
+```
+
+### Typed correctly
+```typescript
+export interface ProjectData {
+  title: string
+  slug: string
+  year?: string
+  description: string[]
+  content?: string[]
+  image: string
+  cover?: {
+    src: string
+    alt: string
+  }
+  images?: RawProjectImage[]
+  link?: string
+  award?: string
+  tags: string[]
+}
+```
+
+### Images CDN
+
+If you took a glance at the [Projects](/projects) pages, you would have appreciated the usually high quality of the images and screenshots. The total raw size of images in the projects pages is 130MB+. I surely could not store all of them in the same repo with the code. I had stored a few images here and there with the blog posts which bloated the size of the repository.
+
+I moved the images for Projects and Covers out of the public directory and into `src/assets/`. The folder is added to `.gitignore` and it is synced with the Bucket/CDN with simple scripts. The assets are reduplicated at build time so that Astro can optimize the images and therefore the final size of the build is  small.
+
+```typescript
+export const getImages = async (paths: string[], widths: number[] = [256, 512, 1200]) => {
+  const missingImages = await checkImages(paths)
+  // This ensures we are not using a image that does not exist.
+  if (missingImages.length !== 0) {
+    throw new Error(`Missing images: ${missingImages}`)
+  }
+  // Widths help us specify a specific size of image. Useful for thumbnails.
+  const images = await optimizeImages(paths, widths)
+  return images
+}
+```
+
+### [Covers](/design/covers) and [Logos](/design/logos)
+
+Both covers and logos now have sliders as well. The covers additionally have the link to the playlist the cover is for in the Alt with Slider.
+
+Now that I have the basic pipelines setup, I can now add high quality images and designs that I usually created over the years and could not find a decent way of sharing. (Fediverse/post style sharing is terrible for browsing. Xshitter/insta style sharing is terrible in general.)
+
+Expect to see more.
+
+## Tools
+
+These are small pieces of software that do a small thing. I make them because I can't find any decent ones.
+
+Due to the magic of astro, I can embed the tools in this post itself! Enjoy a preview, and open in a new tab for full layout. 
+
+### [NamemaN](/tools/nameman)
+
+import Nameman from "../../../tools/nameman/nman.astro";
+
+<Nameman />
+
+<p />
+ 
+A common problem faced by many is to find a decent name for official registration of a organization. I saw people finding inspiration with llm chatbots, which although talk nicely, only are able to provide a handful of suggestions before tumbling over themselves.
+
+NamemaN takes the list of most popular english words and slices dices and joins them together to form interesting (sometimes meaningful) names. The point is the speed and volume of suggestions. One can very rapidly iterate through a lot of decent to good suggestions.
+
+### [JSee](/tools/jsee)
+
+import { JSee } from "../../../components/jsee";
+
+<JSee defaultValue={JSON.stringify({"HelloThere": ["General", "Kenobi"]}, null, 2)} client:only />
+
+<p />
+
+JSee is a json viewer with just a little bit of nicety. It has nice nested view and good error display. I have used it mostly to check json from sources that don't have a linter, etc.
+
+### [EnHigh](/tools/enhigh)
+
+import { EnHigh } from "../../../tools/enhigh";
+
+<EnHigh defaultText={"This here is EnHigh. It highlights english language and sentences and stuff.\nI made it to experiment."} client:only />
+
+
+## Themescura
+
+Due to the wonder of [themescura](/blag/posts/themescura/introducing-themescura), every page on this website sans the [poems](/poems) are customizable. This includes the [Projects](/projects), [Design](/design), [Tools](/tools) etc.
+
+## Music
+
+There is music here now. I took a nice lofi track called 
+[Coverless Book (Lofi)](https://pixabay.com/music/beats-coverless-book-lofi-186307/) by [MYAUDIOVISION](https://open.spotify.com/artist/3tdB2cNPY1qeyk7jdnV0Fm?si=pKI2oKccQOCfHQUw_9FTnQ). And split it into two, first an intro segment and a repeating section. For it to persist, you do have to allow autoplay audio in Firefox. The music is played at half volume.
+
+
+

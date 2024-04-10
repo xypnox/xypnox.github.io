@@ -1,4 +1,4 @@
-import { For, Match, Show, Switch, createMemo, createSignal } from "solid-js";
+import { For, Match, Show, Switch, createMemo, createSignal, onMount } from "solid-js";
 import { Button, ButtonGroup, Label, baseElementStyles } from "../../components/elements/atoms";
 import { styled } from "solid-styled-components";
 import { theme } from "../../theme";
@@ -239,7 +239,7 @@ const Processed = styled("div")`
 
 const TagTooltip = styled("div")`
   font-size: ${theme.font.size.base};
-  ul {
+  && ul {
     font-size: ${theme.font.size.sm};
     list-style-type: none;
     padding: 0;
@@ -249,6 +249,7 @@ const TagTooltip = styled("div")`
     gap: 0.5rem;
     li {
       padding: 0.1rem;
+      margin: 0;
     }
   }
 `
@@ -377,20 +378,31 @@ const Toolbar = styled("div")`
   }
 `
 
+const Wrapper = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+
 type InputEv = InputEvent & {
   currentTarget: HTMLInputElement;
   target: Element;
 }
 
-export const EnHigh = () => {
+export const EnHigh = (props: { defaultText: string }) => {
+  onMount(() => {
+    if (props.defaultText) {
+      setRawText(props.defaultText);
+    }
+  })
   const [mode, setMode] = createSignal<HighlightMode>("sentence");
   const [size, setSize] = createSignal(1);
   return (
-    <div>
+    <Wrapper>
       <Textarea
         placeholder="Enter text to highlight"
         value={rawText()} onInput={(e) => setRawText(e.currentTarget.value)} />
-      <hr />
+
       <ButtonGroup>
         <For each={highlightModes}>
           {(m) => <Button
@@ -456,7 +468,7 @@ export const EnHigh = () => {
         </For>
 
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

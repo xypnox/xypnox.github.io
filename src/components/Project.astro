@@ -64,10 +64,16 @@ const { project, images, coverImage } = Astro.props;
       )
     }
   </div>
-  <ProjectImages cover={{
-    ...coverImage,
-    description: [coverImage.alt]
-  }} images={images} client:load />
+  <ProjectImages
+    cover={coverImage !== undefined
+      ? {
+          ...coverImage,
+          description: [coverImage.alt as string],
+        }
+      : undefined}
+    images={images}
+    client:load
+  />
 </div>
 
 <style>

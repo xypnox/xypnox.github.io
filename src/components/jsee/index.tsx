@@ -1,4 +1,4 @@
-import { For, Match, Show, Switch, createMemo, createSignal } from "solid-js";
+import { For, Match, Show, Switch, createMemo, createSignal, onMount } from "solid-js";
 import { extractCss, styled } from "solid-styled-components";
 import { theme } from "../../theme";
 import { Button, ButtonGroup, GroupSeparator, IconInput, Input, Text, baseElementStyles } from "../elements/atoms";
@@ -115,7 +115,24 @@ const [filter, setFilter] = createSignal({
 const [showTypes, setShowTypes] = createSignal(true);
 const [showValues, setShowValues] = createSignal(true);
 
-const [errorMessage, setErrorMessage] = createSignal<string | undefined>(undefined);
+interface JSONError {
+  error: string;
+  code?: { line: string, highlight: boolean }[];
+}
+
+const [errorMessage, setErrorMessage] = createSignal<JSONError | undefined>(undefined);
+
+const getHighlightCode = (json: string, line: number) => {
+  // We want a max window of 5 lines
+  const windowStart = (line - 2) > 0 ? line - 2 : 0;
+  const windowEnd = Math.min(json.split("\n").length, line + 3);
+
+  return json.split("\n").slice(windowStart, windowEnd);
+}
+
+const getHighlightLine = (json: string, line: number) => {
+  return json.split("\n")[line];
+}
 
 const parseJson = (json: string) => {
   try {
@@ -123,9 +140,27 @@ const parseJson = (json: string) => {
     setJsonObject(parsed);
     setErrorMessage(undefined);
   } catch (e) {
-    // console.error(e);
+    console.error(e);
     if (e instanceof SyntaxError) {
-      setErrorMessage(String(e));
+      // console.log("Syntax Error", e);
+      const error = e as SyntaxError;
+      // `at line {N} column {N} of the JSON data`
+      // extract line and column from message
+      const match = String(error).match(/line \d+ column \d+/);
+      // console.log("Match", match);
+      if (match) {
+        const [line, column] = match[0].split(" ").map(Number).filter(n => !isNaN(n));
+        // Take the json string and find the line and surrounding 1 lines.
+        const lineNum = line - 1
+        const highlightLine = getHighlightLine(json, lineNum);
+        const code = getHighlightCode(json, lineNum);
+        const newError = { error: error.message, code: code.map((l, i) => ({ line: l, highlight: l === highlightLine })) }
+        // console.log("code", line, column, code, newError, highlightLine);
+        setErrorMessage(newError);
+        return;
+      }
+
+      setErrorMessage({ error: error.message });
     }
   }
 }
@@ -422,9 +457,30 @@ const ErrorMessage = styled(Text)`
   border: 1px solid ${theme.primary.color};
   font-size: ${theme.font.size.sm};
   border-radius: ${theme.border.radius};
+  iconify-icon {
+    color: ${theme.primary.color};
+  }
 `
 
-export const JSee = () => {
+const ErrorCode = styled("pre")`
+  font-size: ${theme.font.size.sm};
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: ${theme.surface};
+  code.highlight {
+    color: ${theme.primary.color};
+    border: 1px dashed ${theme.primary.color};
+  }
+`
+
+export const JSee = (props: { defaultValue?: string }) => {
+  onMount(() => {
+    if (props.defaultValue) {
+      parseJson(props.defaultValue);
+    }
+  });
   const updateQuery = (e: InputEvent & {
     target: HTMLInputElement | null
   }) => {
@@ -437,10 +493,27 @@ export const JSee = () => {
       <Wrapper>
         <Textarea
           onInput={(e) => {
-            console.log("Input", e.currentTarget.value);
+            // console.log("Input", e.currentTarget.value);
             parseJson(e.currentTarget.value);
           }}
         >{jsonString()}</Textarea>
+        <Show when={errorMessage()}>
+          <div>
+            <ErrorMessage>
+              <iconify-icon icon={icons.error} />
+              {errorMessage()!.error}
+            </ErrorMessage>
+            <Show when={errorMessage()!.code}>
+              <ErrorCode>
+                {errorMessage()!.code!.map((line, index) => (
+                  <code class={line.highlight ? "highlight" : ""}>
+                    {line.line}
+                  </code>
+                ))}
+              </ErrorCode>
+            </Show>
+          </div>
+        </Show>
         <Toolbar>
           <IconInput classList={{ active: filter().query !== "" }}>
             <iconify-icon icon={icons.filter} />
@@ -474,12 +547,6 @@ export const JSee = () => {
               }}
             </For>
           </ButtonGroup>
-          <Show when={errorMessage()}>
-            <ErrorMessage>
-              <iconify-icon icon={icons.error} />
-              {errorMessage()}
-            </ErrorMessage>
-          </Show>
         </Toolbar>
         <JSeeRender>
           <JSeeElement keys={[]} json={jsonObject()} root />

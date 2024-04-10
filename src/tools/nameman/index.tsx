@@ -61,6 +61,8 @@ const [wordConfig, setWordConfig] = createSignal({
   restrictLength: false,
   seed: 0
 })
+
+type WordConfig = ReturnType<typeof wordConfig>
 const changeConfig = (keyname: 'count' | 'sections' | 'maxLengthAllowed', value: string) => {
   const intVal = parseInt(value)
   if (isNaN(intVal)) {
@@ -282,7 +284,7 @@ const WordList = styled('div')`
   padding-bottom: 0.5rem;
 `
 
-export const Nameman = () => {
+export const Nameman = (props: { defaultConfig?: WordConfig }) => {
   // createEffect(() => {
   //   console.log('wordConfig', wordConfig())
   //   console.log('names', names())
@@ -294,6 +296,9 @@ export const Nameman = () => {
     const favWordsCache = localStorage.getItem(favWordsCacheName)
     if (favWordsCache) {
       setFavWords(favWordsCache.split(','))
+    }
+    if (props.defaultConfig) {
+      setWordConfig(props.defaultConfig)
     }
   })
 
