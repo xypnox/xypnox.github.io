@@ -35,7 +35,7 @@ const dateFormatOption = {
   title={entry.data.title}
   meta={{
     description: entry.data.description,
-    image: entry.data.socialImage?.src ?? entry.data.coverImage?.src,
+    image: entry.data.socialImage?.src ?? entry.data.coverImage?.src ?? "/filler.png",
     type: "article",
     tags: entry.data.tags,
   }}
@@ -87,11 +87,10 @@ const dateFormatOption = {
         entry.data.hidden && (
           <blockquote class="hidden-post theme-card">
             <p>
-              <strong>This is a Hidden Post</strong>
-              If you have landed here, wow!
+              <strong><span>🔒</span> This is a Hidden Post</strong>
             </p>
             <p>
-              This may also be a draft, share feedback, <a href="/#contact-and-links">reachout to me!</a>
+              If you have landed here, wow! This may also be a draft, share feedback, <a href="/#contact-and-links">reachout to me!</a>
             </p>
           </blockquote>
         )

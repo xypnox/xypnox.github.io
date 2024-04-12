@@ -5,7 +5,7 @@ const blogEntriesAll = await getCollection("blog");
 
 /** Filtered Blog entries that are root, and are not hidden */
 const blogEntriesFiltered = blogEntriesAll
-  .filter(b => b.data.hidden !== true);
+  .filter(b => import.meta.env.PROD ? b.data.hidden !== true : true);
 // .filter((b) => b.slug.split("/").length === 1);
 
 /** Blog entries which are filtered by hidden and sorted by time (latest first) */

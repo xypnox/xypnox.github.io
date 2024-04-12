@@ -1,54 +1,69 @@
 ---
 title: "Website Updates 1"
-date: 2024-04-09
-description: "A review of a few small and large changes made to this website."
+date: 2024-04-12
+description: "A review of a few small and large changes made to this website, including the updated Projects and Tools."
 
-categories: ["design", "tech"]
-tags: ["design", "tech"]
-coverAlt: 'One of the wallpaper images made by xypnox.'
+categories: ["tech"]
+tags: ["tech", "website", "tools", "project"]
+coverAlt: 'One of the wallpapers I made with balls in lines following the contour of a 3D wave.'
 coverImage: "./cover.png"
-hidden: true
 ---
 
-There has been a lot of time between [when I last covered](/blag/posts/migrating-to-zola/) how I made this website. And a lot has changed since then. The website changed from [Zola]() to [Astro](). I went from using [React]() to [SolidJS](). And in the meantime found a lot more to what a website could be.
+So long since I [last covered](/blag/posts/migrating-to-zola/) how this website was made.
+
+A lot has changed. The underlying generator changed from [Zola](https://getzola.org) to [Astro](https://astro.build). And though I did not incorporate any [React](https://infrequently.org/2023/02/the-market-for-lemons/) in the previous blog, I have switched to [SolidJS](https://www.solidjs.com/) and use it for client-side interactivity. With Astro I could combine both the landing page and the [Blag](/blag/) into one single website and codebase. 
+
+Here are a few recent changes made to this website, and the thoughts behind them.
 
 ## [Projects](/projects/) and [Design](/design/) Pages
 
-I have added more detailed projects pages. You can browse them at the [Projects](/projects/) page.
+I wanted to make a portfolio of my Design and Frontend creations.
 
-### **Sliders**
+Usually, design portfolios are hosted on Behance and similar services, where the entire page of a project is plastered from top to bottom with full width images. All the screenshots and description about the project is included inside these images. These are very hard to get right, considering the responsiveness and fluidity of layout. The platforms offload all the work to the designer. For every single project. 
 
-There are nice Image sliders in [Project pages (ex: Notes)](/project/notes/) and [Covers](/design/covers/) etc.
+The [Project](/projects/) pages afford me control over both the raw data and the layout of the page. The structure (separation of description from image) allows me to keep the project details accessible and readable regardless of the size of images or the device width. Otherwise, the project details littered inside the images would have to be very large to remain readable on a small screen.
 
-I could not find a good slider with themable styles so I had to write one from scratch. It has all the niceties such as keybindings, thumbnais etc.
+It took a while to curate the screenshots and prototypes, especially the [older](/project/finbox/) [ones](/project/grameen-setu/). I have added additional commentary and details in each image's description.
 
-Moreover, the alt text/description paragraphs can be customized. For [Covers](/design/covers/) the alt in slider becomes the link to the playlist. So to open a playlist from the covers pages, you can open the slider and click on the "Play" alt.
+### Image Gallery and Slider
 
 
-The [code](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/projectImages.tsx#L52-L63) isn't [too complex](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/projectImages.tsx#L67-L93) [either](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/imageGrid.tsx#L334-L338). 
+I could not find a decent slider library or component with theme-able styles so I had to write [one from scratch](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/imageSlider.tsx). It has niceties such as keybindings and thumbnails. 
 
+The Image Slider is used in two kinds of galleries, [One in the project pages](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/projectImages.tsx) which shows images one after another with their description, and [the other](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/imageGrid.tsx) which shows a grid of images.
+
+Moreover, the image description component of the slider is customizable. For [Covers](/design/covers/) the component in slider is the link to the playlist. You can open the playlist of a cover by clicking the "Play" in the Slider.
+
+The [code](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/projectImages.tsx#L52-L63) to use the Slider isn't [too complex](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/projectImages.tsx#L67-L93) [either](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/components/imageGrid.tsx#L334-L338). 
+
+I will add zooming and panning later on.
 
 ### Types and Checks
 
-I have used structured content in Projects and have typed the fields. And then there are checks to ensure the images and cover are all checked to ensure that the image actually exists in directory.
+I have structured the content of Projects inside [typescript files](https://github.com/xypnox/xypnox.github.io/blob/a4128fdcdb2b21f3a30456f6db65e8ca347f9491/src/content/projects/notes.ts). This allows me to write the content of project pages in a clean, minimal, and type-safe way.
+
+I was fluctuating between using markdown, json, and typescript. And even though typescript feels overkill to write content, it has decent structure, with the linter & language server providing helpful errors and suggestions when I edit the content.
+
+There are [additional checks](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/utils/images.ts#L4-L23) to ensure that the images actually exists in directory before being used in the pages.
+
 
 ### Images CDN
 
-If you took a glance at the [Projects](/projects/) pages, you would have appreciated the usually high quality of the images and screenshots. The total raw size of images in the projects pages is 130MB+. I surely could not store all of them in the same repo with the code. I had stored a few images here and there with the blog posts which bloated the size of the repository.
+If you took a glance at the [Projects](/projects/) pages, you would have appreciated the high quality of the images and screenshots.
 
-I moved the images for Projects and Covers out of the public directory and into `src/assets/`. The folder is added to `.gitignore` and it is synced with the Bucket/CDN with simple scripts. The assets are reduplicated at build time so that Astro can optimize the images and therefore the final size of the build is  small.
+Unfortunately, the raw size of images in the projects pages is currently ~130MB. I surely could not store all of them in the repository. I already have a few images with the blog posts bloating it.
 
-### [Covers](/design/covers/) and [Logos](/design/logos/)
+I have stored the images for Projects and Covers in `src/assets/`, which is added to `.gitignore`. It is synced with the Bucket/CDN with [simple](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/buildScripts/fetchImagesCdn.ts) [scripts](https://github.com/xypnox/xypnox.github.io/blob/5b4857f11cf230af191690a788eb3ef7b8bd9b02/src/buildScripts/uploadImages.ts). The assets are fetched at build time in the GitHub Action. Astro optimizes the images and therefore the final size of images in the build is so small.
 
-Both covers and logos now have sliders as well. The covers additionally have the link to the playlist the cover is for in the Alt with Slider.
+I will later move raw images for future blog posts to CDN as well.
 
-Now that I have the basic pipelines setup, I can now add high quality images and designs that I usually created over the years and could not find a decent way of sharing. (Fediverse/post style sharing is terrible for browsing. Xshitter/insta style sharing is terrible in general.)
+---
 
-Expect to see more.
-
-## Tools
+## [Tools](/tools/)
 
 These are small pieces of software that do a small thing. I make them because I can't find any decent ones.
+
+I created a few tools on [xypnox.studio](https://xypnox.studio/) where I experiment with SolidJS and have now added more [Tools here](/tools/).
 
 ### [NamemaN](/tools/nameman/)
 
@@ -58,33 +73,44 @@ import Nameman from "../../../tools/nameman/nman.astro";
 
 <p />
  
-A common problem faced by many is to find a decent name for official registration of a organization. I saw people finding inspiration with llm chatbots, which although talk nicely, only are able to provide a handful of suggestions before tumbling over themselves.
+A common problem faced by many entrepreneurs is to find a decent name for the official registration of an organization. I saw LLMs being employed for inspiration, which could write fluently, but are only able to provide a handful of suggestions before tumbling over themselves.
 
-NamemaN takes the list of most popular english words and slices dices and joins them together to form interesting (sometimes meaningful) names. The point is the speed and volume of suggestions. One can very rapidly iterate through a lot of decent to good suggestions.
+NamemaN takes a list of most popular English words, then slices, dices, and joins them together to form interesting (sometimes meaningful) names. The advantage is the speed and volume of suggestions. One can very rapidly iterate through a lot of decent-to-good suggestions.
+
+Moreover, if the names are favorited by either clicking the star or the name itself, they can then be exported as text/list.
+
+It has been used to register 1 Org successfully (of those that are known to me).
 
 ### [EnHigh](/tools/enhigh)
 
 import { EnHigh } from "../../../tools/enhigh";
 
-<EnHigh defaultText={"This here is EnHigh. It highlights english language and sentences and stuff.\nI made it to experiment."} client:only />
+<EnHigh defaultText={"This here is EnHigh. It highlights english language and sentences and stuff.\nI made it to experiment with language and text highlighting."} client:only />
 
-It highlights english language and sentences and stuff.I made it to experiment.
+<p />
+
+I made [EnHigh](/tools/enhigh/) to experiment with a [part-of-speech tagging library](https://github.com/finnlp/en-pos) in javascript. The library didn't work that well (with technical prose), however, the attempt also generated the sentence and paragraph highlighters which do create some decent variations.
 
 ### [JSee](/tools/jsee/)
 
-JSee is a json viewer with just a little bit of nicety. It has nice nested view and good error display. I have used it mostly to check json from sources that don't have a linter, etc.
+JSee is a json viewer with a little bit of added nicety. It has nested objects, types, and error display. I have used it for JSON from sources that don't have a linter or are unformatted.
 
-> *Note*: Unfortunately, the embed of JSee seems a bit too much for chrome (works fine in firefox). But to save the normies still using chrome, I have omitted the embed here.
+> *Note*: Unfortunately, the embed of JSee seems a bit too much for Chrome (works fine in Firefox (the recommended browser)). But to save the normies still using chrome, I have omitted the embed here.
+>
 > [Use JSee on its page](/tools/jsee/)
 
 ## Themescura
 
-Due to the wonder of [themescura](/blag/posts/themescura/introducing-themescura/), every page on this website sans the [poems](/poems/) are customizable. This includes the [Projects](/projects), [Design](/design/), [Tools](/tools/) etc.
+Due to the wonder of [themescura](/blag/posts/themescura/introducing-themescura/), every page on this website sans the [poems](/poems/) are customizable. This includes the new [Projects](/projects), [Design](/design/), [Tools](/tools/) etc.
 
 ## Music
 
-There is music here now. I took a nice lofi track called 
-[Coverless Book (Lofi)](https://pixabay.com/music/beats-coverless-book-lofi-186307/) by [MYAUDIOVISION](https://open.spotify.com/artist/3tdB2cNPY1qeyk7jdnV0Fm?si=pKI2oKccQOCfHQUw_9FTnQ). And split it into two, first an intro segment and a repeating section. For it to persist, you do have to allow autoplay audio in Firefox. The music is played at half volume.
+There is music here now, for a bit of ambiance on all the pages.
 
+I took a nice lofi track called [Coverless Book (Lofi)](https://pixabay.com/music/beats-coverless-book-lofi-186307/) by [MYAUDIOVISION](https://open.spotify.com/artist/3tdB2cNPY1qeyk7jdnV0Fm?si=pKI2oKccQOCfHQUw_9FTnQ). And split it into two, first an intro segment and a repeating section. The music is played at half volume.
 
+---
 
+Now that I have the basic pipelines setup, I can add high quality images and designs that I created over the years and for which I could not find a decent home. (Fediverse/post style sharing is terrible for browsing. Xshitter/insta style sharing is terrible in general.)
+
+Expect to see more, including a home for that cover wallpaper of this post...

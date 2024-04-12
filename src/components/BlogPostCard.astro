@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import { Image } from "astro:assets";
+import Filler from "../components/elements/filler.astro";
 
 interface Props {
   slug: string;
@@ -28,7 +29,7 @@ const dateFormatOption = {
               src={blogPostEntry.data.coverImage}
             />
           ) : (
-            <img src="/blogpostcover.webp" />
+            <Filler />
           )}
         </div>
       )}
@@ -54,6 +55,7 @@ const dateFormatOption = {
               </div>
             </>
           )}
+          {blogPostEntry.data.hidden && (<div>🔒</div>)}
         </div>
       </div>
     </a>
@@ -90,6 +92,7 @@ const dateFormatOption = {
     display: flex;
     width: 100%;
     height: 100%;
+    max-width: 100%;
     max-height: 300px;
     overflow: hidden;
     align-items: flex-start;
@@ -105,6 +108,11 @@ const dateFormatOption = {
     margin: 0;
     filter: saturate(1);
     transition: filter 0.2s ease-in-out;
+  }
+
+  .blog-entry .coverImage :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .blog-entry:hover .coverImage img {

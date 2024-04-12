@@ -18,89 +18,89 @@ const defaultValue = {
     "Key Labels are sticky"
   ],
 
-  // sample: {
-  //   ohMyColorsAreInArray: ['red', 'green', 'blue'],
-  //   whatever: {
-  //     key: "value",
-  //     key3: 124,
-  //     key4: true,
-  //     key5: null,
-  //     key6: {
-  //       key4: true,
-  //       key5: null,
-  //       key6: {
-  //         key4: true,
-  //         key5: null,
-  //       },
-  //       key7: {
-  //         key4: true,
-  //         key5: null,
-  //       },
-  //     },
-  //   },
-  //   defined: {
-  //     isDefined: true,
-  //   }
-  // },
+  sample: {
+    ohMyColorsAreInArray: ['red', 'green', 'blue'],
+    whatever: {
+      key: "value",
+      key3: 124,
+      key4: true,
+      key5: null,
+      key6: {
+        key4: true,
+        key5: null,
+        key6: {
+          key4: true,
+          key5: null,
+        },
+        key7: {
+          key4: true,
+          key5: null,
+        },
+      },
+    },
+    defined: {
+      isDefined: true,
+    }
+  },
 
-  // sizeDoesntMatter: "Curabitizzle et go to hizzle daahng dawg nisi the bizzle mollizzle. Stuff gizzle. Morbi odio. Vivamus neque. Crizzle orci. Cras maurizzle i'm in the shizzle, interdizzle fo shizzle, hizzle shizzlin dizzle amizzle, ma nizzle izzle, pede. Pellentesque shizzlin dizzle. Boofron fo shizzle mi, sheezy cool, ma nizzle sizzle, izzle fo shizzle, sizzle. Mofo in its fo rizzle.",
+  sizeDoesntMatter: "Curabitizzle et go to hizzle daahng dawg nisi the bizzle mollizzle. Stuff gizzle. Morbi odio. Vivamus neque. Crizzle orci. Cras maurizzle i'm in the shizzle, interdizzle fo shizzle, hizzle shizzlin dizzle amizzle, ma nizzle izzle, pede. Pellentesque shizzlin dizzle. Boofron fo shizzle mi, sheezy cool, ma nizzle sizzle, izzle fo shizzle, sizzle. Mofo in its fo rizzle.",
 
-  // noteAboutNext: "Now lets see a sample JSON Response",
+  noteAboutNext: "Now lets see a sample JSON Response",
 
-  // response: {
-  //   "page": 1,
-  //   "per_page": 6,
-  //   "total": 12,
-  //   "total_pages": 2,
-  //   "data": [
-  //     {
-  //       "id": 1,
-  //       "name": "cerulean",
-  //       "year": 2000,
-  //       "color": "#98B2D1",
-  //       "pantone_value": "15-4020"
-  //     },
-  //     {
-  //       "id": 2,
-  //       "name": "fuchsia rose",
-  //       "year": 2001,
-  //       "color": "#C74375",
-  //       "pantone_value": "17-2031"
-  //     },
-  //     {
-  //       "id": 3,
-  //       "name": "true red",
-  //       "year": 2002,
-  //       "color": "#BF1932",
-  //       "pantone_value": "19-1664"
-  //     },
-  //     {
-  //       "id": 4,
-  //       "name": "aqua sky",
-  //       "year": 2003,
-  //       "color": "#7BC4C4",
-  //       "pantone_value": "14-4811"
-  //     },
-  //     {
-  //       "id": 5,
-  //       "name": "tigerlily",
-  //       "year": 2004,
-  //       "color": "#E2583E",
-  //       "pantone_value": "17-1456"
-  //     },
-  //     {
-  //       "id": 6,
-  //       "name": "blue turquoise",
-  //       "year": 2005,
-  //       "color": "#53B0AE",
-  //       "pantone_value": "15-5217"
-  //     }
-  //   ],
-  //   "support": {
-  //     "url": "https://reqres.in/#support-heading",
-  //     "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
-  //   }
-  // }
+  response: {
+    "page": 1,
+    "per_page": 6,
+    "total": 12,
+    "total_pages": 2,
+    "data": [
+      {
+        "id": 1,
+        "name": "cerulean",
+        "year": 2000,
+        "color": "#98B2D1",
+        "pantone_value": "15-4020"
+      },
+      {
+        "id": 2,
+        "name": "fuchsia rose",
+        "year": 2001,
+        "color": "#C74375",
+        "pantone_value": "17-2031"
+      },
+      {
+        "id": 3,
+        "name": "true red",
+        "year": 2002,
+        "color": "#BF1932",
+        "pantone_value": "19-1664"
+      },
+      {
+        "id": 4,
+        "name": "aqua sky",
+        "year": 2003,
+        "color": "#7BC4C4",
+        "pantone_value": "14-4811"
+      },
+      {
+        "id": 5,
+        "name": "tigerlily",
+        "year": 2004,
+        "color": "#E2583E",
+        "pantone_value": "17-1456"
+      },
+      {
+        "id": 6,
+        "name": "blue turquoise",
+        "year": 2005,
+        "color": "#53B0AE",
+        "pantone_value": "15-5217"
+      }
+    ],
+    "support": {
+      "url": "https://reqres.in/#support-heading",
+      "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+  }
 }
 
 

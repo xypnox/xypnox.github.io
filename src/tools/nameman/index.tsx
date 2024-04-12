@@ -353,7 +353,6 @@ export const Nameman = (props: { defaultConfig?: WordConfig }) => {
 
           <Show when={wordList()}>
             <WordList>
-              <div> <a href={word_list_url} target="_blank" rel="noreferrer">List</a>: {wordList()!.length} words </div>
               <Label title="Restrict length of words to take from wordlist">
                 Word Length
                 <Input
@@ -396,10 +395,9 @@ export const Nameman = (props: { defaultConfig?: WordConfig }) => {
             max={12}
             step={1}
           />
-
-
-
         </Row>
+
+
         <Show when={favWords().length > 0}>
           <Button
             classList={{ selected: showFavWords() }}
@@ -422,6 +420,7 @@ export const Nameman = (props: { defaultConfig?: WordConfig }) => {
       >
         <For each={names()}>{name => <Name name={name} />}</For>
       </Names>
+      <div> <a href={word_list_url} target="_blank" rel="noreferrer">List</a>: {wordList()!.length} words </div>
     </Wrapper>
   )
 }
