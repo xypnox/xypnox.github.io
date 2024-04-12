@@ -23,11 +23,7 @@ const Input = styled("input")`
   outline: none; 
   z-index: 4;
 
-  &::-webkit-slider-thumb,
   &::-moz-range-thumb {
-    position: relative;
-    -webkit-appearance: none; 
-    appearance: none;
     height: 0.8em; 
     width: 0.8em; 
     background: ${theme.text}; 
@@ -38,15 +34,35 @@ const Input = styled("input")`
     outline: 0.1em solid transparent;
   }
 
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: ${theme.text}; 
+    height: 0.8em; 
+    width: 0.8em; 
+    background: ${theme.text}; 
+    border-radius: 50%;
+    border: 0.2em solid ${theme.background};
+    cursor: pointer; 
+    transition: all ease-in-out .2s;
+    outline: 0.1em solid transparent;
+  }
+
+
   &:hover {
-    &::-webkit-slider-thumb,
     &::-moz-range-thumb {
+      background: ${theme.primary.color};
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
       background: ${theme.primary.color};
     }
   }
   &:active {
-    &::-webkit-slider-thumb,
     &::-moz-range-thumb {
+      outline: 0.1em solid ${theme.primary.color};
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
       outline: 0.1em solid ${theme.primary.color};
     }
   }
