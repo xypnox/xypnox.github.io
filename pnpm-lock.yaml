@@ -35,6 +35,9 @@ dependencies:
   '@solid-primitives/mouse':
     specifier: ^2.0.14
     version: 2.0.14(solid-js@1.8.5)
+  '@solid-primitives/resize-observer':
+    specifier: ^2.0.25
+    version: 2.0.25(solid-js@1.8.5)
   astro:
     specifier: ^4.4.0
     version: 4.4.0(@types/node@20.9.3)(typescript@5.2.2)
@@ -2061,6 +2064,18 @@ packages:
       solid-js: 1.8.5
     dev: false
 
+  /@solid-primitives/resize-observer@2.0.25(solid-js@1.8.5):
+    resolution: {integrity: sha512-jVDXkt2MiriYRaz4DYs62185d+6jQ+1DCsR+v7f6XMsIJJuf963qdBRFjtZtKXBaxdPNMyuPeDgf5XQe3EoDJg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/event-listener': 2.3.3(solid-js@1.8.5)
+      '@solid-primitives/rootless': 1.4.5(solid-js@1.8.5)
+      '@solid-primitives/static-store': 0.0.8(solid-js@1.8.5)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.5)
+      solid-js: 1.8.5
+    dev: false
+
   /@solid-primitives/rootless@1.4.3(solid-js@1.8.5):
     resolution: {integrity: sha512-IPsfUhKsqQOxLtRMQWK2EZAYbL9RKJMLBelLwpaXl9+oa1tl5aNvA6GHgrNrK+85oUhiYh7/OuogO18AuHepqQ==}
     peerDependencies:
@@ -2085,6 +2100,15 @@ packages:
       solid-js: ^1.6.12
     dependencies:
       '@solid-primitives/utils': 6.2.2(solid-js@1.8.5)
+      solid-js: 1.8.5
+    dev: false
+
+  /@solid-primitives/static-store@0.0.8(solid-js@1.8.5):
+    resolution: {integrity: sha512-ZecE4BqY0oBk0YG00nzaAWO5Mjcny8Fc06CdbXadH9T9lzq/9GefqcSe/5AtdXqjvY/DtJ5C6CkcjPZO0o/eqg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.5)
       solid-js: 1.8.5
     dev: false
 
