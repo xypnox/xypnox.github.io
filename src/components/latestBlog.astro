@@ -15,7 +15,7 @@ import Tag from '../components/nav/Tag.astro'
   {
     latestBlog && latestBlog.length > 0 &&
     <div class="col-l">
-      <h2>Blag <em>Latest Posts</em> <a class="allposts" href="/blag">All posts<iconify-icon name="ph:arrow-right" /></a></h2>
+      <h2>Blag <em>Latest Posts</em> <a class="allposts" href="/blag/">All posts<iconify-icon name="ph:arrow-right" /></a></h2>
        
       <div class="first">
         <BlogPostCard slug={latestBlog[0].slug} />

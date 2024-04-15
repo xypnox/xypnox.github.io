@@ -32,7 +32,7 @@ const dateFormatOption = {
     {
       sortedPoems.map((poem) => (
         <div class="poem">
-          <a href={"/poems/" + poem.slug}>
+          <a href={"/poems/" + poem.slug + '/'}>
             <h2 class="headingFont">{poem.data.title}</h2>
 
             <time datetime={poem.data.date.toISOString()}>

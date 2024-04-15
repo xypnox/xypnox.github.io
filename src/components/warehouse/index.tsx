@@ -26,6 +26,7 @@ const MasonryImage = styled("div")`
     height: auto;
     z-index: 10;
     transition: all 0.3s ease-in-out;
+    border-radius: calc(${theme.border.radius} * 4);
   }
 
   .caption {
@@ -39,6 +40,7 @@ const MasonryImage = styled("div")`
     color: white;
     transition: all 0.3s ease-in-out;
     transform: translateY(30%);
+    border-radius: calc(${theme.border.radius} * 2);
     p {
       margin: 0;
     }
@@ -183,7 +185,7 @@ export const WarehouseSolidJS = () => {
           minColumns={1}
           maxColumns={4}
           colWidth={400}
-          gap={10}
+          gap={16}
           imageDimensions={masonryData3.map((item) => [item.w, item.h])}
         >
           <For each={masonryData3}>

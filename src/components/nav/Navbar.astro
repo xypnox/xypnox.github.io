@@ -4,6 +4,25 @@ import { ThemePopup } from "../themeManager/popup";
 import { Tooltip } from "../elements/tooltip";
 import { AudioButton } from "./audioButton";
 import NavLink from "./NavLink.astro";
+
+const links = [
+  {
+    href: "/blag/",
+    text: "Blag",
+  },
+  {
+    href: "/projects/",
+    text: "Projects",
+  },
+  {
+    href: "/design/",
+    text: "Design",
+  },
+  {
+    href: "https://x5z.studio",
+    text: "x5z",
+  },
+];
 ---
 
 <nav class="navbar">
@@ -14,16 +33,10 @@ import NavLink from "./NavLink.astro";
     <span slot="tooltip">Home</span>
   </Tooltip>
   <div class="navlinks navSurface">
-    <NavLink href="/blag">Blag</NavLink>
-    <NavLink href="/projects">Projects</NavLink>
-    <NavLink href="/design">Design</NavLink>
-    <NavLink href="https://x5z.studio">x5z</NavLink>
+    {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
   </div>
   <div class="mobile-menu navSurface">
-    <NavLink href="/blag">Blag</NavLink>
-    <NavLink href="/projects">Projects</NavLink>
-    <NavLink href="/design">Design</NavLink>
-    <NavLink href="https://x5z.studio">x5z</NavLink>
+    {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
   </div>
   <div class="mobile-menu-button navButton navSurface">
     <iconify-icon icon={icons.menu}></iconify-icon>
