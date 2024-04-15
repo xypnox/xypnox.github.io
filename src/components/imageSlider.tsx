@@ -200,6 +200,7 @@ const Contents = styled("div")`
   height: calc(100vh - 7rem);
   padding: 1rem;
   .altText {
+    opacity: 0;
     z-index: 1002;
     pointer-events: all;
   }

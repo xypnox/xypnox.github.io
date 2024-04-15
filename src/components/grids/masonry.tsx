@@ -99,15 +99,16 @@ export const Masonry = (props: MasonryProps) => {
         const left = insertColumnIndex * columnWidth + (insertColumnIndex > 0 ? (props.gap ?? 0) * (insertColumnIndex) : 0);
         const top = insertColumn[0] + (insertColumn[1] > 0 ? (props.gap ?? 0) * (insertColumn[1]) : 0);
 
+        const childDimensions = dimensions.childrenHeights[i];
+        const childHeight = childDimensions * columnWidth / dimensions.conWidth;
+
         // Width will be calculated based on the number of columns
         cE.setAttribute?.("style",
           // Transform performs better than top and left
-          `transform: translate(${left}px, ${top}px); width: ${columnWidth}px;`
+          `transform: translate(${left}px, ${top}px);   width: ${columnWidth}px;  height: ${childHeight}px;`
         );
 
         // Update the height of the column
-        const childDimensions = dimensions.childrenHeights[i];
-        const childHeight = childDimensions * columnWidth / dimensions.conWidth;
         columns[insertColumnIndex] = [insertColumn[0] + childHeight, insertColumn[1] + 1];
       }
     }

@@ -4,6 +4,7 @@ import { styled } from "solid-styled-components"
 import { Masonry } from "../grids/masonry"
 import { MasonrySample } from "./rawData"
 import { ImageSlider, createSliderState } from "../imageSlider"
+import { theme } from "../../theme"
 
 const Row = styled("div")`
   display: flex;
@@ -19,10 +20,53 @@ const Col = styled("div")`
 `
 
 const MasonryImage = styled("div")`
+  /* overflow: hidden; */
   img {
     width: 100%;
     height: auto;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
   }
+
+  .caption {
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: 20;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
+    color: white;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(30%);
+    p {
+      margin: 0;
+    }
+  }
+  &:hover {
+    z-index: 30;
+    img {
+      box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.3);
+      transform: scale(1.066);
+    }
+    .caption {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`
+
+const SliderAlt = styled("div")`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
+  color: white;
+  transition: all 0.3s ease-in-out;
+  max-width: 60ch;
+  pointer-events: none !important;
 `
 
 
@@ -69,7 +113,7 @@ export const WarehouseSolidJS = () => {
         },
         attributes: {}
       },
-      alt: `Image ${i + 1}`
+      alt: `The randomly generated Image #${i + 1} with Dimensions ${item.h}x${item.w} and Colors ${item.back} & ${item.color}`
     }
   })
   const sliderState = createSliderState(0, sliderImages.length)
@@ -147,6 +191,9 @@ export const WarehouseSolidJS = () => {
               <MasonryImage
               >
                 <img src={`https://placehold.co/${item.w}x${item.h}/${item.back}/${item.color}?text=${i() + 1} - ${item.h}x${item.w}`} alt="placeholder" loading="lazy" />
+                <div class="caption">
+                  <p>{sliderImages[i()].alt}</p>
+                </div>
               </MasonryImage>
             )}
           </For>
@@ -171,6 +218,9 @@ export const WarehouseSolidJS = () => {
                 }}
               >
                 <img src={`https://placehold.co/${item.w}x${item.h}/${item.back}/${item.color}?text=${i() + 1} - ${item.h}x${item.w}`} alt="placeholder" loading="lazy" />
+                <div class="caption">
+                  <p>{sliderImages[i()].alt}</p>
+                </div>
               </MasonryImage>
             )}
           </For>
@@ -180,7 +230,9 @@ export const WarehouseSolidJS = () => {
       <ImageSlider
         images={sliderImages}
         sliderState={sliderState}
-      // Alt={DefaultAlt}
+        Alt={(props) => (
+          <SliderAlt class="altText">{props.image.alt}</SliderAlt>
+        )}
       />
     </Col>
   )
