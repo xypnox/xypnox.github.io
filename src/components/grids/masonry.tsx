@@ -9,6 +9,7 @@ interface MasonryConfig {
   minColumns: number
   // ideal column width, it can be increased if the container is too wide
   colWidth: number
+  // If image dimensions are not provided, we have to render and calculate the height of the items
   imageDimensions?: ImageDimensions
   gap?: number
 }

@@ -1,4 +1,4 @@
-import type { GetImageResult } from "astro"
+import type { GetImageResult, ImageQuality } from "astro"
 import { getImage } from "astro:assets"
 
 export const checkImages = async (paths: string[]) => {
@@ -22,7 +22,17 @@ export const checkImages = async (paths: string[]) => {
   return missingImages
 }
 
-export const optimizeImages = async (paths: string[], widths: number[]) => {
+interface ExtraConfig {
+  widths: number[],
+  quality: ImageQuality
+}
+
+const defaultConfig: ExtraConfig = {
+  widths: [256, 512, 1200],
+  quality: 85
+}
+
+export const optimizeImages = async (paths: string[], config: ExtraConfig) => {
   const assetImages = import.meta.glob('../../src/assets/**/*')
   const images: Record<string, GetImageResult> = {}
 
@@ -37,18 +47,41 @@ export const optimizeImages = async (paths: string[], widths: number[]) => {
     }
     const ogImg = await assetImages[assetPath]()
     // console.log('assetPath', assetPath, { ogImg })
-    const i = await getImage({ src: (ogImg as any).default as any, widths })
+    const i = await getImage({ src: (ogImg as any).default as any, ...config })
     images[path] = i
   }
 
   return images
 }
 
-export const getImages = async (paths: string[], widths: number[] = [256, 512, 1200]) => {
+export const getImages = async (paths: string[], config = defaultConfig) => {
   const missingImages = await checkImages(paths)
   if (missingImages.length !== 0) {
     throw new Error(`Missing images: ${missingImages}`)
   }
-  const images = await optimizeImages(paths, widths)
+  const images = await optimizeImages(paths, config)
+  return images
+}
+
+export const getImagesOfDir = async (path: string, config = defaultConfig) => {
+  const dirImages = import.meta.glob('../../src/assets/**/*')
+
+  const filteredImages =
+    Object.keys(dirImages)
+      .filter((key) => key.startsWith(`../assets/${path}`))
+
+  const paths =
+    filteredImages
+      .map((key) => key.replace('../assets', ''))
+
+  console.log('filteredImages', { filteredImages, paths })
+
+  const missingImages = await checkImages(paths)
+
+  if (missingImages.length !== 0) {
+    throw new Error(`Missing images: ${missingImages}`)
+  }
+
+  const images = await optimizeImages(paths, config)
   return images
 }

@@ -1,43 +1,150 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
 import { Books as RawBooksData, type Book } from "../../data/books";
+import { Books as BooksSolidJS, type BookImage } from "../../components/books";
+import { getImagesOfDir } from "../../utils/images";
+import type { GetImageResult } from "astro";
 
-const ReadBooks = RawBooksData.filter(book => book["Read Count"] > 0).map(
+const ReadBooks = RawBooksData.filter((book) => book["Read Count"] > 0).map(
   (book: Book) => ({
     ...book,
-    // Remove the starting =
     ISBN: book.ISBN?.replace(/^=\"/, ""),
+  }),
+).sort((a, b) => {
+// Sort by Title alphabetically
+  if (a.Title < b.Title) {
+    return -1;
   }
-  )
+  if (a.Title > b.Title) {
+    return 1;
+  }
+  return 0;
+});
 
-)
+const images = await getImagesOfDir("books");
 
-// https://covers.openlibrary.org/b/isbn/0385472579-S.jpg 
+const getImageFilename = (image: GetImageResult) => {
+  //@fs/home/xypnox/Projects/x/com/src/assets/books/1600964338-M.jpg?origWidth=180&origHeight=277&origFormat=jpg
+  // Returns 1600964338-M
+  let src = image.options.src;
+  if (typeof src !== 'string') {
+    src = src.src;
+  }
+  const parts = src.split("/");
+  // Strip the options if present
+  const filename = parts[parts.length - 1].split("?")[0];
+  // Remove the -M.filetype
+  return filename.split("-")[0];
+};
+
+const imagesArray = Object.values(images).map((image) => {
+  // console.log("Image", image)
+  return {
+    // alt: "Some alt",
+    image: image,
+    filename: getImageFilename(image),
+  };
+});
+
+// console.log("Images", images, imagesArray);
+
+const BookImages = ReadBooks.map((book) => {
+  // return false if image not in the images
+  const isbnString = book["ISBN"];
+  if (!isbnString) {
+    return { book, found: false };
+  }
+  const allImages = imagesArray.map((image) => image.filename);
+  // console.log("ISBN", isbnString, allImages);
+  // Check if the isbn string is present in imageArray filename
+  const found = imagesArray.find((image) => image.filename === isbnString);
+  if (!found) {
+    return { book, found: false };
+  }
+  return { book, found: true, image: found.image };
+})
+  .filter((b) => b.found)
+  .map((book): BookImage => {
+    return {
+      image: book.image as GetImageResult,
+      book: book.book,
+    };
+  });
+
+// console.log("BookImages", BookImages);
+
+// https://covers.openlibrary.org/b/isbn/0385472579-S.jpg
+// src={`https://covers.openlibrary.org/b/isbn/${book["ISBN"]}-M.jpg`}
 ---
 
 <Layout title="Books">
   <h1>Books</h1>
-  <div class="shelf">
-    {ReadBooks.map(book => (
-      <div>
-        {book["ISBN"]
-          && <img src={`https://covers.openlibrary.org/b/isbn/${book["ISBN"]}-M.jpg`} alt={`Cover of ${book.Title}`} />
-        }
-        <p><strong>{book.Title}</strong></p>
-        <p>{book.Author}</p>
-        {book["My Rating"]
-          && book["My Rating"] !== 0
-          && <p>My Rating: {book["My Rating"]}</p>
-        }
-      </div>
-    ))}
-  </div>
+  <BooksSolidJS images={BookImages} client:load />
+  // <div class="shelf">
+  //   {
+  //     ReadBooks.map((book) => (
+  //       <div>
+  //         {book["ISBN"] && (
+  //           <img src={""} alt={`Cover of ${book.Title}`} loading="lazy" />
+  //         )}
+  //         <p>
+  //           <strong>{book.Title}</strong>
+  //         </p>
+  //         <p>{book.Author}</p>
+  //         {book["My Rating"] && book["My Rating"] !== 0 && (
+  //           <p>My Rating: {book["My Rating"]}</p>
+  //         )}
+  //       </div>
+  //     ))
+  //   }
+  // </div>
 </Layout>
-
 <style>
   .shelf {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
+  }
+  .masonry-image {
+    /* overflow: hidden; */
+    img {
+      width: 100%;
+      height: auto;
+      z-index: 10;
+      transition: all 0.3s ease-in-out;
+      border-radius: calc(${theme.border.radius} * 4);
+    }
+
+    .caption {
+      padding: 1rem;
+      position: absolute;
+      bottom: 0;
+      opacity: 0;
+      width: 100%;
+      z-index: 20;
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+      color: white;
+      transition: all 0.3s ease-in-out;
+      transform: translateY(30%);
+      border-radius: calc(${theme.border.radius} * 2);
+      p {
+        margin: 0;
+      }
+    }
+    &:hover {
+      z-index: 30;
+      img {
+        box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.3);
+        transform: scale(1.066);
+      }
+      .caption {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   }
 </style>
