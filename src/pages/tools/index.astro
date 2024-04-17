@@ -5,17 +5,17 @@ import PageHeader from "../../components/pageHeader.astro";
 const tools = [
   {
     name: "JSee",
-    path: "/tools/jsee",
+    path: "jsee",
     description: "A tool to visualize JSON data in a tree view.",
   },
   {
     name: "NamemaN",
-    path: "/tools/nameman",
+    path: "nameman",
     description: "A tool to generate random names.",
   },
   {
     name: "EnHigh",
-    path: "/tools/enhigh",
+    path: "enhigh",
     description: "English Highlighter",
   },
 ];
@@ -33,7 +33,7 @@ const meta = {
     <div class="tools">
       {
         tools.map((tool) => (
-          <a href={tool.path} class="tool">
+          <a href={`/tools/${tool.path}/`} class="tool">
             <h2>{tool.name}</h2>
             <p>{tool.description}</p>
           </a>

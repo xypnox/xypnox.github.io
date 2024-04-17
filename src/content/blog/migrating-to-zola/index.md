@@ -38,7 +38,9 @@ But, these are modern times we live in. While working on the [LTTKGP](https://lt
 
 And it wouldn't be an overstatement to say that Hugo's current ecosystem makes it very hard for someone to create a new theme for scratch, or even significantly modify a theme without going through pages and pages of documentation; Almost like learning an entire "framework". It is often the case that those starting with Hugo just stick to one of the pre-existing themes and don't put any effort into customizing it, simply because it is too hard to customize.
 
-At the time when I created the blog in Hugo, it was all the rage. Almost everyone I knew personally used Hugo for their blogs. Then as time passed more "modern" SSGs were invented such as [Gatsby](https://www.gatsbyjs.org/) and [Next.js](https://nextjs.org/). I disliked Gatsby because it felt too processed and complex for something so simple as a blog. I have given Next.js a try in my [Poem Collection](https://poems.xypnox.com/) but I didn't find it exciting enough to switch over.
+At the time when I created the blog in Hugo, it was all the rage. Almost everyone I knew personally used Hugo for their blogs. Then as time passed more "modern" SSGs were invented such as [Gatsby](https://www.gatsbyjs.org/) and [Next.js](https://nextjs.org/). I disliked Gatsby because it felt too processed and complex for something so simple as a blog. I have given Next.js a try in my Poem Collection but I didn't find it exciting enough to switch over.
+
+> The poems have been rewritten to Astro and are at [xypnox.com/poems](/poems/)
 
 ## Enter Zola
 

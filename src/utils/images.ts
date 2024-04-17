@@ -16,7 +16,7 @@ export const checkImages = async (paths: string[]) => {
   }
 
   if (missingImages.length > 0) {
-    console.log('Missing images', { missingImages, paths })
+    console.error('Missing images', { missingImages, paths })
   }
 
   return missingImages

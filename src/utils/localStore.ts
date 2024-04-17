@@ -14,6 +14,7 @@ export function createStoredSignal<T>(
   const [value, setValue] = createSignal<T>(initialValue);
 
   const setValueAndStore = ((arg) => {
+    if (arg == undefined) return;
     const v = setValue(arg);
     storage.setItem(key, JSON.stringify(v));
     return v;
