@@ -72,7 +72,7 @@ export const Books = (props: BookProps) => {
             <div class="caption">
               <p>{item.book.Title}</p>
               {item.book['My Rating'] && item.book['My Rating'] > 0 &&
-                <p>Rating: {item.book['My Rating']}</p>
+                <p>{item.book['My Rating']}</p>
               }
             </div>
           </MasonryImage>
