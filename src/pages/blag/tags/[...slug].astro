@@ -13,7 +13,7 @@ const { tag } = Astro.props;
 const entries = filteredByTag(tag).map((e) => e.slug)
 ---
 
-<Layout title={`Blog `}>
+<Layout title={`Tag: ${tag} | Blag | xypnox`}>
   <main class="blog-index">
     <div class="blog-header">
       <h2>#{tag}</h2>

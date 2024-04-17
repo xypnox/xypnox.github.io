@@ -37,7 +37,7 @@ const dateFormatOption = {
     description: entry.data.description,
     image: entry.data.socialImage?.src ?? entry.data.coverImage?.src ?? "/filler.png",
     type: "article",
-    tags: entry.data.tags,
+    tags: entry.data.hidden ? [] : entry.data.tags,
   }}
 >
   <link

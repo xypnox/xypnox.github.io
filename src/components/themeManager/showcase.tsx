@@ -409,6 +409,35 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#919DCF"
       }
     }
+  },
+  {
+    "name": "Old Newspaper",
+    "id": "showcase_newspaper-LDA0PW-vjyepZ",
+    "base": {
+      "border": {
+        "radius": "0.2rem"
+      },
+      "font": {
+        "family": "\"Bitter\""
+      }
+    },
+    "card": "solid-border",
+    "vars": {
+      "light": {
+        "primary": "#d16c00",
+        "secondary": "#b88d00",
+        "background": "#ede5d2",
+        "surface": "#b0a88f2d",
+        "text": "#544c34"
+      },
+      "dark": {
+        "primary": "#f29500",
+        "secondary": "#ffec5c",
+        "background": "#171306",
+        "surface": "#4a3d282d",
+        "text": "#cfc591"
+      }
+    }
   }
 ]
 

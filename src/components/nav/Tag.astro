@@ -5,10 +5,10 @@ interface Props {
 }
 const { tag, showCount } = Astro.props;
 
-import { tagCounts } from '../../lib/dataAstro'
+import { tagCounts, isTagHidden } from '../../lib/dataAstro'
 ---
 
-<a href={`/blag/tags/${tag}/`} class="tag">
+<a href={isTagHidden(tag) ? `/blag/tags/` : `/blag/tags/${tag}/`} class="tag">
   #<span>{tag}</span> {showCount && <span class="count">{tagCounts[tag]}</span>}
 </a>
 

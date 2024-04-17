@@ -6,6 +6,7 @@ const blogEntriesAll = await getCollection("blog");
 /** Filtered Blog entries that are root, and are not hidden */
 const blogEntriesFiltered = blogEntriesAll
   .filter(b => import.meta.env.PROD ? b.data.hidden !== true : true);
+// .filter(b => !b.data.hidden)
 // .filter((b) => b.slug.split("/").length === 1);
 
 /** Blog entries which are filtered by hidden and sorted by time (latest first) */
@@ -33,11 +34,12 @@ const allTags: string[] = [...(new Set(blogEntriesFiltered
   .flat()
   .filter((tag) => tag !== undefined) as string[]))];
 
+
 /** The latest blog entry */
 const latestBlog = blogEntries.length > 3 ? blogEntries.slice(0, 3) : [];
 
 const tagCounts: Record<string, number> = allTags.reduce((p, t) => {
-  const tagCount = blogEntriesAll.reduce((c, e) => {
+  const tagCount = blogEntriesFiltered.reduce((c, e) => {
     if (e.data.tags) return e.data.tags.includes(t) ? c + 1 : c
     else return c
   }, 0)
@@ -50,6 +52,11 @@ const tagCounts: Record<string, number> = allTags.reduce((p, t) => {
 const sortedTags = allTags.sort((a, b) => tagCounts[b] - tagCounts[a])
 
 const topFiveTags = sortedTags.slice(0, 5)
+
+const isTagHidden = (tag: string) => {
+  if (tagCounts[tag] === undefined) return true
+  return tagCounts[tag] === 0
+}
 
 const tagStaticPaths = blogEntries
   .reduce((acc, blogPostEntry) => {
@@ -124,5 +131,6 @@ export {
   filteredByTag,
   poemsStaticPaths,
   sortedPoems,
+  isTagHidden,
 }
 
