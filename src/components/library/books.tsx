@@ -1,9 +1,9 @@
 import { keyframes, styled } from "solid-styled-components"
-import { theme } from "../theme"
-import { Masonry } from "./grids/masonry"
+import { theme } from "../../theme"
+import { Masonry } from "../grids/masonry"
 import { For } from "solid-js"
-import type { Image } from "../dataTypes"
-import type { Book } from "../data/books"
+import type { Image } from "../../dataTypes"
+import type { Book } from "../../data/books"
 
 const randomRotations = Array.from({ length: 32 }, (_, i) => (Math.random() + i * 0.02) * 20 - 10);
 

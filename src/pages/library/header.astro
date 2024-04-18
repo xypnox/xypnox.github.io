@@ -1,0 +1,82 @@
+---
+import { icons } from "../../components/icons";
+
+// /quotes/ Quotes
+const Links = [
+  {
+    slug: "books",
+    title: "Books",
+    icon: icons.books,
+  },
+  {
+    slug: "quotes",
+    title: "Quotes",
+    icon: icons.quotes,
+  },
+];
+
+const pathname = new URL(Astro.request.url).pathname;
+---
+
+<header>
+  <a href="/library/">
+    <iconify-icon icon={icons.library}></iconify-icon>
+    Library
+  </a>
+  <ul class="links">
+    {
+      Links.map((l) => (
+        <a class={pathname.includes(l.slug) ? "active" : ""} href={`/library/${l.slug}/`}>
+          <iconify-icon icon={l.icon} />
+          {l.title}
+        </a>
+      ))
+    }
+  </ul>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 100;
+    margin-bottom: 1rem;
+  }
+  header a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    background: var(--background);
+    border-radius: calc(2 * var(--border-radius));
+    color: var(--text);
+    opacity: 0.8;
+    transition: all 0.2s ease-in-out;
+    iconify-icon {
+      font-size: 1.25rem;
+    }
+  }
+  header a:hover {
+    opacity: 1;
+    background: var(--text);
+    color: var(--background);
+  }
+  header a.active {
+    opacity: 1;
+    background: var(--primary-color);
+    color: var(--primary-contrast);
+  }
+  header ul {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+  }
+  header .toolbar {
+    margin-inline-start: auto;
+  }
+</style>

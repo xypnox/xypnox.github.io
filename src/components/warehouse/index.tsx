@@ -5,18 +5,13 @@ import { Masonry } from "../grids/masonry"
 import { MasonrySample } from "./rawData"
 import { ImageSlider, createSliderState } from "../imageSlider"
 import { theme } from "../../theme"
+import { Col } from "../elements/atoms/layout"
 
 const Row = styled("div")`
   display: flex;
   gap: 1rem;
   align-items: center;
   flex-wrap: wrap;
-`
-
-const Col = styled("div")`
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
 `
 
 const MasonryImage = styled("div")`
@@ -239,3 +234,4 @@ export const WarehouseSolidJS = () => {
     </Col>
   )
 }
+

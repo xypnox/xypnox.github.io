@@ -1,0 +1,36 @@
+---
+import { icons } from "../../components/icons";
+import Layout from "./layout.astro";
+---
+
+<Layout title="Library | xypnox">
+  <div class="hero">
+  <div class="icon">
+    <iconify-icon icon={icons.library}></iconify-icon>
+  </div>
+  <h1>Library</h1>
+  </div>
+</Layout>
+
+<style>
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10rem;
+  height: 10rem;
+  font-size: 10rem;
+}
+
+</style>

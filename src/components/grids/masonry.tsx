@@ -1,4 +1,4 @@
-import { children, type ParentProps, createEffect } from "solid-js";
+import { children, type ParentProps, createEffect, on } from "solid-js";
 import { css, styled } from "solid-styled-components";
 import { makeResizeObserver } from "@solid-primitives/resize-observer";
 
@@ -9,7 +9,8 @@ interface MasonryConfig {
   minColumns: number
   // ideal column width, it can be increased if the container is too wide
   colWidth: number
-  // If image dimensions are not provided, we have to render and calculate the height of the items
+
+  // If image dimensions are not provided, we have to render children one by one and calculate the height of the items
   imageDimensions?: ImageDimensions
   gap?: number
 }
@@ -23,26 +24,24 @@ const Wrapper = styled("div")`
 type Dimension = {
   conHeight: number
   conWidth: number
-  childrenHeights: number[]
+  childrenHeights: number[] | null
 }
 
 const getDimensions = (el: HTMLElement, imageDimensions?: ImageDimensions): Dimension => {
-  if (!el) return { conHeight: 0, conWidth: 0, childrenHeights: [] }
+  if (!el) return { conHeight: 0, conWidth: 0, childrenHeights: null }
   // Get dimensions of viewport and container
   const containerWidth = el.offsetWidth
   const containerHeight = el.offsetHeight
 
   // Each child is image
   const normalizedWidth = containerWidth
-  const childrenHeights = Array.from(el.children).map((child: any, i: number) => {
+  const childrenHeights = imageDimensions ? Array.from(el.children).map((child: any, i: number) => {
     // Normalize the height of the child to the width of the container
-    if (imageDimensions && imageDimensions[i]) {
+    if (imageDimensions[i]) {
       const [w, h] = imageDimensions[i]
       return h * (normalizedWidth / w)
-    }
-    return child.offsetHeight * (normalizedWidth / child.offsetWidth)
-
-  });
+    } else return 0
+  }) : null;
 
   return { conHeight: containerHeight, conWidth: containerWidth, childrenHeights }
 }
@@ -54,12 +53,23 @@ const calculateColumnWidth = (dimensions: Dimension, config: MasonryConfig) => {
   const columns = Math.min(maxColumns, Math.max(minColumns, idealColumns))
   const calGap = gap ?? 0
   const width = (containerWidth - calGap * (columns - 1)) / columns
-  console.log({ containerWidth, idealColumns, columns, width })
+  // console.log({ containerWidth, idealColumns, columns, width })
   return [width, columns]
 }
 
 const masonryItemClass = css`
   position: absolute;
+`
+
+const getItemStyle = (p: {
+  left: number
+  top: number
+  columnWidth: number
+  childHeight: number | null
+}) => `
+transform: translate(${p.left}px, ${p.top}px);
+width: ${p.columnWidth}px;
+${p.childHeight ? "height: " + p.childHeight + "px;" : ''}
 `
 
 export const Masonry = (props: MasonryProps) => {
@@ -82,7 +92,7 @@ export const Masonry = (props: MasonryProps) => {
     const dimensions = getDimensions(wrapper!, props.imageDimensions);
     const [columnWidth, columnNum] = colWidth(dimensions);
 
-    console.log({ columnWidth, columnNum, dimensions })
+    // console.log({ columnWidth, columnNum, dimensions })
 
     // To track the height and number of items of the columns filled
     const columns = Array.from({ length: columnNum }, () => [0, 0]); // [height, numItems]
@@ -102,19 +112,26 @@ export const Masonry = (props: MasonryProps) => {
         const left = insertColumnIndex * columnWidth + (insertColumnIndex > 0 ? (props.gap ?? 0) * (insertColumnIndex) : 0);
         const top = insertColumn[0] + (insertColumn[1] > 0 ? (props.gap ?? 0) * (insertColumn[1]) : 0);
 
-        const childDimensions = dimensions.childrenHeights[i];
-        const childHeight = childDimensions * columnWidth / dimensions.conWidth;
+        const childDimensions = dimensions.childrenHeights ? dimensions.childrenHeights[i] : null;
+        const childHeight = childDimensions ? childDimensions * columnWidth / dimensions.conWidth : null;
 
-        console.log({ i, childHeight, insertColumnIndex, insertColumn, columns, left, top })
+        // console.log({ i, childHeight, insertColumnIndex, insertColumn, columns, left, top })
 
         // Width will be calculated based on the number of columns
         cE.setAttribute?.("style",
           // Transform performs better than top and left
-          `transform: translate(${left}px, ${top}px);   width: ${columnWidth}px;  height: ${childHeight}px;`
+          getItemStyle({ left, top, columnWidth, childHeight })
         );
 
         // Update the height of the column
-        columns[insertColumnIndex] = [insertColumn[0] + childHeight, insertColumn[1] + 1];
+        if (childHeight) {
+          columns[insertColumnIndex] = [insertColumn[0] + childHeight, insertColumn[1] + 1];
+        } else {
+          const childHeightEl = cE.offsetHeight;
+          // console.log({ childHeightEl })
+          columns[insertColumnIndex] = [insertColumn[0] + childHeightEl, insertColumn[1] + 1];
+
+        }
       }
     }
 
@@ -135,6 +152,10 @@ export const Masonry = (props: MasonryProps) => {
   createEffect(() => {
     if (document) observe(document.body);
   })
+
+  createEffect(on(c, () => {
+    applyLayout();
+  }));
 
   return (
     <Wrapper ref={wrapper!}>

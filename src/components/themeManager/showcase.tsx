@@ -418,7 +418,7 @@ const showcaseThemes: ThemePalette[] = [
         "radius": "0.2rem"
       },
       "font": {
-        "family": "\"Bitter\""
+        "family": "\"Crimson Text\""
       }
     },
     "card": "solid-border",

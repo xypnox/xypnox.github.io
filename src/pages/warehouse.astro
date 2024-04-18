@@ -3,6 +3,7 @@ import Layout from "../layouts/MainLayout.astro";
 import PageHeader from "../components/pageHeader.astro";
 import { Tooltip } from "../components/elements/tooltip";
 import { WarehouseSolidJS } from "../components/warehouse/index";
+import { MasonryText } from "../components/warehouse/masonry-text";
 ---
 
 <Layout title="Warehouse">
@@ -23,5 +24,6 @@ import { WarehouseSolidJS } from "../components/warehouse/index";
     <h1>HelloH1</h1>
     <div slot="tooltip">world</div>
   </Tooltip>
+  <MasonryText client:only />
   <WarehouseSolidJS client:load />
 </Layout>
