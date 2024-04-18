@@ -54,7 +54,8 @@ const calculateColumnWidth = (dimensions: Dimension, config: MasonryConfig) => {
   const columns = Math.min(maxColumns, Math.max(minColumns, idealColumns))
   const calGap = gap ?? 0
   const width = (containerWidth - calGap * (columns - 1)) / columns
-  return width
+  console.log({ containerWidth, idealColumns, columns, width })
+  return [width, columns]
 }
 
 const masonryItemClass = css`
@@ -72,15 +73,16 @@ export const Masonry = (props: MasonryProps) => {
   });
 
   const colWidth = (dimensions: Dimension) => {
-    if (!wrapper) return 0;
+    if (!wrapper) return [0, 1];
     return calculateColumnWidth(dimensions, props)
   }
 
   const applyLayout = () => {
     const list = c.toArray();
     const dimensions = getDimensions(wrapper!, props.imageDimensions);
-    const columnWidth = colWidth(dimensions);
-    const columnNum = Math.floor(wrapper!.offsetWidth / columnWidth);
+    const [columnWidth, columnNum] = colWidth(dimensions);
+
+    console.log({ columnWidth, columnNum, dimensions })
 
     // To track the height and number of items of the columns filled
     const columns = Array.from({ length: columnNum }, () => [0, 0]); // [height, numItems]
@@ -102,6 +104,8 @@ export const Masonry = (props: MasonryProps) => {
 
         const childDimensions = dimensions.childrenHeights[i];
         const childHeight = childDimensions * columnWidth / dimensions.conWidth;
+
+        console.log({ i, childHeight, insertColumnIndex, insertColumn, columns, left, top })
 
         // Width will be calculated based on the number of columns
         cE.setAttribute?.("style",

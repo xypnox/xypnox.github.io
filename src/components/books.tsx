@@ -1,9 +1,22 @@
-import { styled } from "solid-styled-components"
+import { keyframes, styled } from "solid-styled-components"
 import { theme } from "../theme"
 import { Masonry } from "./grids/masonry"
 import { For } from "solid-js"
 import type { Image } from "../dataTypes"
 import type { Book } from "../data/books"
+
+const randomRotations = Array.from({ length: 32 }, (_, i) => (Math.random() + i * 0.02) * 20 - 10);
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+// console.log({ randomRotations })
 
 const MasonryImage = styled("div")`
   /* overflow: hidden; */
@@ -13,7 +26,14 @@ const MasonryImage = styled("div")`
     z-index: 10;
     transition: all 0.3s ease-in-out;
     border-radius: calc(${theme.border.radius} * 4);
+    animation: ${fadeIn} 1s ease-in;
+    animation-fill-mode: both;
   }
+    ${randomRotations.map((rotation, i) => `
+      &:nth-child(${i}n) img {
+        transform: rotate(${rotation}deg);
+        animation-delay: ${i * 0.05}s;
+      }`).join('')}
 
   .caption {
     padding: 1rem;
@@ -60,7 +80,7 @@ export const Books = (props: BookProps) => {
       minColumns={1}
       maxColumns={8}
       colWidth={200}
-      gap={16}
+      gap={32}
       imageDimensions={props.images.map((item) => [item.image.attributes.width, item.image.attributes.height])}
     >
       <For each={props.images}>

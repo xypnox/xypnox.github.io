@@ -75,11 +75,6 @@ const BookImages = ReadBooks.map((book) => {
 
 // https://covers.openlibrary.org/b/isbn/0385472579-S.jpg
 // src={`https://covers.openlibrary.org/b/isbn/${book["ISBN"]}-M.jpg`}
----
-
-<Layout title="Books">
-  <h1>Books</h1>
-  <BooksSolidJS client:only images={BookImages}  />
   // <div class="shelf">
   //   {
   //     ReadBooks.map((book) => (
@@ -98,8 +93,18 @@ const BookImages = ReadBooks.map((book) => {
   //     ))
   //   }
   // </div>
+---
+
+<Layout title="Books">
+  <h1>Books</h1>
+  <div class="books">
+    <BooksSolidJS client:only images={BookImages}  />
+  </div>
 </Layout>
 <style>
+  .books {
+    margin: 1rem;
+  }
   .shelf {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
