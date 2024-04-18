@@ -96,60 +96,27 @@ const BookImages = ReadBooks.map((book) => {
 ---
 
 <Layout title="Books">
-  <h1>Books</h1>
-  <div class="books">
-    <BooksSolidJS client:only images={BookImages}  />
+  <h1 class="title">Books</h1>
+  <div class="wrapper">
+    <div class="books">
+      <BooksSolidJS client:only images={BookImages}  />
+    </div>
   </div>
 </Layout>
 <style>
-  .books {
-    margin: 1rem;
+  .title {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .wrapper {
+    width: 100%;
+    padding: 3rem;
+    overflow: hidden;
   }
   .shelf {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
-  }
-  .masonry-image {
-    /* overflow: hidden; */
-    img {
-      width: 100%;
-      height: auto;
-      z-index: 10;
-      transition: all 0.3s ease-in-out;
-      border-radius: calc(${theme.border.radius} * 4);
-    }
-
-    .caption {
-      padding: 1rem;
-      position: absolute;
-      bottom: 0;
-      opacity: 0;
-      width: 100%;
-      z-index: 20;
-      background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.5) 0%,
-        rgba(0, 0, 0, 0.3) 100%
-      );
-      color: white;
-      transition: all 0.3s ease-in-out;
-      transform: translateY(30%);
-      border-radius: calc(${theme.border.radius} * 2);
-      p {
-        margin: 0;
-      }
-    }
-    &:hover {
-      z-index: 30;
-      img {
-        box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.3);
-        transform: scale(1.066);
-      }
-      .caption {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
   }
 </style>
