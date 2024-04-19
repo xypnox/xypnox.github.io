@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import {LoStream as LoStreamSolid} from '../../tools/lostream/index'
+
+const meta = {
+  title: "LoStream",
+  description: "LoStream is a simple, lightweight, and fast library for working with streams in JavaScript.",
+};
+---
+
+<Layout title={meta.title} meta={meta}>
+  <h1>LoStream</h1>
+  <LoStreamSolid client:load />
+</Layout>
+
