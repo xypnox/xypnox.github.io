@@ -1,40 +1,27 @@
 ---
 layout: '../layouts/PageLayout.astro'
 title: 'Why xypnox?'
-description: 'Who knows?'
 ---
 
 import { ImageGrid } from '../components/imageGrid';
 
-> Is it a question? To me? Or just the meaning of the text "xypnox"?
+The time was near the start of my college journey when I realized that my previous alias was not same in all the places. I juggled portmanteaus sprinkled with numbers, dates and adjectives. 
 
-Following are the benefits of choosing it:
+Distraught, I found a solution with an invented word. Having recently read books about Greek mythologies, I looked for inspiration there. I translated some words to greek and found έξυπνος (éxypnos). It meant smart/clever in English. I tweaked it a little to get xypnos, which meant awake. It was, however, already in use. I tweaked it further to get xypnox.
 
-- Is short enough
-- And it was available
-- Is unique enough
-- Was available in several places
-- Because it can be pronounced
-- Did I mention it was available?
-- Looks good as text ( xypnox ) somewhat symmetric
+As I had shifted my accounts to this username, when I barged into college, my digital presence had the username xypnox plastered all over it. During those early days of college, when everyone knew nearly no one, students corralled themselves into Whatsapp groups of different sections and batches, where each of my messages carried the nick xypnox. As time went on, the username was picked up by many. Some started using it as my nick name, before eventually replacing the name itself.
 
-Needless to say, it indeed was available and that was the best reason.
+I have observed so many folks please themselves by introducing me to others in real life by my nickname. Initially in those conversations, I added in my name at a later point. Since then, it has occurred so often that I have tired from the routine. Now, I don't even mention the name.
 
----
+It has been a long time now since I started using it as a pseudonym. And I have grown to liking it for a few reasons. It is short. It is relatively unique. Although I did not focus on its pronunciation, it is relatively simple (ज़िपनॉक्स).
 
-## Meaning
+At least xypnox has a decent tale, do you know the tale of your name?
 
-The Greek word that I finally stumbled upon was έξυπνος (éxypnos). It means smart, clever, ingenious etc in English. Perfect! But the e in the beginning wasn't too nice. So, I removed the e and It now also meant Awake! Obviously, xypnos was already taken on Gmail. So, I had to improvise again. This time removing the last letter and replacing it with the good old x. And xypnox was finalized.
+## Icon
 
----
+In the start I used a x that looked like the greek letter chi written with brush strokes. I made several variations once I had vectorized that shape.
 
-## The logo/icon/wordmark/favicon/symbol/graph
-
-History of the icon.
-
-From the very beginning to variations to a reset to now.
-
-<div style={{"--count": 3}}>
+<div style={{"--count": 3, "--image-width-raw": "100%"}}>
   <ImageGrid client:load images={[
   "/xypLogos/photo_2023-10-10_19-55-42.jpg",
   "/xypLogos/photo_2023-10-10_19-55-41.jpg",
@@ -44,21 +31,44 @@ From the very beginning to variations to a reset to now.
   "/xypLogos/photo_2023-10-10_19-55-31.jpg",
   "/xypLogos/photo_2023-10-10_19-55-30.jpg",
   "/xypLogos/photo_2023-10-10_19-55-29.jpg",
+  ].map(( s, i ) => ({
+  url: s,
+  title: i,
+  thumbnail: s,
+  alt: s,
+  link: s,
+  image: {
+    src: s,
+    alt: i,
+  },
+  }))} />
+</div>
+
+However, I was not quite happy with it. The shape was somewhat badly drawn, lacked smooth curves in some places and was a bit too simplistic.
+
+A day while doodling I discovered the shape that is now used everywhere:
+
+<div style={{"--count": 3, "--image-width-raw": "100%"}}>
+  <ImageGrid client:load images={[
   "/xypLogos/photo_2023-10-10_19-55-27.jpg",
   "/xypLogos/photo_2023-10-10_19-55-26.jpg",
   "/xypLogos/photo_2023-10-10_19-55-25.jpg",
   "/xypLogos/photo_2023-10-10_19-55-24.jpg",
   "/xypLogos/photo_2023-10-10_19-55-22.jpg",
-  "/xypLogos/photo_2023-10-10_19-55-20.jpg"
+  "/xypLogos/photo_2023-10-10_19-55-20.jpg",
   ].map(( s, i ) => ({
   url: s,
-  thumbnail: s,
   title: i,
+  thumbnail: s,
   alt: s,
   link: s,
+  image: {
+    src: s,
+    alt: i,
+  },
   }))} />
 </div>
 
-As is obvious from the variations, the shape is malleable.
+---
 
-I use several variants of the current shape/form in different places. The ones shown above are the ones I liked at that time.
+Last Updated: 2024
