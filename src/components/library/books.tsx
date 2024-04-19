@@ -5,7 +5,41 @@ import { For } from "solid-js"
 import type { Image } from "../../dataTypes"
 import type { Book } from "../../data/books"
 
-const randomRotations = Array.from({ length: 32 }, (_, i) => (Math.random() + i * 0.02) * 20 - 10);
+const randomRotations = [
+  "3.72",
+  "-4.10",
+  "-7.75",
+  "2.59",
+  "-5.89",
+  "0.12",
+  "9.08",
+  "0.31",
+  "8.02",
+  "5.12",
+  "-4.43",
+  "7.97",
+  "3.24",
+  "-1.74",
+  "2.13",
+  "15.78",
+  "6.18",
+  "11.99",
+  "8.53",
+  "2.55",
+  "5.00",
+  "7.63",
+  "11.47",
+  "1.89",
+  "3.87",
+  "15.19",
+  "9.22",
+  "10.75",
+  "20.61",
+  "14.74",
+  "5.59",
+  "6.75"
+]
+// Array.from({ length: 32 }, (_, i) => ((Math.random() + i * 0.02) * 20 - 10).toFixed(2));
 
 const fadeIn = keyframes`
   from {
@@ -25,7 +59,7 @@ const MasonryImage = styled("div")`
     height: auto;
     z-index: 10;
     transition: all 0.3s ease-in-out;
-    border-radius: calc(${theme.border.radius} * 4);
+    border-radius: calc(${theme.border.radius} * 2);
     animation: ${fadeIn} 1s ease-in;
     animation-fill-mode: both;
   }
@@ -90,10 +124,14 @@ export const Books = (props: BookProps) => {
               {...item.image.attributes}
               alt="placeholder" loading="lazy" />
             <div class="caption">
-              <p>{item.book.Title}</p>
               {item.book['My Rating'] && item.book['My Rating'] > 0 &&
-                <p>{item.book['My Rating']}</p>
+                <p>
+                  <For each={[...Array(item.book['My Rating'])]}>
+                    {() => <span>★</span>}
+                  </For>
+                </p>
               }
+              <p>{item.book.Title}</p>
             </div>
           </MasonryImage>
         )}

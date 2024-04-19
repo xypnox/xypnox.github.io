@@ -9412,7 +9412,7 @@ export const Books: Book[] = [
     "My Review": "",
     "Spoiler": "",
     "Private Notes": "",
-    "Read Count": 1,
+    "Read Count": 0,
     "Owned Copies": 0
   },
   {
@@ -9620,7 +9620,7 @@ export const Books: Book[] = [
     "My Review": "",
     "Spoiler": "",
     "Private Notes": "",
-    "Read Count": 1,
+    "Read Count": 0,
     "Owned Copies": 0
   },
   {
