@@ -38,4 +38,4 @@ PS. Hackinout, please do not spread the fraudulent schemes of these people from 
 
 Regards and curses,
 xypnox
-[xypnox.com](http://www.xypnox.com) => _Bought on Google Domains which I will gladly renew this year._
+[xypnox.com](https://www.xypnox.com) => _Bought on Google Domains which I will gladly renew this year._

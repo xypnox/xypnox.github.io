@@ -1,0 +1,15 @@
+---
+import type { BaseLayoutProps } from "../dataTypes";
+import MainLayout from "./MainLayout.astro";
+import Header from "../components/library/header.astro";
+
+export interface Props extends BaseLayoutProps {}
+
+const props = Astro.props;
+---
+
+<MainLayout {...props}>
+  <Header />
+  <slot />
+</MainLayout>
+

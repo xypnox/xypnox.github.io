@@ -1,0 +1,49 @@
+---
+import Layout from "../../../layouts/MainLayout.astro";
+import { sortedTags } from "../../../lib/dataAstro";
+import Tag from '../../../components/nav/Tag.astro'
+---
+
+<Layout title={`Tags | Blag | xypnox`}>
+  <main class="blog-index">
+    <div class="blog-header">
+      <a class="text-gradient-fx" href="/blag/">Blag</a>
+    </div>
+    <div class="tag-flex">
+      {sortedTags.map((tag) => <Tag showCount tag={tag} />)}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .blog-index {
+    margin: 0 auto;
+  }
+
+  .blog-header {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .blog-header a {
+    color: var(--fadeText);
+  }
+
+  .tag-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 390px) {
+    .blog-header {
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+  }
+</style>
