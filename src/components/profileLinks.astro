@@ -1,10 +1,10 @@
 ---
 import { links } from "../content/links";
+import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
 ---
 
 <div class="links-wrapper">
-  <h2 id="contact-and-links">Contact and Links</h2>
-
+  <h2 id="contact-and-links">Social media and other places</h2>
   <div class="links">
     {
       links.map((link) => (
@@ -15,11 +15,15 @@ import { links } from "../content/links";
       ))
     }
   </div>
+  <TootFeedSolid client:only max={6} />
 </div>
 
 <style>
   .links-wrapper {
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 2rem;
     border-radius: calc(var(--border-radius) * 2);
     border: var(--card-border);

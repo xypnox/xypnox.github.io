@@ -19,7 +19,6 @@ const TootWrapper = styled("div")`
     display: flex;
     flex-direction: column;
     gap: 0rem;
-    background: ${theme.surface};
     border-radius: calc(${theme.border.radius} * 4);
     overflow: hidden;
   }
@@ -65,15 +64,24 @@ const TootWrapper = styled("div")`
       color: ${theme.primary.color};
     }
   }
+
+  .refetch-time {
+    font-size: ${theme.font.size.sm};
+    flex-grow: 1 !important;
+  }
 `
 
 const parseFeed = async () => {
   return await parse(feedURL) as RootObject;
 }
 
-export const TootFeed = () => {
+interface TootFeedProps {
+  max?: number
+}
+
+export const TootFeed = (props: TootFeedProps) => {
   const repaint = createSignal(0)
-  const [lastFetched, setLastFetched] = createSignal(0)
+  const [lastFetched, setLastFetched] = createSignal(Date.now())
   const [loadCount, setLoadCount] = createSignal({
     count: 0,
     total: 0
@@ -83,6 +91,7 @@ export const TootFeed = () => {
   const [feed, { refetch }] = createResource(async () => {
     try {
       const feedData = await parseFeed()
+      if (props.max) feedData.items = feedData.items.slice(0, props.max)
       setLastFetched(Date.now())
       return feedData
     } catch (error) {
@@ -123,23 +132,28 @@ export const TootFeed = () => {
       <Masonry
         minColumns={1}
         maxColumns={6}
-        colWidth={430}
+        colWidth={props.max ? 300 : 400}
         gap={24}
         repaint={repaint}
       >
         <TootWrapper>
-          <div class="card">
+          <div class="theme-card card">
             <div class="content">
               <div class="title">
-                <h2>TootFeed</h2>
+                <h2>
+                  <a href={'/tootfeed/'}>TootFeed</a>
+                </h2>
               </div>
               <p>A replica of my feed @ <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
               <Button class="small" onClick={() => refetch()}>
                 <Show when={lastFetched() !== 0}>
                   <iconify-icon icon={icons.refresh} />
-                  Refetched <RelativeTime date={lastFetched()} />
+                  Refresh
                 </Show>
               </Button>
+              <p class="refetch-time">
+                <RelativeTime date={lastFetched()} />
+              </p>
             </div>
           </div>
         </TootWrapper>
@@ -153,7 +167,7 @@ export const TootFeed = () => {
           <For each={feed()!.items} fallback={<div>Loading...</div>}>
             {(toot) => (
               <TootWrapper>
-                <div class="card">
+                <div class="theme-card card">
                   <div class="content" >
                     <div
                       innerHTML={toot.description} />
