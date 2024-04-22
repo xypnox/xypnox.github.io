@@ -1,4 +1,4 @@
-import { createSignal, Show, type Accessor, type Signal, createEffect, type Component, type JSX, createMemo, For } from "solid-js"
+import { createSignal, Show, type Accessor, type Signal, createEffect, type JSX, createMemo, For } from "solid-js"
 import type { Image } from "../dataTypes"
 import { Portal } from "solid-js/web"
 import { keyframes, styled } from "solid-styled-components"
@@ -154,7 +154,7 @@ const ThumbnailWrapper = styled("div")`
   width: 100%;
   max-width: 100%;
   pointer-events: all;
-  overflow-x: hidden;
+  overflow: hidden;
 `
 
 const Thumbnails = styled("div")`
@@ -162,17 +162,18 @@ const Thumbnails = styled("div")`
   display: flex;
   align-items: center;
   height: 6rem;
+  width: min-content;
   transform: translateX(var(--left));
-  transition: transform var(--duration, 0.5s) ease-out;
+  transition: transform 0.5s;
   & > * {
     pointer-events: all;
   }
 `
 
 const Thumbnail = styled("img")`
+  display: block;
   width: 4rem;
   height: 4rem;
-  object-fit: cover;
   transition: width 0.25s ease-in-out, height 0.25s ease-in-out, opacity 0.25s ease-in-out;
   opacity: 0.5;
 
@@ -300,7 +301,6 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
   })
   // Use currernt index to determine how many to subtract from the center
   const newImage = () => props.images[props.sliderState.newIm()].image
-  const leftPad = createMemo(() => `calc(50% - ${props.sliderState.newIm() * 4 + 3}rem)`)
   const currentimage = () => props.images[current()].image
 
   return (
@@ -363,22 +363,27 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
               </TooltipElement>
             </ImageContents>
 
-            <ThumbnailWrapper style={{
-              '--left': leftPad(),
-              '--duration': props.sliderState.quickChange() ? '0s' : '0.5s'
-            }}>
+            <ThumbnailWrapper
+              style={{
+                '--duration': props.sliderState.quickChange() ? '0s' : '0.5s',
+                '--left': `calc(50% - ${current() * 4}rem)`,
+              }}
+            >
               <Thumbnails>
                 <For each={props.images}>
                   {
                     (image, i) => (
                       <Thumbnail
-                        classList={{ active: i() === props.sliderState.newIm() }}
+                        classList={{
+                          active: i() === props.sliderState.newIm(),
+                        }}
                         src={image.image.src}
                         srcSet={image.image.srcSet.attribute}
                         sizes={'256px'}
                         alt={image.alt}
                         onClick={() => props.sliderState.changeCurrent(i())}
-                      />
+                      >
+                      </Thumbnail>
                     )}
                 </For>
               </Thumbnails>

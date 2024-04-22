@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
+import feedData from "../data/feed.json";
+import type { Feed } from "../dataTypes";
+
+const feedDataTyped = feedData as Feed;
+
+console.log(feedDataTyped);
+---
+
+<Layout title="Toot Feed">
+  <TootFeedSolid feed={feedDataTyped} client:load />
+</Layout>
+

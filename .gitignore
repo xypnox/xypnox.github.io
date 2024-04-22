@@ -24,3 +24,5 @@ cssVariables.json
 
 .buildScripts/
 src/assets/
+
+src/data/feed.json

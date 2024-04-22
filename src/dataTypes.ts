@@ -41,3 +41,54 @@ export interface Image {
   image: GetImageResult
 }
 
+
+interface MediaContent {
+  $: {
+    url: string;
+    type: string;
+    fileSize: string;
+    medium: string;
+  };
+  "media:rating": {
+    _: string;
+    $: {
+      scheme: string;
+    };
+  }[];
+  "media:description": {
+    _: string;
+    $: {
+      type: string;
+    };
+  }[];
+}
+
+interface Item {
+  link: string;
+  pubDate: string;
+  guid: string;
+  description: string;
+  "media:content"?: MediaContent;
+  content: string;
+  contentSnippet: string;
+  isoDate: string;
+}
+
+interface ChannelImage {
+  link: string;
+  url: string;
+  title: string;
+}
+
+interface Feed {
+  items: Item[];
+  image: ChannelImage;
+  title: string;
+  description: string;
+  generator: string;
+  link: string;
+  lastBuildDate: string;
+  "webfeeds:icon": string;
+}
+
+export type { Feed, Item, ChannelImage, MediaContent }
