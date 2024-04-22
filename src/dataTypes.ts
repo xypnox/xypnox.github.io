@@ -42,53 +42,58 @@ export interface Image {
 }
 
 
-interface MediaContent {
-  $: {
-    url: string;
-    type: string;
-    fileSize: string;
-    medium: string;
-  };
+interface Enclosure {
   "media:rating": {
-    _: string;
-    $: {
-      scheme: string;
-    };
-  }[];
+    "$text": string;
+    "scheme": string;
+  };
   "media:description": {
-    _: string;
-    $: {
-      type: string;
-    };
-  }[];
+    "$text": string;
+    "type": string;
+  };
+  url: string;
+  type: string;
+  fileSize: string;
+  medium: string;
+}
+
+interface Thumbnail {
+  "media:rating": {
+    "$text": string;
+    "scheme": string;
+  };
+  "media:description": {
+    "$text": string;
+    "type": string;
+  };
+  url: string;
+  type: string;
+  fileSize: string;
+  medium: string;
+}
+
+interface Media {
+  thumbnail: Thumbnail | Thumbnail[];
 }
 
 interface Item {
-  link: string;
-  pubDate: string;
-  guid: string;
+  id: string;
   description: string;
-  "media:content"?: MediaContent;
-  content: string;
-  contentSnippet: string;
-  isoDate: string;
-}
-
-interface ChannelImage {
   link: string;
-  url: string;
-  title: string;
+  published: number;
+  created: number;
+  category: any[];
+  enclosures: Enclosure[];
+  media: Media;
 }
 
-interface Feed {
+interface RootObject {
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  category: any[];
   items: Item[];
-  image: ChannelImage;
-  title: string;
-  description: string;
-  generator: string;
-  link: string;
-  lastBuildDate: string;
-  "webfeeds:icon": string;
 }
 
-export type { Feed, Item, ChannelImage, MediaContent }
+export type { RootObject, Item, Media, Thumbnail, Enclosure };

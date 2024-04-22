@@ -1,13 +1,14 @@
-import { For, Show } from "solid-js"
-import type { Feed } from "../dataTypes"
+import { For, Show, createEffect, createResource, createSignal } from "solid-js"
 import { Masonry } from "./grids/masonry"
 import { styled } from "solid-styled-components"
 import { theme } from "../theme"
 import { RelativeTime } from "./elements/relativeTime"
+import { parse } from 'rss-to-json';
+import type { RootObject, Thumbnail } from "../dataTypes"
+import { Button } from "./elements/atoms"
+import { icons } from "./icons"
 
-interface TootFeedProps {
-  feed: Feed
-}
+const feedURL = "https://fosstodon.org/@xypnox.rss"
 
 const TootWrapper = styled("div")`
   display: flex;
@@ -66,42 +67,126 @@ const TootWrapper = styled("div")`
   }
 `
 
-export const TootFeed = (props: TootFeedProps) => {
+const parseFeed = async () => {
+  return await parse(feedURL) as RootObject;
+}
+
+export const TootFeed = () => {
+  const repaint = createSignal(0)
+  const [lastFetched, setLastFetched] = createSignal(0)
+  const [loadCount, setLoadCount] = createSignal({
+    count: 0,
+    total: 0
+  })
+
+  const increaseCount = () => setLoadCount(s => ({ ...s, count: s.count + 1 }))
+  const [feed, { refetch }] = createResource(async () => {
+    try {
+      const feedData = await parseFeed()
+      setLastFetched(Date.now())
+      return feedData
+    } catch (error) {
+      console.error(error);
+      throw error
+    }
+  })
+
+  createEffect(() => {
+    if (feed()) {
+      // Add the lenth of thumbnail | thumbnail[]
+      const mediaCount = feed()!.items.reduce((acc, item) => {
+        if (item.media && item.media.thumbnail) {
+          if (Array.isArray(item.media.thumbnail)) {
+            return acc + item.media.thumbnail.length
+          }
+          return acc + 1
+        }
+        return acc
+      }, 0)
+
+      setLoadCount({
+        count: 0,
+        total: mediaCount,
+      })
+    }
+  })
+
+  createEffect(() => {
+    // Repaint when all images are loaded
+    if (loadCount().count !== 0 && loadCount().total === loadCount().count) {
+      repaint[1](1)
+    }
+  })
+
   return (
-    <Masonry
-      minColumns={1}
-      maxColumns={6}
-      colWidth={430}
-      gap={24}
-    >
-      <TootWrapper>
-        <div class="card">
-          <div class="content">
-            <h2>TootFeed</h2>
-            <p>A replica of my feed @ <a href={props.feed.link}>Mastodon</a></p>
-          </div>
-        </div>
-      </TootWrapper>
-      <For each={props.feed.items}>
-        {(toot) => (
-          <TootWrapper>
-            <div class="card">
-              <div class="content" >
-                <div
-                  innerHTML={toot.description} />
-                <div class="meta">
-                  <a class="link" href={toot.link}>
-                    <RelativeTime date={new Date(toot.isoDate).getTime()} />
-                  </a>
-                </div>
+    <div>
+      <Masonry
+        minColumns={1}
+        maxColumns={6}
+        colWidth={430}
+        gap={24}
+        repaint={repaint}
+      >
+        <TootWrapper>
+          <div class="card">
+            <div class="content">
+              <div class="title">
+                <h2>TootFeed</h2>
               </div>
-              <Show when={toot["media:content"]}>
-                <img src={toot["media:content"]!.$.url} alt={toot["media:content"]!["media:description"].join(' ')} />
-              </Show>
+              <p>A replica of my feed @ <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
+              <Button class="small" onClick={() => refetch()}>
+                <Show when={lastFetched() !== 0}>
+                  <iconify-icon icon={icons.refresh} />
+                  Refetched <RelativeTime date={lastFetched()} />
+                </Show>
+              </Button>
             </div>
-          </TootWrapper>
-        )}
-      </For>
-    </Masonry>
+          </div>
+        </TootWrapper>
+        <Show when={feed.loading}>
+          <div>Loading...</div>
+        </Show>
+        <Show when={feed.error}>
+          <div>Error: {feed.error.message}</div>
+        </Show>
+        <Show when={feed() !== undefined}>
+          <For each={feed()!.items} fallback={<div>Loading...</div>}>
+            {(toot) => (
+              <TootWrapper>
+                <div class="card">
+                  <div class="content" >
+                    <div
+                      innerHTML={toot.description} />
+                    <div class="meta">
+                      <a class="link" href={toot.link}>
+                        <RelativeTime date={toot.published} />
+                      </a>
+                    </div>
+                  </div>
+                  <Show when={toot.media}>
+                    <Show when={Array.isArray(toot.media.thumbnail)}>
+                      <For each={toot.media.thumbnail as Thumbnail[]}>
+                        {(im) => (
+                          <Thumb onLoad={() => increaseCount()} media={im} />
+                        )}
+                      </For>
+                    </Show>
+                    <Show when={toot.media.thumbnail && !Array.isArray(toot.media.thumbnail)}>
+                      {
+                        (<Thumb onLoad={() => increaseCount()} media={toot.media.thumbnail as Thumbnail} />)
+                      }
+                    </Show>
+                  </Show>
+                </div>
+              </TootWrapper>
+            )}
+          </For>
+        </Show>
+      </Masonry>
+    </div>
   )
 }
+
+const Thumb = (props: { media: Thumbnail, onLoad: () => void }) => <img src={props.media.url} alt={props.media["media:description"].$text}
+  onLoad={props.onLoad}
+/>

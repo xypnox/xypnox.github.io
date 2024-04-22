@@ -53,6 +53,7 @@ if (style && themeCss) {
     const theme = themesPalette.find(
       (theme: ThemePalette) => theme.id === themeConfigPalette.theme,
     );
+    // console.log('SET THEME', { theme, themesPalette, themeConfigPalette });
     if (!theme) return;
     const fontFamily = theme.base.font.family;
     // console.log({ theme, fontFamily });

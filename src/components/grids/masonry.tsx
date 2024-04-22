@@ -1,6 +1,7 @@
-import { children, type ParentProps, createEffect, on } from "solid-js";
+import { children, type ParentProps, createEffect, on, createRenderEffect, type Signal } from "solid-js";
 import { css, styled } from "solid-styled-components";
 import { makeResizeObserver } from "@solid-primitives/resize-observer";
+import { themeState } from "../themeManager/themeState";
 
 type ImageDimensions = [number, number][]
 
@@ -13,6 +14,8 @@ interface MasonryConfig {
   // If image dimensions are not provided, we have to render children one by one and calculate the height of the items
   imageDimensions?: ImageDimensions
   gap?: number
+
+  repaint?: Signal<number>
 }
 
 interface MasonryProps extends ParentProps, MasonryConfig { }
@@ -87,7 +90,10 @@ export const Masonry = (props: MasonryProps) => {
     return calculateColumnWidth(dimensions, props)
   }
 
+
   const applyLayout = () => {
+    // console.log('Applying layout')
+    if (!wrapper) return;
     const list = c.toArray();
     const dimensions = getDimensions(wrapper!, props.imageDimensions);
     const [columnWidth, columnNum] = colWidth(dimensions);
@@ -149,6 +155,16 @@ export const Masonry = (props: MasonryProps) => {
   }
   const { observe } = makeResizeObserver(handleObserverCallback, { box: "content-box" });
 
+  createRenderEffect(() => {
+    if (props.repaint) {
+      // We have to repaint when the repaint signal changes to true
+      if (props.repaint[0]()) {
+        // console.log('Repainting... in Masonry')
+        applyLayout();
+      }
+    }
+  })
+
   createEffect(() => {
     if (document) observe(document.body);
   })
@@ -156,6 +172,11 @@ export const Masonry = (props: MasonryProps) => {
   createEffect(on(c, () => {
     applyLayout();
   }));
+
+  createEffect(on(themeState.theme, () => {
+    // console.log('Theme changed, Inside Masonry, Repainting...');
+    applyLayout();
+  }))
 
   return (
     <Wrapper ref={wrapper!}>
