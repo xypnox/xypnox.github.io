@@ -5,7 +5,7 @@ import { theme } from "../theme"
 import { RelativeTime } from "./elements/relativeTime"
 import { parse } from 'rss-to-json';
 import type { RootObject, Thumbnail } from "../dataTypes"
-import { Button } from "./elements/atoms"
+import { Button, cardStyles, cardTransition } from "./elements/atoms"
 import { icons } from "./icons"
 
 const feedURL = "https://fosstodon.org/@xypnox.rss"
@@ -15,13 +15,10 @@ const TootWrapper = styled("div")`
   flex-direction: column;
   gap: 0rem;
 
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: 0rem;
-    border-radius: 1em;
-    overflow: hidden;
-  }
+  ${cardStyles};
+  ${cardTransition};
+  border-radius: 1em;
+  overflow: hidden;
 
   .content {
     display: flex;
@@ -30,6 +27,7 @@ const TootWrapper = styled("div")`
     font-size: 1.25em;
     padding: ${theme.font.size.md};
   }
+
   h2 {
     margin: 0;
   }
@@ -142,21 +140,19 @@ export const TootFeed = (props: TootFeedProps) => {
         repaint={repaint}
       >
         <TootWrapper>
-          <div class="theme-card card">
-            <div class="content">
-              <div class="title">
-                <h2>
-                  <a href={'/tootfeed/'}>TootFeed</a>
-                </h2>
-              </div>
-              <p>A replica of my feed @ <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
-              <Button class="small" onClick={() => refetch()}>
-                <Show when={lastFetched() !== 0}>
-                  <iconify-icon icon={icons.refresh} />
-                  <RelativeTime date={lastFetched()} />
-                </Show>
-              </Button>
+          <div class="content">
+            <div class="title">
+              <h2>
+                <a href={'/tootfeed/'}>TootFeed</a>
+              </h2>
             </div>
+            <p>A replica of my feed @ <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
+            <Button class="small" onClick={() => refetch()}>
+              <Show when={lastFetched() !== 0}>
+                <iconify-icon icon={icons.refresh} />
+                <RelativeTime date={lastFetched()} />
+              </Show>
+            </Button>
           </div>
         </TootWrapper>
         <Show when={feed.loading}>
@@ -169,31 +165,28 @@ export const TootFeed = (props: TootFeedProps) => {
           <For each={feed()!.items} fallback={<div>Loading...</div>}>
             {(toot) => (
               <TootWrapper>
-                <div class="theme-card card">
-                  <div class="content" >
-                    <div
-                      innerHTML={toot.description} />
-                    <div class="meta">
-                      <a class="link" href={toot.link}>
-                        <RelativeTime date={toot.published} />
-                      </a>
-                    </div>
+                <div class="content" >
+                  <div innerHTML={toot.description} />
+                  <div class="meta">
+                    <a class="link" href={toot.link}>
+                      <RelativeTime date={toot.published} />
+                    </a>
                   </div>
-                  <Show when={toot.media}>
-                    <Show when={Array.isArray(toot.media.thumbnail)}>
-                      <For each={toot.media.thumbnail as Thumbnail[]}>
-                        {(im) => (
-                          <Thumb onLoad={() => increaseCount()} media={im} />
-                        )}
-                      </For>
-                    </Show>
-                    <Show when={toot.media.thumbnail && !Array.isArray(toot.media.thumbnail)}>
-                      {
-                        (<Thumb onLoad={() => increaseCount()} media={toot.media.thumbnail as Thumbnail} />)
-                      }
-                    </Show>
-                  </Show>
                 </div>
+                <Show when={toot.media}>
+                  <Show when={Array.isArray(toot.media.thumbnail)}>
+                    <For each={toot.media.thumbnail as Thumbnail[]}>
+                      {(im) => (
+                        <Thumb onLoad={() => increaseCount()} media={im} />
+                      )}
+                    </For>
+                  </Show>
+                  <Show when={toot.media.thumbnail && !Array.isArray(toot.media.thumbnail)}>
+                    {
+                      (<Thumb onLoad={() => increaseCount()} media={toot.media.thumbnail as Thumbnail} />)
+                    }
+                  </Show>
+                </Show>
               </TootWrapper>
             )}
           </For>

@@ -13,6 +13,23 @@ export const baseElementStyles = `
   }
 `
 
+export const cardStyles = `
+  & {
+    background: var(--card-background);
+    border: var(--card-border);
+    background-size: var(--card-backgroundSize);
+    background-position: var(--card-backgroundPosition);
+  }
+
+  &:hover {
+    background-position: var(--card-backgroundPositionHover);
+    border: var(--card-borderHover);
+  }
+`
+
+export const cardTransition = `
+transition: background 0.2s ease, border 0.2s ease, background-size 0.2s ease, background-position 0.2s ease;
+`
 export const Label = styled('label')`
   width: 100%;
   display: flex;
@@ -40,7 +57,6 @@ export const Button = styled('button')`
   border: 1px solid ${theme.border.color};
   background: ${theme.surface};
   color: ${theme.text};
-  transition: all 0.2s ease;
   white-space: nowrap;
 
   &.small {
@@ -78,6 +94,7 @@ export const Button = styled('button')`
     transform: scale(0.9);
     transition: all 0.2s ease-out;
   }
+
   transition: all 0.3s ease-in-out;
 `
 
