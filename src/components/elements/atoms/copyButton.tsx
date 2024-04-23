@@ -4,15 +4,16 @@ import { For, Show, createSignal } from "solid-js"
 import { icons } from "../../icons"
 import { EntryTopTooltip } from "./tooltip"
 
-
 const CopyButtonEl = styled(Button)`
   position: relative;
+  z-index: 10;
 `
 
 interface CopyButtonProps {
   icon?: string
   label?: string
   tooltip?: string
+  class?: string
   copyText: () => string
 }
 
@@ -31,7 +32,7 @@ export const CopyButton = (props: CopyButtonProps) => {
   }
 
   return (
-    <CopyButtonEl onClick={onCopy}>
+    <CopyButtonEl onClick={onCopy} class={props.class}>
       <Show when={props.icon}>
         <iconify-icon icon={props.icon!} />
       </Show>

@@ -1,18 +1,14 @@
-import { For, createSignal } from "solid-js"
-import { RangeInput } from "../elements/range"
+import { For } from "solid-js"
 import { styled } from "solid-styled-components"
 import { Masonry } from "../grids/masonry"
 import { MasonrySample } from "./rawData"
 import { ImageSlider, createSliderState } from "../imageSlider"
 import { theme } from "../../theme"
 import { Col } from "../elements/atoms/layout"
-
-const Row = styled("div")`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-`
+import { Elements, ElementsPageStructure } from "./elements"
+import { MasonryText } from "./masonry-text";
+import { slugify } from "../../lib/text"
+import { Heading, hg, type HeadingSpec } from "./headings"
 
 const MasonryImage = styled("div")`
   /* overflow: hidden; */
@@ -66,16 +62,95 @@ const SliderAlt = styled("div")`
   pointer-events: none !important;
 `
 
+const WareNav = styled('nav')`
+  position: sticky;
+  top: 1rem;
+  right: 1rem;
+  width: 100%;
+  max-width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  height: 3.25rem;
 
-export const WarehouseSolidJS = () => {
-
-  const [value, setValue] = createSignal(0.24)
-
-  const onChange = (e: Event) => {
-    setValue((e.target as HTMLInputElement).valueAsNumber)
+  .linklists {
+    display: flex;
+    align-items: flex-start;
+    background: ${theme.background};
+    border: 1px solid ${theme.border.color};
+    border-radius: calc(${theme.border.radius} * 2);
+    height: max-content;
+    max-height: 3.25rem;
+    transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
   }
 
-  const masonryData2 = MasonrySample.masonryData2
+  &:focus-within .linklists,
+  .linklists:hover {
+    max-height: 50vh;
+    border-color: ${theme.primary.color};
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    height: max-content;
+  }
+
+  li {
+    margin-inline-start: var(--pad-start);
+  }
+
+  li::marker {
+    color: ${theme.fadeText};
+  }
+
+  a {
+    color: ${theme.text};
+    text-decoration: none;
+  }
+  a:hover {
+    color: ${theme.primary.color};
+    text-decoration: underline;
+  }
+`
+
+const BaseHeadings = [
+  { title: "Masonry", level: 1 },
+  { title: "Text", level: 2 },
+  { title: "Image with caption", level: 2 },
+  { title: "Image with Slider", level: 2 },
+] as const
+
+const h = hg(BaseHeadings)
+
+const LinkList = ({ list }: { list: readonly HeadingSpec[] }) => <ul>
+  <For each={list}>
+    {(item) => (
+      <li style={{ "--pad-start": `${item.level * 1}rem` }}>
+        <a href={`#${slugify(item.title)}`}>{item.title}</a>
+      </li>
+    )}
+  </For>
+</ul>
+
+const WarehouseNav = () => {
+  return (
+    <WareNav>
+      <div tabindex="0" class="linklists">
+        <LinkList list={ElementsPageStructure} />
+        <LinkList list={BaseHeadings} />
+      </div>
+    </WareNav>
+  )
+}
+
+export const WarehouseSolidJS = () => {
+  const masonryData2 = MasonrySample.masonryData2.slice(0, 16)
   const masonryData3 = MasonrySample.masonryData3
 
   const sliderImages = masonryData2.map((item, i) => {
@@ -119,62 +194,13 @@ export const WarehouseSolidJS = () => {
 
   return (
     <Col>
-      <RangeInput
-        label="Range Input"
-        value={value()}
-        min={0} max={1} step={0.01}
-        onChange={onChange}
-      />
-      <RangeInput
-        label="Range Input"
-        value={value()}
-        showValue
-        min={0}
-        max={1}
-        step={0.01}
-        onChange={onChange}
-      />
-      <Row>
-        <RangeInput
-          label="Range Input"
-          value={value()}
-          min={0} max={1} step={0.01}
-          onChange={onChange}
-        />
-        <RangeInput
-          label="Range Input"
-          value={value()}
-          showValue
-          min={0} max={1} step={0.01}
-          onChange={onChange}
-        />
-        <RangeInput
-          label="Range Input"
-          value={value()}
-          min={0} max={1} step={0.01}
-          onChange={onChange}
-        />
+      <WarehouseNav />
+      <Elements />
+      <Heading h={h("Masonry")} />
+      <Heading h={h("Text")} />
+      <MasonryText />
 
-      </Row>
-
-      <Col>
-        <For each={[1, 2, 4, 6, 8]}>
-          {(item) => (<Row
-            style={{ 'font-size': `calc(${item} * 0.5rem)` }}
-          >
-            {item}
-            <RangeInput
-              label="Range Input"
-              value={value()}
-              showValue
-              min={0} max={1} step={0.01}
-              onChange={onChange}
-            />
-          </Row>)}
-        </For>
-      </Col>
-
-      <h2>A few random images in a masonry with a slider</h2>
+      <Heading h={h("Image with caption")} />
       <Col>
         <Masonry
           minColumns={1}
@@ -197,7 +223,7 @@ export const WarehouseSolidJS = () => {
         </Masonry>
       </Col>
 
-      <h2>A thousand random images in a masonry with a slider</h2>
+      <Heading h={h("Image with Slider")} />
       <Col>
         <Masonry
           minColumns={1}

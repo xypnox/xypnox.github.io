@@ -57,6 +57,17 @@ const Input = styled("input")`
       background: ${theme.primary.color};
     }
   }
+  &:focus-within {
+    &::-moz-range-thumb {
+      outline: 0.1em solid ${theme.primary.color};
+      background: ${theme.primary.color};
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background: ${theme.primary.color};
+      outline: 0.1em solid ${theme.primary.color};
+    }
+  }
   &:active {
     &::-moz-range-thumb {
       outline: 0.1em solid ${theme.primary.color};

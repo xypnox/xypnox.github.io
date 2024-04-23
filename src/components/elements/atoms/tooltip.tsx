@@ -31,14 +31,13 @@ export const Tooltip = styled.div`
   font-size: ${theme.font.size.sm};
   color: ${theme.text};
   background: ${theme.tooltip};
-  padding: 0.5rem;
+  padding: 0.5em;
   border-radius: ${theme.border.radius};
   text-align: center;
-  iconify-icon {
+  z-index: 10;
+  && iconify-icon {
     color: ${theme.primary.color};
-    width: 1.25rem;
-    height: 1.25rem;
-    font-size: 1.25rem;
+    font-size: 1.2em;
   }
 `
 

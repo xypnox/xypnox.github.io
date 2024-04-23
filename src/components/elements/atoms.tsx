@@ -64,8 +64,9 @@ export const Button = styled('button')`
     flex-shrink: 0;
     line-height: 1;
     max-width: max-content;
-    min-height: 2rem;
-    padding: 0.25rem 0.5rem;
+    /* min-height: 2rem; */
+    height: 100%;
+    padding: 0.3rem 0.5rem;
     font-size: ${theme.font.size.sm};
     gap: 0.25rem;
 

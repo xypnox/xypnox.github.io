@@ -1,13 +1,21 @@
 import { keyframes, styled } from "solid-styled-components"
 import { Button } from "../atoms"
 import { Show, createEffect, createSignal } from "solid-js"
-import { Tooltip } from "./tooltip"
+import { EntryTopTooltip, Tooltip } from "./tooltip"
 import { theme } from "../../../theme"
+import { icons } from "../../icons"
 
 
 const DeleteButtonEl = styled(Button)`
   position: relative;
   pointer-events: auto;
+`
+
+const DeleteButtonWrapper = styled('div')`
+  position: relative;
+  pointer-events: auto;
+  width: max-content;
+  display: flex;
 `
 
 const tooltipAnim = keyframes`
@@ -30,7 +38,7 @@ const InteractiveTooltip = styled(Tooltip)`
   gap: 0.5rem;
   top: 100%;
   left: 50%;
-  z-index: 2;
+  z-index: 10;
   pointer-events: auto;
   padding: 0.75rem;
   max-width: 18ch;
@@ -55,11 +63,14 @@ interface DeleteButtonProps {
 
 export const DeleteButton = (props: DeleteButtonProps) => {
   const [showConfirm, setShowConfirm] = createSignal(false)
+  const [confirmed, setConfirmed] = createSignal(false)
   let popup: HTMLDivElement;
 
   const onConfirm = () => {
     props.onConfirm()
+    setConfirmed(true)
     setShowConfirm(false)
+    setTimeout(() => setConfirmed(false), 2000)
   }
 
   const onClickOutside = (e: MouseEvent) => {
@@ -78,13 +89,20 @@ export const DeleteButton = (props: DeleteButtonProps) => {
 
 
   return (
-    <>
+    <DeleteButtonWrapper>
       <DeleteButtonEl onClick={() => setShowConfirm(c => !c)}>
         <Show when={props.icon}>
           <iconify-icon icon={props.icon!} />
         </Show>
         {props.label}
       </DeleteButtonEl>
+
+      <Show when={confirmed()}>
+        <EntryTopTooltip>
+          <iconify-icon icon={icons.done} />
+          Deleted
+        </EntryTopTooltip>
+      </Show>
       <Show when={showConfirm()}>
         <InteractiveTooltip ref={popup! as any}>
           {props.warn || "Are you sure you wanna delete?"}
@@ -92,7 +110,7 @@ export const DeleteButton = (props: DeleteButtonProps) => {
           <Button onClick={onConfirm}>Yes</Button>
         </InteractiveTooltip>
       </Show>
-    </>
+    </DeleteButtonWrapper>
   )
 }
 
