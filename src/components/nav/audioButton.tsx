@@ -105,8 +105,8 @@ export const AudioButton = () => {
         }></iconify-icon>
       </button>
       <Portal>
-        <audio ref={intro!} src={audiotracks.intro} preload="auto" />
-        <audio ref={repeat!} src={audiotracks.repeat} preload="auto" />
+        <audio ref={intro!} src={audiotracks.intro} preload="metadata" />
+        <audio ref={repeat!} src={audiotracks.repeat} preload="metadata" />
       </Portal>
     </>
   )
