@@ -89,7 +89,7 @@ export const MasonryText = () => {
           minColumns={1}
           maxColumns={4}
           colWidth={400}
-          gap={16}
+          gap={1}
         // imageDimensions={[].map((item) => [item.w, item.h])}
         >
           <For each={quotes}>

@@ -114,7 +114,7 @@ export const Books = (props: BookProps) => {
       minColumns={1}
       maxColumns={8}
       colWidth={200}
-      gap={32}
+      gap={2}
       imageDimensions={props.images.map((item) => [item.image.attributes.width, item.image.attributes.height])}
     >
       <For each={props.images}>

@@ -3,7 +3,7 @@ import Layout from "../layouts/MainLayout.astro";
 import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
 ---
 
-<Layout title="Toot Feed">
+<Layout title="Toot Feed" meta={{ description: "A masonry grid of the feed of the toots of my mastodon account. Yeah a lot of ofs."}}>
   <TootFeedSolid client:only />
 </Layout>
 

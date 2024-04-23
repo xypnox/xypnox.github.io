@@ -180,7 +180,7 @@ export const WarehouseSolidJS = () => {
           minColumns={1}
           maxColumns={4}
           colWidth={400}
-          gap={16}
+          gap={1}
           imageDimensions={masonryData3.map((item) => [item.w, item.h])}
         >
           <For each={masonryData3}>
@@ -203,7 +203,7 @@ export const WarehouseSolidJS = () => {
           minColumns={1}
           maxColumns={4}
           colWidth={400}
-          gap={16}
+          gap={1}
           imageDimensions={masonryData2.map((item) => [item.w, item.h])}
         >
           <For each={masonryData2}>

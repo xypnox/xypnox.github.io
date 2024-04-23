@@ -15,7 +15,9 @@ import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
       ))
     }
   </div>
-  <TootFeedSolid client:only max={6} />
+  <div class="profile-feed">
+    <TootFeedSolid client:only max={6} />
+  </div>
 </div>
 
 <style>
@@ -74,5 +76,9 @@ import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
   }
   .link:hover span {
     color: var(--primary-color);
+  }
+
+  .profile-feed {
+    font-size: 0.8rem;
   }
 </style>

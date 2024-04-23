@@ -51,6 +51,7 @@ export const Button = styled('button')`
     min-height: 2rem;
     padding: 0.25rem 0.5rem;
     font-size: ${theme.font.size.sm};
+    gap: 0.25rem;
 
     iconify-icon {
       font-size: ${theme.font.size.sm};

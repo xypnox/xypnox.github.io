@@ -19,7 +19,7 @@ const TootWrapper = styled("div")`
     display: flex;
     flex-direction: column;
     gap: 0rem;
-    border-radius: calc(${theme.border.radius} * 4);
+    border-radius: 1em;
     overflow: hidden;
   }
 
@@ -27,7 +27,7 @@ const TootWrapper = styled("div")`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-size: 1.25rem;
+    font-size: 1.25em;
     padding: ${theme.font.size.md};
   }
   h2 {
@@ -44,7 +44,7 @@ const TootWrapper = styled("div")`
   }
   img {
     max-width: 100%;
-    border-radius: calc(${theme.border.radius} * 2);
+    border-radius: 0.5em;
   }
   a {
     color: ${theme.primary.color};
@@ -59,7 +59,7 @@ const TootWrapper = styled("div")`
   }
   .meta .link {
     color: ${theme.fadeText};
-    font-size: 0.75rem;
+    font-size: 0.75em;
     &:hover {
       color: ${theme.primary.color};
     }
@@ -90,8 +90,10 @@ export const TootFeed = (props: TootFeedProps) => {
   const increaseCount = () => setLoadCount(s => ({ ...s, count: s.count + 1 }))
   const [feed, { refetch }] = createResource(async () => {
     try {
+      // console.log("Fetching feed");
       const feedData = await parseFeed()
       if (props.max) feedData.items = feedData.items.slice(0, props.max)
+      // Setting last fetched time
       setLastFetched(Date.now())
       return feedData
     } catch (error) {
@@ -99,6 +101,9 @@ export const TootFeed = (props: TootFeedProps) => {
       throw error
     }
   })
+  // createEffect(() => {
+  //   console.log("last fetched time", lastFetched());
+  // })
 
   createEffect(() => {
     if (feed()) {
@@ -131,9 +136,9 @@ export const TootFeed = (props: TootFeedProps) => {
     <div>
       <Masonry
         minColumns={1}
-        maxColumns={6}
+        maxColumns={5}
         colWidth={props.max ? 300 : 400}
-        gap={24}
+        gap={1}
         repaint={repaint}
       >
         <TootWrapper>
@@ -148,12 +153,9 @@ export const TootFeed = (props: TootFeedProps) => {
               <Button class="small" onClick={() => refetch()}>
                 <Show when={lastFetched() !== 0}>
                   <iconify-icon icon={icons.refresh} />
-                  Refresh
+                  <RelativeTime date={lastFetched()} />
                 </Show>
               </Button>
-              <p class="refetch-time">
-                <RelativeTime date={lastFetched()} />
-              </p>
             </div>
           </div>
         </TootWrapper>

@@ -5,16 +5,27 @@ import { themeState } from "../themeManager/themeState";
 
 type ImageDimensions = [number, number][]
 
+/** Columns vary based on the width of the container, 
+ * It will try to choose number of columns such that the column width is close to the ideal column width.
+ * */
+
 interface MasonryConfig {
+  /** Maximum number of columns */
   maxColumns: number
+  /** Minimum number of columns */
   minColumns: number
-  // ideal column width, it can be increased if the container is too wide
+  /** ideal column width, it can be increased if the container is too wide */
   colWidth: number
 
-  // If image dimensions are not provided, we have to render children one by one and calculate the height of the items
+  /** If image dimensions are not provided,
+   * children are layout one by one to find correct height */
   imageDimensions?: ImageDimensions
+
   gap?: number
 
+  /**
+  * Repaints that depend on changes in the children, theme, and resize are handled automatically.
+  * Increment/Change repaint to > 0 to trigger a repaint for other scenarios: Images have loaded */
   repaint?: Signal<number>
 }
 
@@ -49,9 +60,9 @@ const getDimensions = (el: HTMLElement, imageDimensions?: ImageDimensions): Dime
   return { conHeight: containerHeight, conWidth: containerWidth, childrenHeights }
 }
 
-const calculateColumnWidth = (dimensions: Dimension, config: MasonryConfig) => {
+const calculateColumnWidth = (dimensions: Dimension, config: MasonryConfig, gap: number) => {
   const { conWidth: containerWidth } = dimensions
-  const { maxColumns, minColumns, colWidth, gap } = config
+  const { maxColumns, minColumns, colWidth } = config
   const idealColumns = Math.floor(containerWidth / colWidth)
   const columns = Math.min(maxColumns, Math.max(minColumns, idealColumns))
   const calGap = gap ?? 0
@@ -85,20 +96,16 @@ export const Masonry = (props: MasonryProps) => {
     return r
   });
 
-  const colWidth = (dimensions: Dimension) => {
-    if (!wrapper) return [0, 1];
-    return calculateColumnWidth(dimensions, props)
-  }
-
-
   const applyLayout = () => {
     // console.log('Applying layout')
     if (!wrapper) return;
+    const remValue = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const gap = (props.gap ?? 0) * remValue;
     const list = c.toArray();
     const dimensions = getDimensions(wrapper!, props.imageDimensions);
-    const [columnWidth, columnNum] = colWidth(dimensions);
+    const [columnWidth, columnNum] = calculateColumnWidth(dimensions, props, gap);
 
-    // console.log({ columnWidth, columnNum, dimensions })
+    // console.log({ gap, remValue })
 
     // To track the height and number of items of the columns filled
     const columns = Array.from({ length: columnNum }, () => [0, 0]); // [height, numItems]
@@ -115,8 +122,8 @@ export const Masonry = (props: MasonryProps) => {
         const insertColumnIndex = columns.findIndex((c) => c[0] === minColHeight);
         const insertColumn = columns[insertColumnIndex];
 
-        const left = insertColumnIndex * columnWidth + (insertColumnIndex > 0 ? (props.gap ?? 0) * (insertColumnIndex) : 0);
-        const top = insertColumn[0] + (insertColumn[1] > 0 ? (props.gap ?? 0) * (insertColumn[1]) : 0);
+        const left = insertColumnIndex * columnWidth + (insertColumnIndex > 0 ? (gap ?? 0) * (insertColumnIndex) : 0);
+        const top = insertColumn[0] + (insertColumn[1] > 0 ? (gap ?? 0) * (insertColumn[1]) : 0);
 
         const childDimensions = dimensions.childrenHeights ? dimensions.childrenHeights[i] : null;
         const childHeight = childDimensions ? childDimensions * columnWidth / dimensions.conWidth : null;
@@ -141,7 +148,7 @@ export const Masonry = (props: MasonryProps) => {
       }
     }
 
-    const maxHeight = Math.max(...columns.map((c) => c[0])) + (props.gap ?? 0) * (Math.max(...columns.map((c) => c[1] - 1)));
+    const maxHeight = Math.max(...columns.map((c) => c[0])) + (gap ?? 0) * (Math.max(...columns.map((c) => c[1] - 1)));
     wrapper!.style.height = `${maxHeight}px`;
   }
 
@@ -155,7 +162,24 @@ export const Masonry = (props: MasonryProps) => {
   }
   const { observe } = makeResizeObserver(handleObserverCallback, { box: "content-box" });
 
-  createRenderEffect(() => {
+
+  /** Observe the body for changes */
+  createEffect(() => {
+    if (document) observe(document.body);
+  })
+
+  /** Repaint when children change */
+  createEffect(on(c, () => {
+    applyLayout();
+  }));
+
+  /** Repaint when theme changes */
+  createEffect(on(themeState.theme, () => {
+    // console.log('Theme changed, Inside Masonry, Repainting...');
+    applyLayout();
+  }))
+
+  createEffect(() => {
     if (props.repaint) {
       // We have to repaint when the repaint signal changes to true
       if (props.repaint[0]()) {
@@ -164,19 +188,6 @@ export const Masonry = (props: MasonryProps) => {
       }
     }
   })
-
-  createEffect(() => {
-    if (document) observe(document.body);
-  })
-
-  createEffect(on(c, () => {
-    applyLayout();
-  }));
-
-  createEffect(on(themeState.theme, () => {
-    // console.log('Theme changed, Inside Masonry, Repainting...');
-    applyLayout();
-  }))
 
   return (
     <Wrapper ref={wrapper!}>

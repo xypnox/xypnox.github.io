@@ -1,4 +1,4 @@
-import { createSignal, onCleanup } from "solid-js"
+import { createEffect, createSignal, onCleanup } from "solid-js"
 import { formatDistanceToNow } from "date-fns"
 
 const getRelativeString = (date: Date) => {
@@ -13,12 +13,18 @@ interface Props {
 }
 
 export const RelativeTime = (props: Props) => {
-  const date = new Date(props.date)
-  const [relativeString, setRelativeString] = createSignal(getRelativeString(date))
+  const [date, setDate] = createSignal(new Date(props.date))
+  const [relativeString, setRelativeString] = createSignal(getRelativeString(date()))
+
+  createEffect(() => {
+    const date = new Date(props.date)
+    setDate(date)
+    setRelativeString(getRelativeString(date))
+  })
 
   const interval = setInterval(() => {
-    setRelativeString(getRelativeString(date))
-  }, props.refreshInterval ?? 1000)
+    setRelativeString(getRelativeString(date()))
+  }, props.refreshInterval ?? 10000)
 
   onCleanup(() => clearInterval(interval))
 
