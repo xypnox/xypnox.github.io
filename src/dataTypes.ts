@@ -78,13 +78,16 @@ interface Media {
 
 interface Item {
   id: string;
+  title?: string;
+  author?: string;
+  content?: string;
   description: string;
   link: string;
   published: number;
   created: number;
   category: any[];
   enclosures: Enclosure[];
-  media: Media;
+  media?: Media;
 }
 
 interface RootObject {

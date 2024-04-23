@@ -5,6 +5,7 @@ interface Link {
   url: string;
   icon: string;
 }
+
 export const links: Link[] = [
   {
     name: 'Mastodon',

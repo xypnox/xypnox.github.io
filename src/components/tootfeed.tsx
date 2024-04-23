@@ -3,12 +3,13 @@ import { Masonry } from "./grids/masonry"
 import { styled } from "solid-styled-components"
 import { theme } from "../theme"
 import { RelativeTime } from "./elements/relativeTime"
-import { parse } from 'rss-to-json';
 import type { RootObject, Thumbnail } from "../dataTypes"
 import { Button, cardStyles, cardTransition } from "./elements/atoms"
 import { icons } from "./icons"
+import { parseRss } from "../lib/parseRss"
 
 const feedURL = "https://fosstodon.org/@xypnox.rss"
+
 
 const TootWrapper = styled("div")`
   display: flex;
@@ -70,7 +71,7 @@ const TootWrapper = styled("div")`
 `
 
 const parseFeed = async () => {
-  return await parse(feedURL) as RootObject;
+  return await parseRss(feedURL) as RootObject;
 }
 
 interface TootFeedProps {
@@ -174,16 +175,18 @@ export const TootFeed = (props: TootFeedProps) => {
                   </div>
                 </div>
                 <Show when={toot.media}>
-                  <Show when={Array.isArray(toot.media.thumbnail)}>
-                    <For each={toot.media.thumbnail as Thumbnail[]}>
+                  <Show when={Array.isArray(toot.media!.thumbnail)}>
+                    <For each={toot.media!.thumbnail as Thumbnail[]}>
                       {(im) => (
-                        <Thumb onLoad={() => increaseCount()} media={im} />
+                        <Thumb lazy={props.max !== undefined} onLoad={() => increaseCount()} media={im} />
                       )}
                     </For>
                   </Show>
-                  <Show when={toot.media.thumbnail && !Array.isArray(toot.media.thumbnail)}>
+                  <Show when={toot.media!.thumbnail && !Array.isArray(toot.media!.thumbnail)}>
                     {
-                      (<Thumb onLoad={() => increaseCount()} media={toot.media.thumbnail as Thumbnail} />)
+                      (<Thumb
+                        lazy={props.max !== undefined}
+                        onLoad={() => increaseCount()} media={toot.media!.thumbnail as Thumbnail} />)
                     }
                   </Show>
                 </Show>
@@ -196,6 +199,7 @@ export const TootFeed = (props: TootFeedProps) => {
   )
 }
 
-const Thumb = (props: { media: Thumbnail, onLoad: () => void }) => <img src={props.media.url} alt={props.media["media:description"].$text}
+const Thumb = (props: { lazy: boolean, media: Thumbnail, onLoad: () => void }) => <img src={props.media.url} alt={props.media["media:description"].$text}
   onLoad={props.onLoad}
+  loading={props.lazy ? "lazy" : "eager"}
 />

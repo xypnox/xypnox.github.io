@@ -38,7 +38,6 @@
     "lodash.debounce": "^4.0.8",
     "nanoid": "^5.0.4",
     "remark-breaks": "^4.0.0",
-    "rss-to-json": "^2.1.1",
     "sharp": "^0.32.6",
     "solid-js": "^1.8.5",
     "solid-styled-components": "^0.28.5",
