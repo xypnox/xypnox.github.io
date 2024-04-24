@@ -9,8 +9,8 @@ export interface HeadingSpec {
 /**
  * Generates the helper heading function that will by typed by title and return the heading to be passed to the props
  */
-const hg = <T extends HeadingSpec>(k: readonly T[]) => (title: T["title"]): HeadingSpec => {
-  return k.filter((heading) => heading.title === title)[0]
+const hg = <T extends HeadingSpec>(k: readonly T[]) => (title: T["title"]): { h: HeadingSpec } => {
+  return { h: k.filter((heading) => heading.title === title)[0] }
 }
 
 // A 

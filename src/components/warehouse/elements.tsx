@@ -70,9 +70,9 @@ export const Elements = () => {
   // console.log({ options });
   return (
     <Col>
-      <Heading h={h("Atoms")} />
+      <Heading {...h("Atoms")} />
 
-      <Heading h={h("Icons")} />
+      <Heading {...h("Icons")} />
       <IconGrid>
         <For each={Object.entries(icons)}>
           {
@@ -87,8 +87,8 @@ export const Elements = () => {
       </IconGrid>
 
 
-      <Heading h={h("Buttons")} />
       <Col>
+        <Heading {...h("Buttons")} />
         <Row>
           <Button>Button</Button>
           <Button class="small">Small Button</Button>
@@ -137,8 +137,7 @@ export const Elements = () => {
       </Col>
 
       <Col>
-
-        <Heading h={h("Inputs")} />
+        <Heading {...h("Inputs")} />
 
         <Col>
           <Input placeholder="Input" onInput={(e) => console.log((e.target as HTMLInputElement).value)} />
@@ -208,7 +207,7 @@ export const Elements = () => {
       </Col>
 
       <Col>
-        <Heading h={h("Tooltip")} />
+        <Heading {...h("Tooltip")} />
         <Row>
           <Tooltip id="Hello" tooltip={<div>world</div>}>
             Hello
@@ -231,8 +230,9 @@ export const Elements = () => {
           <p><RelativeTime date={now - 666 * 24 * 60 * 60 * 1000} /></p>
         </Row>
       </Col>
+
       <Col>
-        <Heading h={h("Layout")} />
+        <Heading {...h("Layout")} />
         <Col>
           <Box>Column</Box>
           <For each={[1, 2, 3, 4]}>

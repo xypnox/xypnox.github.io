@@ -196,11 +196,11 @@ export const WarehouseSolidJS = () => {
     <Col>
       <WarehouseNav />
       <Elements />
-      <Heading h={h("Masonry")} />
-      <Heading h={h("Text")} />
+      <Heading {...h("Masonry")} />
+      <Heading {...h("Text")} />
       <MasonryText />
 
-      <Heading h={h("Image with caption")} />
+      <Heading {...h("Image with caption")} />
       <Col>
         <Masonry
           minColumns={1}
@@ -223,7 +223,7 @@ export const WarehouseSolidJS = () => {
         </Masonry>
       </Col>
 
-      <Heading h={h("Image with Slider")} />
+      <Heading {...h("Image with Slider")} />
       <Col>
         <Masonry
           minColumns={1}
