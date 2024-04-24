@@ -367,7 +367,7 @@ export const ImageSlider = <T extends Image>(props: ImageSliderProps<T>) => {
             <ThumbnailWrapper
               style={{
                 '--duration': props.sliderState.quickChange() ? '0s' : '0.5s',
-                '--left': `calc(50% - ${current() * 4}rem)`,
+                '--left': `calc(50% - ${current() * 4 + 3}rem)`,
               }}
             >
               <Thumbnails>

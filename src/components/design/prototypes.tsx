@@ -128,7 +128,7 @@ const VLine = styled("div")`
   top: 0;
   width: 1px;
   border-left: var(--border);
-  height: 200vh;
+  height: 100%;
   z-index: 0;
 `
 
