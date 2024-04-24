@@ -52,7 +52,6 @@ interface PrototypesProps {
 
 const MasonryWrapper = styled("div")`
   padding: 1rem;
-  margin: 1rem;
   position: relative;
   z-index: 0;
 
@@ -191,7 +190,7 @@ export const Prototypes = (props: PrototypesProps) => {
   const sliderState = createSliderState(0, props.images.length)
 
   return (
-    <div>
+    <>
       <MasonryWrapper ref={wrapperElement!}
         style={{
           '--border': theme.card.border,
@@ -236,6 +235,7 @@ export const Prototypes = (props: PrototypesProps) => {
         sliderState={sliderState}
       // Alt={() => <p>Prototype</p>}
       />
-    </div>
+    </>
+
   )
 }

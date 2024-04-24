@@ -162,9 +162,9 @@ const Thumbnails = styled("div")`
   display: flex;
   align-items: center;
   height: 6rem;
-  width: min-content;
+  width: 100%;
   transform: translateX(var(--left));
-  transition: transform 0.5s;
+  transition: transform 0.5s ease;
   & > * {
     pointer-events: all;
   }
@@ -176,6 +176,7 @@ const Thumbnail = styled("img")`
   height: 4rem;
   transition: width 0.25s ease-in-out, height 0.25s ease-in-out, opacity 0.25s ease-in-out;
   opacity: 0.5;
+  object-fit: cover;
 
   &:hover {
     opacity: 1;
