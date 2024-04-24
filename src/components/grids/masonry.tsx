@@ -27,7 +27,10 @@ interface MasonryConfig {
   * Repaints that depend on changes in the children, theme, and resize are handled automatically.
   * Increment/Change repaint to > 0 to trigger a repaint for other scenarios: Images have loaded */
   repaint?: Signal<number>
+
+  updateLayoutData?: (layout: LayoutData) => void
 }
+
 
 interface MasonryProps extends ParentProps, MasonryConfig { }
 
@@ -40,6 +43,15 @@ type Dimension = {
   conWidth: number
   childrenHeights: number[] | null
 }
+
+// This contains the data about the columns filled and at what heights
+// example
+// const layoutData: LayoutData = [
+//   [100, 200, 300], // Column 1, heights of items
+//   [150, 250, 350]  // Column 2, heights of items
+//   // ...
+// ]
+type LayoutData = number[][]
 
 const getDimensions = (el: HTMLElement, imageDimensions?: ImageDimensions): Dimension => {
   if (!el) return { conHeight: 0, conWidth: 0, childrenHeights: null }
@@ -81,9 +93,9 @@ const getItemStyle = (p: {
   columnWidth: number
   childHeight: number | null
 }) => `
-transform: translate(${p.left}px, ${p.top}px);
-width: ${p.columnWidth}px;
-${p.childHeight ? "height: " + p.childHeight + "px;" : ''}
+  transform: translate(${p.left}px, ${p.top}px);
+  width: ${p.columnWidth}px;
+  ${p.childHeight ? "height: " + p.childHeight + "px;" : ''}
 `
 
 export const Masonry = (props: MasonryProps) => {
@@ -104,6 +116,12 @@ export const Masonry = (props: MasonryProps) => {
     const list = c.toArray();
     const dimensions = getDimensions(wrapper!, props.imageDimensions);
     const [columnWidth, columnNum] = calculateColumnWidth(dimensions, props, gap);
+
+    let layoutData;
+
+    if (props.updateLayoutData) {
+      layoutData = Array.from({ length: columnNum }, () => [] as number[]);
+    }
 
     // console.log({ gap, remValue })
 
@@ -139,17 +157,26 @@ export const Masonry = (props: MasonryProps) => {
         // Update the height of the column
         if (childHeight) {
           columns[insertColumnIndex] = [insertColumn[0] + childHeight, insertColumn[1] + 1];
+          if (props.updateLayoutData) {
+            if (layoutData) layoutData[insertColumnIndex].push(childHeight ?? cE.offsetHeight);
+          }
         } else {
           const childHeightEl = cE.offsetHeight;
           // console.log({ childHeightEl })
           columns[insertColumnIndex] = [insertColumn[0] + childHeightEl, insertColumn[1] + 1];
-
+          if (props.updateLayoutData) {
+            if (layoutData) layoutData[insertColumnIndex].push(childHeightEl);
+          }
         }
       }
     }
 
     const maxHeight = Math.max(...columns.map((c) => c[0])) + (gap ?? 0) * (Math.max(...columns.map((c) => c[1] - 1)));
     wrapper!.style.height = `${maxHeight}px`;
+
+    if (props.updateLayoutData) {
+      props.updateLayoutData(layoutData!);
+    }
   }
 
 

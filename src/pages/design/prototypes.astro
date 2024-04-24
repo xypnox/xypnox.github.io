@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { getImages } from "../../utils/images";
+import { ProptotypesData } from "../../data/prototypes";
+import { Prototypes as ProptotypesSolid } from "../../components/design/prototypes";
+
+const images = await getImages(ProptotypesData.map((p) => p.path));
+
+console.log(images);
+
+const prototypesWithImages = ProptotypesData.map((p, i) => ({
+  data: p,
+  image: images[p.path],
+}));
+---
+
+<Layout title="Prototypes">
+  <ProptotypesSolid client:only images={prototypesWithImages} />
+</Layout>
