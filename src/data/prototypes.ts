@@ -3,8 +3,6 @@ export interface PrototypeData {
   name: string
 }
 export const ProptotypesData: PrototypeData[] = [
-  /*
-   */
   { path: '/prototypes/calry-product-design.png', name: 'Calry Product Design' },
   { path: '/prototypes/aide-web.png', name: 'Aide Web' },
   { path: '/prototypes/dashboard.png', name: 'Dashboard' },
@@ -16,4 +14,29 @@ export const ProptotypesData: PrototypeData[] = [
   { path: '/prototypes/aide-palette.png', name: 'Aide Palette' },
   { path: '/prototypes/calry-proto-ai.png', name: 'Calry Proto ai' },
   { path: '/prototypes/fifthtry-doc.png', name: 'Fifthtry Doc' },
+  { path: '/prototypes/dark-mex.png', name: 'Dark Mex' },
+  { path: '/prototypes/mexit-web.png', name: 'Mexit Web' },
+  { path: '/prototypes/wd-emulator.png', name: 'WD Emulator' },
+  { path: '/prototypes/pol-dash.png', name: 'Pol Dash' },
+  { path: '/prototypes/pol-detail.png', name: 'Pol Detail' },
+  { path: '/prototypes/mex-editor.png', name: 'Mex Editor' },
+  { path: '/prototypes/mexit-feat.png', name: 'Mexit Feat' },
+  { path: '/prototypes/mex-green.png', name: 'Mex Green' },
+  { path: '/prototypes/lttkgp-white.png', name: 'Lttkgp White' },
+  { path: '/prototypes/wd-play.png', name: 'WD Play' },
+  { path: '/prototypes/warehouse.png', name: 'Warehouse' },
+  { path: '/prototypes/photos.png', name: 'Photos' },
+  { path: '/prototypes/swigg.png', name: 'Swigg' },
+  { path: '/prototypes/mfqp.png', name: 'Mfqp' },
+  { path: '/prototypes/economize.png', name: 'Economize' },
+  { path: '/prototypes/zooz.png', name: 'Zooz' },
+  { path: '/prototypes/map-game.png', name: 'Map Game' },
+  { path: '/prototypes/typora.png', name: 'Typora' },
+  { path: '/prototypes/kwoc-dash.png', name: 'Kwoc Dash' },
+  { path: '/prototypes/newspapa.png', name: 'Newspapa' },
+  { path: '/prototypes/travel-book.png', name: 'Travel Book' },
+  { path: '/prototypes/events-page.png', name: 'Events Page' },
+  { path: '/prototypes/score-calc.png', name: 'Score Calc' },
+  { path: '/prototypes/unsplash.png', name: 'Unsplash' },
+  { path: '/prototypes/settings.png', name: 'Settings' },
 ]
