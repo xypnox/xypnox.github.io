@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/MainLayout.astro";
-import PageHeader from "../../components/pageHeader.astro";
 
 const designSections = [
   {
@@ -9,6 +8,7 @@ const designSections = [
     slug: "/design/covers/",
   },
   { name: "Logos", image: "/design-covers/logos.webp", slug: "/design/logos/" },
+  { name: "Prototypes", image: "/design-covers/proto.webp", slug: "/design/prototypes/" },
   {
     name: "Posters",
     image: "/design-covers/posters.webp",
@@ -46,12 +46,18 @@ const designSections = [
 <style>
   .design-sections {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     justify-items: center;
     gap: 2rem;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 4rem auto;
+  }
+
+  @media (max-width: 600px) {
+    .design-sections {
+      grid-template-columns: 1fr;
+    }
   }
 
   .design-sections .page-title {

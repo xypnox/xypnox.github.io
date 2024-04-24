@@ -6,7 +6,7 @@ import { Prototypes as ProptotypesSolid } from "../../components/design/prototyp
 
 const images = await getImages(ProptotypesData.map((p) => p.path));
 
-console.log(images);
+// console.log(images);
 
 const prototypesWithImages = ProptotypesData.map((p, i) => ({
   data: p,
@@ -14,6 +14,6 @@ const prototypesWithImages = ProptotypesData.map((p, i) => ({
 }));
 ---
 
-<Layout title="Prototypes">
+<Layout title="Prototypes | xypnox" meta={{ description: 'A few prototypes that I have made, including other design assets.'}}>
   <ProptotypesSolid client:only images={prototypesWithImages} />
 </Layout>
