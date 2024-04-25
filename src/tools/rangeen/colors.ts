@@ -116,9 +116,15 @@ export { average, prominent }
 
 /* ******************************************** */
 
+export type ColorData = {
+  color: string;
+  count: number;
+  rgb: Rgb;
+  hsl: [number, number, number];
+}
 
 function getColorsCount(data: Data) {
-  const colorCounts: Record<string, number> = {};
+  const colorCounts: Record<string, ColorData> = {};
 
   for (let i = 0; i < data.length; i += 4) {
     const r = data[i];
@@ -126,14 +132,20 @@ function getColorsCount(data: Data) {
     const b = data[i + 2];
     const a = data[i + 3];
 
+    const colorKey = `${r},${g},${b},${a}`;
     // Create a string representation of the color
-    const color = `rgba(${r},${g},${b},${a})`;
+    const color: ColorData = {
+      color: `rgba(${r},${g},${b},${a})`,
+      rgb: [r, g, b],
+      count: 1,
+      hsl: [getHue([r, g, b]), getSaturation([r, g, b]), getLightness([r, g, b])],
+    };
 
     // Increment the count for this color
-    if (colorCounts[color]) {
-      colorCounts[color]++;
+    if (colorCounts[colorKey]) {
+      colorCounts[colorKey].count++;
     } else {
-      colorCounts[color] = 1;
+      colorCounts[colorKey] = color;
     }
   }
 
@@ -145,3 +157,91 @@ export const getColors = async (item: CanvasEl) => {
   const colorCounts = getColorsCount(data)
   return colorCounts
 }
+
+
+const getHue = (rgb: Rgb) => {
+  const [r, g, b] = rgb.map(v => v / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const delta = max - min
+  let hue = 0
+
+  if (delta === 0) {
+    hue = 0
+  } else if (max === r) {
+    hue = ((g - b) / delta) % 6
+  } else if (max === g) {
+    hue = (b - r) / delta + 2
+  } else {
+    hue = (r - g) / delta + 4
+  }
+
+  hue = Math.round(hue * 60)
+
+  return hue < 0 ? 360 + hue : hue
+}
+
+
+const getLightness = (rgb: Rgb) => {
+  const [r, g, b] = rgb.map(v => v / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+
+  return (max + min) / 2
+}
+
+const getSaturation = (rgb: Rgb) => {
+  const [r, g, b] = rgb.map(v => v / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const delta = max - min
+
+  return delta === 0 ? 0 : delta / (1 - Math.abs(2 * (max + min) - 1))
+}
+
+export interface ColorDataSized extends ColorData {
+  size: number;
+}
+
+// take in a size and a max and return a size that is scaled between 4 and scale
+const scaleSize = (size: number, max: number, scale: [number, number]) => {
+  // Logarithmic scale
+  return Math.log(size + 1) / Math.log(max + 1) * (scale[1] - scale[0]) + scale[0]
+}
+
+export const lightHueSort = (colors: Record<string, ColorData>, config = { splitCount: 12, saturationCutoff: 0.03 }) => {
+  const totalHues = Array(config.splitCount).fill(0).map(() => [] as ColorDataSized[])
+  const returnData: Array<Array<ColorDataSized>> = totalHues
+
+
+
+  for (const color in colors) {
+    const { hsl } = colors[color]
+    const hueIndex = Math.floor(hsl[0] / (360 / config.splitCount))
+    if (hsl[1] < config.saturationCutoff) {
+      // console.log('Skipping', colors[color], hueIndex, hsl, config)
+      continue
+    }
+
+    totalHues[hueIndex].push({ ...colors[color], size: 0 })
+  }
+
+  const maxCount = Math.max(...totalHues.map(hue => Math.max(...hue.map(c => c.count))))
+  console.log('Max count', maxCount)
+
+  totalHues.forEach((hue, i) => {
+    hue.forEach((color) => {
+      color.size = scaleSize(color.count, maxCount, [8, 24])
+    })
+  })
+  // We first want to sort by 12 colors and then by lightness
+
+  for (let i = 0; i < totalHues.length; i++) {
+    totalHues[i].sort((a, b) => a.size - b.size).reverse()
+  }
+
+  console.log(totalHues)
+  return returnData
+}
+
+
