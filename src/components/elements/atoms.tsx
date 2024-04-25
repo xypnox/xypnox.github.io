@@ -101,8 +101,6 @@ export const Button = styled('button')`
 
 export const Text = styled('div')`
   ${baseElementStyles}
-  flex: 0 !important;
-  width: max-content;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -111,7 +109,6 @@ export const Text = styled('div')`
   background: ${theme.surface};
   color: ${theme.text};
   transition: all 0.2s ease;
-  padding: 0.3rem 1rem;
 `
 
 // A horizontal group of buttons, with separator borders, and outside border radius
@@ -125,12 +122,17 @@ export const ButtonGroup = styled('div')`
   border: 1px solid ${theme.border.color};
   background: ${theme.surface};
   transition: all 0.2s ease;
-  & > ${Button.class}, & > ${Text.class} {
+  & > ${Button.class} {
     background: transparent;
     border-radius: 0;
     border: none;
     flex: 1;
     z-index: 3;
+  }
+  & > ${Text.class} {
+    background: transparent;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
   & > ${Button.class}:hover {
     transform: scale(1);

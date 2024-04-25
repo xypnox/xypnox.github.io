@@ -1,48 +1,13 @@
-import { For, createEffect, createSignal, on } from "solid-js";
-import { Button } from "../../components/elements/atoms";
-import { getColors, type ColorData, type Rgb, lightHueSort } from "./colors";
+import { For, Show, createEffect, createMemo, createSignal, on } from "solid-js";
+import { Button, ButtonGroup, Text } from "../../components/elements/atoms";
+import { getColors, type ColorData } from "./colors";
 import { styled } from "solid-styled-components";
 import { RangeInput } from "../../components/elements/range";
 import { theme } from "../../theme";
 import { Col, Row } from "../../components/elements/atoms/layout";
+import { capitalize } from "../../lib/text";
+import { icons } from "../../components/icons";
 
-// var video = document.createElement('video');
-// video.setAttribute('playsinline', '');
-// video.setAttribute('autoplay', '');
-// video.setAttribute('muted', '');
-// video.style.width = '200px';
-// video.style.height = '200px';
-
-// /* Setting up the constraint */
-// var facingMode = "user"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
-// var constraints = {
-//   audio: false,
-//   video: {
-//    facingMode: facingMode
-//   }
-// };
-
-// /* Stream it to video element */
-// navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-//   video.srcObject = stream;
-// });
-
-
-/*
- function readFile(file) {                                                       
-    var reader = new FileReader();
-    reader.onload = readSuccess;                                            
-    function readSuccess(evt) {     
-        document.getElementById("your_img_id").src = evt.target.result                   
-    };
-    reader.readAsDataURL(file);                                              
-} 
-
-  document.getElementById('cameraInput').onchange = function(e) {
-      readFile(e.srcElement.files[0]);
-  };
- */
-// We want to return new dimensions resized to max dimensions provided
 const resized = (video: HTMLVideoElement, dimensions: [number, number]): [number, number] => {
   const currentWidth = video.videoWidth;
   const currentHeight = video.videoHeight;
@@ -70,8 +35,47 @@ const Video = styled('video')`
   border-radius: ${theme.border.radius};
 `
 
+const Controls = styled(Row)`
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: ${theme.border.radius};
+  border: 1px solid ${theme.border.color};
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  ${ButtonGroup.class} {
+    align-self: center;
+    flex-wrap: wrap;
+  }
+`
+
+// It is inside flexbox but should be sized by its width/height and not 100% of parent
+const PreviewImg = styled('img')`
+  max-width: 100%;
+  max-height: 80dvh;
+  border-radius: ${theme.border.radius};
+  margin: 0.5rem 0;
+  align-self: center;
+`
+
+type SortKey = keyof ColorData | 'hue' | 'saturation' | 'lightness';
+type GroupKey = 'hue' | 'saturation' | 'lightness';
+
+const sortKeys = ['count', 'hue', 'saturation', 'lightness']
+
 export const Rangeen = () => {
-  const [sampleSize, setSampleSize] = createSignal(128);
+  const [sampleSize, setSampleSize] = createSignal(64);
+
+  const [imageUrl, setImageUrl] = createSignal('')
+
+  const [colorCounts, setColorCounts] = createSignal<Record<string, ColorData>>({});
+
+  const [sortKey, setSortKey] = createSignal<SortKey>('lightness');
+  const [groupConfig, setGroupConfig] = createSignal<[GroupKey | null, number]>(['hue', 12]);
+
+
   const constraints = {
     audio: false,
     video: {
@@ -95,13 +99,6 @@ export const Rangeen = () => {
     }
   });
 
-  const [imageUrl, setImageUrl] = createSignal('')
-
-  const [colorCounts, setColorCounts] = createSignal<Record<string, ColorData>>({});
-
-  createEffect(on(sampleSize, async () => {
-    await onTakeSnapshot();
-  }));
 
 
   const onTakeSnapshot = async () => {
@@ -114,37 +111,70 @@ export const Rangeen = () => {
       canvas.height = newSize[1];
       canvas.getContext('2d')?.drawImage(camVideo, 0, 0, canvas.width, canvas.height);
       const data = canvas.toDataURL('image/png');
-      // console.log(data);
       setImageUrl(data);
-      // const opts = {
-      //   amount: 12,
-      //   group: 60,
-      //   sample: 30,
-      // }
-      // const colors1 = await prominent(canvas, opts)
-      // const colors2 = await average(canvas, opts)
-      // console.log(colors1, colors2);
-      // if (colors1 && colors2) {
-      //   setPalette([...colors1, colors2] as Rgb[]);
-      // }
       const colorCounts = await getColors(canvas);
       setColorCounts(colorCounts);
-      // console.log(colorCounts);
     }
   }
 
-  createEffect(() => {
-    // console.log('New Image URL', imageUrl());
-    if (!imageUrl()) return;
-    if (!imageEl) return;
-  });
+  createEffect(on(sampleSize, async () => {
+    await onTakeSnapshot();
+  }));
+
+
+  const sortBy = (arr: ColorData[], sortKey: keyof ColorData | 'hue' | 'saturation' | 'lightness'): ColorData[] => {
+    if (sortKey === 'hue' || sortKey === 'saturation' || sortKey === 'lightness') {
+      const index = sortKey === 'hue' ? 0 : sortKey === 'saturation' ? 1 : 2;
+      const sorted = arr.sort((a, b) => a.hsl[index] - b.hsl[index]);
+      if (sortKey === 'lightness') {
+        return sorted.reverse();
+      }
+      return sorted;
+    }
+    if (sortKey === 'count') {
+      return arr.sort((a, b) => b[sortKey] - a[sortKey]);
+    }
+    return arr
+  }
+
+  const groupIndexers = {
+    hue: (c: ColorData) => Math.floor(c.hsl[0] / (360 / groupConfig()[1])),
+    saturation: (c: ColorData) => Math.floor(c.hsl[1] / (1 / groupConfig()[1])),
+    lightness: (c: ColorData) => Math.floor(c.hsl[2] / (1 / groupConfig()[1])),
+  }
+
+  const sortGroupBy = (): ColorData[] | ColorData[][] => {
+    if (groupConfig()[0] === null) {
+      return [...sortBy(Object.values(colorCounts()), sortKey())];
+    }
+
+    const groups = Object.values(colorCounts()).reduce((acc, c) => {
+      const group = groupIndexers[groupConfig()[0]!](c);
+      acc[group].push(c);
+      return acc;
+    }, [...Array.from({ length: groupConfig()[1] }, () => [])] as ColorData[][]);
+
+    // console.log({ groups });
+
+    return groups.map((g) => sortBy(g, sortKey()));
+  }
+
+  const sortResult = createMemo(() => sortGroupBy());
+
 
   return <Col>
-    <Video ref={camVideo!} autoplay playsinline muted></Video>
-    <Row>
+    <Video ref={camVideo!}
+      onPlay={() => onTakeSnapshot()}
+      onClick={onTakeSnapshot}
+      autoplay
+      playsinline
+      muted></Video>
+    <Controls>
       <Button
         onClick={onTakeSnapshot}
-      >Take Snapshot</Button>
+      >
+        <iconify-icon icon={icons.camera} />
+        Take Snapshot</Button>
       <RangeInput
         label="Sample Size"
         value={sampleSize()}
@@ -154,64 +184,136 @@ export const Rangeen = () => {
         showValue
         onChange={(e) => setSampleSize(e.currentTarget.valueAsNumber)}
       />
-    </Row>
-    <div>
-      <img ref={imageEl!} src={imageUrl()} alt="Snapshot" />
-      <h2>Colors</h2>
-      <Colors3>
-        <For each={lightHueSort(colorCounts(), { splitCount: 24, saturationCutoff: 0.01 })}>
-          {(c) =>
-            <Colors2>
-              <For each={c}>
-                {(c1) => <div style={{ 'background-color': `${c1.color}`, width: `${c1.size}px`, height: `${c1.size}px` }}></div>}
-              </For>
-            </Colors2>
-          }
+
+      <ButtonGroup>
+        <Text>Group By:</Text>
+        <For each={['hue', 'saturation', 'lightness']}>
+          {(k) => <Button
+            onClick={() => setGroupConfig(c => [k as GroupKey, c[1]])}
+            classList={{ selected: groupConfig()[0] === k }}
+          >{capitalize(k)}</Button>}
         </For>
-      </Colors3>
-      <h2>Palette</h2>
+      </ButtonGroup>
+      <RangeInput
+        label="Group Count"
+        value={groupConfig()[1]}
+        min={2}
+        step={1}
+        max={24}
+        showValue
+        onChange={(e) => setGroupConfig([groupConfig()[0], e.currentTarget.valueAsNumber])}
+      />
+
+      <ButtonGroup>
+        <Text>Sort By:</Text>
+        <For each={sortKeys}>
+          {(k) => <Button
+            onClick={() => setSortKey(k as SortKey)}
+            classList={{ selected: sortKey() === k }}
+          >{capitalize(k)}</Button>}
+        </For>
+      </ButtonGroup>
+    </Controls>
+    <PreviewImg ref={imageEl!} src={imageUrl()} alt="Snapshot" />
+
+
+    <Show when={Array.isArray(sortResult())}>
+      <ColorColumns>
+        <For each={sortResult() as ColorData[][]}>
+          {(c, i1) => (
+            <Show when={c.length > 0}>
+              <Colors>
+                <For each={c}>
+                  {(c1, i2) => <ColorPixel style={{ 'background-color': `${c1.color}` }} />}
+                </For>
+              </Colors>
+            </Show>
+          )}
+        </For>
+      </ColorColumns>
+    </Show>
+
+    <Show when={!Array.isArray(sortResult())}>
+      <ColorColumns>
+        <Colors>
+          <For each={sortResult() as ColorData[]}>
+            {(c) => (<ColorPixel style={{ 'background-color': `${c.color}` }} />)}
+          </For>
+        </Colors>
+      </ColorColumns>
+    </Show>
+    <Col>
       <p>Total Colors: {Object.keys(colorCounts()).length}</p>
       <p>Total Individual: {Object.values(colorCounts()).reduce((acc, c) => acc + c.count, 0)}</p>
-      <h3>Sorted by Count</h3>
-      <p>The following colors are sorted by the number of pixels they occupy in the image.</p>
-      <Colors2>
-        <For each={Object.values(colorCounts()).sort((a, b) => b.count - a.count)}>
-          {(c) => <div style={{ 'background-color': `${c.color}`, width: '8px', height: '8px' }}></div>}
-        </For>
-      </Colors2>
-      <h3>Sorted by Hue</h3>
-      <p>The following colors are sorted by their hue value.</p>
-      <Colors2>
-        <For each={Object.values(colorCounts()).sort((a, b) => a.hsl[0] - b.hsl[0])}>
-          {(c) => <div style={{ 'background-color': `${c.color}`, width: '8px', height: '8px' }}></div>}
-        </For>
-      </Colors2>
-      <h3>Sorted by Lightness</h3>
-      <p>The following colors are sorted by their lightness value.</p>
-      <Colors2>
-        <For each={Object.values(colorCounts()).sort((a, b) => a.hsl[2] - b.hsl[2])}>
-          {(c) => <div style={{ 'background-color': `${c.color}`, width: '8px', height: '8px' }}></div>}
-        </For>
-      </Colors2>
-    </div>
-  </Col>;
+    </Col>
+    <ThreeDee colors={colorCounts()} />
+  </Col >;
 }
 
-const Colors2 = styled('div')`
+const ThreeDee = (props: { colors: Record<string, ColorData> }) => {
+  return <ThreeDeeWrapper>
+    <For each={Object.values(props.colors)}>
+      {(c) => <ThreeDeePixel
+        style={{
+          'background-color': `${c.color}`,
+          '--x': `${c.rgb[0] / 255 * 100}`,
+          '--y': `${c.rgb[1] / 255 * 100}`,
+          '--z': `${c.rgb[2] / 255 * 100}`,
+        }}
+      />}
+    </For>
+  </ThreeDeeWrapper>
+}
+
+/**
+ * Transform the pixel into a 3D plane
+ * Rotate to face the camera
+ */
+const ThreeDeePixel = styled('div')`
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  transform: translate3d(calc(var(--x, 0) * var(--pixelWidth)), calc(var(--y, 0) * var(--pixelWidth)), calc(var(--z, 0) * var(--pixelWidth)));
+  transition: transform 2s ease;
+`
+
+// <!-- Change perspective on hover -->
+const ThreeDeeWrapper = styled('div')`
+  position: relative;
+  overflow: hidden;
+  background: ${theme.surface};
+  --pixelWidth: calc((min(80vw, 80vh) - 2rem) / 100);
+  width: calc(100 * var(--pixelWidth));
+  height: calc(100 * var(--pixelWidth));
+  &:hover {
+    ${ThreeDeePixel.class} {
+      transform: translate3d(calc(var(--y, 0) * var(--pixelWidth)), calc(var(--z, 0) * var(--pixelWidth)), calc(var(--x, 0) * var(--pixelWidth)));
+    }
+  }
+`
+
+
+const ColorColumns = styled('div')`
+  display: flex;
+  gap: 0.5rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+
+const Colors = styled('div')`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0;
+  height: 100%;
 `
 
-const Colors3 = styled('div')`
-  line-height: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  } 
+const ColorPixel = styled('div')`
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.1rem;
+  margin: 1px;
 `
