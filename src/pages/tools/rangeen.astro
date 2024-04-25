@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { Rangeen as RangeenSolid } from "../../tools/rangeen";
+
+const meta = {
+  title: "Rangeen",
+  description: "The colorful world of colors.",
+}
+---
+
+<Layout title={meta.title} meta={meta}>
+  <RangeenSolid client:only />
+</Layout>
+
