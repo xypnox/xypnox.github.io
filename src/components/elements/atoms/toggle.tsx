@@ -1,5 +1,5 @@
 import { For, Show } from "solid-js"
-import { Button, ButtonGroup, GroupSeparator } from "../atoms"
+import { Button, ButtonGroup, GroupSeparator, Text } from "../atoms"
 
 interface ToggleProps<T extends string> {
   label?: string
@@ -11,9 +11,9 @@ interface ToggleProps<T extends string> {
 
 export const Toggle = <T extends string,>(props: ToggleProps<T>) => {
   return (
-    <ButtonGroup>
+    <ButtonGroup style={{ "flex-wrap": 'wrap', "align-self": "auto" }}>
       <Show when={props.label}>
-        <Button disabled>{props.label}</Button>
+        <Text >{props.label}</Text>
         <GroupSeparator />
       </Show>
       <For each={props.options}>

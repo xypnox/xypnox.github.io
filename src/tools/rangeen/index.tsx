@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createMemo, createSignal, on } from "solid-js";
+import { For, Show, createEffect, createMemo, createSignal, on, onMount } from "solid-js";
 import { Button, ButtonGroup, GroupSeparator, Input, Label, Text, UploadLabel } from "../../components/elements/atoms";
 import { getColors, type ColorData } from "./colors";
 import { styled } from "solid-styled-components";
@@ -41,8 +41,9 @@ const Video = styled('video')`
 `
 
 const Controls = styled(Row)`
+  font-size: ${theme.font.size.sm};
   flex-wrap: wrap;
-  gap: 0.5em 1em;
+  gap: 1em;
   justify-content: space-between;
   padding: 0.5rem;
   border-radius: ${theme.border.radius};
@@ -53,6 +54,9 @@ const Controls = styled(Row)`
   ${ButtonGroup.class} {
     align-self: center;
     flex-wrap: wrap;
+  }
+  ${Button.class}, div, button, label, input {
+    font-size: ${theme.font.size.sm};
   }
 `
 
@@ -113,25 +117,49 @@ const storage: AsyncStorage = {
   clear: async () => {
     localforage.clear();
   }
+}
 
-
-
-
+const defaultConfig = {
+  sampleSize: 64,
+  imageSource: 'url' as ImageSource,
+  imageUrl: {
+    name: '/social.png',
+    data: '/social.png'
+  },
+  colorCounts: {},
+  sortKey: 'lightness' as SortKey,
+  groupConfig: ['hue', 64] as [GroupKey, number],
+  pixelSize: 8,
+  dynamicSize: true
 }
 
 export const Rangeen = () => {
-  const [sampleSize, setSampleSize] = createSignal(64);
+  const [sampleSize, setSampleSize] = createSignal(defaultConfig.sampleSize);
 
-  const [imageSource, setImageSource] = makePersisted(createSignal<ImageSource | undefined>(undefined), { storage });
+  const [imageSource, setImageSource] = makePersisted(createSignal<ImageSource>(defaultConfig.imageSource), { storage });
   const [imageUrl, setImageUrl] = makePersisted(createSignal<{
     data: string;
     name?: string;
-  } | null>(null), { storage });
+  } | null>(defaultConfig.imageUrl), { storage });
 
-  const [colorCounts, setColorCounts] = createSignal<Record<string, ColorData>>({});
+  const [colorCounts, setColorCounts] = makePersisted(createSignal<Record<string, ColorData>>(defaultConfig.colorCounts), { storage });
 
-  const [sortKey, setSortKey] = createSignal<SortKey>('lightness');
-  const [groupConfig, setGroupConfig] = createSignal<[GroupKey | null, number]>(['hue', 64]);
+  const [sortKey, setSortKey] = makePersisted(createSignal<SortKey>(defaultConfig.sortKey), { storage });
+  const [groupConfig, setGroupConfig] = makePersisted(createSignal<[GroupKey, number]>(defaultConfig.groupConfig), { storage });
+
+  const [pixelSize, setPixelSize] = makePersisted(createSignal(defaultConfig.pixelSize), { storage });
+  const [dynamicSize, setDynamicSize] = makePersisted(createSignal(defaultConfig.dynamicSize), { storage });
+
+  const reset = () => {
+    setSampleSize(defaultConfig.sampleSize);
+    setImageSource(defaultConfig.imageSource);
+    setImageUrl(defaultConfig.imageUrl);
+    setColorCounts(defaultConfig.colorCounts);
+    setSortKey(defaultConfig.sortKey);
+    setGroupConfig(defaultConfig.groupConfig);
+    setPixelSize(defaultConfig.pixelSize);
+    setDynamicSize(defaultConfig.dynamicSize);
+  }
 
   const constraints = {
     audio: false,
@@ -178,13 +206,14 @@ export const Rangeen = () => {
       canvas.height = newSize[1];
       canvas.getContext('2d')?.drawImage(camVideo, 0, 0, canvas.width, canvas.height);
       const data = canvas.toDataURL('image/png');
-      console.log(data);
+      // console.log(data);
       setImageUrl({
         name: 'Snapshot_' + Date.now() + '.png',
         data
       });
       const colorCounts = await getColors(canvas);
-      setColorCounts(colorCounts);
+      if (Object.keys(colorCounts).length > 0)
+        setColorCounts(colorCounts);
     }
   }
 
@@ -196,27 +225,37 @@ export const Rangeen = () => {
       canvas.width = newSize[0];
       canvas.height = newSize[1];
       canvas.getContext('2d')?.drawImage(imageEl, 0, 0, canvas.width, canvas.height);
-      console.log({ imageEl });
+      // console.log({ imageEl });
       const colorCounts = await getColors(canvas);
-      console.log({ colorCounts: Object.keys(colorCounts).length, imageUri: imageUrl() });
-      setColorCounts(colorCounts);
+      // console.log({ colorCounts: Object.keys(colorCounts).length, imageUri: imageUrl() });
+      console.log('onDrawing on canvas', { colorCounts: colorCounts, imageUri: imageUrl() });
+      if (Object.keys(colorCounts).length > 0)
+        setColorCounts(colorCounts);
     }
   }
 
   createEffect(on([sampleSize, imageSource, imageUrl], async () => {
     console.log('Source Changed', { size: sampleSize(), url: imageUrl(), source: imageSource() });
     setTimeout(async () => {
-      await drawImageOnCanvas();
-    }, 0);
+      try {
+        await drawImageOnCanvas();
+      } catch (e) {
+        console.error('Error in drawing on canvas', e);
+      }
+    }, 10);
     console.log('Drawn on canvas');
   }));
 
+  onMount(() => {
+    if (imageEl)
+      imageEl.addEventListener('load', async () => {
+        console.log('Image Loaded');
+        await drawImageOnCanvas();
+      });
+  });
 
-  const sortGroupBy = (): ColorData[] | ColorData[][] => {
-    if (groupConfig()[0] === null) {
-      return [...sortBy(Object.values(colorCounts()), sortKey())];
-    }
 
+  const sortGroupBy = (): ColorData[][] => {
     const groups = Object.values(colorCounts()).reduce((acc, c) => {
       const func = groupIndexers(groupConfig()[1])[groupConfig()[0]! as GroupKey];
       const group = func(c);
@@ -224,89 +263,97 @@ export const Rangeen = () => {
       return acc;
     }, [...Array.from({ length: groupConfig()[1] }, () => [])] as ColorData[][]);
 
-    // console.log({ groups });
+    console.log({ groups });
 
     return groups.map((g) => sortBy(g, sortKey()));
   }
 
   const sortResult = createMemo(on([colorCounts, sortKey, groupConfig], () => sortGroupBy()));
 
-  createEffect(() => {
-    console.log('SortResult', sortResult());
-  })
-  return <Col>
+  // createEffect(() => {
+  //   console.log('SortResult', sortResult());
+  // })
+  return <Col
+    style={{
+      '--pixelSize': `${pixelSize()}px`,
+      '--pixelGap': `${Math.ceil(pixelSize() / 4)}px`,
+    }}
+  >
     <Controls>
-      <Toggle options={['camera', 'file', 'url']} selected={imageSource()} onChange={setImageSource} getValue={capitalize} />
+      <Row style={{ gap: '1rem', 'flex-wrap': 'wrap' }}>
+        <Toggle label="Rangeen" options={['camera', 'file', 'url']} selected={imageSource()} onChange={(val) => {
+          setImageSource(val);
+          setImageUrl(null);
+          setColorCounts({});
+          // console.log('Image Source', val);
+        }} getValue={capitalize} />
 
-      <Show when={imageSource() === 'camera'}>
-        <Button
-          onClick={onTakeSnapshot}
-        >
-          <iconify-icon icon={icons.camera} />
-          Take Snapshot</Button>
-      </Show>
+        <Show when={imageSource() === 'camera'}>
+          <Button
+            onClick={onTakeSnapshot}
+          >
+            <iconify-icon icon={icons.camera} />
+            Take Snapshot</Button>
+        </Show>
 
-      <Show when={imageSource() === 'file'}>
-        <UploadLabel>
-          <input type="file" accept="image/*" onInput={(e) => {
-            console.log('File Input', e.currentTarget.files);
-            const file = e.currentTarget.files?.[0];
-            if (file) {
-              const reader = new FileReader();
-              // This is a png file whose blob we set in imageurl
+        <Show when={imageSource() === 'file'}>
+          <UploadLabel>
+            <input type="file" accept="image/*" id="rangeen-file-upload" onInput={(e) => {
+              console.log('File Input', e.currentTarget.files);
+              const file = e.currentTarget.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                // This is a png file whose blob we set in imageurl
 
-              reader.onload = (e) => {
-                const data = e.target?.result;
-                if (typeof data === 'string') {
-                  console.log('Finished reading file', data, file.name);
-                  setImageUrl({
-                    name: file.name,
-                    data
-                  });
+                reader.onload = (e) => {
+                  const data = e.target?.result;
+                  if (typeof data === 'string') {
+                    console.log('Finished reading file', data, file.name);
+                    setImageUrl({
+                      name: file.name,
+                      data
+                    });
+                  }
                 }
+                reader.readAsDataURL(file);
               }
-              reader.readAsDataURL(file);
-            }
-          }} />
-          <div>
-            <iconify-icon icon={icons.upload} />
-            Upload
-          </div>
-          <div class="filename">
-            {
-              imageUrl() ? imageUrl()!.name : 'Upload Image'
-            }
-          </div>
-        </UploadLabel>
-      </Show>
+            }} />
+            <div>
+              <iconify-icon icon={icons.upload} />
+              Upload
+            </div>
+            <div class="filename">
+              {
+                imageUrl() ? imageUrl()!.name : 'from computer...'
+              }
+            </div>
+          </UploadLabel>
+        </Show>
 
-      <Show when={imageSource() === 'url'}>
-        <Input type="url" placeholder="Image URL" onInput={async (e) => {
-          const initUrl = e.currentTarget.value;
-          // Convert the url into blob
-          const response = await fetch(initUrl);
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
-          if (url) {
-            console.log('Finished reading url', url, initUrl);
-            setImageUrl({
-              name: initUrl,
-              data: url
-            });
-          }
-        }} />
-      </Show>
+        <Show when={imageSource() === 'url'}>
+          <Input type="url" placeholder="Image URL"
+            value={imageUrl()?.name}
+            onInput={async (e) => {
+              const initUrl = e.currentTarget.value;
+              // Convert the url into blob
+              const response = await fetch(initUrl);
+              const blob = await response.blob();
+              const url = URL.createObjectURL(blob);
+              if (url) {
+                // console.log('Finished reading url', url, initUrl);
+                setImageUrl({
+                  name: initUrl,
+                  data: url
+                });
+              }
+            }} />
+        </Show>
+      </Row>
 
 
-      <RangeInput
-        label="Sample Size"
-        value={sampleSize()}
-        min={16}
-        step={16}
-        max={256}
-        showValue
-        onChange={(e) => setSampleSize(e.currentTarget.valueAsNumber)}
-      />
+      <Button class="icon" onClick={reset}>
+        <iconify-icon icon={icons.refresh} />
+      </Button>
 
     </Controls>
 
@@ -320,70 +367,120 @@ export const Rangeen = () => {
     </Show>
 
     <Show when={imageUrl() !== null}>
-      <PreviewImg ref={imageEl!} src={imageUrl()!.data} />
-    </Show>
-
-    <Row>
-      <Toggle
-        label="Group By:"
-        options={['hue', 'saturation', 'lightness']}
-        selected={groupConfig()[0] ?? 'hue'}
-        onChange={(v) => setGroupConfig(c => [v, c[1]])}
-        getValue={capitalize}
+      <PreviewImg
+        style={{
+          'cursor': 'copy'
+        }}
+        onClick={() => {
+          if (imageSource() === 'url') {
+            navigator.clipboard.writeText(imageUrl()!.data);
+          } else if (imageSource() === 'file') {
+            // We will open the file dialog again
+            document.getElementById('rangeen-file-upload')?.click();
+          }
+        }}
+        ref={imageEl!}
+        src={imageUrl()!.data}
       />
+      <Show when={Object.keys(colorCounts()).length > 0}>
+        <Controls>
+          <RangeInput
+            label="Sample Size"
+            value={sampleSize()}
+            min={16}
+            step={16}
+            max={256}
+            showValue
+            onChange={(e) => setSampleSize(e.currentTarget.valueAsNumber)}
+          />
+          <Row style={{ gap: '1rem', 'flex-wrap': 'wrap' }}>
 
-      <RangeInput
-        label="Group Count"
-        value={groupConfig()[1]}
-        min={4}
-        step={4}
-        max={128}
-        showValue
-        onChange={(e) => setGroupConfig(c => [c[0], e.currentTarget.valueAsNumber])}
-      />
+            <RangeInput
+              label="Pixel Size"
+              value={pixelSize()}
+              min={2}
+              step={1}
+              max={32}
+              showValue
+              onChange={(e) => setPixelSize(e.currentTarget.valueAsNumber)}
+            />
+            <Toggle
+              label="Dynamic"
+              options={['on', 'off']}
+              selected={dynamicSize() ? 'on' : 'off'}
+              onChange={(v) => setDynamicSize(v === 'on')}
+              getValue={capitalize}
+            />
 
-      <Toggle
-        label="Sort By:"
-        options={sortKeys}
-        selected={sortKey()}
-        onChange={(v) => setSortKey(v)}
-        getValue={capitalize}
-      />
-    </Row>
+          </Row>
 
-    <Show when={Array.isArray(sortResult())}>
-      <ColorColumns>
-        <For each={sortResult() as ColorData[][]}>
-          {(c, i1) => (
-            <Show when={c.length > 0}>
-              <Colors>
-                <For each={c}>
-                  {(c1, i2) => <ColorPixel style={{ 'background-color': `${c1.color}` }} />}
-                </For>
-              </Colors>
-            </Show>
-          )}
-        </For>
-      </ColorColumns>
-    </Show>
+          <Row style={{ gap: '1rem', 'flex-wrap': 'wrap' }}>
+            <Toggle
+              label="Group By:"
+              options={['hue', 'saturation', 'lightness']}
+              selected={groupConfig()[0] ?? 'hue'}
+              onChange={(v) => setGroupConfig(c => [v, c[1]])}
+              getValue={capitalize}
+            />
 
-    <Show when={!Array.isArray(sortResult())}>
-      <ColorColumns>
-        <Colors>
-          <For each={sortResult() as ColorData[]}>
-            {(c) => (<ColorPixel style={{ 'background-color': `${c.color}` }} />)}
+            <RangeInput
+              label="Group Count"
+              value={groupConfig()[1]}
+              min={4}
+              step={4}
+              max={128}
+              showValue
+              onChange={(e) => setGroupConfig(c => [c[0], e.currentTarget.valueAsNumber])}
+            />
+          </Row>
+
+          <Toggle
+            label="Sort By:"
+            options={sortKeys}
+            selected={sortKey()}
+            onChange={(v) => setSortKey(v)}
+            getValue={capitalize}
+          />
+        </Controls>
+
+        <ColorColumns>
+          <For each={sortResult() as ColorData[][]}>
+            {(c, i1) => (
+              <Show when={c.length > 0}>
+                <ColorSection
+                  dynamic={dynamicSize()}
+                  colors={c.reduce((acc, c) => ({ ...acc, [c.color]: c }), {})} />
+              </Show>
+            )}
           </For>
-        </Colors>
-      </ColorColumns>
+        </ColorColumns>
+        <Col>
+          <p>Total Colors: {Object.keys(colorCounts()).length}</p>
+          <p>Total Individual: {Object.values(colorCounts()).reduce((acc, c) => acc + c.count, 0)}</p>
+        </Col>
+      </Show>
     </Show>
+
+
     <Col>
-      <p>Total Colors: {Object.keys(colorCounts()).length}</p>
-      <p>Total Individual: {Object.values(colorCounts()).reduce((acc, c) => acc + c.count, 0)}</p>
+      <p>Note: Currently works with Raster Images only. Increase sample size at your device's performance capabilities.</p>
     </Col>
     {/* <ThreeDee colors={colorCounts()} /> */}
   </Col >;
 }
 
+const ColorSection = (props: { colors: Record<string, ColorData>, dynamic: boolean }) => (
+  <Colors>
+    <For each={Object.values(props.colors)}>
+      {(c1, i2) => <ColorPixel style={{
+        // We need to take a log of the count to make it more visible
+        '--count': `${props.dynamic ? Math.ceil(Math.log1p(c1.count)) : 1}`,
+        'background-color': `${c1.color}`
+      }}
+      />}
+    </For>
+  </Colors>
+)
 const ThreeDee = (props: { colors: Record<string, ColorData> }) => {
   return <ThreeDeeWrapper>
     <For each={Object.values(props.colors)}>
@@ -430,7 +527,9 @@ const ThreeDeeWrapper = styled('div')`
 
 const ColorColumns = styled('div')`
   display: flex;
-  gap: 0.5rem;
+  gap: var(--pixelSize);
+  align-items: flex-start;
+  overflow-x: scroll;
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -439,14 +538,14 @@ const ColorColumns = styled('div')`
 const Colors = styled('div')`
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  gap: 2px;
+  gap: var(--pixelGap);
   height: 100%;
 `
 
 const ColorPixel = styled('div')`
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 0.125rem;
+  width: calc(var(--pixelSize) * var(--count));
+  height: calc(var(--pixelSize) * var(--count));
+  border-radius: calc(var(--pixelSize) * var(--count) / 4);
 `

@@ -4,7 +4,7 @@ import { theme } from "../../theme"
 export const baseElementStyles = `
   box-sizing: border-box;
   font-family: inherit;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem 0.6rem;
   border-radius: ${theme.border.radius};
   font-size: ${theme.font.size.base};
   border: 1px solid transparent;
@@ -42,7 +42,7 @@ export const UploadLabel = styled('label')`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px dashed ${theme.border.color};
+  border: 1px dashed ${theme.border.color};
   background: ${theme.surface};
   color: ${theme.text};
   border-radius: ${theme.border.radius};
@@ -57,7 +57,9 @@ export const UploadLabel = styled('label')`
     max-width: 100%;
     display: flex;
     gap: 0.5rem;
+    padding: 0.25rem;
     align-items: center;
+    font-size: ${theme.font.size.sm};
 
     iconify-icon {
       font-size: 1.25rem;
@@ -70,7 +72,7 @@ export const UploadLabel = styled('label')`
   }
 
   &:hover {
-    border: 1px dashed ${theme.primary.color};
+    border-color: ${theme.primary.color};
     color: ${theme.primary.color};
   }
 `
@@ -145,7 +147,7 @@ export const Text = styled('div')`
   justify-content: center;
   border: 1px solid transparent;
   background: ${theme.surface};
-  color: ${theme.text};
+  color: ${theme.fadeText};
   transition: all 0.2s ease;
 `
 

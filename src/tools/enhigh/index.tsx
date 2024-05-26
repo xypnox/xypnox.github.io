@@ -2,9 +2,9 @@ import { For, Match, Show, Switch, createMemo, createSignal, onMount } from "sol
 import { Button, ButtonGroup, Label, baseElementStyles } from "../../components/elements/atoms";
 import { styled } from "solid-styled-components";
 import { theme } from "../../theme";
-import { Tag } from 'en-pos';
+// import { Tag } from 'en-pos';
 import { SampleText } from "./sample";
-import { Tooltip } from "../../components/elements/tooltip";
+// import { Tooltip } from "../../components/elements/tooltip";
 import { RangeInput } from "../../components/elements/range";
 
 const [rawText, setRawText] = createSignal(SampleText);
@@ -21,11 +21,11 @@ const Textarea = styled("textarea")`
 
 const splitParagraphs = (text: string) => text.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
 
-const generatedTags = (text: string): TagName[] => {
-  const words = text.split(" ");
-  const tags = new Tag(words).initial().smooth().tags;
-  return tags as TagName[];
-};
+// const generatedTags = (text: string): TagName[] => {
+//   const words = text.split(" ");
+//   const tags = new Tag(words).initial().smooth().tags;
+//   return tags as TagName[];
+// };
 
 const dictionary = {
   NN: {
@@ -206,28 +206,28 @@ const dictionary = {
   },
 }
 
-type TagName = keyof typeof dictionary;
-type ColorKey = "secondary" | "primary" | "heading" | "fade";
+// type TagName = keyof typeof dictionary;
+// type ColorKey = "secondary" | "primary" | "heading" | "fade";
 
-const colortagGroups: Record<ColorKey, TagName[]> = {
-  "secondary": ["NN", "NNS", "NNP", "NNPS", "PRP", "PRP$", "WDT", "WP", "WP$", "WRB", "EX", "CD", "FW"],
-  "primary": ["VB", "VBP", "VBZ", "VBG", "VBD", "VBN", "MD"],
-  "heading": ["JJ", "JJR", "JJS", "RB", "RBR", "RBS", "DT", "PDT"],
-  "fade": ["POS", "IN", "PR", "TO", "CC", "LS", ",", ":", ".", "(", ")", "#", "$", "SYM", "EM"]
-}
+// const colortagGroups: Record<ColorKey, TagName[]> = {
+//   "secondary": ["NN", "NNS", "NNP", "NNPS", "PRP", "PRP$", "WDT", "WP", "WP$", "WRB", "EX", "CD", "FW"],
+//   "primary": ["VB", "VBP", "VBZ", "VBG", "VBD", "VBN", "MD"],
+//   "heading": ["JJ", "JJR", "JJS", "RB", "RBR", "RBS", "DT", "PDT"],
+//   "fade": ["POS", "IN", "PR", "TO", "CC", "LS", ",", ":", ".", "(", ")", "#", "$", "SYM", "EM"]
+// }
 
-const colortags: Record<ColorKey, string> = {
-  "secondary": theme.secondary.color,
-  "primary": theme.primary.color,
-  "heading": theme.heading,
-  "fade": theme.fadeText
-}
+// const colortags: Record<ColorKey, string> = {
+//   "secondary": theme.secondary.color,
+//   "primary": theme.primary.color,
+//   "heading": theme.heading,
+//   "fade": theme.fadeText
+// }
 
 
-const WordColor = styled("span")`
-  color: var(--word-color);
-  padding: 0.1rem;
-`
+// const WordColor = styled("span")`
+//   color: var(--word-color);
+//   padding: 0.1rem;
+// `
 
 const Processed = styled("div")`
   display: flex;
@@ -237,68 +237,54 @@ const Processed = styled("div")`
   padding: 0.5rem;
 `
 
-const TagTooltip = styled("div")`
-  font-size: ${theme.font.size.base};
-  && ul {
-    font-size: ${theme.font.size.sm};
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    li {
-      padding: 0.1rem;
-      margin: 0;
-    }
-  }
-`
+// const TagTooltip = styled("div")`
+//   font-size: ${theme.font.size.base};
+//   && ul {
+//     font-size: ${theme.font.size.sm};
+//     list-style-type: none;
+//     padding: 0;
+//     margin: 0;
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 0.5rem;
+//     li {
+//       padding: 0.1rem;
+//       margin: 0;
+//     }
+//   }
+// `
 
-const Word = (props: { text: string, tag: TagName }) => {
-  const wordColor = createMemo(() => {
-    const key = Object.keys(colortagGroups).find((group) => colortagGroups[group as ColorKey].includes(props.tag))
-    if (key) {
-      return colortags[key as ColorKey];
-    }
-    return colortags.fade;
-  });
-  const tag = createMemo(() => dictionary[props.tag]);
-  return (
-    <Tooltip id="tag" placement="top"
-      tooltip={<TagTooltip>
-        <WordColor style={{ "--word-color": wordColor() }}>
-          {tag().name}
-        </WordColor>
-        <ul>
-          <For each={tag().example}>
-            {(ex) => <li>{ex}</li>}
-          </For>
-        </ul>
+// const Word = (props: { text: string, tag: TagName }) => {
+//   const wordColor = createMemo(() => {
+//     const key = Object.keys(colortagGroups).find((group) => colortagGroups[group as ColorKey].includes(props.tag))
+//     if (key) {
+//       return colortags[key as ColorKey];
+//     }
+//     return colortags.fade;
+//   });
+//   const tag = createMemo(() => dictionary[props.tag]);
+//   return (
+//     <Tooltip id="tag" placement="top"
+//       tooltip={<TagTooltip>
+//         <WordColor style={{ "--word-color": wordColor() }}>
+//           {tag().name}
+//         </WordColor>
+//         <ul>
+//           <For each={tag().example}>
+//             {(ex) => <li>{ex}</li>}
+//           </For>
+//         </ul>
 
-      </TagTooltip>}
-    >
-      <WordColor
-        style={{ "--word-color": wordColor() }}
-      >
-        {props.text}
-      </WordColor>
-    </Tooltip>
-  )
-}
-
-const PartOfSpeech = (props: { text: string }) => {
-  const tags = generatedTags(props.text);
-  const words = createMemo(() => props.text.split(" "));
-  return (
-    <Processed>
-      <For each={tags}>
-        {(tag, i) =>
-          <Word text={words()[i()]} tag={tag} />
-        }
-      </For>
-    </Processed>
-  )
-}
+//       </TagTooltip>}
+//     >
+//       <WordColor
+//         style={{ "--word-color": wordColor() }}
+//       >
+//         {props.text}
+//       </WordColor>
+//     </Tooltip>
+//   )
+// }
 
 const [startOpacity, setStartOpacity] = createSignal(1);
 const [midOpacity, setMidOpacity] = createSignal(0.5);
@@ -348,7 +334,11 @@ const Paragraph = (props: { text: string }) => {
   )
 }
 
-const highlightModes = ["sentence", "paragraph", "part-of-speech"];
+const highlightModes = [
+  "sentence",
+  "paragraph",
+  // "part-of-speech"
+];
 
 type HighlightMode = typeof highlightModes[number];
 
@@ -455,11 +445,6 @@ export const EnHigh = (props: { defaultText: string }) => {
               <Match when={mode() === "sentence"}>
                 <Sentence text={p} />
               </Match>
-
-              <Match when={mode() === "part-of-speech"}>
-                <PartOfSpeech text={p} />
-              </Match>
-
               <Match when={mode() === "paragraph"}>
                 <Paragraph text={p} />
               </Match>
