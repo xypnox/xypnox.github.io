@@ -37,6 +37,44 @@ export const Label = styled('label')`
   gap: 0.25rem;
 `
 
+export const UploadLabel = styled('label')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px dashed ${theme.border.color};
+  background: ${theme.surface};
+  color: ${theme.text};
+  border-radius: ${theme.border.radius};
+  flex-shrink: 1;
+
+  input {
+    display: none;
+  }
+
+  div {
+    ${baseElementStyles}
+    max-width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    iconify-icon {
+      font-size: 1.25rem;
+    }
+
+
+    &.filename {
+      font-size: ${theme.font.size.sm};
+    }
+  }
+
+  &:hover {
+    border: 1px dashed ${theme.primary.color};
+    color: ${theme.primary.color};
+  }
+`
+
 export const Input = styled('input')`
   ${baseElementStyles}
   flex: 1;
