@@ -438,6 +438,35 @@ const showcaseThemes: ThemePalette[] = [
         "text": "#cfc591"
       }
     }
+  },
+  {
+    "name": "Old Paintings",
+    "id": "showcase_oldpaintings-1b2c3d",
+    "base": {
+      "border": {
+        "radius": "0.5em"
+      },
+      "font": {
+        "family": "\"Vollkorn\""
+      }
+    },
+    "card": "gradient",
+    "vars": {
+      "light": {
+        "primary": "#ab574c",
+        "secondary": "#825c47",
+        "background": "#d6c5a5",
+        "surface": "#baad8b7c",
+        "text": "#474a35"
+      },
+      "dark": {
+        "primary": "#649f85",
+        "secondary": "#88b079",
+        "background": "#1a221e",
+        "surface": "#3e4f4863",
+        "text": "#9e956f"
+      }
+    }
   }
 ]
 

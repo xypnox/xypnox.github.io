@@ -1,5 +1,5 @@
 import { For, Show, createEffect, createMemo, createSignal, on, onMount } from "solid-js";
-import { Button, ButtonGroup, GroupSeparator, Input, Label, Text, UploadLabel } from "../../components/elements/atoms";
+import { Button, ButtonGroup, Input, UploadLabel } from "../../components/elements/atoms";
 import { getColors, type ColorData } from "./colors";
 import { styled } from "solid-styled-components";
 import { RangeInput } from "../../components/elements/range";
@@ -149,6 +149,9 @@ export const Rangeen = () => {
 
   const [pixelSize, setPixelSize] = makePersisted(createSignal(defaultConfig.pixelSize), { storage });
   const [dynamicSize, setDynamicSize] = makePersisted(createSignal(defaultConfig.dynamicSize), { storage });
+
+  // set true when hovering inside the color section
+  const [hovered, setHovered] = createSignal<ColorData | null>(null);
 
   const reset = () => {
     setSampleSize(defaultConfig.sampleSize);
@@ -348,6 +351,7 @@ export const Rangeen = () => {
               }
             }} />
         </Show>
+
       </Row>
 
 
@@ -441,6 +445,19 @@ export const Rangeen = () => {
             onChange={(v) => setSortKey(v)}
             getValue={capitalize}
           />
+
+          <Row style={{ 'align-items': 'center', 'width': '20ch', 'justify-content': 'flex-end', 'max-width': '100%', 'flex-grow': 1 }}>
+            <div>{hovered()?.color ?? 'Hover a pixel'}</div>
+            <div
+              style={{
+                'background-color': `${hovered()?.color ?? theme.primary.color}`,
+                'width': '2em',
+                'height': '2em',
+                'border-radius': '0.5em',
+              }}
+            />
+          </Row>
+
         </Controls>
 
         <ColorColumns>
@@ -448,6 +465,7 @@ export const Rangeen = () => {
             {(c, i1) => (
               <Show when={c.length > 0}>
                 <ColorSection
+                  setHovered={setHovered}
                   dynamic={dynamicSize()}
                   colors={c.reduce((acc, c) => ({ ...acc, [c.color]: c }), {})} />
               </Show>
@@ -469,61 +487,29 @@ export const Rangeen = () => {
   </Col >;
 }
 
-const ColorSection = (props: { colors: Record<string, ColorData>, dynamic: boolean }) => (
+const copyColor = (color: string) => {
+  navigator.clipboard.writeText(color);
+}
+
+const ColorSection = (props: { colors: Record<string, ColorData>, dynamic: boolean, setHovered: (v: ColorData) => void }) => (
   <Colors>
     <For each={Object.values(props.colors)}>
-      {(c1, i2) => <ColorPixel style={{
-        // We need to take a log of the count to make it more visible
-        '--count': `${props.dynamic ? Math.ceil(Math.log1p(c1.count)) : 1}`,
-        'background-color': `${c1.color}`
-      }}
+      {(c1, i2) => <div
+        onMouseEnter={() => props.setHovered(c1)}
+        onClick={() => copyColor(c1.color)}
+        style={{
+          // We need to take a log of the count to make it more visible
+          '--count': `${props.dynamic ? Math.ceil(Math.log1p(c1.count)) : 1}`,
+          'background-color': `${c1.color}`,
+          'width': `calc(var(--pixelSize) * var(--count))`,
+          'height': `calc(var(--pixelSize) * var(--count))`,
+          'border-radius': `calc(var(--pixelSize) * var(--count) / 4)`,
+          'cursor': 'pointer',
+        }}
       />}
     </For>
   </Colors>
 )
-const ThreeDee = (props: { colors: Record<string, ColorData> }) => {
-  return <ThreeDeeWrapper>
-    <For each={Object.values(props.colors)}>
-      {(c) => <ThreeDeePixel
-        style={{
-          'background-color': `${c.color}`,
-          '--x': `${c.rgb[0] / 255 * 100}`,
-          '--y': `${c.rgb[1] / 255 * 100}`,
-          '--z': `${c.rgb[2] / 255 * 100}`,
-        }}
-      />}
-    </For>
-  </ThreeDeeWrapper>
-}
-
-/**
- * Transform the pixel into a 3D plane
- * Rotate to face the camera
- */
-const ThreeDeePixel = styled('div')`
-  position: absolute;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 0.25rem;
-  transform: translate3d(calc(var(--x, 0) * var(--pixelWidth)), calc(var(--y, 0) * var(--pixelWidth)), calc(var(--z, 0) * var(--pixelWidth)));
-  transition: transform 2s ease;
-`
-
-// <!-- Change perspective on hover -->
-const ThreeDeeWrapper = styled('div')`
-  position: relative;
-  overflow: hidden;
-  background: ${theme.surface};
-  --pixelWidth: calc((min(80vw, 80vh) - 2rem) / 100);
-  width: calc(100 * var(--pixelWidth));
-  height: calc(100 * var(--pixelWidth));
-  &:hover {
-    ${ThreeDeePixel.class} {
-      transform: translate3d(calc(var(--y, 0) * var(--pixelWidth)), calc(var(--z, 0) * var(--pixelWidth)), calc(var(--x, 0) * var(--pixelWidth)));
-    }
-  }
-`
-
 
 const ColorColumns = styled('div')`
   display: flex;
@@ -540,12 +526,7 @@ const Colors = styled('div')`
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: var(--pixelGap);
+  gap: max(var(--pixelGap), 1px);
   height: 100%;
 `
 
-const ColorPixel = styled('div')`
-  width: calc(var(--pixelSize) * var(--count));
-  height: calc(var(--pixelSize) * var(--count));
-  border-radius: calc(var(--pixelSize) * var(--count) / 4);
-`
