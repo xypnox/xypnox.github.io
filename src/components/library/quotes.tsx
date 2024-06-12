@@ -19,6 +19,10 @@ const sanitizeQuote = (quote: Quote) => {
 
 const quotes: Quote[] = [
   {
+    quote: "The cost of a thing is the amount of what I will call life which is required to be exchanged for it, immediately or in the long run.",
+    author: "Henry David Thoreau"
+  },
+  {
     quote: "It doesn't matter if a cat is black or white, so long as it catches mice.",
   },
   {
