@@ -30,3 +30,24 @@ export const RelativeTime = (props: Props) => {
 
   return <>{relativeString}</>
 }
+
+interface UpdatedProps {
+  newVal: () => string
+  refreshInterval?: number
+}
+
+/**
+ * Acceps a function and a refresh interval,
+ * Calls the function every refresh interval and updates the value in the UI
+ */
+export const Updated = (props: UpdatedProps) => {
+  const [value, setValue] = createSignal(props.newVal())
+
+  const interval = setInterval(() => {
+    setValue(props.newVal())
+  }, props.refreshInterval ?? 10000)
+
+  onCleanup(() => clearInterval(interval))
+
+  return <>{value()}</>
+}

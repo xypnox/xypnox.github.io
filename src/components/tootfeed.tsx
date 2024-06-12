@@ -21,7 +21,7 @@ const TootWrapper = styled("div")`
   border-radius: 1em;
   overflow: hidden;
 
-  .content {
+  .toot-content {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -126,7 +126,7 @@ export const TootFeed = (props: TootFeedProps) => {
 
   createEffect(() => {
     // Repaint when all images are loaded
-    if (loadCount().count !== 0 && loadCount().total === loadCount().count) {
+    if (loadCount().count !== 0 && loadCount().total <= loadCount().count) {
       repaint[1](1)
     }
   })
@@ -141,7 +141,7 @@ export const TootFeed = (props: TootFeedProps) => {
         repaint={repaint}
       >
         <TootWrapper>
-          <div class="content">
+          <div class="toot-content">
             <div class="title">
               <h2>
                 <a href={'/tootfeed/'}>TootFeed</a>
@@ -166,7 +166,7 @@ export const TootFeed = (props: TootFeedProps) => {
           <For each={feed()!.items} fallback={<div>Loading...</div>}>
             {(toot) => (
               <TootWrapper>
-                <div class="content" >
+                <div class="toot-content" >
                   <div innerHTML={toot.description} />
                   <div class="meta">
                     <a class="link" href={toot.link}>

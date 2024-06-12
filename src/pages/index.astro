@@ -13,11 +13,8 @@ import LatestBlog from "../components/latestBlog.astro";
       <div class="intro-content">
         <h1>Hi, I am <span class="text-gradient-fx-constant">xypnox</span>.</h1>
         <p class="subline">I design/develop interfaces.</p>
-        <p>
-          This is the lair, <br />
-          a collection of works, <br />
-          designs, and writings.
-        </p>
+        <p>The lair for works, designs, and writings.</p>
+        <p><a href="/now/">What am I upto?</a></p>
       </div>
     </div>
 
@@ -144,6 +141,10 @@ import LatestBlog from "../components/latestBlog.astro";
     color: var(--text);
   }
 
+  .intro a {
+    font-size: var(--font-size-base);
+  }
+
   .containers {
     width: 100%;
     max-width: 1200px;
@@ -167,7 +168,7 @@ import LatestBlog from "../components/latestBlog.astro";
     max-width: 1200px;
   }
 
-  main a {
+  main .containers a {
     display: flex;
     padding: 0.5rem;
     justify-content: center;
@@ -180,7 +181,7 @@ import LatestBlog from "../components/latestBlog.astro";
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease-in-out;
   }
-  main a:hover {
+  main .containers a:hover {
     color: var(--primary-color);
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);

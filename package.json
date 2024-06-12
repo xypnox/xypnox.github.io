@@ -44,9 +44,11 @@
     "solid-js": "^1.8.5",
     "solid-styled-components": "^0.28.5",
     "tinycolor2": "^1.6.0",
-    "undici": "^6.9.0"
+    "undici": "^6.9.0",
+    "unplugin-icons": "^0.19.0"
   },
   "devDependencies": {
+    "@iconify-json/ph": "^1.1.13",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.9.3",
     "@types/tinycolor2": "^1.4.6",

@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import { Now as NowSolid } from "../components/now.tsx";
+import {data} from '../content/now.ts';
+import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
+---
+
+<Layout title="Now | xypnox" meta={{ description: data.description}}>
+  <NowSolid client:load />
+  <br />
+  <hr />
+  <TootFeedSolid client:load />
+</Layout>
