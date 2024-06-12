@@ -7,6 +7,7 @@ import { data, type NowCardData, type NowCardType } from "../content/now"
 import { Updated } from "./elements/relativeTime"
 
 
+import IconLink from '~icons/ph/globe-duotone'
 import IconProject from '~icons/ph/code-duotone'
 import IconLocation from '~icons/ph/map-pin-line-duotone'
 import IconSpotify from '~icons/ph/spotify-logo-duotone'
@@ -25,6 +26,12 @@ const ItemWrapper = styled("div")`
   gap: 1rem;
   padding: ${theme.font.size.md};
 
+  h2, div, p {
+    word-break: normal; 
+    word-break: break-all; 
+    word-break: keep-all;
+  }
+
   &.items-intro {
     padding: ${theme.font.size.xl};
     .item-content {
@@ -32,10 +39,12 @@ const ItemWrapper = styled("div")`
     }
   }
 
+  h1, h2 {
+    color: ${theme.heading};
+  }
   h1 {
     font-size: ${theme.font.size.xl};
   }
-
   h2 {
     font-size: ${theme.font.size.lg};
   }
@@ -48,22 +57,31 @@ const ItemWrapper = styled("div")`
   a {
     color: ${theme.primary.color};
     text-decoration: none;
-    border-bottom: none;
   }
 
   .item-content {
     display: flex;
     flex-direction: column;
     gap: 0.25em;
+    width: 100%;
   }
 
   .item-label {
-    font-size: ${theme.font.size.sm};
-    color: ${theme.fadeText};
+    font-size: ${theme.font.size.base};
+  }
+
+  .url {
+    svg {
+      font-size: 0.8em;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.25em;
+      color: ${theme.fadeText};
+    }
   }
 
   .icon svg {
-    font-size: ${theme.font.size.xxl};
+    font-size: 3rem;
     align-self: center;
     color: ${theme.fadeText};
   }
@@ -141,50 +159,12 @@ const ProfileImage = styled("div")`
   }
 `
 
-interface TootFeedProps {
-  max?: number
-}
-
-export const Now = (props: TootFeedProps) => {
-  return (
-    <div>
-      <Masonry
-        minColumns={1}
-        maxColumns={4}
-        colWidth={props.max ? 300 : 400}
-        gap={2}
-      >
-        <Show when={data.photo}>
-          <ProfileImage>
-            <img src={data.photo} alt={data.photoAlt} title={data.photoAlt} />
-            {/* <img src={'/logo.svg'} alt={data.photoAlt} title={data.photoAlt} /> */}
-            <div class="fixed-ring" />
-            <div class="glow-1" />
-            <div class="glow-2" />
-            <div class="glow-3" />
-            <div style={{ width: 'var(--scale2)', height: 'var(--scale2)', position: 'absolute', border: '1px solid black' }} />
-          </ProfileImage>
-        </Show>
-        <ItemWrapper class="items-intro">
-          <div class="item-content">
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
-          </div>
-        </ItemWrapper>
-        <For each={data.cards}>
-          {(card) => (
-            <NowCard card={card} />
-          )}
-        </For>
-      </Masonry>
-    </div>
-  )
-}
 
 // for all timezones
 const getDateOfTimeZone = (description: string) => {
-  const date = new Date().toLocaleString(undefined, { timeZone: description })
+  const userLocale = Intl.DateTimeFormat().resolvedOptions().locale
   // We need to convert current time to the time in this timezone
+  const date = new Date().toLocaleString(userLocale, { timeZone: description })
   return date.toString()
 }
 
@@ -219,7 +199,11 @@ const NowCard = (props: { card: NowCardData }) => {
             <p>{props.card.description}</p>
           </Show>
           <Show when={props.card.url}>
-            <p><a href={props.card.url}> {trimUrl(props.card.url!)} </a></p>
+            <p><a href={props.card.url} class="url">
+              <IconLink />
+              {trimUrl(props.card.url!)}
+            </a>
+            </p>
           </Show>
         </Match>
 
@@ -247,4 +231,40 @@ const NowCard = (props: { card: NowCardData }) => {
       </Switch>
     </div>
   </ItemWrapper >
+}
+
+export const Now = () => {
+  return (
+    <div>
+      <Masonry
+        minColumns={1}
+        maxColumns={3}
+        colWidth={400}
+        gap={2}
+      >
+        <Show when={data.photo}>
+          <ProfileImage>
+            <img src={data.photo} alt={data.photoAlt} title={data.photoAlt} />
+            {/* <img src={'/logo.svg'} alt={data.photoAlt} title={data.photoAlt} /> */}
+            <div class="fixed-ring" />
+            <div class="glow-1" />
+            <div class="glow-2" />
+            <div class="glow-3" />
+            <div style={{ width: 'var(--scale2)', height: 'var(--scale2)', position: 'absolute', border: '1px solid black' }} />
+          </ProfileImage>
+        </Show>
+        <ItemWrapper class="items-intro">
+          <div class="item-content">
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
+          </div>
+        </ItemWrapper>
+        <For each={data.cards}>
+          {(card) => (
+            <NowCard card={card} />
+          )}
+        </For>
+      </Masonry>
+    </div>
+  )
 }

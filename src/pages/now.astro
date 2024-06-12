@@ -6,8 +6,31 @@ import { TootFeed as TootFeedSolid } from "../components/tootfeed.tsx";
 ---
 
 <Layout title="Now | xypnox" meta={{ description: data.description}}>
-  <NowSolid client:load />
-  <br />
-  <hr />
-  <TootFeedSolid client:load />
+  <main>
+    <NowSolid client:load />
+    <div class="separator">❦ </div>
+    <TootFeedSolid title="And some musings" description="with the curtesy of" client:load />
+  </main>
 </Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: var(--font-size-xxxl);
+    gap: 4rem;
+    .separator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: var(--font-size-xxxl);
+      color: var(--fadeText);
+    }
+  }
+  @media (max-width: 768px) {
+    main {
+      gap: 8rem;
+    }
+  }
+</style>

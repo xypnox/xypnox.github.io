@@ -76,6 +76,8 @@ const parseFeed = async () => {
 
 interface TootFeedProps {
   max?: number
+  title?: string
+  description?: string
 }
 
 export const TootFeed = (props: TootFeedProps) => {
@@ -144,10 +146,12 @@ export const TootFeed = (props: TootFeedProps) => {
           <div class="toot-content">
             <div class="title">
               <h2>
-                <a href={'/tootfeed/'}>TootFeed</a>
+                <a href={'/tootfeed/'}>{
+                  props.title ? props.title : "TootFeed"
+                }</a>
               </h2>
             </div>
-            <p>A replica of my feed @ <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
+            <p> {props.description ? props.description : "A replica of my toots @ "} <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
             <Button class="small" onClick={() => refetch()}>
               <Show when={lastFetched() !== 0}>
                 <iconify-icon icon={icons.refresh} />

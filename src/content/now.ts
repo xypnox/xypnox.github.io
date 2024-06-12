@@ -29,7 +29,7 @@ export const data: {
   photoAlt: string
   cards: NowCardData[]
 } = {
-  title: 'What\'s he (supossedly) upto?',
+  title: 'What\'s he (*supossedly) upto?',
   description: 'A view (only for the eyes of birds) of the places my time slips away to.',
   photo: '/logo.svg',
   photoAlt: "Widely and critically regarded as one of the photos captured of all time ever.",
