@@ -5,6 +5,8 @@ description: 'A different social network of networks'
 
 categories: ["tech", "culture"]
 tags: ["tech", "culture"]
+
+hidden: true
 ---
 
 I got onboard the fedi train via mastodon about 3 years ago. I have used mastodon now and then, while frequently returning to twitter. But during these years my experience with mastodon has been far better than with twitter, and it has been more enlightening.
