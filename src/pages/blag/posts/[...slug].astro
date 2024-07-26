@@ -29,6 +29,7 @@ const dateFormatOption = {
   year: "numeric",
 } as const;
 
+const datawider=( headings.length > 0 && entry.data.hideTOC !== true ) ? "true" : "false"
 console.log({ entryD: entry.data });
 ---
 
@@ -42,7 +43,7 @@ console.log({ entryD: entry.data });
     tags: entry.data.hidden ? [] : entry.data.tags,
   }}
 >
-  <div class="postHeading" data-wider={( headings.length > 0 && entry.data.hideTOC !== true ) ? "true" : "false"}>
+  <div class="postHeading" data-wider={datawider}>
     <h1 class="text-gradient-fx">{entry.data.title}</h1>
     {
       entry.data.description && (
@@ -79,7 +80,7 @@ console.log({ entryD: entry.data });
     )
   }
   <div class="content-wrapper">
-    <div class="content">
+    <div class="content" data-wider={datawider}>
       {
         entry.data.hidden && (
           <blockquote class="hidden-post theme-card">
