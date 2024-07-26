@@ -1,0 +1,61 @@
+---
+import DevIcon from './dev.astro';
+import DesignIcon from './design.astro';
+import LitIcon from './lit.astro';
+
+interface Props {
+  type: 'dev' | 'design' | 'literature';
+}
+
+const { type } = Astro.props;
+---
+
+<div class="home-icon">
+  {type === 'dev' && <DevIcon />}
+  {type === 'design' && <DesignIcon />}
+  {type === 'literature' && <LitIcon />}
+</div>
+
+<style>
+.home-icon {
+  padding-inline-start: 1em;
+}
+.home-icon :global(svg) {
+  height: auto;
+  width: 66%;
+}
+.home-icon :global(svg .surface-fill) {
+  fill: var(--text);
+}
+
+.home-icon :global(svg .bg-fill) {
+  fill: var(--background);
+}
+
+.home-icon :global(svg .secondary-fill) {
+  fill: var(--secondary-color);
+}
+.home-icon :global(svg .secondary-stop-color) {
+  stop-color: var(--secondary-color);
+}
+
+
+.home-icon :global(svg .primary-fill) {
+  fill: var(--heading);
+}
+.home-icon :global(svg .primary-stop-color) {
+  stop-color: var(--heading);
+}
+
+
+.home-icon :global(svg .heading-fill) {
+  fill: var(--primary-color);
+}
+.home-icon :global(svg .heading-stroke-color) {
+  stroke: var(--primary-color);
+}
+.home-icon :global(svg .heading-stop-color) {
+  stop-color: var(--primary-color);
+}
+</style>
+

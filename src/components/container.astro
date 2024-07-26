@@ -1,9 +1,11 @@
 ---
+import HomeIcon from './images/homeIcon.astro';
+
 interface Props {
   title?: string;
   // Links title
   linkTitle?: string;
-  icon?: string;
+  icon?: 'dev' | 'design' | 'literature';
   image?: string;
   color?: string
   links?: {
@@ -17,10 +19,10 @@ const { title, icon, image, links, linkTitle, color } = Astro.props;
 
 <div class={ "container-wrapper theme-card" + (image ? " with-image" : "") }>
   {image && <img src={image} alt={title} />}
+  {icon && <HomeIcon type={icon} />}
   <div class="info">
     {title && 
       <h2>
-        {icon && <iconify-icon name={icon} />}
         {linkTitle ? <a class="text-gradient-fx" href={linkTitle}> {title}</a> : title}
       </h2>
     }
