@@ -5,7 +5,7 @@ import { createThemeState } from "./themeStateDef";
 
 export const themeState = createThemeState(
   'xypnox',
-  showcaseThemes,
+  [defaultThemePalette, ...showcaseThemes],
   generateThemeFromPalette,
   cssConverter,
   defaultThemePalette,
