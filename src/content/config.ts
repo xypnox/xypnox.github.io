@@ -14,6 +14,8 @@ const blog = defineCollection({
     coverAlt: z.string().optional(),
     socialImage: image().optional(), // will use coverImage or default
     hidden: z.boolean().optional(), // will default to false
+
+    hideTOC: z.boolean().optional(), // will default to false
   }),
 })
 

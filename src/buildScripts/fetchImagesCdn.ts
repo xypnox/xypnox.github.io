@@ -13,13 +13,25 @@ const xmlData = (xml: string) => {
   return jsonObj;
 }
 
-const fetchCdnImage = async (cdnBucketUrl: string, image: string, directory: string) => {
+const fetchCdnImage = async (cdnBucketUrl: string, image: string, directory: string, args: any) => {
   return new Promise(async (resolve, reject) => {
     const objectPath = path.join(directory, image);
     const dir = path.dirname(objectPath);
     console.log('Fetching image:', { cdnBucketUrl, image, objectPath });
 
     await fs.mkdir(dir, { recursive: true });
+
+    // Check if image exists if args has 'cache'
+    if (args?.includes('cache')) {
+      try {
+        await fs.access(objectPath);
+        console.log('Image already exists:', objectPath);
+        resolve(objectPath);
+        return;
+      } catch (error) {
+        console.warn('In cache, Image not found:', objectPath);
+      }
+    }
 
     try {
       // This will be a image, save the stream to the file in the directory
@@ -58,7 +70,7 @@ const fetchCdnImage = async (cdnBucketUrl: string, image: string, directory: str
   })
 }
 
-const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string) => {
+const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string, args: any) => {
   console.log('Fetching images to directory:', directory, cdnBucketUrl);
 
   try {
@@ -92,7 +104,7 @@ const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string) =
 
     const promises = imagePaths.map(async (imagePath) => {
       if (!imagePath) return;
-      return await fetchCdnImage(cdnBucketUrl, imagePath, directory);
+      return await fetchCdnImage(cdnBucketUrl, imagePath, directory, args);
     });
 
     // await Promise.all(promises);
@@ -110,7 +122,10 @@ const fetchImagesToDirectory = async (directory: string, cdnBucketUrl: string) =
 (async () => {
   try {
     const t1 = performance.now();
-    await fetchImagesToDirectory(IMAGE_DIRECTORY, CDN_URL)
+    const args = process.argv.slice(2);
+    console.log('Args:', args);
+    // return
+    await fetchImagesToDirectory(IMAGE_DIRECTORY, CDN_URL, args)
     const t2 = performance.now();
     console.log(`Images fetched in ${(t2 - t1) / 1000} seconds`);
   } catch (error) {

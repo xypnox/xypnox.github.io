@@ -1,12 +1,13 @@
 import { cssConverter, generateThemeFromPalette } from "../../theme";
-import { defaultPalettes } from "../../theme";
+import { defaultThemePalette } from "../../theme";
+import { showcaseThemes } from "./showcaseThemes";
 import { createThemeState } from "./themeStateDef";
 
 export const themeState = createThemeState(
   'xypnox',
-  defaultPalettes,
+  showcaseThemes,
   generateThemeFromPalette,
   cssConverter,
-  'default_aster',
+  defaultThemePalette,
   'dark'
 );

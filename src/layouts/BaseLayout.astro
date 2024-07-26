@@ -24,7 +24,6 @@ const { title, meta, showLoading, htmlClass, themeCssVars } = Astro.props;
   </head>
 
   <body>
-    {!(showLoading === false) && <Loading />}
     <slot />
   </body>
 

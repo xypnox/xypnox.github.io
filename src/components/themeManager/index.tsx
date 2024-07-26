@@ -21,7 +21,7 @@ const attachFontLink = (newFamily: string) => {
     return;
   }
   const link = document.createElement('link');
-  link.href = `https://fonts.googleapis.com/css2?family=${(newFamily)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+  link.href = `https://fonts.googleapis.com/css2?family=${(newFamily)}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600`;
   link.rel = 'stylesheet';
   link.classList.add('_fontFamily');
   document.head.appendChild(link);
@@ -115,6 +115,15 @@ const Button = styled('button')`
     background: var(--primary-color);
   }
 `;
+
+const ThemeButtonEl = styled(Button)`
+  gap: 0.5em;
+  svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+`
 
 const ButtonRow = styled('div')`
   display: flex;
@@ -211,6 +220,30 @@ const ImportPopup = (props: {
   )
 }
 
+const ThemeButton = (props: {
+  theme: ThemePalette;
+  available?: boolean;
+}) => {
+  return (
+    <ThemeButtonEl
+      onClick={() => {
+        if (props.available) {
+          themeState.addTheme(props.theme);
+          themeState.changeTheme(props.theme.id);
+          return;
+        }
+        themeState.changeTheme(props.theme.id)
+      }}
+      classList={{ 'active': themeState.themeConfig.get().theme === props.theme.id }}>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill={props.theme.vars[themeState.themeMode()].background} />
+        <circle cx="16" cy="16" r="8" fill={props.theme.vars[themeState.themeMode()].primary} />
+      </svg>
+      {props.theme.name}
+    </ThemeButtonEl>
+  )
+}
+
 interface Props {
   isPopup?: boolean;
 }
@@ -285,12 +318,10 @@ const ThemeManager = (props: Props) => {
             <iconify-icon icon={icons.new} />
             New Theme
           </Button>
-          <Show when={!themeState.isThemeDefault()}>
-            <Button onClick={() => setEditing(!editing())}>
-              <iconify-icon icon={icons.edit} />
-              Edit
-            </Button>
-          </Show>
+          <Button onClick={() => setEditing(!editing())}>
+            <iconify-icon icon={icons.edit} />
+            Edit
+          </Button>
           <Button onClick={() => setShowImport(i => !i)}>
             <iconify-icon icon={icons.import} />
             Import
@@ -298,18 +329,20 @@ const ThemeManager = (props: Props) => {
         </ButtonRow>
         <div>
           <h3>Theme</h3>
+          <h4>Local Themes</h4>
           <ButtonRow>
             <For each={themeState.themes()}>
-              {theme => (
-                <Button
-                  // class={`${theme.name === themeState.theme().name ? 'active' : ''}`}
-                  classList={{
-                    active: themeState.theme().id === theme.id
-                  }}
-                  onClick={() => themeState.changeTheme(theme.id)}>{theme.name}</Button>
-              )}
+              {theme => (<ThemeButton theme={theme} />)}
             </For>
           </ButtonRow>
+          <Show when={themeState.availableThemes().length > 0}>
+            <h4 style={{ 'width': '100%' }}>Available Themes</h4>
+            <ButtonRow>
+              <For each={themeState.availableThemes()}>
+                {theme => (<ThemeButton available theme={theme} />)}
+              </For>
+            </ButtonRow>
+          </Show>
         </div>
       </Show>
       <Show when={editing()}>

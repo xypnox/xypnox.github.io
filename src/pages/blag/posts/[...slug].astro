@@ -28,6 +28,8 @@ const dateFormatOption = {
   month: "long",
   year: "numeric",
 } as const;
+
+console.log({ entryD: entry.data });
 ---
 
 <Layout
@@ -40,12 +42,7 @@ const dateFormatOption = {
     tags: entry.data.hidden ? [] : entry.data.tags,
   }}
 >
-  <link
-    slot="head"
-    href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-    rel="stylesheet"
-  />
-  <div class="postHeading">
+  <div class="postHeading" data-wider={( headings.length > 0 && entry.data.hideTOC !== true ) ? "true" : "false"}>
     <h1 class="text-gradient-fx">{entry.data.title}</h1>
     {
       entry.data.description && (
@@ -112,7 +109,7 @@ const dateFormatOption = {
         async></script>
     </div>
     {
-      headings.length > 0 && (
+      headings.length > 0 && entry.data.hideTOC !== true && (
         <div class="content-toc">
           <Toc headings={headings} />
         </div>
@@ -133,11 +130,20 @@ const dateFormatOption = {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-width: 800px;
+    max-width: var(--layout-content-main);
     margin: 0 auto;
     margin-top: 4rem;
     margin-bottom: 2rem;
   }
+
+  .postHeading[data-wider="true"] {
+    max-width: var(--layout-content-wide);
+  }
+  .postHeading[data-wider="true"] h1,
+  .postHeading[data-wider="true"] p {
+    max-width: var(--layout-content-main);
+  }
+  p {}
 
   .postHeading h1,
   .postHeading p {

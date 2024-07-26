@@ -58,6 +58,7 @@ interface DeleteButtonProps {
   icon?: string
   label?: string
   warn?: string
+  skipConfirm?: boolean
   onConfirm: () => void
 }
 
@@ -90,7 +91,12 @@ export const DeleteButton = (props: DeleteButtonProps) => {
 
   return (
     <DeleteButtonWrapper>
-      <DeleteButtonEl onClick={() => setShowConfirm(c => !c)}>
+      <DeleteButtonEl onClick={() => {
+        if (props.skipConfirm) {
+          props.onConfirm()
+        }
+        setShowConfirm(c => !c)
+      }}>
         <Show when={props.icon}>
           <iconify-icon icon={props.icon!} />
         </Show>

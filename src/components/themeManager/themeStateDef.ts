@@ -20,17 +20,17 @@ export const createThemeState = <Palette extends {
   vars: Record<"light" | "dark", any>;
 }>(
   stateid: string,
-  defaultPalettes: Palette[],
+  palettes: Palette[],
   generateTheme: (palette: Palette) => Theme,
   convertCss: (theme: Theme) => string,
-  initTheme?: string,
+  initTheme: Palette,
   initMode?: ThemeMode,
 ) => {
-  const themesData = createStoredStore<Palette[]>(`${stateid}-themes`, []);
+  const themesData = createStoredStore<Palette[]>(`${stateid}-themes`, [initTheme]);
 
   const defaultConfig = {
     mode: initMode ?? 'auto',
-    theme: initTheme ?? defaultPalettes[0].id,
+    theme: initTheme.id,
     debug: false,
     version: THEME_MANAGER_VERSION,
   }
@@ -60,15 +60,16 @@ export const createThemeState = <Palette extends {
   });
 
   const themes = createMemo(() => {
-    return [...themesData.get(), ...defaultPalettes];
+    return [...themesData.get()];
   });
 
   const themePalette: () => Palette = createMemo(() => {
     const config = themeConfig.get();
     let themePalette = themes().find(t => t.id === config.theme);
     if (!themePalette) {
+      //find in palette
       console.error(`Theme ${config.theme} is not available`);
-      themePalette = defaultPalettes[0];
+      themePalette = palettes[0] ?? initTheme;
     }
     return themePalette;
   })
@@ -119,7 +120,7 @@ export const createThemeState = <Palette extends {
 
   // is the current theme one of the default theme?
   const isThemeDefault = createMemo(() => {
-    return defaultPalettes.some(t => t.id === theme().id);
+    return palettes.some(t => t.id === theme().id);
   })
 
   const themeExists = (id: string) => {
@@ -127,11 +128,11 @@ export const createThemeState = <Palette extends {
   }
 
   const addTheme = (theme: Palette) => {
-    const isDefault = defaultPalettes.some(t => t.id === theme.id);
-    if (isDefault) {
-      console.error(`Default theme cannot be added`);
-      return Error(`Default theme cannot be added`);
-    }
+    // const isDefault = palettes.some(t => t.id === theme.id);
+    // if (isDefault) {
+    //   console.error(`Default theme cannot be added`);
+    //   return Error(`Default theme cannot be added`);
+    // }
     const alreadyExists = themesData.get().some(t => t.id === theme.id);
     if (alreadyExists) {
       // console.error(`Theme already exists`);
@@ -154,7 +155,7 @@ export const createThemeState = <Palette extends {
     const themes = [...themesData.get()];
     const index = themes.findIndex(t => t.id === id);
     if (index === -1) {
-      console.error(`Theme ${id} is not available`);
+      console.error(`Theme ${id} is not modifiable`);
       // return Error(`Theme ${id} is not available`);
     }
     themes[index] = theme;
@@ -184,6 +185,10 @@ export const createThemeState = <Palette extends {
     });
   }
 
+  const availableThemes = () => {
+    return palettes.filter(p => !themesData.get().some(t => t.id === p.id));
+  }
+
   return {
     theme,
     themes,
@@ -201,6 +206,7 @@ export const createThemeState = <Palette extends {
     themePalette,
     themeExists,
     setDebugMode,
+    availableThemes,
   }
 }
 

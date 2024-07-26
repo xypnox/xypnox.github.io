@@ -360,15 +360,14 @@ export const ThemeEditor = (props: { closeEditor: () => void }) => {
           }
         />
         <ButtonGroup>
-          <Show when={!themeState.theme().id.startsWith('default')}>
-            <DeleteButton
-              icon={icons.delete}
-              onConfirm={() => {
-                themeState.deleteTheme(themeState.theme().id)
-                props.closeEditor()
-              }}
-            />
-          </Show>
+          <DeleteButton
+            icon={icons.delete}
+            skipConfirm={themeState.isThemeDefault()}
+            onConfirm={() => {
+              themeState.deleteTheme(themeState.theme().id)
+              props.closeEditor()
+            }}
+          />
           <GroupSeparator />
           <CopyButton icon={icons.copy} copyText={() => JSON.stringify(themePalette(), null, 2)} />
         </ButtonGroup>

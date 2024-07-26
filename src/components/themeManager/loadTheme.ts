@@ -65,7 +65,7 @@ if (style && themeCss) {
     const link = document.createElement("link");
     link.href = `https://fonts.googleapis.com/css2?family=${getFirstFont(
       fontFamily,
-    )}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap`;
+    )}:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600`;
     link.rel = "stylesheet";
     link.classList.add("_fontFamily");
     document.head.appendChild(link);

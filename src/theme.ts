@@ -278,101 +278,9 @@ export const defaultThemePalette: ThemePalette = {
   }
 }
 
-const brutalistPalette: ThemePalette = {
-  "name": "Brutalist",
-  "id": "default_brutalist",
-  "base": {
-    "border": {
-      "radius": "0px"
-    },
-    "font": {
-      "family": "Inter"
-    }
-  },
-  "card": "border",
-  "vars": {
-    "light": {
-      "primary": "#222",
-      "secondary": "#6e6e6e",
-      "background": "#f0f0f0",
-      "surface": "#b8b8b844",
-      "text": "#000000"
-    },
-    "dark": {
-      "primary": "#ffffff",
-      "secondary": "#999999",
-      "background": "#000000",
-      "surface": "#ffffff14",
-      "text": "#cccccc"
-    }
-  }
-}
-
-const royalDecree: ThemePalette = {
-  "name": "Royal Decree",
-  "id": "default_royal_decree",
-  "base": {
-    "border": {
-      "radius": "0.25rem"
-    },
-    "font": {
-      "family": "Ibarra Real Nova",
-    },
-  },
-  card: 'border',
-  "vars": {
-    "light": {
-      "primary": "#a6581d",
-      "secondary": "#c26125",
-      "background": "#d9cfc4",
-      "surface": "#a67f6c23",
-      "text": "#453531"
-    },
-    "dark": {
-      "primary": "#cf833c",
-      "secondary": "#ff5370",
-      "background": "#0d0b14",
-      "surface": "#6b52473f",
-      "text": "#ab9b8a"
-    }
-  }
-};
-
-const structured: ThemePalette = {
-  "name": "Structured",
-  "id": "default_structured",
-  "base": {
-    "border": {
-      "radius": "6px"
-    },
-    "font": {
-      "family": "Recursive"
-    }
-  },
-  "card": "solid",
-  "vars": {
-    "light": {
-      "primary": "#0f8a8c",
-      "secondary": "#ff5370",
-      "background": "#c5cde3",
-      "surface": "#ffffff2b",
-      "text": "#3c5266"
-    },
-    "dark": {
-      "primary": "#30a38a",
-      "secondary": "#4da6ff",
-      "background": "#1a1f29",
-      "surface": "#323f4f44",
-      "text": "#5c93ab"
-    }
-  }
-};
 
 export const defaultPalettes: ThemePalette[] = [
   defaultThemePalette,
-  structured,
-  royalDecree,
-  brutalistPalette,
 ]
 
 
@@ -529,6 +437,6 @@ export const generateThemeFromPalette = (palette: ThemePalette): UITheme => {
   return theme
 }
 
-const defaultTheme = generateUITheme(generateThemeFromPalette(defaultPalettes[0]), 'dark')
+const defaultTheme = generateUITheme(generateThemeFromPalette(defaultThemePalette), 'dark')
 export const themeCssVars = defaultTheme.themeCss
 export const theme = defaultTheme.theme
