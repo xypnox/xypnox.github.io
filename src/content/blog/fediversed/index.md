@@ -1,6 +1,6 @@
 ---
 title: 'Fediversed'
-date: 2024-06-26
+date: 2024-07-26
 description: 'A sojourn turned to a home'
 
 categories: ["tech", "culture"]
