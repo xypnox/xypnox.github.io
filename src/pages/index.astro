@@ -103,32 +103,34 @@ import LatestBlog from "../components/latestBlog.astro";
   .intro {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 2.25rem;
+    gap: 2.5rem;
     width: 100%;
     max-width: 1200px;
-    font-size: var(--font-size-md);
     color: var(--text);
     padding: 2rem;
     border-radius: calc(var(--border-radius) * 4);
     border: var(--card-border);
   }
 
-  .intro :global(wrapper) {
-    flex-shrink: 1;
+  @media (max-width: 30em) {
+    .intro {
+      flex-direction: column;
+    }
   }
+
+  .intro :global(.wrapper) {}
 
   .intro-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-    flex-grow: 1;
-    /* max-width: 35ch; */
+    flex-basis: 70%;
   }
 
   .intro-content h1 {
     margin: 0;
+    font-size: var(--font-size-lg);
   }
 
   .intro-content p {
@@ -137,7 +139,7 @@ import LatestBlog from "../components/latestBlog.astro";
   }
 
   .intro .subline {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     color: var(--text);
   }
 
