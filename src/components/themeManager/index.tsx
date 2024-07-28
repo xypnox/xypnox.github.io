@@ -94,7 +94,6 @@ const ManagerWrapper = styled('div')`
 const Button = styled('button')`
   padding: 0.5rem 1rem;
   border-radius: ${theme.border.radius};
-  font-size: ${theme.font.size.base};
   border: 1px solid transparent;
   background: ${theme.surface};
   color: ${theme.text};
