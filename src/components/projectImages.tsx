@@ -182,7 +182,7 @@ const ImageInfo = styled("div")`
     padding-left: 1.25rem;
   }
   li {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     margin: 0;
   }
   @media (max-width: 1200px) {

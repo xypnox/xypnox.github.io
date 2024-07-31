@@ -1,0 +1,148 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import {data, pastEventRender, legends, totalMonths} from '../content/past.ts';
+import { capitalize } from "../lib/text.ts";
+import PageHeader from "../components/pageHeader.astro";
+
+const meta = {
+  title: "Past | xypnox",
+  description: "A log of my past events, milestones and achievements."
+}
+---
+
+<Layout title="Past | xypnox" meta={{ description: data.description}}>
+  <main>
+    <PageHeader {...meta} />
+    <p>This log is in no way finished yet.</p>
+    <div class="past-grid"
+    style={{
+      '--totalMonths': totalMonths
+    }}
+    >
+    {legends.map(legend => (
+      <div
+        class="past-legend"
+        style={{
+          '--start': legend.gridStart > 0 ? legend.gridStart : 1,
+          '--span': legend.gridSpan,
+        }}
+      >
+        <h2>{legend.title}</h2>
+      </div>
+    ))}
+    {pastEventRender.map(ev => (
+      <div class={"past-item " + ev.type}
+        data-span={ev.gridSpan}
+        style={{
+        '--start': ev.gridStart > 0 ? ev.gridStart : 1,
+        '--span': ev.gridSpan, 
+        'grid-column': ev.column
+        }}
+      >
+        <p class="event-category">
+          {ev.icon && <iconify-icon icon={ev.icon} />}
+          {capitalize(ev.category)}
+        </p>
+        <h2>
+        {ev.url ? <a href={ev.url}>{ev.title}</a> : ev.title}
+        </h2>
+      </div>
+    ))}
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: var(--font-size-xxxl);
+    gap: 4rem;
+    height: 100%;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
+    .separator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: var(--font-size-xxxl);
+      color: var(--fadeText);
+    }
+  }
+
+  .past-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 6em repeat(auto-fill, 1fr);
+    grid-template-rows: repeat(var(--totalMonths), 1em);
+    width: max-content;
+  }
+
+  .past-item {
+    height: 100%;
+    overflow: hidden;
+    border-radius: calc(var(--border-radius) * 2);
+    grid-row-start: var(--start);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25em;
+    padding: 1rem;
+
+    p, h2 {
+      margin: 0;
+    }
+
+    h2 {
+      font-size: var(--font-size-base);
+      a {
+        color: inherit;
+      }
+    }
+
+    &[data-span="1"] {
+      padding: 0.25em 0.75em;
+      font-size: var(--font-size-sm);
+      border-radius: calc(var(--border-radius));
+    }
+
+    .event-category {
+      display: flex;
+      align-items: center;
+      gap: 0.25em;
+      color: var(--primary-color);
+    }
+  }
+
+  .past-legend {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    grid-row-start: var(--start);
+    grid-column: 1;
+    grid-row-end: span var(--span);
+    color: var(--fadeText);
+    text-align: center;
+    border: 1px solid var(--fadeText);
+    border-radius: calc(var(--border-radius) * 2);
+  }
+
+  .past-item.event {
+    background-color: var(--surface);
+    color: var(--text);
+    grid-row-end: span max(var(--span), 2);
+  }
+
+  .past-item.milestone {
+    align-items: center;
+    color: var(--secondary-color);
+    grid-row-end: span 3;
+    padding: 0em 0.5em;
+    gap: 0;
+    border: 1px dashed var(--secondary-color);
+  }
+
+</style>

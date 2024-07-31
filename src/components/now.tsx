@@ -92,6 +92,8 @@ const ItemWrapper = styled("div")`
 `
 
 const ProfileImage = styled("div")`
+  max-width: 30em;
+  max-height: 30em;
   --scale1: 0.85;
   --scale2: 0.7;
   @keyframes rotating {
@@ -243,8 +245,15 @@ export const Now = () => {
         gap={2}
       >
         <Show when={data.photo}>
-          <ProfileImage>
-            <img src={data.photo} alt={data.photoAlt} title={data.photoAlt} />
+          <ProfileImage >
+            <img
+              style={{
+                // width: '100%',
+                'max-width': '30em',
+                // height: '100%',
+                'max-height': '30em',
+              }}
+              src={data.photo} alt={data.photoAlt} title={data.photoAlt} />
             {/* <img src={'/logo.svg'} alt={data.photoAlt} title={data.photoAlt} /> */}
             <div class="fixed-ring" />
             <div class="glow-1" />

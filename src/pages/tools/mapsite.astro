@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { MapSite as MapSiteSolid } from "../../tools/mapsite";
+import PageHeader from "../../components/pageHeader.astro";
+
+const meta = {
+  title: "MapSite",
+  description: "map maker",
+}
+---
+
+<Layout title={meta.title} meta={meta}>
+  <PageHeader {...meta} />
+  <main>
+    <MapSiteSolid client:only />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 2rem;
+    width: 100%;
+  }
+</style>

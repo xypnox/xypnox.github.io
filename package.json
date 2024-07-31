@@ -38,6 +38,7 @@
     "iconify-icon": "^1.0.8",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.groupby": "^4.6.0",
     "nanoid": "^5.0.4",
     "remark-breaks": "^4.0.0",
     "sharp": "^0.32.6",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@iconify-json/ph": "^1.1.13",
     "@types/lodash.debounce": "^4.0.9",
+    "@types/lodash.groupby": "^4.6.9",
     "@types/node": "^20.9.3",
     "@types/tinycolor2": "^1.4.6",
     "@types/xml2js": "^0.4.14",
