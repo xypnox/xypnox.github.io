@@ -6,13 +6,13 @@ import PageHeader from "../components/pageHeader.astro";
 
 const meta = {
   title: "Past | xypnox",
-  description: "A log of my past events, milestones and achievements."
+  description: "A chronological log of my past events, milestones and achievements."
 }
 ---
 
 <Layout title="Past | xypnox" meta={{ description: data.description}}>
   <main>
-    <PageHeader {...meta} />
+    <PageHeader {...meta} title="Past"  />
     <p>This log is in no way finished yet.</p>
     <div class="past-grid"
     style={{
@@ -31,12 +31,12 @@ const meta = {
       </div>
     ))}
     {pastEventRender.map(ev => (
-      <div class={"past-item " + ev.type}
+      <div class={"past-item " + ev.type + ' event-' + ev.category}
         data-span={ev.gridSpan}
         style={{
-        '--start': ev.gridStart > 0 ? ev.gridStart : 1,
-        '--span': ev.gridSpan, 
-        'grid-column': ev.column
+          '--start': ev.gridStart > 0 ? ev.gridStart : 1,
+          '--span': ev.gridSpan, 
+          'grid-column': ev.column
         }}
       >
         <p class="event-category">
@@ -44,7 +44,9 @@ const meta = {
           {capitalize(ev.category)}
         </p>
         <h2>
-        {ev.url ? <a href={ev.url}>{ev.title}</a> : ev.title}
+        {ev.url ? <a href={ev.url}>{ev.title}
+        <iconify-icon icon="ph:arrow-up-right-light" />
+        </a> : ev.title}
         </h2>
       </div>
     ))}
@@ -57,7 +59,6 @@ const meta = {
   main {
     display: flex;
     flex-direction: column;
-    padding: 0 1rem;
     gap: var(--font-size-xxxl);
     gap: 4rem;
     height: 100%;
@@ -76,22 +77,21 @@ const meta = {
   .past-grid {
     display: grid;
     gap: 1rem;
-    grid-template-columns: 6em repeat(auto-fill, 1fr);
+    grid-template-columns: 2em repeat(6, 1fr);
     grid-template-rows: repeat(var(--totalMonths), 1em);
     width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .past-item {
     height: 100%;
-    overflow: hidden;
-    border-radius: calc(var(--border-radius) * 2);
     grid-row-start: var(--start);
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 0.25em;
-    padding: 1rem;
+    padding: 0.25em 0.5em;
 
     p, h2 {
       margin: 0;
@@ -101,13 +101,20 @@ const meta = {
       font-size: var(--font-size-base);
       a {
         color: inherit;
+        display: flex;
+        align-items: center;
+        iconify-icon {
+          font-size: var(--font-size-sm);
+        }
       }
     }
 
     &[data-span="1"] {
-      padding: 0.25em 0.75em;
+      padding: 0.15em 0.5em;
       font-size: var(--font-size-sm);
-      border-radius: calc(var(--border-radius));
+      h2 {
+        font-size: var(--font-size-sm);
+      }
     }
 
     .event-category {
@@ -131,18 +138,53 @@ const meta = {
   }
 
   .past-item.event {
-    background-color: var(--surface);
     color: var(--text);
     grid-row-end: span max(var(--span), 2);
+    border-left: 4px solid var(--surface2);
+    &.event-work {
+      border-left: 4px solid var(--secondary-color);
+    }
+    &.event-consult {
+      border-left: 4px solid var(--heading);
+    }
+    &.event-personal {
+      border-left: 4px solid var(--primary-color);
+    }
   }
 
   .past-item.milestone {
     align-items: center;
     color: var(--secondary-color);
     grid-row-end: span 3;
-    padding: 0em 0.5em;
+    justify-content: center;
+    padding: 0.5em;
     gap: 0;
     border: 1px dashed var(--secondary-color);
+  }
+
+  @media (max-width: 700px) {
+    .past-grid {
+      grid-template-columns: 2em repeat(6, 3.5rem);
+    }
+    .past-item {
+      writing-mode: vertical-rl;
+      gap: 0em;
+      padding: 0.25em 0.5em;
+    }
+    .past-item.event {
+      grid-row-end: span max(var(--span), 3);
+      &[data-span="1"] {
+        width: 3.5em;
+        padding: 0.15em 0.25em;
+        font-size: var(--font-size-sm);
+        h2 {
+          font-size: var(--font-size-sm);
+        }
+      }
+    }
+    .past-item.milestone {
+      align-items: flex-start;
+    }
   }
 
 </style>

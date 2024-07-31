@@ -36,7 +36,7 @@ export const data: {
     {
       type: 'event',
       category: 'work',
-      icon: 'ph:briefcase',
+      icon: 'ph:code-duotone',
       title: 'Calry',
       // column: 2,
       start: '2023-03-01',
@@ -46,7 +46,7 @@ export const data: {
     {
       type: 'event',
       category: 'work',
-      icon: 'ph:briefcase',
+      icon: 'ph:code-duotone',
       title: 'Flataway',
       start: '2024-07-01',
       current: true,
@@ -70,7 +70,7 @@ export const data: {
     {
       type: 'event',
       category: 'personal',
-      icon: '',
+      icon: 'ph:shooting-star-duotone',
       title: 'notes',
       start: '2022-03-01',
       current: true,
@@ -79,7 +79,7 @@ export const data: {
     {
       type: 'event',
       category: 'personal',
-      icon: '',
+      icon: 'ph:shooting-star-duotone',
       title: 'xip',
       start: '2024-02-01',
       current: true,
@@ -88,7 +88,7 @@ export const data: {
     {
       type: 'event',
       category: 'work',
-      icon: 'ph:briefcase',
+      icon: 'ph:code-duotone',
       title: 'Finbox',
       start: '2019-05-01',
       end: '2019-07-31',
@@ -97,7 +97,7 @@ export const data: {
     {
       type: 'event',
       category: 'work',
-      icon: 'ph:briefcase',
+      icon: 'ph:code-duotone',
       title: 'Workduck',
       start: '2021-04-01',
       end: '2023-01-01',
@@ -106,7 +106,7 @@ export const data: {
     {
       type: 'event',
       category: 'work',
-      icon: 'ph:briefcase',
+      icon: 'ph:code-duotone',
       title: 'Fifthtry',
       start: '2020-07-01',
       end: '2020-09-31',

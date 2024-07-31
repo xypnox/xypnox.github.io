@@ -54,6 +54,11 @@ export const data: {
     },
     {
       type: 'collab',
+      label: 'Building smooth experiences at',
+      title: 'Flataway',
+    },
+    {
+      type: 'collab',
       label: 'Managing interfaces (design & frontend) at',
       title: 'Calry',
       // description: 'The Unified API for Vacation Rental PMS Integrations',
@@ -67,10 +72,9 @@ export const data: {
     },
     {
       type: 'project',
-      label: 'Spotted converting divs (to semantic elements) on',
-      title: 'tipedream',
-      // description: 'Experiments with decent typography, and hardcore responsiveness.',
-      url: 'https://github.com/xypnox/tipedream',
+      label: 'Found tinkering (with online services) on',
+      title: 'agenc',
+      url: 'https://agenc.xyp.one/',
     },
   ]
 }

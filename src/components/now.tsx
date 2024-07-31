@@ -245,12 +245,17 @@ export const Now = () => {
         gap={2}
       >
         <Show when={data.photo}>
-          <ProfileImage >
+          <ProfileImage style={{
+            width: '100%',
+            'max-width': '30em',
+            height: '100%',
+            'max-height': '30em',
+          }}>
             <img
               style={{
-                // width: '100%',
+                width: '100%',
                 'max-width': '30em',
-                // height: '100%',
+                height: '100%',
                 'max-height': '30em',
               }}
               src={data.photo} alt={data.photoAlt} title={data.photoAlt} />
