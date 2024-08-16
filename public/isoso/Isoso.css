@@ -1,0 +1,287 @@
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 100;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Thin.woff2") format("woff2"),
+    url("TTF/Isoso-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 100;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-ThinOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ThinOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 100;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-ThinOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ThinOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 200;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-ExtraLight.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 200;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-ExtraLightOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraLightOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 200;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-ExtraLightOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraLightOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Light.woff2") format("woff2"),
+    url("TTF/Isoso-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-LightOblique.woff2") format("woff2"),
+    url("TTF/Isoso-LightOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 300;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-LightOblique.woff2") format("woff2"),
+    url("TTF/Isoso-LightOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Regular.woff2") format("woff2"),
+    url("TTF/Isoso-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-Oblique.woff2") format("woff2"),
+    url("TTF/Isoso-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 400;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-Oblique.woff2") format("woff2"),
+    url("TTF/Isoso-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Medium.woff2") format("woff2"),
+    url("TTF/Isoso-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-MediumOblique.woff2") format("woff2"),
+    url("TTF/Isoso-MediumOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 500;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-MediumOblique.woff2") format("woff2"),
+    url("TTF/Isoso-MediumOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-SemiBold.woff2") format("woff2"),
+    url("TTF/Isoso-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-SemiBoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-SemiBoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 600;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-SemiBoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-SemiBoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Bold.woff2") format("woff2"),
+    url("TTF/Isoso-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-BoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-BoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 700;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-BoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-BoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-ExtraBold.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-ExtraBoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraBoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 800;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-ExtraBoldOblique.woff2") format("woff2"),
+    url("TTF/Isoso-ExtraBoldOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  src:
+    url("WOFF2/Isoso-Heavy.woff2") format("woff2"),
+    url("TTF/Isoso-Heavy.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web";
+  font-display: swap;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: oblique;
+  src:
+    url("WOFF2/Isoso-HeavyOblique.woff2") format("woff2"),
+    url("TTF/Isoso-HeavyOblique.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Isoso Web Oblique";
+  font-display: swap;
+  font-weight: 900;
+  font-stretch: normal;
+  src:
+    url("WOFF2/Isoso-HeavyOblique.woff2") format("woff2"),
+    url("TTF/Isoso-HeavyOblique.ttf") format("truetype");
+}

@@ -179,6 +179,7 @@ const ToggleSection = (props: ParentProps & {
 }
 
 const SelectedFamilies = [
+  'Isoso Web',
   'Inter',
   'Jost',
   'Outfit',
