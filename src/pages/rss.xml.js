@@ -9,6 +9,7 @@ export async function GET(context) {
     site: context.site,
     items: blog
       .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+      .filter((a) => a.data.hidden !== true)
       .map((post) => ({
         title: post.data.title,
         pubDate: post.data.date,
