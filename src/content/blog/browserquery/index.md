@@ -17,7 +17,8 @@ I use a few extensions in the browser, Firefox. Tree Style Tabs. It does two nic
 
 And secondly, every time my browser restarts starts, the extension restores the previous session, but doesn't actually load any tabs unless they are opened (or pinned).
 
-Then I have 7 windows of Firefox open. Two of them are ancient but have not been touched in a while. Apart from them, there is one with mail, mastodon (elk) etc pinned, then there is a bookmarked (to read) collection with hn.algolia.com pinned. There is also a general dev window, dev windows for two clients, a window with design and a window with notes and localhost tabs.
+Then I have 7 windows of Firefox open. I didn't start with seven windows either. I had one window to begin with but with split monitors I wanted one window to just have the localhost development tabs to 
+Two of them are ancient but have not been touched in a while. Apart from them, there is one with mail, mastodon (elk) etc pinned, then there is a bookmarked (to read) collection with hn.algolia.com pinned. There is also a general dev window, dev windows for two clients, a window with design and a window with notes and localhost tabs.
 
 I also use two 1440p monitors (at native res).
 
