@@ -1,5 +1,6 @@
 ---
 title: "Caddy Server and Proxy"
+description: "A short tale of servers proxies and debugging"
 date: 2024-09-09
 
 categories: ["tech"]
