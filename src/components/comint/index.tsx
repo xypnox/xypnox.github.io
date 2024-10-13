@@ -1,6 +1,5 @@
-import { For, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
+import { For, Show, createEffect, createSignal } from "solid-js";
 import styles from './style.module.css';
-import { Button } from "../elements/atoms";
 
 const instance = 'https://fosstodon.org';
 const fetchComments = async (id: string) => {
@@ -14,94 +13,6 @@ const fetchComments = async (id: string) => {
   };
 }
 
-/*
- * {
-  "0": {
-    "id": "113300194331339696",
-    "created_at": "2024-10-13T12:49:26.043Z",
-    "in_reply_to_id": "113300164654141011",
-    "in_reply_to_account_id": "106397694356569392",
-    "sensitive": false,
-    "spoiler_text": "",
-    "visibility": "public",
-    "language": "en",
-    "uri": "https://fosstodon.org/users/xypnox/statuses/113300194331339696",
-    "url": "https://fosstodon.org/@xypnox/113300194331339696",
-    "replies_count": 0,
-    "reblogs_count": 0,
-    "favourites_count": 0,
-    "edited_at": null,
-    "content": "<p>Very nice very nice.</p><p>GG <span class=\"h-card\" translate=\"no\"><a href=\"https://mastodon.social/@Mastodon\" class=\"u-url mention\">@<span>Mastodon</span></a></span></p>",
-    "reblog": null,
-    "application": {
-      "name": "Elk",
-      "website": "https://elk.zone"
-    },
-    "account": {
-      "id": "106397694356569392",
-      "username": "xypnox",
-      "acct": "xypnox",
-      "display_name": "xypnox",
-      "locked": false,
-      "bot": false,
-      "discoverable": true,
-      "indexable": true,
-      "group": false,
-      "created_at": "2021-06-12T00:00:00.000Z",
-      "note": "<p>Dev, Design, Literature, Philosophy</p><p>Dabbling with interfaces and design systems.</p>",
-      "url": "https://fosstodon.org/@xypnox",
-      "uri": "https://fosstodon.org/users/xypnox",
-      "avatar": "https://cdn.fosstodon.org/accounts/avatars/106/397/694/356/569/392/original/a7cd8aef1361b657.png",
-      "avatar_static": "https://cdn.fosstodon.org/accounts/avatars/106/397/694/356/569/392/original/a7cd8aef1361b657.png",
-      "header": "https://cdn.fosstodon.org/accounts/headers/106/397/694/356/569/392/original/075182ac8604332a.png",
-      "header_static": "https://cdn.fosstodon.org/accounts/headers/106/397/694/356/569/392/original/075182ac8604332a.png",
-      "followers_count": 80,
-      "following_count": 416,
-      "statuses_count": 2364,
-      "last_status_at": "2024-10-13",
-      "hide_collections": false,
-      "noindex": false,
-      "emojis": [],
-      "roles": [
-        {
-          "id": "8",
-          "name": "Supporter 💰♥️",
-          "color": "#4f7a28"
-        }
-      ],
-      "fields": [
-        {
-          "name": "Home",
-          "value": "<a href=\"https://xypnox.com/\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">xypnox.com/</span><span class=\"invisible\"></span></a>",
-          "verified_at": "2023-10-31T15:49:25.420+00:00"
-        },
-        {
-          "name": "Github",
-          "value": "<a href=\"https://github.com/xypnox\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">github.com/xypnox</span><span class=\"invisible\"></span></a>",
-          "verified_at": "2023-03-13T11:14:19.847+00:00"
-        },
-        {
-          "name": "Blog",
-          "value": "<a href=\"https://www.xypnox.com/rss.xml\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://www.</span><span class=\"\">xypnox.com/rss.xml</span><span class=\"invisible\"></span></a>",
-          "verified_at": null
-        }
-      ]
-    },
-    "media_attachments": [],
-    "mentions": [
-      {
-        "id": "1462",
-        "username": "Mastodon",
-        "url": "https://mastodon.social/@Mastodon",
-        "acct": "Mastodon@mastodon.social"
-      }
-    ],
-    "tags": [],
-    "emojis": [],
-    "card": null,
-    "poll": null
-  }
-}*/
 interface CommentRaw {
   account: {
     display_name: string;
