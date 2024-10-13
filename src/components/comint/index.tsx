@@ -1,5 +1,6 @@
-import { For, Show, createEffect, createSignal } from "solid-js";
+import { For, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
 import styles from './style.module.css';
+import { Button } from "../elements/atoms";
 
 const instance = 'https://fosstodon.org';
 const fetchComments = async (id: string) => {
@@ -28,6 +29,10 @@ interface CommentRaw {
   reblogs_count: number;
   favourites_count: number;
   in_reply_to_id: string;
+  media_attachments: {
+    preview_url: string;
+    description: string;
+  }[]
 }
 
 /** This is nested as replies */
@@ -106,6 +111,9 @@ const Comment = (props: { comment: Comment, root?: boolean }) => {
         }
       </header>
       <div>
+        <Show when={props.comment.media_attachments.length > 0}>
+          <img class={styles.media} src={props.comment.media_attachments[0].preview_url} alt={props.comment.media_attachments[0].description} />
+        </Show>
         <div class={styles.ccontent} innerHTML={props.comment.content} />
         <div class={styles.meta}>
           <div>

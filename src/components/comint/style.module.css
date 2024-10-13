@@ -62,6 +62,10 @@
       margin: 0.75em 0;
     }
   }
+  img.media {
+    margin: 0.5em 0;
+    max-width: 100%;
+  }
 
   .meta {
     display: flex;
