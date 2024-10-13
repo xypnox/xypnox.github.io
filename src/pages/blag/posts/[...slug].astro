@@ -99,7 +99,7 @@ console.log({ entryD: entry.data });
         ❦
         <p>Sooner or later, everything ends.</p>
       </div>
-      {entry.data.tootId && <Commint tootId={entry.data.tootId} client:load />
+      {entry.data.tootId && <Commint tootId={entry.data.tootId} client:visible />
     </div>
     {
       headings.length > 0 && entry.data.hideTOC !== true && (

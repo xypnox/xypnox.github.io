@@ -4,9 +4,28 @@
   gap: 1em;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .comment {
-  padding: 1em;
-  border-radius: calc(2 * var(--border-radius));
+  animation: fadeIn 0.5s ease forwards;
+
+  padding: 0.5em;
+
+  &.rootComment {
+    border-radius: var(--border-radius);
+    > header {
+      h3 {
+        font-size: var(--font-size-base);
+      }
+    }
+  }
 
   header {
     display: flex;
@@ -21,8 +40,6 @@
     h3,
     p {
       margin: 0;
-    }
-    p {
       font-size: var(--font-size-sm);
     }
     a {
@@ -30,8 +47,8 @@
       border-bottom: none;
     }
     img {
-      width: 2rem;
-      height: 2rem;
+      width: 1.25em;
+      height: 1.25em;
       border-radius: 50%;
       flex-grow: 0;
       flex-shrink: 0;
@@ -40,15 +57,16 @@
   }
 
   .ccontent {
-    padding: 0.5em 0;
+    font-size: var(--font-size-base);
     p {
-      margin: 0.5em 0;
+      margin: 0.75em 0;
     }
   }
 
   .meta {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5em;
     font-size: var(--font-size-sm);
@@ -57,6 +75,29 @@
     a {
       text-decoration: none;
       border-bottom: none;
+    }
+  }
+
+  button {
+    padding: 0.25em 1em;
+    font-size: var(--font-size-sm);
+    border: none;
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    &:hover {
+      color: var(--primary-color);
+      background: var(--surface2);
+    }
+  }
+
+  .replies {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    .comment {
+      border-left: 2px solid var(--border-color);
     }
   }
 }
