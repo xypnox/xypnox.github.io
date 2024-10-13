@@ -1,0 +1,42 @@
+---
+title: 'Comments via Mastodon'
+date: 2024-10-13
+description: "Replaced comments with Mastodon's context API calls."
+
+categories: ["tech"]
+tags: ["tech", "software"]
+
+tootId: "113034812167024055"
+hideTOC: true
+---
+
+import CodeEmbed from '../../components/codeembed.astro';
+
+I have replaced the comment mechanism of this website again.
+
+I looked into [Webmentions](https://indieweb.org/webmention) but the setup was quite complex. I want to add it later.
+
+Now the comments are raw calls to the mastodon context APIs. There is a slight technicality in updating the `tootId` in the post frontmatter, but when set it will fetch and render the comments on client side (so they will be latest).
+
+Old comments are available in the [old repo's issues](https://github.com/xypnox/blag_zola/issues). 
+
+Earlier people needed a github account to post comments, now they need a mastodon/fediverse account instead.
+
+
+Here is the [basic Solid component](https://) I wrote for rendering comments:
+
+<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/theme.ts" lang="ts" />
+
+And the code embed component (because why not):
+
+<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/theme.ts" lang="astro" />
+
+Currently apart from the user profile image, the data is rendered in plain text, no icons.
+
+Also new is the css based syntax highlighting from github code blocks as seen above.
+
+With these changes, the site is now entirely customizable in terms of colors and fonts. The code blocks and comments were the last remaining parts that did not use the theme variables.
+
+
+
+Hopefully you will find comments below.

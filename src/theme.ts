@@ -150,15 +150,29 @@ export const generateUITheme = (
 
   return generated;
 };
-
+// --step--2: clamp(0.7813rem, 0.7526rem + 0.0763vw, 0.8442rem);
+//   --step--1: clamp(0.9375rem, 0.8521rem + 0.2276vw, 1.1253rem);
+//   --step-0: clamp(1.125rem, 0.9545rem + 0.4545vw, 1.5rem);
+//   --step-1: clamp(1.35rem, 1.0548rem + 0.7873vw, 1.9995rem);
+//   --step-2: clamp(1.62rem, 1.1448rem + 1.2671vw, 2.6653rem);
+//   --step-3: clamp(1.944rem, 1.2127rem + 1.9502vw, 3.5529rem);
+//   --step-4: clamp(2.3328rem, 1.2404rem + 2.913vw, 4.736rem);
+//   --step-5: clamp(2.7994rem, 1.2022rem + 4.2591vw, 6.3131rem);
 const fontSizes = {
-  sm: "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
-  base: "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
-  md: "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
-  lg: "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
-  xl: "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
-  xxl: "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
-  xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
+  // sm: "clamp(0.8rem, 0.21vw + 0.75rem, 0.94rem)",
+  // base: "clamp(1rem, 0.38vw + 0.9rem, 1.25rem)",
+  // md: "clamp(1.25rem, 0.64vw + 1.09rem, 1.67rem)",
+  // lg: "clamp(1.56rem, 1.01vw + 1.31rem, 2.22rem)",
+  // xl: "clamp(1.95rem, 1.55vw + 1.57rem, 2.96rem)",
+  // xxl: "clamp(2.44rem, 2.32vw + 1.86rem, 3.95rem)",
+  // xxxl: "clamp(3.05rem, 3.4vw + 2.2rem, 5.26rem)",
+  sm: "clamp(0.9375rem, 0.8521rem + 0.2276vw, 1.1253rem)",
+  base: "clamp(1.125rem, 0.9545rem + 0.4545vw, 1.5rem)",
+  md: "clamp(1.35rem, 1.0548rem + 0.7873vw, 1.9995rem)",
+  lg: "clamp(1.62rem, 1.1448rem + 1.2671vw, 2.6653rem)",
+  xl: "clamp(1.944rem, 1.2127rem + 1.9502vw, 3.5529rem)",
+  xxl: "clamp(2.3328rem, 1.2404rem + 2.913vw, 4.736rem)",
+  xxxl: "clamp(2.7994rem, 1.2022rem + 4.2591vw, 6.3131rem)",
 };
 
 const layout = {

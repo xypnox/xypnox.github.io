@@ -1,0 +1,55 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.comment {
+  padding: 1em;
+  border-radius: calc(2 * var(--border-radius));
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    h3,
+    p {
+      margin: 0;
+    }
+    img {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin: 0;
+    }
+  }
+
+  .ccontent {
+    padding: 0.5em;
+    p {
+      margin: 0.5em 0;
+    }
+  }
+
+  .meta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.8em;
+    color: #666;
+
+    a {
+      text-decoration: none;
+      border-bottom: none;
+    }
+  }
+}

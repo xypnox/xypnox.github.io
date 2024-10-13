@@ -132,10 +132,9 @@ const dateFormatOption = {
     color: var(--heading);
   }
 
-  .blog-entry:not(:has(.coverImage)) {
+  :global(.first) .blog-entry:not(:has(.coverImage)) {
     h2 {
       font-size: var(--font-size-xl);
-      margin-block-end: 1em;
     }
   }
   .blog-entry .details {

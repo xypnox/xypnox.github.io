@@ -46,6 +46,8 @@ export const frontMatter = {
         >
           {projectCoverImages && p.cover ? (
             <img
+              width="400"
+              height="200"
               class="cover-image"
               src={
                 projectCoverImages[pathToProjectImage(p.slug, p.cover.src!)].src

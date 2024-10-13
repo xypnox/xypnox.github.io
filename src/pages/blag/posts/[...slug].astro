@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/MainLayout.astro";
 import Toc from "../../../components/Toc.astro";
+import { Commint } from "../../../components/comint";
 import Tag from "../../../components/nav/Tag.astro";
 import { blogStaticPaths } from "../../../lib/dataAstro";
 
@@ -98,16 +99,7 @@ console.log({ entryD: entry.data });
         ❦
         <p>Sooner or later, everything ends.</p>
       </div>
-      <h2>Comments</h2>
-      <script
-        is:inline
-        src="https://utteranc.es/client.js"
-        repo="xypnox/blag_zola"
-        issue-term="pathname"
-        label="comments"
-        theme="photon-dark"
-        crossorigin="anonymous"
-        async></script>
+      {entry.data.tootId && <Commint tootId={entry.data.tootId} client:load />
     </div>
     {
       headings.length > 0 && entry.data.hideTOC !== true && (
@@ -185,8 +177,8 @@ console.log({ entryD: entry.data });
     max-width: var(--layout-content-main);
     width: 100%;
     margin: 0 auto;
-    line-height: 1.5;
-    font-size: 1.2rem;
+    line-height: 1.6;
+    font-size: 1.1em;
   }
 
   blockquote.hidden-post {
@@ -251,9 +243,6 @@ console.log({ entryD: entry.data });
       width: 100%;
       max-width: 800px;
       position: relative;
-    }
-    .content {
-      font-size: 1rem;
     }
   }
 

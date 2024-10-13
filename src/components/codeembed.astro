@@ -1,0 +1,19 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+  url: string;
+  lang: string;
+}
+
+const codeUrl = async (url: string) => {
+  const code = await fetch(url).then((res) => res.text());
+  return code;
+};
+
+const { url, lang } = Astro.props;
+const code = await codeUrl(url);
+---
+
+<Code code={code} lang={lang} theme="css-variables" />
+

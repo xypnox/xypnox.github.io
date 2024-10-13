@@ -279,10 +279,7 @@
       }
     },
     {
-      "scope": [
-        "keyword.operator.new",
-        "keyword.operator.expression"
-      ],
+      "scope": ["keyword.operator.new", "keyword.operator.expression"],
       "settings": {
         "foreground": "#BB9AF7"
       }
@@ -333,10 +330,7 @@
     },
     {
       "name": "Function declarations",
-      "scope": [
-        "entity.name.function",
-        "support.function"
-      ],
+      "scope": ["entity.name.function", "support.function"],
       "settings": {
         "foreground": "#82AAFF"
       }
@@ -387,27 +381,20 @@
       }
     },
     {
-      "scope": [
-        "meta.definition.variable.name",
-        "support.variable"
-      ],
+      "scope": ["meta.definition.variable.name", "support.variable"],
       "settings": {
         "foreground": "#ff5370"
       }
     },
     {
-      "scope": [
-        "variable.parameter"
-      ],
+      "scope": ["variable.parameter"],
       "settings": {
         "foreground": "#ff9e64"
       }
     },
     {
       "name": "Variable and parameter name",
-      "scope": [
-        "variable"
-      ],
+      "scope": ["variable"],
       "settings": {
         "foreground": "#c0caf5"
       }

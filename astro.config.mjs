@@ -14,7 +14,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkBreaks],
     shikiConfig: {
-      theme: shikiTheme,
+      theme: 'css-variables',
     }
   },
   vite: {
