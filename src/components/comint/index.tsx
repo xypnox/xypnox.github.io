@@ -76,9 +76,9 @@ export const Commint = (props: { tootId: string }) => {
       {data.error && <p>Error: {data.error}</p>}
       {data() && (
         <>
-          <h2>Comments:</h2>
+          <h2>Comments</h2>
           <p>
-            <a href={instance + '/web/statuses/' + props.tootId}>View on Mastodon</a>
+            <a href={instance + '/web/statuses/' + props.tootId}>Comment on Mastodon</a>
           </p>
           <br />
           <div class={styles.comments}>

@@ -6,7 +6,7 @@ description: "Replaced comments with Mastodon's context API calls."
 categories: ["tech"]
 tags: ["tech", "software"]
 
-tootId: "113034812167024055"
+tootId: "113300164654141011"
 hideTOC: true
 ---
 
@@ -23,13 +23,14 @@ Old comments are available in the [old repo's issues](https://github.com/xypnox/
 Earlier people needed a github account to post comments, now they need a mastodon/fediverse account instead.
 
 
-Here is the [basic Solid component](https://) I wrote for rendering comments:
+Here is the [basic Solid component](https://github.com/xypnox/xypnox.github.io/tree/v2/src/components/comint) I wrote for rendering comments:
 
-<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/theme.ts" lang="ts" />
+<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/components/comint/index.tsx" lang="ts" />
 
-And the code embed component (because why not):
 
-<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/theme.ts" lang="astro" />
+And the [code embed component](https://github.com/xypnox/xypnox.github.io/blob/v2/src/components/codeembed.astro) (because why not):
+
+<CodeEmbed url="https://raw.githubusercontent.com/xypnox/xypnox.github.io/refs/heads/v2/src/components/codeembed.astro" lang="astro" />
 
 Currently apart from the user profile image, the data is rendered in plain text, no icons.
 
