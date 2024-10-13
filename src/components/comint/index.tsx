@@ -67,8 +67,7 @@ export const Commint = (props: { tootId: string }) => {
   const [data, { refetch, }] = createResource(async () => fetchComments(props.tootId));
 
   createEffect(() => {
-    const d = data();
-    console.log({ d });
+    refetch();
   });
   return (
     <div>
