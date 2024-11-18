@@ -6,7 +6,7 @@ description: "Search is f*cked and so are we."
 categories: ["tech"]
 tags: ["tech", "media"]
 
-# tootId: "113300164654141011"
+tootId: "113504319395445133"
 hideTOC: true
 ---
 
