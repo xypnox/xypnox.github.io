@@ -4,7 +4,7 @@ description: "A short tale of servers proxies and debugging"
 date: 2024-09-09
 
 categories: ["tech"]
-tags: ["tech", "software", "tools"]
+tags: ["tech", "dev", "tools"]
 ---
 
 

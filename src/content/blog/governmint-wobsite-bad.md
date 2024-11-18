@@ -4,7 +4,7 @@ date: 2024-08-27
 description: 'Why are government websites bad?'
 
 categories: ["tech", "culture"]
-tags: ["tech", "culture", "software"]
+tags: ["tech", "culture"]
 
 tootId: "113034812167024055"
 hideTOC: true

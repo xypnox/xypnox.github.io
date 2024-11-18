@@ -4,19 +4,17 @@ import { Projects } from "../content/projects";
 const blogEntriesAll = await getCollection("blog");
 
 /** Filtered Blog entries that are root, and are not hidden */
-const blogEntriesFiltered = blogEntriesAll
-  .filter(b => import.meta.env.PROD ? b.data.hidden !== true : true);
+const blogEntriesFiltered = blogEntriesAll.filter((b) =>
+  import.meta.env.PROD ? b.data.hidden !== true : true,
+);
 // .filter(b => !b.data.hidden)
 // .filter((b) => b.slug.split("/").length === 1);
 
 /** Blog entries which are filtered by hidden and sorted by time (latest first) */
-const blogEntries = blogEntriesFiltered
-  .sort((a, b) => {
-    const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
-    return bDateNum - aDateNum;
-  })
-
-
+const blogEntries = blogEntriesFiltered.sort((a, b) => {
+  const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
+  return bDateNum - aDateNum;
+});
 
 const entryList = blogEntriesAll.map((entry) => ({
   slug: entry.slug,
@@ -29,34 +27,40 @@ const blogStaticPaths = blogEntriesAll.map((entry) => ({
 }));
 
 /** All the tags used in the blog posts */
-const allTags: string[] = [...(new Set(blogEntriesFiltered
-  .map((blogPostEntry) => blogPostEntry.data.tags)
-  .flat()
-  .filter((tag) => tag !== undefined) as string[]))];
-
+const allTags: string[] = [
+  ...new Set(
+    blogEntriesFiltered
+      .map((blogPostEntry) => blogPostEntry.data.tags)
+      .flat()
+      .filter((tag) => tag !== undefined) as string[],
+  ),
+];
 
 /** The latest blog entry */
 const latestBlog = blogEntries.length > 3 ? blogEntries.slice(0, 3) : [];
 
 const tagCounts: Record<string, number> = allTags.reduce((p, t) => {
   const tagCount = blogEntriesFiltered.reduce((c, e) => {
-    if (e.data.tags) return e.data.tags.includes(t) ? c + 1 : c
-    else return c
-  }, 0)
+    if (e.data.tags) return e.data.tags.includes(t) ? c + 1 : c;
+    else return c;
+  }, 0);
   return {
     ...p,
-    [t]: tagCount
-  }
-}, {})
+    [t]: tagCount,
+  };
+}, {});
 
-const sortedTags = allTags.sort((a, b) => tagCounts[b] - tagCounts[a])
+const sortedTags = allTags.sort((a, b) => {
+  if (tagCounts[b] === tagCounts[a]) return a.localeCompare(b);
+  return tagCounts[b] - tagCounts[a];
+});
 
-const topFiveTags = sortedTags.slice(0, 5)
+const topFiveTags = sortedTags.slice(0, 5);
 
 const isTagHidden = (tag: string) => {
-  if (tagCounts[tag] === undefined) return true
-  return tagCounts[tag] === 0
-}
+  if (tagCounts[tag] === undefined) return true;
+  return tagCounts[tag] === 0;
+};
 
 const tagStaticPaths = blogEntries
   .reduce((acc, blogPostEntry) => {
@@ -73,18 +77,19 @@ const tagStaticPaths = blogEntries
     props: { tag },
   }));
 
-const filteredByTag = (tag: string) => blogEntriesFiltered.filter(e => e.data.tags && e.data.tags.includes(tag))
+const filteredByTag = (tag: string) =>
+  blogEntriesFiltered.filter((e) => e.data.tags && e.data.tags.includes(tag));
 
 // ---------------------------------
 
 const poems = await getCollection("poems");
 
-const filteredPoems = poems.filter(p => p.data.hidden !== true);
+const filteredPoems = poems.filter((p) => p.data.hidden !== true);
 
 const sortedPoems = filteredPoems.sort((a, b) => {
   const [aDateNum, bDateNum] = [a.data.date.getTime(), b.data.date.getTime()];
   return bDateNum - aDateNum;
-})
+});
 
 const poemEntryList = poems.map((poem) => ({
   slug: poem.slug,
@@ -98,7 +103,6 @@ const poemsStaticPaths = poems.map((poem) => ({
 
 // ---------------------------------
 
-
 const projectEntryList = Projects.map((project) => ({
   slug: project.slug,
   data: project,
@@ -108,13 +112,6 @@ const projectStaticPaths = Projects.map((project) => ({
   params: { slug: project.slug },
   props: { project, projectEntryList },
 }));
-
-
-
-
-
-
-
 
 export {
   blogEntriesAll,
@@ -132,5 +129,4 @@ export {
   poemsStaticPaths,
   sortedPoems,
   isTagHidden,
-}
-
+};
