@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="en" class=""> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Title --><title>Migrating to Zola</title><meta name="title" content="Migrating to Zola"><meta property="og:title" content="Migrating to Zola"><meta property="twitter:title" content="Migrating to Zola"><!-- Description --><meta name="description" content="The How and the Why of the switch from Hugo to Zola."><meta property="og:description" content="The How and the Why of the switch from Hugo to Zola."><meta property="twitter:description" content="The How and the Why of the switch from Hugo to Zola."><!-- URL --><meta property="og:url" content="https://www.xypnox.com/blag/posts/migrating-to-zola/"><meta property="twitter:url" content="https://www.xypnox.com/blag/posts/migrating-to-zola/"><!-- Image --><meta property="og:image" content="/_astro/cover.C6FlvQfv.png"><meta property="twitter:image" content="/_astro/cover.C6FlvQfv.png"><meta property="og:type" content="article"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="@xypnox"><meta property="twitter:creator" content="@xypnox"><meta property="og:site_name" content="xypnox"><meta name="generator" content="Astro v4.16.15"> <link href="/isoso/Isoso.css" rel="stylesheet"> <style id="_goober" type="text/css">.go2497111954{position:absolute;width:max-content;pointer-events:none;display:flex;align-items:center;gap:0.25rem;font-size:var(--font-size-sm);color:var(--text);background:var(--tooltip);padding:0.5em;border-radius:var(--border-radius);text-align:center;z-index:10;}.go2497111954.go2497111954 iconify-icon{color:var(--primary-color);font-size:1.2em;}.go3988363021{position:relative;width:max-content;pointer-events:all;}.go3948540184{width:max-content;position:absolute;display:none;z-index:2009;padding:0.25rem 0.5rem;box-shadow:var(--shadow-small);animation:go419718849 0.5s ease-out forwards;}.go3948540184.visible{z-index:2009;display:flex;gap:0.5rem;}</style> <style id="_themeVars">:root { --layout-content-wide: 1200px;
+--layout-content-main: 60rem;
+--layout-nav-height: 3rem;
+--border-radius: 0.2rem;
+--font-family: Isoso Web;
+--font-size-sm: clamp(0.9375rem, 0.8521rem + 0.2276vw, 1.1253rem);
+--font-size-base: clamp(1.125rem, 0.9545rem + 0.4545vw, 1.5rem);
+--font-size-md: clamp(1.35rem, 1.0548rem + 0.7873vw, 1.9995rem);
+--font-size-lg: clamp(1.62rem, 1.1448rem + 1.2671vw, 2.6653rem);
+--font-size-xl: clamp(1.944rem, 1.2127rem + 1.9502vw, 3.5529rem);
+--font-size-xxl: clamp(2.3328rem, 1.2404rem + 2.913vw, 4.736rem);
+--font-size-xxxl: clamp(2.7994rem, 1.2022rem + 4.2591vw, 6.3131rem); } 
+      @media (prefers-color-scheme: dark) { :root { --primary-color: #ff5370;
+--primary-contrast: #000000;
+--secondary-color: #5d86ff;
+--colors-purple: #ff5370;
+--background: #0f111a;
+--surface: #1e2139a0;
+--surface2: rgba(35, 38, 61, 0.72);
+--tooltip: rgb(35, 38, 53);
+--border-style: solid;
+--border-color: rgb(48, 52, 71);
+--text: #919DCF;
+--heading: #aab6e8;
+--fadeText: rgba(108, 117, 158, 0.94);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.6);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #ff5370;
+--italic: #ff5370;
+--strikethrough: #ff5370;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } }
+    
+
+      @media (prefers-color-scheme: light) { :root { --primary-color: #613de3;
+--primary-contrast: #ffffff;
+--secondary-color: #b55089;
+--colors-purple: #613de3;
+--background: #dfdfed;
+--surface: #9f9fe02d;
+--surface2: rgba(164, 165, 218, 0.38);
+--tooltip: rgb(197, 198, 214);
+--border-style: solid;
+--border-color: rgb(180, 181, 199);
+--text: #343654;
+--heading: #202234;
+--fadeText: rgba(94, 95, 128, 0.88);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.15);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #613de3;
+--italic: #613de3;
+--strikethrough: #613de3;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } }
+      .dark-mode { --primary-color: #ff5370;
+--primary-contrast: #000000;
+--secondary-color: #5d86ff;
+--colors-purple: #ff5370;
+--background: #0f111a;
+--surface: #1e2139a0;
+--surface2: rgba(35, 38, 61, 0.72);
+--tooltip: rgb(35, 38, 53);
+--border-style: solid;
+--border-color: rgb(48, 52, 71);
+--text: #919DCF;
+--heading: #aab6e8;
+--fadeText: rgba(108, 117, 158, 0.94);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.6);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #ff5370;
+--italic: #ff5370;
+--strikethrough: #ff5370;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } 
+ .light-mode { --primary-color: #613de3;
+--primary-contrast: #ffffff;
+--secondary-color: #b55089;
+--colors-purple: #613de3;
+--background: #dfdfed;
+--surface: #9f9fe02d;
+--surface2: rgba(164, 165, 218, 0.38);
+--tooltip: rgb(197, 198, 214);
+--border-style: solid;
+--border-color: rgb(180, 181, 199);
+--text: #343654;
+--heading: #202234;
+--fadeText: rgba(94, 95, 128, 0.88);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.15);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #613de3;
+--italic: #613de3;
+--strikethrough: #613de3;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } </style><link rel="stylesheet" href="/_astro/books.DH18Ss7G.css">
+<link rel="stylesheet" href="/_astro/_slug_.7uDgxDnH.css">
+<style>*{box-sizing:border-box}html{min-height:100vh;scroll-behavior:smooth;-moz-text-size-adjust:none;-webkit-text-size-adjust:none;text-size-adjust:none}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin-block-end:0}body{margin:0;padding:1rem;min-height:100vh}h1,h2,h3,h4,h5,h6{margin:1em 0}h1,h2,h3{line-height:1.2}input,select,textarea,button{font:inherit;color:inherit}
+.tag[data-astro-cid-zmpbtckx]{display:flex;flex-direction:row;align-items:center;width:max-content;color:var(--text);text-decoration:none;background-color:var(--surface);padding:.25rem .75rem;border-radius:var(--border-radius);transition:all .2s ease-in-out}.tag[data-astro-cid-zmpbtckx]:hover{color:var(--primary-color)}.count[data-astro-cid-zmpbtckx]{color:var(--fadeText);margin-left:.5rem}.tag[data-astro-cid-zmpbtckx]:hover span[data-astro-cid-zmpbtckx]{background:var(--animated-gradient);background-size:200% 200%;animation:backgroundMove 3s ease infinite;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+<link rel="stylesheet" href="/_astro/index.7Sr4fLAQ.css"><script type="module" src="/_astro/hoisted.DQG8g9vy.js"></script></head> <body>    <nav class="navbar" data-astro-cid-ri6uxye2> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><script>window._$HY||(e=>{let t=e=>e&&e.hasAttribute&&(e.hasAttribute("data-hk")?e:t(e.host&&e.host.nodeType?e.host:e.parentNode));["click", "input"].forEach((o=>document.addEventListener(o,(o=>{if(!e.events)return;let s=t(o.composedPath&&o.composedPath()[0]||o.target);s&&!e.completed.has(s)&&e.events.push([s,o])}))))})(_$HY={events:[],completed:new WeakSet,r:{},fe(){}});</script><!--xs--><astro-island uid="7PFBt" data-solid-render-id="s1" component-url="/_astro/tooltip.BedR4bNQ.js" component-export="Tooltip" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;placement&quot;:[0,&quot;top&quot;],&quot;icon&quot;:[0,&quot;ph:house-duotone&quot;],&quot;id&quot;:[0,&quot;home-tooltip&quot;],&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;Tooltip&quot;,&quot;value&quot;:true}" await-children=""><div data-hk=s100000 class="wrapper go3988363021 " aria-describedby="home-tooltip"><astro-slot> <a href="/" aria-label="Home" class="navSurface" data-astro-cid-ri6uxye2> <div class="navLogo" data-astro-cid-ri6uxye2></div> </a>  </astro-slot><div data-hk=s1000010 role="tooltip" id="home-tooltip" class="go3948540184 go2497111954 " ><iconify-icon data-hk=s10000110 icon="ph:house-duotone"></iconify-icon><astro-slot name="tooltip"><span data-astro-cid-ri6uxye2>Home</span></astro-slot></div></div><!--astro:end--></astro-island> <div class="navlinks navSurface" data-astro-cid-ri6uxye2> <a class="navLink text-gradient-fx active " href="/blag/" data-astro-cid-j4bvlyv2> Blag </a> <a class="navLink text-gradient-fx " href="/projects/" data-astro-cid-j4bvlyv2> Projects </a> <a class="navLink text-gradient-fx " href="/tools/" data-astro-cid-j4bvlyv2> Tools </a> <a class="navLink text-gradient-fx " href="/design/" data-astro-cid-j4bvlyv2> Design </a>  </div> <div class="mobile-menu navSurface" data-astro-cid-ri6uxye2> <a class="navLink text-gradient-fx active " href="/blag/" data-astro-cid-j4bvlyv2> Blag </a> <a class="navLink text-gradient-fx " href="/projects/" data-astro-cid-j4bvlyv2> Projects </a> <a class="navLink text-gradient-fx " href="/tools/" data-astro-cid-j4bvlyv2> Tools </a> <a class="navLink text-gradient-fx " href="/design/" data-astro-cid-j4bvlyv2> Design </a>  </div> <div class="mobile-menu-button navButton navSurface" data-astro-cid-ri6uxye2> <iconify-icon icon="ph:dots-three" data-astro-cid-ri6uxye2></iconify-icon> </div> <div id="SitePreferences" data-astro-cid-ri6uxye2> <astro-island uid="277B59" data-solid-render-id="s2" component-url="/_astro/tooltip.BedR4bNQ.js" component-export="Tooltip" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;placement&quot;:[0,&quot;top&quot;],&quot;icon&quot;:[0,&quot;ph:music-notes-duotone&quot;],&quot;id&quot;:[0,&quot;music-tooltip&quot;],&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;Tooltip&quot;,&quot;value&quot;:true}" await-children=""><div data-hk=s200000 class="wrapper go3988363021 " aria-describedby="music-tooltip"><astro-slot> <astro-island uid="ZM4mJI" data-solid-render-id="s0" component-url="/_astro/audioButton.gjKuzwA2.js" component-export="AudioButton" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;AudioButton&quot;,&quot;value&quot;:true}" await-children=""><button data-hk=s00000 class="navButton " id="audioButton" aria-label="Play audio"><iconify-icon icon="ph:speaker-none-duotone"></iconify-icon></button><!--astro:end--></astro-island>  </astro-slot><div data-hk=s2000010 role="tooltip" id="music-tooltip" class="go3948540184 go2497111954 " ><iconify-icon data-hk=s20000110 icon="ph:music-notes-duotone"></iconify-icon><astro-slot name="tooltip"><span data-astro-cid-ri6uxye2>Music</span></astro-slot></div></div><!--astro:end--></astro-island> <script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();</script><astro-island uid="1q6Mdn" component-url="/_astro/popup.BVJqizFM.js" component-export="ThemePopup" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="only" opts="{&quot;name&quot;:&quot;ThemePopup&quot;,&quot;value&quot;:&quot;solid-js&quot;}"></astro-island> </div> </nav>   <div class="postHeading" data-wider="true" data-astro-cid-p5t2vqpj> <h1 class="text-gradient-fx" data-astro-cid-p5t2vqpj>Migrating to Zola</h1> <p class="description" data-astro-cid-p5t2vqpj>The How and the Why of the switch from Hugo to Zola.</p> <div class="details" data-astro-cid-p5t2vqpj> <time datetime="2020-10-05T00:00:00.000Z" data-astro-cid-p5t2vqpj> October 5, 2020 </time>  <span class="separator" data-astro-cid-p5t2vqpj>•</span> <div class="tags" data-astro-cid-p5t2vqpj> <a href="/blag/tags/tech/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>tech</span>  </a> <a href="/blag/tags/blog/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>blog</span>  </a> <a href="/blag/tags/zola/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>zola</span>  </a> <a href="/blag/tags/theme/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>theme</span>  </a>  </div>  </div> </div> <div class="coverImage" data-astro-cid-p5t2vqpj> <img src="/_astro/cover.C6FlvQfv_1pyo7q.webp" alt="The two sides of the Yin and Yang combine to provide ultimate harmony!" data-astro-cid-p5t2vqpj width="2400" height="1400" loading="lazy" decoding="async"> <p data-astro-cid-p5t2vqpj>The two sides of the Yin and Yang combine to provide ultimate harmony!</p> </div><div class="content-wrapper" data-astro-cid-p5t2vqpj> <div class="content" data-wider="true" data-astro-cid-p5t2vqpj>  <blockquote>
+<p>Update:<br>
+This blog has moved yet again!<br>
+I redid it again in Astro.<br>
+So this is kinda out of date.<br>
+The source code and template still remains if you want to use it with zola.</p>
+</blockquote>
+<p>I recently migrated my <em>blag</em> from Hugo to <a href="https://www.getzola.org/">Zola</a>. I made my theme for this blog and it was a blast!</p>
+<p>I will discuss the why and the how in this post.</p>
+<h1 id="the-why">The Why?</h1>
+<p>In terms of features and ecosystem, Hugo trumps Zola any day. Then why did I switch?</p>
+<h2 id="whats-wrong-with-hugo">What’s wrong with Hugo?</h2>
+<p>I started using Hugo for the blog about 3 years ago. I used <a href="https://minimo.netlify.com/">Minimo</a>, a minimalist, sleek and modern theme. It was one of the primary reasons why I started using Hugo in the first place. I could give it a unique look with minimal customization of typography and colors. And it worked, the blog loaded fast, looked beautiful, and worked nicely.</p>
+<p>But as time moved on, the author of the theme started adding features which were generally useful and nice to have, but useless for me. A few of those were search, widgets, translations, sidebar, etc. I had to disable several of these in the configuration. And with every update, there were always a few changes that required me to edit the config file even though I wasn’t going to use them anyway.</p>
+<p>After several such continuous updates of useless features, I decided to fork the theme into a <a href="https://github.com/xypnox/blag-theme">custom one (which I named blag-theme)</a>. Adding my mods directly to the theme simplified the “hacks” I had used earlier to customize the blog. But slowly it dawned on me that I wasn’t using even half of the features that were offered. And editing it to simplify the theme was painful, partly because of too many features and partly due to the theming and templating complexity of Hugo itself.</p>
+<p>Yet, I was satisfied. Even though it looked a mess behind the curtains, and even though I had given up on either simplifying or creating a new theme (in Hugo), the blog still looked fine and was readable/usable for the end-user.</p>
+<p>But, these are modern times we live in. While working on the <a href="https://lttkgp.com/">LTTKGP</a> project, my fav thing was the dark theme. It looked sick. And I wondered if I could have a dark theme for my blog as well. However, the monolith like templates got the better of me and I held off. There I was, wishing I could have a dark theme and there was Hugo, scaring me nuts with its complexity.</p>
+<p>And it wouldn’t be an overstatement to say that Hugo’s current ecosystem makes it very hard for someone to create a new theme for scratch, or even significantly modify a theme without going through pages and pages of documentation; Almost like learning an entire “framework”. It is often the case that those starting with Hugo just stick to one of the pre-existing themes and don’t put any effort into customizing it, simply because it is too hard to customize.</p>
+<p>At the time when I created the blog in Hugo, it was all the rage. Almost everyone I knew personally used Hugo for their blogs. Then as time passed more “modern” SSGs were invented such as <a href="https://www.gatsbyjs.org/">Gatsby</a> and <a href="https://nextjs.org/">Next.js</a>. I disliked Gatsby because it felt too processed and complex for something so simple as a blog. I have given Next.js a try in my Poem Collection but I didn’t find it exciting enough to switch over.</p>
+<blockquote>
+<p>The poems have been rewritten to Astro and are at <a href="/poems/">xypnox.com/poems</a></p>
+</blockquote>
+<h2 id="enter-zola">Enter Zola</h2>
+<p>Fast forward a few weeks ago, I was browsing the <a href="https://github.com/trending/rust?since=daily">“Trending” page on GitHub</a> and was looking at popular repositories, and there I found <a href="https://www.getzola.org/">Zola</a>, a static site generator written in <a href="https://www.rust-lang.org/">Rust</a>. As it happens with several projects, Zola was created long ago but I got to know about it now. Due to it being written in Rust and having a minimal approach to SSGs, it wasn’t as popular. And frankly, had I not fallen in love with rust earlier I would have also given it a pass.</p>
+<p>With my recent exposure to the Rust ecosystem, I have formed a view that <em>the developers that are using rust “think” and “reason” about their applications a lot more than other languages</em>. And I understand that this view may very well be wrong. This was my viewpoint when I discovered Zola, and I immediately dove in, skimming it’s docs and comparing how it approached a “Static Site Generator”.</p>
+<p>Zola’s take on SSG is quite different from other tools such as Jekyll and Hugo.</p>
+<ol>
+<li>
+<p><em>It doesn’t have a plugin system.</em> (At least as of now) Everything that matters, or what the author considers matters, is built in the single binary. It includes: Sass compilation, syntax highlighting, ToC, etc. And if you want to add others, just include the javascript libraries in the templates!</p>
+</li>
+<li>
+<p><em>It’s rust, therefore it’s fast.</em> Speed isn’t that much of an issue for small blogs such as this one, but still faster compilation means faster hot reloading in dev mode when you edit your themes.</p>
+</li>
+<li>
+<p><em>It is intuitive.</em> And even though it may not make much of a difference for those who have the time to sift through the documentation of other SSGs, it was a big deal for me. I don’t want to spend months reading documentation and configuring the website, especially a blog that probably won’t ever generate any revenue.</p>
+</li>
+</ol>
+<p>You can look at the directory structure of this blog below and have a fairly good idea of what each folder is for:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>blag</span></span>
+<span class="line"><span>├── content</span></span>
+<span class="line"><span>│   ├── pages</span></span>
+<span class="line"><span>│   └── posts</span></span>
+<span class="line"><span>├── static</span></span>
+<span class="line"><span>│   ├── css</span></span>
+<span class="line"><span>│   ├── icon</span></span>
+<span class="line"><span>│   └── images</span></span>
+<span class="line"><span>├── sass</span></span>
+<span class="line"><span>└── themes</span></span>
+<span class="line"><span>    └── xyblag</span></span>
+<span class="line"><span>        ├── sass</span></span>
+<span class="line"><span>        ├── static</span></span>
+<span class="line"><span>        └── templates</span></span>
+<span class="line"><span>            ├── categories</span></span>
+<span class="line"><span>            ├── shortcodes</span></span>
+<span class="line"><span>            └── tags</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>That above, is the entire directory structure, including the theme. Posts can have individual directories to store assets, but that doesn’t concern us.</p>
+<p>For comparison, Here is the directory structure of Hugo that I used earlier with the theme for fairness (<em>feel free to skip through this code block</em>) :</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>blag</span></span>
+<span class="line"><span>├── archetypes</span></span>
+<span class="line"><span>├── content</span></span>
+<span class="line"><span>│   ├── page</span></span>
+<span class="line"><span>│   └── posts</span></span>
+<span class="line"><span>├── static</span></span>
+<span class="line"><span>│   ├── css</span></span>
+<span class="line"><span>│   ├── icon</span></span>
+<span class="line"><span>│   └── images</span></span>
+<span class="line"><span>└── themes</span></span>
+<span class="line"><span>    └── blag-theme</span></span>
+<span class="line"><span>        ├── archetypes</span></span>
+<span class="line"><span>        ├── data</span></span>
+<span class="line"><span>        │   └── config</span></span>
+<span class="line"><span>        │       └── default</span></span>
+<span class="line"><span>        ├── exampleSite</span></span>
+<span class="line"><span>        │   ├── content</span></span>
+<span class="line"><span>        │   │   ├── authors</span></span>
+<span class="line"><span>        │   │   ├── docs</span></span>
+<span class="line"><span>        │   │   │   └── res</span></span>
+<span class="line"><span>        │   │   ├── page</span></span>
+<span class="line"><span>        │   │   └── tags</span></span>
+<span class="line"><span>        │   │       ├── config</span></span>
+<span class="line"><span>        │   │       └── og</span></span>
+<span class="line"><span>        │   ├── data</span></span>
+<span class="line"><span>        │   │   ├── authors</span></span>
+<span class="line"><span>        │   │   ├── comments</span></span>
+<span class="line"><span>        │   │   │   └── 33deba780bf80cacf2627abf7a22fec7</span></span>
+<span class="line"><span>        │   │   └── config</span></span>
+<span class="line"><span>        │   └── static</span></span>
+<span class="line"><span>        │       ├── css</span></span>
+<span class="line"><span>        │       ├── images</span></span>
+<span class="line"><span>        │       └── js</span></span>
+<span class="line"><span>        ├── i18n</span></span>
+<span class="line"><span>        ├── images</span></span>
+<span class="line"><span>        ├── layouts</span></span>
+<span class="line"><span>        │   ├── _default</span></span>
+<span class="line"><span>        │   ├── page</span></span>
+<span class="line"><span>        │   ├── partials</span></span>
+<span class="line"><span>        │   │   ├── comments</span></span>
+<span class="line"><span>        │   │   │   └── staticman</span></span>
+<span class="line"><span>        │   │   ├── data</span></span>
+<span class="line"><span>        │   │   │   └── author</span></span>
+<span class="line"><span>        │   │   ├── entry</span></span>
+<span class="line"><span>        │   │   │   └── meta</span></span>
+<span class="line"><span>        │   │   ├── extras</span></span>
+<span class="line"><span>        │   │   ├── footer</span></span>
+<span class="line"><span>        │   │   ├── head</span></span>
+<span class="line"><span>        │   │   │   └── opengraph</span></span>
+<span class="line"><span>        │   │   ├── header</span></span>
+<span class="line"><span>        │   │   ├── list</span></span>
+<span class="line"><span>        │   │   ├── nav</span></span>
+<span class="line"><span>        │   │   │   └── menus</span></span>
+<span class="line"><span>        │   │   ├── sidebar</span></span>
+<span class="line"><span>        │   │   ├── svg</span></span>
+<span class="line"><span>        │   │   └── widgets</span></span>
+<span class="line"><span>        │   ├── shortcodes</span></span>
+<span class="line"><span>        │   └── taxonomy</span></span>
+<span class="line"><span>        ├── scripts</span></span>
+<span class="line"><span>        ├── src</span></span>
+<span class="line"><span>        │   ├── scripts</span></span>
+<span class="line"><span>        │   │   └── search</span></span>
+<span class="line"><span>        │   └── stylesheets</span></span>
+<span class="line"><span>        │       ├── elements</span></span>
+<span class="line"><span>        │       ├── extras</span></span>
+<span class="line"><span>        │       │   ├── mixins</span></span>
+<span class="line"><span>        │       │   └── variables</span></span>
+<span class="line"><span>        │       ├── forms</span></span>
+<span class="line"><span>        │       ├── hugo</span></span>
+<span class="line"><span>        │       │   └── shortcodes</span></span>
+<span class="line"><span>        │       ├── layouts</span></span>
+<span class="line"><span>        │       │   ├── entry</span></span>
+<span class="line"><span>        │       │   ├── others</span></span>
+<span class="line"><span>        │       │   ├── sidebar</span></span>
+<span class="line"><span>        │       │   └── widgets</span></span>
+<span class="line"><span>        │       ├── navigation</span></span>
+<span class="line"><span>        │       │   └── menus</span></span>
+<span class="line"><span>        │       └── typography</span></span>
+<span class="line"><span>        └── static</span></span>
+<span class="line"><span>            ├── assets</span></span>
+<span class="line"><span>            │   ├── css</span></span>
+<span class="line"><span>            │   └── js</span></span>
+<span class="line"><span>            └── images</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Good luck understanding that! (I couldn’t)</p>
+<p>You can see with the above example the simplicity and sensibility of Zola. And it carries through to other aspects of its usage as well.</p>
+<p>When I used Hugo, I was so tired that I never dealt with the auto-deployment side of things. I manually generated the blog on my machine and pushed it to GitHub like a 19t- century peasant.</p>
+<p>With Zola, setting up auto-deployment was as easy as creating a <a href="https://www.getzola.org/documentation/deployment/github-pages/#github-actions">Github Action</a>.</p>
+<p>All of the benefits of Zola, it’s simplicity, ease of use, intuitiveness, all batteries included, and a solid base of rust was enough for me to give it a spin. The auto-deployment was the cherry on the cake!</p>
+<h1 id="the-how">The How?</h1>
+<p>Now that I have raved long enough about Zola, how was the migrating experience? To sum it up, <em>smooth with a few hiccups</em>.</p>
+<p>Migrating a blog is like moving into a new home. You arrange all of your <em>furniture and appliances</em> (your posts), and decorate the house with <em>fancy wallpapers/wall paint, curtains, etc.</em> (themes) and hope that the <em>location</em> (permalinks) remains the same so that the old visitors can easily find their way when they come again.</p>
+<h2 id="the-links-must-be-the-same">The links must be the same</h2>
+<p>Making the permalinks the same is <em>very very important</em>. If you change the links that initially pointed to the old posts you would be contributing to <a href="https://en.wikipedia.org/wiki/Link_rot">Link rot</a>, the people who may have referenced your posts would have broken links. And a visitor arriving at your blog would see the disgraceful 404 page! So your content’s links <em>must</em> be the same when you switch to a new SSG.</p>
+<p>The link of my blog posts has the structure of <code>xypnox.com/blag/posts/&#x3C;slug></code>.To achieve the same structure I put the markdown files in <code>content/posts/</code> with an <code>_index.md</code> file in the posts directory with:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-color-text)">+++</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">transparent = true</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">redirect_to = "/"</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">+++</span></span>
+<span class="line"></span></code></pre>
+<p>The <code>transparent</code> tells Zola that the posts in this directory are meant to be pushed one directory up so that they appear in the index list. And if someone visits the <code>/posts/</code> URL, they will be redirected to the homepage <code>/</code>.</p>
+<p>The specific pages such as About, Quotes, Why xypnox have configuration like:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-color-text)">+++</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">title = "About"</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">path = "about"</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">template = "about.html"</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">+++</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">Markdown content of the page</span></span>
+<span class="line"></span></code></pre>
+<p>So that when someone visits <code>/about/</code> path, they see the about page! And the template used to render is <code>about.html</code> which as defined in the theme, doesn’t have the comment section.</p>
+<h2 id="configuration-is-easy">Configuration is easy</h2>
+<p>The configuration ideology of Zola is quite simple: <em>You opt-in for the things you need.</em> And the only necessary variable in <code>config.toml</code> is <code>base_url</code>! This approach makes it easier to understand and maintain your blog as you are only dealing with what you are using explicitly. This includes code highlighting, search index, sass compilation, feed generation, taxonomies, etc.</p>
+<p>When you start using a theme, some of the themes will require you to set up these variables such as taxonomies because the themes require them to render properly.</p>
+<h2 id="templating-is-solid">Templating is solid</h2>
+<p>Zola uses the <a href="https://tera.netlify.app/">Tera</a> templating engine. It is inspired by Jinja and Django’s templating engine and therefore if you have prior experience with these, it will feel like home. And even if you are new, it is still simple enough to understand and use.</p>
+<p>Most of the code for the theme will be written as templates. You can always use pre-existing themes as a starting point. I used the <a href="https://zola-even.netlify.app/">Even theme</a> as it was bare and its layout was similar to my previous Hugo based blog. Needless to say, the current theme is a significant step-up from the Even theme. Here is a screenshot of the theme I created:</p>
+<p><img src="https://github.com/xypnox/blag/blob/master/themes/xyblag/screenshot.png?raw=true" alt="Blag screenshot"></p>
+<p>If you need to include any javascript files or other links, you can add them to the template. A tweak that I did to improve the loading performance was to put the <a href="https://slideout.js.org/">slideout.js</a> script with the static files so that when the page loads it doesn’t do a request to another server just for a small javascript file.</p>
+<h2 id="sass-make-it-pop">Sass: Make it pop</h2>
+<p>The styling is handled via <a href="https://sass-lang.com/">SASS</a>, and I love it. I have used SASS in a lot of my previous projects and I adore the variables, mixins, and nested styles. It just ends up making stylesheets more readable and maintainable.</p>
+<p>“Even” theme had a great underline from center animation on menu links and in the Index and Taxonomy lists. I modified the animation to add a little glow with a thicker line and rounded corners.</p>
+<p>Moreover, even though I liked the summaries in the original theme, I found it not as useful in my theme. Firstly, because to use the summaries you need to add a <code>&#x3C;!-- more --></code> comment to specify where to break, and usually the summaries are not of similar length.</p>
+<p>Hence, the current <a href="https://www.xypnox.com/blag/">index page</a> just has the post title and the category with the date. One unintended but happy consequence of removing the summaries is that people will open the article to view the full contents more often!</p>
+<h2 id="you-want-it-darker"><a href="https://youtu.be/v0nmHymgM7Y">You want it darker?</a></h2>
+<p>If you haven’t seen the dark mode yet, do it right now!</p>
+<p>And there it is, the <em>Dark Mode</em> in all its glory.</p>
+<p>To add dark mode, I had to restructure the colors to use CSS variables so that I could simply change them whenever the theme switched at the base itself. This also meant that since I was always using the CSS variables, later updates would force me to take care of the dark mode, as I will not forget to add and change the variable in the dark mode as well!</p>
+<p>There are a few things to take into consideration while adding dark mode to your site:</p>
+<ul>
+<li>Does your site have elements that need more than color variables to switch the theme? For example, Wikipedia’s equations are rendered SVGs so it is harder to change its color.</li>
+<li>The theme preference should be stored locally so that subsequent revisits have the same preference.</li>
+<li>The theme should respect the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme"><code>prefers-color-scheme</code></a> setting of the user if it can’t find the preference in the <code>localStorage</code>.</li>
+<li>When the site loads, it shouldn’t load the light theme or dark theme by default and then switch on detecting the user’s preference. This will make a flash of light before switching to the dark mode and vice versa.</li>
+</ul>
+<p>These can be solved by including a little bit of Javascript just before the main content of the body. The trick here is that this bit of code is executed and only after it’s evaluation is the rest of the code executed. Here is the JS code that finds and sets the theme on the page-load of this blog:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> initTheme</span><span style="color:var(--astro-code-color-text)">() {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  let</span><span style="color:var(--astro-code-color-text)"> body </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-constant)"> document</span><span style="color:var(--astro-code-token-function)">.getElementsByTagName</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'body'</span><span style="color:var(--astro-code-color-text)">)[</span><span style="color:var(--astro-code-token-constant)">0</span><span style="color:var(--astro-code-color-text)">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  if</span><span style="color:var(--astro-code-color-text)"> (</span><span style="color:var(--astro-code-token-constant)">window</span><span style="color:var(--astro-code-token-function)">.</span><span style="color:var(--astro-code-token-constant)">localStorage</span><span style="color:var(--astro-code-token-function)">.getItem</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'theme'</span><span style="color:var(--astro-code-color-text)">) </span><span style="color:var(--astro-code-token-keyword)">!==</span><span style="color:var(--astro-code-token-constant)"> null</span><span style="color:var(--astro-code-color-text)">) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    if</span><span style="color:var(--astro-code-color-text)"> (</span><span style="color:var(--astro-code-token-constant)">window</span><span style="color:var(--astro-code-token-function)">.</span><span style="color:var(--astro-code-token-constant)">localStorage</span><span style="color:var(--astro-code-token-function)">.getItem</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'theme'</span><span style="color:var(--astro-code-color-text)">) </span><span style="color:var(--astro-code-token-keyword)">===</span><span style="color:var(--astro-code-token-string-expression)"> 'dark'</span><span style="color:var(--astro-code-color-text)">) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">      body</span><span style="color:var(--astro-code-token-function)">.setAttribute</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'data-theme'</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-string-expression)"> 'dark'</span><span style="color:var(--astro-code-color-text)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">    } </span><span style="color:var(--astro-code-token-keyword)">else</span><span style="color:var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">      body</span><span style="color:var(--astro-code-token-function)">.setAttribute</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'data-theme'</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-string-expression)"> 'light'</span><span style="color:var(--astro-code-color-text)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">    }</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">  } </span><span style="color:var(--astro-code-token-keyword)">else</span><span style="color:var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    if</span><span style="color:var(--astro-code-color-text)"> (</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">      window</span><span style="color:var(--astro-code-color-text)">.matchMedia </span><span style="color:var(--astro-code-token-keyword)">&#x26;&#x26;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">      window</span><span style="color:var(--astro-code-token-function)">.matchMedia</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'(prefers-color-scheme: dark)'</span><span style="color:var(--astro-code-color-text)">).matches</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">    ) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">      body</span><span style="color:var(--astro-code-token-function)">.setAttribute</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">'data-theme'</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-string-expression)"> 'dark'</span><span style="color:var(--astro-code-color-text)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">    }</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">  }</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">})();</span></span>
+<span class="line"></span></code></pre>
+<p>And that switcher that comes in between this post? That is plain HTML copied from the theme code. Also, it triggers the same function that changes the theme.</p>
+<h2 id="socially-appropriate-media-tags">Socially appropriate: Media tags</h2>
+<p>Zola is so minimal that it doesn’t add any media tags, <a href="https://ogp.me/">Opengraph</a> and <a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards">Twitter</a>, required to display nice previews when shared to social sites such as Facebook, Twitter, etc. (<em>And the “Even” theme didn’t have them either</em>). So, I had to add them myself, one set of tags for all the generic pages, and one for the posts.</p>
+<p>Another problem with the social tags is that even though Facebook will correctly parse the page and use an appropriate image for its card, twitter requires you to put a specific image URL in the meta tags. To solve this I added a new variable in the posts’ configuration, <code>metadata_image</code>, that stores the absolute path of the image that is used in social previews.</p>
+<h2 id="them-comments">Them Comments</h2>
+<p>Comments are an important part of the blog for me as they allow me to have a discourse with the people who are interested and excited by my posts. And preserving the old comments from the previous version was therefore important. Luckily, I used <a href="https://disqus.com/">Disqus</a> as the comment platform, and the great thing is that if the link to the posts is the same, Disqus shows the old comments!</p>
+<p>Adding Disqus to Zola was a bit more complicated than others, still, it was simple enough. I had to copy the <a href="https://help.disqus.com/en/articles/1717112-universal-embed-code">universal embed code</a> and put it in the template in the right place. In the initialization script, I used the template variables to fill the link and unique identifiers for the post and that was enough for the comments to show up successfully.</p>
+<p>In terms of theme support, when Disqus is set to the Auto theme, it automatically sets the correct theme depending on the font color passed to it. The problem is that the Disqus theme doesn’t change when the overall theme changes. So, to switch the Disqus theme as well, I have to reload Disqus on every theme change, so that you don’t have to reload the entire page to access Disqus with the correct theme.</p>
+<h2 id="analytics-oh-no">Analytics? Oh no.</h2>
+<p>Even though I am interested in collecting analytics for my blog, <a href="https://consent.guide/google-analytics-cookie-consent/">adding Google Analytics requires affirmative consent from the user</a>. And adding a big-yucky-privacy-consent-popup when someone lands on a minimal blog page is just ugly.</p>
+<p>For me, the <em>aesthetic disadvantages</em> of adding a banner for consent far outweigh the <em>advantages of collecting data</em> which I may barely use. The blog posts I write aren’t monetized and if someone wants to communicate, or suggest a topic for a post, he or she can always comment or reach out via mail! (xypnox gmail com).</p>
+<p>Besides, Google’s search console provides similar data about the popularity of my blog posts already, albeit only limited to the Google search results.</p>
+<h2 id="deployment">Deployment</h2>
+<p>The current blog uses a <a href="https://github.com/shalzz/zola-deploy-action">GitHub action</a> to auto-deploy whenever a new commit is pushed to master. Setting up the deployment was easy and the <a href="https://www.getzola.org/documentation/deployment/github-pages/#github-actions">steps mentioned in the documentation</a> are enough.</p>
+<p>The cool thing is that I can mark the <code>public</code> folder as ignored in git and I don’t ever commit any of the generated code in the <del>master</del> main branch. Also, to add a new article, I can just create a markdown file using mobile or any device by logging into GitHub on that machine.</p>
+<h1 id="the-future-where-from-to-from-now">The future: Where from to from now?</h1>
+<p>Even though this blog has almost all the features I desire, there are still somethings to iron out:</p>
+<ol>
+<li>Emoji Support</li>
+<li>Independent, decoupled Reusable theme</li>
+<li>Highlighting of the current title in the Content sidebar</li>
+<li>Content sidebar for mobile</li>
+</ol>
+<p>There may be more features coming but these are the major ones for now.</p>
+<p>The source code of the blog is available at <a href="https://github.com/xypnox/blag">xypnox/blag</a>.</p>
+<p>If you are interested in this theme do feel free to reach out. I will prioritize the decoupling of the theme based on other people’s interest in it.</p> <div class="end-marker" data-astro-cid-p5t2vqpj>
+❦
+<p data-astro-cid-p5t2vqpj>Sooner or later, everything ends.</p> </div>  </div></div> <footer data-astro-cid-k2f5zb5c> <div class="footer-row" data-astro-cid-k2f5zb5c> <div class="navLogo" data-astro-cid-k2f5zb5c></div> <div class="footer-content" data-astro-cid-k2f5zb5c> <div class="links" data-astro-cid-k2f5zb5c> <a href="/" data-astro-cid-k2f5zb5c>xypnox</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="/blag/" data-astro-cid-k2f5zb5c>Blag</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="/rss.xml" data-astro-cid-k2f5zb5c>Rss</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="https://github.com/xypnox/xypnox.github.io/" data-astro-cid-k2f5zb5c>Source</a> <span data-astro-cid-k2f5zb5c>|</span> © 2025 </div> <p data-astro-cid-k2f5zb5c> <a href="/about/" data-astro-cid-k2f5zb5c>About this website</a> | <a href="/about/#reading-notice" data-astro-cid-k2f5zb5c>Terms of Use</a> </p> <p data-astro-cid-k2f5zb5c> <em data-astro-cid-k2f5zb5c>The content is 100% human generated.</em> </p> </div> </div> <div class="navbar-helper" data-astro-cid-k2f5zb5c>And this is the navbar</div> </footer>    </body></html> 

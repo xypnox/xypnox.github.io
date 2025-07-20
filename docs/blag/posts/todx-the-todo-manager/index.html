@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="en" class=""> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Title --><title>TodX : The Todo Manager</title><meta name="title" content="TodX : The Todo Manager"><meta property="og:title" content="TodX : The Todo Manager"><meta property="twitter:title" content="TodX : The Todo Manager"><!-- Description --><meta name="description"><meta property="og:description"><meta property="twitter:description"><!-- URL --><meta property="og:url" content="https://www.xypnox.com/blag/posts/todx-the-todo-manager/"><meta property="twitter:url" content="https://www.xypnox.com/blag/posts/todx-the-todo-manager/"><!-- Image --><meta property="og:image" content="/_astro/optipress-2018-09-28-927_To-Do_SQ.Cp_-2gWS.png"><meta property="twitter:image" content="/_astro/optipress-2018-09-28-927_To-Do_SQ.Cp_-2gWS.png"><meta property="og:type" content="article"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="@xypnox"><meta property="twitter:creator" content="@xypnox"><meta property="og:site_name" content="xypnox"><meta name="generator" content="Astro v4.16.15"> <link href="/isoso/Isoso.css" rel="stylesheet"> <style id="_goober" type="text/css">.go2497111954{position:absolute;width:max-content;pointer-events:none;display:flex;align-items:center;gap:0.25rem;font-size:var(--font-size-sm);color:var(--text);background:var(--tooltip);padding:0.5em;border-radius:var(--border-radius);text-align:center;z-index:10;}.go2497111954.go2497111954 iconify-icon{color:var(--primary-color);font-size:1.2em;}.go3988363021{position:relative;width:max-content;pointer-events:all;}.go3948540184{width:max-content;position:absolute;display:none;z-index:2009;padding:0.25rem 0.5rem;box-shadow:var(--shadow-small);animation:go419718849 0.5s ease-out forwards;}.go3948540184.visible{z-index:2009;display:flex;gap:0.5rem;}</style> <style id="_themeVars">:root { --layout-content-wide: 1200px;
+--layout-content-main: 60rem;
+--layout-nav-height: 3rem;
+--border-radius: 0.2rem;
+--font-family: Isoso Web;
+--font-size-sm: clamp(0.9375rem, 0.8521rem + 0.2276vw, 1.1253rem);
+--font-size-base: clamp(1.125rem, 0.9545rem + 0.4545vw, 1.5rem);
+--font-size-md: clamp(1.35rem, 1.0548rem + 0.7873vw, 1.9995rem);
+--font-size-lg: clamp(1.62rem, 1.1448rem + 1.2671vw, 2.6653rem);
+--font-size-xl: clamp(1.944rem, 1.2127rem + 1.9502vw, 3.5529rem);
+--font-size-xxl: clamp(2.3328rem, 1.2404rem + 2.913vw, 4.736rem);
+--font-size-xxxl: clamp(2.7994rem, 1.2022rem + 4.2591vw, 6.3131rem); } 
+      @media (prefers-color-scheme: dark) { :root { --primary-color: #ff5370;
+--primary-contrast: #000000;
+--secondary-color: #5d86ff;
+--colors-purple: #ff5370;
+--background: #0f111a;
+--surface: #1e2139a0;
+--surface2: rgba(35, 38, 61, 0.72);
+--tooltip: rgb(35, 38, 53);
+--border-style: solid;
+--border-color: rgb(48, 52, 71);
+--text: #919DCF;
+--heading: #aab6e8;
+--fadeText: rgba(108, 117, 158, 0.94);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.6);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #ff5370;
+--italic: #ff5370;
+--strikethrough: #ff5370;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } }
+    
+
+      @media (prefers-color-scheme: light) { :root { --primary-color: #613de3;
+--primary-contrast: #ffffff;
+--secondary-color: #b55089;
+--colors-purple: #613de3;
+--background: #dfdfed;
+--surface: #9f9fe02d;
+--surface2: rgba(164, 165, 218, 0.38);
+--tooltip: rgb(197, 198, 214);
+--border-style: solid;
+--border-color: rgb(180, 181, 199);
+--text: #343654;
+--heading: #202234;
+--fadeText: rgba(94, 95, 128, 0.88);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.15);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #613de3;
+--italic: #613de3;
+--strikethrough: #613de3;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } }
+      .dark-mode { --primary-color: #ff5370;
+--primary-contrast: #000000;
+--secondary-color: #5d86ff;
+--colors-purple: #ff5370;
+--background: #0f111a;
+--surface: #1e2139a0;
+--surface2: rgba(35, 38, 61, 0.72);
+--tooltip: rgb(35, 38, 53);
+--border-style: solid;
+--border-color: rgb(48, 52, 71);
+--text: #919DCF;
+--heading: #aab6e8;
+--fadeText: rgba(108, 117, 158, 0.94);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.6);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #ff5370;
+--italic: #ff5370;
+--strikethrough: #ff5370;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } 
+ .light-mode { --primary-color: #613de3;
+--primary-contrast: #ffffff;
+--secondary-color: #b55089;
+--colors-purple: #613de3;
+--background: #dfdfed;
+--surface: #9f9fe02d;
+--surface2: rgba(164, 165, 218, 0.38);
+--tooltip: rgb(197, 198, 214);
+--border-style: solid;
+--border-color: rgb(180, 181, 199);
+--text: #343654;
+--heading: #202234;
+--fadeText: rgba(94, 95, 128, 0.88);
+--shadow-card: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+--shadow-medium: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.15);
+--shadow-small: 0 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+--shadow-cardDrop: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+--card-border: 2px dashed var(--border-color);
+--card-background: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundHover: linear-gradient(-45deg, var(--background), var(--background), var(--surface));
+--card-backgroundPosition: 90% 0;
+--card-backgroundSize: 200%;
+--card-borderHover: 2px solid var(--border-color);
+--card-backgroundPositionHover: 10% 20%;
+--bold: #613de3;
+--italic: #613de3;
+--strikethrough: #613de3;
+--gradient-color-1: var(--primary-color);
+--gradient-color-2: var(--colors-purple);
+--animated-gradient: linear-gradient(-60deg,  var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-1), var(--secondary-color), var(--gradient-color-1), var(--gradient-color-2)); } </style><link rel="stylesheet" href="/_astro/books.DH18Ss7G.css">
+<link rel="stylesheet" href="/_astro/_slug_.7uDgxDnH.css">
+<style>*{box-sizing:border-box}html{min-height:100vh;scroll-behavior:smooth;-moz-text-size-adjust:none;-webkit-text-size-adjust:none;text-size-adjust:none}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin-block-end:0}body{margin:0;padding:1rem;min-height:100vh}h1,h2,h3,h4,h5,h6{margin:1em 0}h1,h2,h3{line-height:1.2}input,select,textarea,button{font:inherit;color:inherit}
+.tag[data-astro-cid-zmpbtckx]{display:flex;flex-direction:row;align-items:center;width:max-content;color:var(--text);text-decoration:none;background-color:var(--surface);padding:.25rem .75rem;border-radius:var(--border-radius);transition:all .2s ease-in-out}.tag[data-astro-cid-zmpbtckx]:hover{color:var(--primary-color)}.count[data-astro-cid-zmpbtckx]{color:var(--fadeText);margin-left:.5rem}.tag[data-astro-cid-zmpbtckx]:hover span[data-astro-cid-zmpbtckx]{background:var(--animated-gradient);background-size:200% 200%;animation:backgroundMove 3s ease infinite;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+<link rel="stylesheet" href="/_astro/index.7Sr4fLAQ.css"><script type="module" src="/_astro/hoisted.DQG8g9vy.js"></script></head> <body>    <nav class="navbar" data-astro-cid-ri6uxye2> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><script>window._$HY||(e=>{let t=e=>e&&e.hasAttribute&&(e.hasAttribute("data-hk")?e:t(e.host&&e.host.nodeType?e.host:e.parentNode));["click", "input"].forEach((o=>document.addEventListener(o,(o=>{if(!e.events)return;let s=t(o.composedPath&&o.composedPath()[0]||o.target);s&&!e.completed.has(s)&&e.events.push([s,o])}))))})(_$HY={events:[],completed:new WeakSet,r:{},fe(){}});</script><!--xs--><astro-island uid="7PFBt" data-solid-render-id="s1" component-url="/_astro/tooltip.BedR4bNQ.js" component-export="Tooltip" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;placement&quot;:[0,&quot;top&quot;],&quot;icon&quot;:[0,&quot;ph:house-duotone&quot;],&quot;id&quot;:[0,&quot;home-tooltip&quot;],&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;Tooltip&quot;,&quot;value&quot;:true}" await-children=""><div data-hk=s100000 class="wrapper go3988363021 " aria-describedby="home-tooltip"><astro-slot> <a href="/" aria-label="Home" class="navSurface" data-astro-cid-ri6uxye2> <div class="navLogo" data-astro-cid-ri6uxye2></div> </a>  </astro-slot><div data-hk=s1000010 role="tooltip" id="home-tooltip" class="go3948540184 go2497111954 " ><iconify-icon data-hk=s10000110 icon="ph:house-duotone"></iconify-icon><astro-slot name="tooltip"><span data-astro-cid-ri6uxye2>Home</span></astro-slot></div></div><!--astro:end--></astro-island> <div class="navlinks navSurface" data-astro-cid-ri6uxye2> <a class="navLink text-gradient-fx active " href="/blag/" data-astro-cid-j4bvlyv2> Blag </a> <a class="navLink text-gradient-fx " href="/projects/" data-astro-cid-j4bvlyv2> Projects </a> <a class="navLink text-gradient-fx " href="/tools/" data-astro-cid-j4bvlyv2> Tools </a> <a class="navLink text-gradient-fx " href="/design/" data-astro-cid-j4bvlyv2> Design </a>  </div> <div class="mobile-menu navSurface" data-astro-cid-ri6uxye2> <a class="navLink text-gradient-fx active " href="/blag/" data-astro-cid-j4bvlyv2> Blag </a> <a class="navLink text-gradient-fx " href="/projects/" data-astro-cid-j4bvlyv2> Projects </a> <a class="navLink text-gradient-fx " href="/tools/" data-astro-cid-j4bvlyv2> Tools </a> <a class="navLink text-gradient-fx " href="/design/" data-astro-cid-j4bvlyv2> Design </a>  </div> <div class="mobile-menu-button navButton navSurface" data-astro-cid-ri6uxye2> <iconify-icon icon="ph:dots-three" data-astro-cid-ri6uxye2></iconify-icon> </div> <div id="SitePreferences" data-astro-cid-ri6uxye2> <astro-island uid="277B59" data-solid-render-id="s2" component-url="/_astro/tooltip.BedR4bNQ.js" component-export="Tooltip" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;placement&quot;:[0,&quot;top&quot;],&quot;icon&quot;:[0,&quot;ph:music-notes-duotone&quot;],&quot;id&quot;:[0,&quot;music-tooltip&quot;],&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;Tooltip&quot;,&quot;value&quot;:true}" await-children=""><div data-hk=s200000 class="wrapper go3988363021 " aria-describedby="music-tooltip"><astro-slot> <astro-island uid="ZM4mJI" data-solid-render-id="s0" component-url="/_astro/audioButton.gjKuzwA2.js" component-export="AudioButton" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;AudioButton&quot;,&quot;value&quot;:true}" await-children=""><button data-hk=s00000 class="navButton " id="audioButton" aria-label="Play audio"><iconify-icon icon="ph:speaker-none-duotone"></iconify-icon></button><!--astro:end--></astro-island>  </astro-slot><div data-hk=s2000010 role="tooltip" id="music-tooltip" class="go3948540184 go2497111954 " ><iconify-icon data-hk=s20000110 icon="ph:music-notes-duotone"></iconify-icon><astro-slot name="tooltip"><span data-astro-cid-ri6uxye2>Music</span></astro-slot></div></div><!--astro:end--></astro-island> <script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();</script><astro-island uid="1q6Mdn" component-url="/_astro/popup.BVJqizFM.js" component-export="ThemePopup" renderer-url="/_astro/client.jCHNo5hK.js" props="{&quot;data-astro-cid-ri6uxye2&quot;:[0,true]}" ssr="" client="only" opts="{&quot;name&quot;:&quot;ThemePopup&quot;,&quot;value&quot;:&quot;solid-js&quot;}"></astro-island> </div> </nav>   <div class="postHeading" data-wider="true" data-astro-cid-p5t2vqpj> <h1 class="text-gradient-fx" data-astro-cid-p5t2vqpj>TodX : The Todo Manager</h1>  <div class="details" data-astro-cid-p5t2vqpj> <time datetime="2018-11-09T00:00:00.000Z" data-astro-cid-p5t2vqpj> November 9, 2018 </time>  <span class="separator" data-astro-cid-p5t2vqpj>•</span> <div class="tags" data-astro-cid-p5t2vqpj> <a href="/blag/tags/tech/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>tech</span>  </a> <a href="/blag/tags/project/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>project</span>  </a> <a href="/blag/tags/linux/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>linux</span>  </a> <a href="/blag/tags/todo/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>todo</span>  </a> <a href="/blag/tags/python/" class="tag" data-astro-cid-zmpbtckx>
+#<span data-astro-cid-zmpbtckx>python</span>  </a>  </div>  </div> </div> <div class="coverImage" data-astro-cid-p5t2vqpj> <img src="/_astro/optipress-2018-09-28-927_To-Do_SQ.Cp_-2gWS_1KFUC9.webp" alt="The ever lasting struggle to manage tasks via a todo list | Credit - Optipress" data-astro-cid-p5t2vqpj width="800" height="800" loading="lazy" decoding="async"> <p data-astro-cid-p5t2vqpj>The ever lasting struggle to manage tasks via a todo list | Credit - Optipress</p> </div><div class="content-wrapper" data-astro-cid-p5t2vqpj> <div class="content" data-wider="true" data-astro-cid-p5t2vqpj>  <p>So, I have been working this past few weeks on a todo application using commandline interface in Python. You can skip the boring backstory and jump right into installation if you want to.</p>
+<blockquote>
+<p>The project’s source code is available at <a href="https://github.com/xypnox/todxpy/">GitHub</a></p>
+</blockquote>
+<h1 id="backstory">Backstory</h1>
+<p>I recently switched to i3 windows manager just to try it out. And I loved it. I have now become used to living in the terminal. Most of the work except web browsing can be done through the terminal in an efficient way. But i3 is a topic for another post.</p>
+<p>I was using TickTick for managing my todos till this point. Since TickTick doesn’t have a native linux interface, it was a pain to use on the desktop. Sure it had extensions for both chrome and firefox and had great sync capabilities but if you wanted to use it you had to open a whole browser and use the mouse to open the TickTick extension. It took a lot of time just to add a todo, which <em>should</em> be a very easy task in and of itself.</p>
+<p>Hence I started looking for a commandline todo app that could sync to Android. It should be simple and fast, thats it, and guess what I couldn’t find one single app that could do it. Most apps didn’t even have a native linux app let alone cli. Those fast cli apps were mostly single bash or python scripts and could not sync at all. The GUI todo apps for linux were essentially like text editors huge and clunky.</p>
+<p>Hence I set forth to make one of my own which centered on speed, ease of use, sync capability and customizability. And it should obviously be crossplatform.</p>
+<blockquote>
+<p>Sync doesn’t work yet</p>
+</blockquote>
+<h1 id="installation">Installation</h1>
+<blockquote>
+<p>Command enetered in terminal have a <code>$</code> before them. The output of the terminal doesn’t have the <code>$</code>.</p>
+</blockquote>
+<p>You can install todx using pip:</p>
+<p>If you are using Ubuntu or a Ubuntu based distro:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> pip3</span><span style="color:var(--astro-code-token-string)"> install</span><span style="color:var(--astro-code-token-string)"> todx</span></span>
+<span class="line"></span></code></pre>
+<p>otherwise:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> pip</span><span style="color:var(--astro-code-token-string)"> install</span><span style="color:var(--astro-code-token-string)"> todx</span></span>
+<span class="line"></span></code></pre>
+<blockquote>
+<p>By default Ubuntu’s pip is for python2 and hence we need pip3 to install the todx for python3</p>
+</blockquote>
+<p>To check if it installed correctly run the command:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> --version</span></span>
+<span class="line"></span></code></pre>
+<p>It should return something like <code>TodX v0.1.2</code>. If it shows any error message file an Issue in the <a href="https://github.com/xypnox/todxpy/issues">github repo</a>.</p>
+<h1 id="usage">Usage</h1>
+<p>You can view your todos using the simple command:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span></span>
+<span class="line"></span></code></pre>
+<p>If you have just installed todx, you wont get any output.</p>
+<p>To add a new todo run:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> add</span><span style="color:var(--astro-code-token-string)"> Make</span><span style="color:var(--astro-code-token-string)"> a</span><span style="color:var(--astro-code-token-string)"> great</span><span style="color:var(--astro-code-token-string)"> website</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">Added</span><span style="color:var(--astro-code-token-string)"> todo:</span><span style="color:var(--astro-code-token-string)">  ☐</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> a</span><span style="color:var(--astro-code-token-string)"> great</span><span style="color:var(--astro-code-token-string)"> website</span></span>
+<span class="line"></span></code></pre>
+<p>This will add a new todo “Make a great website”. You can run <code>todx</code> again to see that the new todo has been added. The empty box <code>☐</code> is not a missing unicode charecter, it is a checkbox and it indicates that the todo has not been marked yet.</p>
+<p>To mark a todo run:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> mark</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">0</span><span style="color:var(--astro-code-token-string)"> ☐</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> a</span><span style="color:var(--astro-code-token-string)"> great</span><span style="color:var(--astro-code-token-string)"> website</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">Which</span><span style="color:var(--astro-code-token-string)"> todo</span><span style="color:var(--astro-code-token-string)"> you</span><span style="color:var(--astro-code-token-string)"> want</span><span style="color:var(--astro-code-token-string)"> to</span><span style="color:var(--astro-code-token-string)"> mark:</span><span style="color:var(--astro-code-token-constant)"> 0</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">What</span><span style="color:var(--astro-code-token-string)"> is</span><span style="color:var(--astro-code-token-string)"> your</span><span style="color:var(--astro-code-token-string)"> new</span><span style="color:var(--astro-code-token-string)"> status:</span><span style="color:var(--astro-code-token-string)"> v</span></span>
+<span class="line"></span></code></pre>
+<p>This command lists the todos with indexes and asks which todo to mark. Here we choose the <code>0</code> and then the command asks what the status you want to be.</p>
+<p>Here we have chosen <code>v</code> since it closely resembles the tick. When todx displays the todos it changes the <code>v</code> to a <code>☑</code>. Neat. But what if you prefer <code>☒</code>? Just use <code>x</code> instead of <code>v</code>. To unmark a todo just use a space in the status.</p>
+<p>Now if you run <code>todx</code> you will see that once you marked your todo you can’t see it. This is because by default <code>todx</code> only shows unmarked, in other words, not done todos. If you want to view all the todos, marked and unmarked you can run:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> view</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">☑</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> a</span><span style="color:var(--astro-code-token-string)"> great</span><span style="color:var(--astro-code-token-string)"> website</span></span>
+<span class="line"></span></code></pre>
+<p>Now lets create another todo:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> add</span><span style="color:var(--astro-code-token-string)"> oops</span><span style="color:var(--astro-code-token-string)"> i</span><span style="color:var(--astro-code-token-string)"> did</span><span style="color:var(--astro-code-token-string)"> it</span><span style="color:var(--astro-code-token-string)"> again</span></span>
+<span class="line"></span></code></pre>
+<p>Oh no. I didn’t wish to create this todo.</p>
+<p>You can delete it using:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> del</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">0</span><span style="color:var(--astro-code-token-string)"> ☑</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> a</span><span style="color:var(--astro-code-token-string)"> great</span><span style="color:var(--astro-code-token-string)"> website</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">1</span><span style="color:var(--astro-code-token-string)"> ☐</span><span style="color:var(--astro-code-token-string)">  oops</span><span style="color:var(--astro-code-token-string)"> i</span><span style="color:var(--astro-code-token-string)"> did</span><span style="color:var(--astro-code-token-string)"> it</span><span style="color:var(--astro-code-token-string)"> again</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">Which</span><span style="color:var(--astro-code-token-string)"> todo</span><span style="color:var(--astro-code-token-string)"> you</span><span style="color:var(--astro-code-token-string)"> want</span><span style="color:var(--astro-code-token-string)"> to</span><span style="color:var(--astro-code-token-string)"> delete:</span><span style="color:var(--astro-code-token-constant)"> 1</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">Are</span><span style="color:var(--astro-code-token-string)"> you</span><span style="color:var(--astro-code-token-string)"> sure</span><span style="color:var(--astro-code-token-string)"> buddy?</span><span style="color:var(--astro-code-color-text)"> [Y/n] Y</span></span>
+<span class="line"></span></code></pre>
+<p>You select your todo just like in the <code>todx mark</code> command. And then it confirms wether you really want to delete your todo. (ProTip: If you just press Enter at the confirmation, it assumes yes)</p>
+<p>Just run <code>todx</code> or <code>todx view</code> to check that you have successfully deleted a todo. There is no trash feature yet so the deleted todo <strong>cannot</strong> be recovered.</p>
+<p>This much is everything you need for a simple basic commandline todo app.</p>
+<p>TodX is simple yes, but not basic.</p>
+<h1 id="advanced-commands">Advanced commands</h1>
+<p>You mave have noted the absence of quotes while using the <code>todx add</code> command. You can definetly do <code>todx add "Some todo"</code> but it takes time to add those quotes and it doesn’t feel elegant. Hence todx is designed in a way to eliminate the need for the quotes. You can always use quotes if you want to be more pragmatic.</p>
+<p>You can use <code>-a</code> instead of <code>add</code> and <code>-m</code> instead of <code>mark</code>.</p>
+<h2 id="tags">Tags</h2>
+<p>Let us say you want to organize your todos. Say that you want to sepearate your homework todos from your personal projects. It would be nice to have two different todo lists for both. But maybe you might have two lists of <em>holiday</em> and <em>thing to buy</em>, now if you want to add a todo <em>Buy a swimsuit</em> You may want to add it to both of your lists, but this will introduce redundancy.</p>
+<p>To simplify this problem, todx uses <strong>tags</strong>. Each tag starts with a <code>+</code> followed by a word, if there are several words use dashes to join them. You can add a tag to a todo while creating it by simply writing <code>+tagname</code> anywhere after the add command. (Although it is recommended to add them at the last since it is how they are displayed)</p>
+<p>So lets add a todo with a tag:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> add</span><span style="color:var(--astro-code-token-string)"> Complete</span><span style="color:var(--astro-code-token-string)"> math</span><span style="color:var(--astro-code-token-string)"> homework</span><span style="color:var(--astro-code-token-string)"> +school</span></span>
+<span class="line"></span></code></pre>
+<p>When you view the todos:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">☐</span><span style="color:var(--astro-code-token-string)">  Complete</span><span style="color:var(--astro-code-token-string)"> math</span><span style="color:var(--astro-code-token-string)"> homework</span><span style="color:var(--astro-code-token-string)">  +school</span></span>
+<span class="line"></span></code></pre>
+<p>Let us add another todo:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> add</span><span style="color:var(--astro-code-token-string)"> Make</span><span style="color:var(--astro-code-token-string)"> science</span><span style="color:var(--astro-code-token-string)"> project</span><span style="color:var(--astro-code-token-string)"> +school</span><span style="color:var(--astro-code-token-string)"> +projects</span></span>
+<span class="line"></span></code></pre>
+<p>Now to view todos of only <code>project</code> tag, use the command:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> +project</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">+</span><span style="color:var(--astro-code-token-string)"> project</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">☐</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> science</span><span style="color:var(--astro-code-token-string)"> project</span></span>
+<span class="line"></span></code></pre>
+<p>Wow, It only displays undone todos of tag project. What if you want to view all todos? Just run:</p>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text); overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:var(--astro-code-token-function)">$</span><span style="color:var(--astro-code-token-string)"> todx</span><span style="color:var(--astro-code-token-string)"> view</span><span style="color:var(--astro-code-token-string)"> +project</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">+</span><span style="color:var(--astro-code-token-string)"> project</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">☐</span><span style="color:var(--astro-code-token-string)">  Make</span><span style="color:var(--astro-code-token-string)"> science</span><span style="color:var(--astro-code-token-string)"> project</span></span>
+<span class="line"></span></code></pre>
+<h2 id="sync">Sync</h2>
+<p>All the data of todx is stored in a single <code>data.json</code> file (in linux located at <code>~/.local/share/todx/data.json</code>). Since this file is a json, it can be easily synced with a remote server and can be used in any other app that might support the json format. Android and Web apps can de made that use this extendability.</p>
+<h2 id="customizability">Customizability</h2>
+<p>Currently things like done markers that define which status elements are marked as done and unicode charecter replacements (<code>☐</code>, <code>☑</code> etc) are stored in <code>settings.py</code> in the main code. I intend to make a <code>settings.json</code> file similar to <code>data.json</code> to add user customizability.</p>
+<h1 id="the-bash-setup">The Bash setup</h1>
+<p>Since <code>todx</code> is commandline tool we can easily mix and match it with other commandline tools to create beautiful things. I created a simple script to run everytime I start my terminal telling me the current weather, a smal quote and my todos. Here is a screenshot:</p>
+<p><img  src="/_astro/todx-setup-bash.DeLDyyWm_Z2uYCRz.webp" alt="" width="930" height="689" loading="lazy" decoding="async"></p>
+<h1 id="what-i-learnt">What I learnt</h1>
+<p>It was and is an exhilarating project. I leant a lot of new stuff and revised old python skills in the process. Firstly I got to finally and successfully save and load data from json files into userdefined python objects.</p>
+<p>Next I got to know about <a href="https://github.com/ActiveState/appdirs">appdirs</a> package which let me use default os directories to save datafiles.</p>
+<p>I also learnt how to process command line parameters and install the package as a binary rather than just a library.</p>
+<p>And finally I got to learn about the python packaging tools. I learnt how to make a package and how to publish it to pypi. Fun fact : TodX is listed in the <a href="https://pypi.org/project/todx/">pypi</a>. Making a python package takes some getting used to and can be daunting for many beginners. I almost quit my plan putting the package on pypi in the process. Perhaps I would make a blogpost describing the process.</p>
+<h1 id="the-future">The Future?</h1>
+<p>Indeed this is just the beginning of TodX. I have several plans about todx which I would like to implement as soon as I get time to work on it. Some of them include:</p>
+<ul>
+<li>Making a server and syncing <code>data.json</code></li>
+<li>Adding tests</li>
+<li>Adding tty colors to make the program more beautiful</li>
+<li>Adding created time and due date with support for notifications</li>
+<li>Hopefully creating a simple android app to sync with (currently TodX runs nicely in <a href="https://termux.com/">Termux</a>)</li>
+</ul> <div class="end-marker" data-astro-cid-p5t2vqpj>
+❦
+<p data-astro-cid-p5t2vqpj>Sooner or later, everything ends.</p> </div>  </div></div> <footer data-astro-cid-k2f5zb5c> <div class="footer-row" data-astro-cid-k2f5zb5c> <div class="navLogo" data-astro-cid-k2f5zb5c></div> <div class="footer-content" data-astro-cid-k2f5zb5c> <div class="links" data-astro-cid-k2f5zb5c> <a href="/" data-astro-cid-k2f5zb5c>xypnox</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="/blag/" data-astro-cid-k2f5zb5c>Blag</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="/rss.xml" data-astro-cid-k2f5zb5c>Rss</a> <span data-astro-cid-k2f5zb5c>|</span>  <a href="https://github.com/xypnox/xypnox.github.io/" data-astro-cid-k2f5zb5c>Source</a> <span data-astro-cid-k2f5zb5c>|</span> © 2025 </div> <p data-astro-cid-k2f5zb5c> <a href="/about/" data-astro-cid-k2f5zb5c>About this website</a> | <a href="/about/#reading-notice" data-astro-cid-k2f5zb5c>Terms of Use</a> </p> <p data-astro-cid-k2f5zb5c> <em data-astro-cid-k2f5zb5c>The content is 100% human generated.</em> </p> </div> </div> <div class="navbar-helper" data-astro-cid-k2f5zb5c>And this is the navbar</div> </footer>    </body></html> 
