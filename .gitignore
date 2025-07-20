@@ -1,4 +1,5 @@
 # generated types
+dist/
 .astro/
 
 # dependencies

@@ -9,7 +9,6 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  outDir: "./docs",
   site: "https://www.xypnox.com",
   integrations: [solidJs(), mdx(), sitemap()],
   markdown: {
