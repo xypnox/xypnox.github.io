@@ -178,7 +178,7 @@ const fontSizes = {
 const layout = {
   content: {
     wide: "1200px",
-    main: "800px",
+    main: "60rem",
   },
 
   nav: {
