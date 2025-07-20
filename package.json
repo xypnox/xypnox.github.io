@@ -41,7 +41,7 @@
     "lodash.groupby": "^4.6.0",
     "nanoid": "^5.0.9",
     "remark-breaks": "^4.0.0",
-    "solid-js": "^1.9.3",
+    "solid-js": "^1.9.4",
     "solid-styled-components": "^0.28.5",
     "tinycolor2": "^1.6.0",
     "undici": "^6.21.0",
