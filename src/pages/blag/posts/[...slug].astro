@@ -86,7 +86,7 @@ console.log({ entryD: entry.data });
         entry.data.hidden && (
           <blockquote class="hidden-post theme-card">
             <p>
-              <strong><span>🔒</span> This is a Hidden Post</strong>
+              <strong>This is a Hidden Post</strong>
             </p>
             <p>
               If you have landed here, wow! This may also be a draft, share feedback, <a href="/#contact-and-links">reachout to me!</a>
@@ -122,7 +122,7 @@ console.log({ entryD: entry.data });
   .postHeading {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     max-width: var(--layout-content-main);
     margin: 0 auto;
     margin-top: 4rem;
@@ -178,7 +178,7 @@ console.log({ entryD: entry.data });
     width: 100%;
     margin: 0 auto;
     line-height: 1.6;
-    font-size: 1.1em;
+    font-size: 1.075em;
   }
 
   blockquote.hidden-post {
@@ -193,7 +193,8 @@ console.log({ entryD: entry.data });
     align-items: center;
     justify-content: flex-start;
     color: var(--fadeText);
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 2rem;
   }
 
   .coverImage {
