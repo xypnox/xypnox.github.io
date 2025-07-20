@@ -1,0 +1,1 @@
+const n=e=>typeof e!="string"||e.length===0?"":e[0].toUpperCase()+e.slice(1),r=(e,t)=>e.replace(new RegExp(`^${t}+|${t}+$`,"g"),""),a=(e,t)=>e.startsWith(t)&&e.endsWith(t)?e:`${t}${e}${t}`,p=e=>e.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");export{r as a,n as c,a as p,p as s};
