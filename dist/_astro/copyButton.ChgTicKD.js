@@ -1,4 +1,0 @@
-import{c as u,b as o,S as d,g as n,n as i,e as c,l as s,i as y,F as g,h as C,t as m}from"./web.DgwoslEx.js";import{s as f}from"./objects.CuEbotcV.js";import{B as h}from"./atoms.DljnSypY.js";import{i as w}from"./icons.Y4puX1ik.js";import{E as _}from"./tooltip.B8h5QbIL.js";var l=m("<iconify-icon>",!0,!1),$=m("<div>");const v=f(h)`
-  position: relative;
-  z-index: 10;
-`,F=e=>{const[a,p]=u([]);return o(v,{onClick:()=>{const t=Date.now();p([...a(),t]),navigator.clipboard.writeText(e.copyText()),setTimeout(()=>{},1100)},get class(){return e.class},get children(){return[o(d,{get when(){return e.icon},get children(){var t=n(l);return t._$owner=i(),c(()=>s(t,"icon",e.icon)),t}}),(()=>{var t=n($);return y(t,()=>e.label??"Copy"),t})(),o(g,{get each(){return a()},children:t=>o(_,{id:`tooltip_${t}`,get children(){return[(()=>{var r=n(l);return r._$owner=i(),c(()=>s(r,"icon",w.done)),r})(),C(()=>e.tooltip||"Copied")]}})})]}})};export{F as C};
