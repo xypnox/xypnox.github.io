@@ -3,14 +3,14 @@ import { styled } from "solid-styled-components";
 import { theme } from "../../theme";
 import { Button, Input } from "./atoms";
 
-interface DropSelectOption {
+interface MenuOption {
   label: string;
   value: string;
 }
 
-interface DropSelectProps {
+interface MenuProps {
   label: string;
-  options: DropSelectOption[];
+  options: MenuOption[];
   value: string;
   onlyFromOptions?: boolean
   onChange: (value: string) => void;
@@ -68,7 +68,7 @@ const SelectOptions = styled('div')`
   gap: 0.25rem;
 `
 
-export const DropSelect = (props: DropSelectProps) => {
+export const Menu = (props: MenuProps) => {
   const [focused, setFocused] = createSignal(false);
   let dropdown: HTMLDivElement | undefined;
 
