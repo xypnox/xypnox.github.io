@@ -6,7 +6,7 @@
     "start": "astro dev",
     "build:scripts": "tsc -p tsconfig-dev.json",
     "convert": "node .buildScripts/buildScripts/cssJsonExport.js",
-    "build": "pnpm run build:prod",
+    "build": "pnpm run build:local",
     "build:local": "pnpm run build:scripts && pnpm run convert && pnpm run astro:build",
     "build:prod": "pnpm run build:scripts && pnpm run convert && pnpm run images:fetch && pnpm run astro:build",
     "astro:build": "astro build",

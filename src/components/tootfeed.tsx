@@ -1,15 +1,20 @@
-import { For, Show, createEffect, createResource, createSignal } from "solid-js"
-import { Masonry } from "./grids/masonry"
-import { styled } from "solid-styled-components"
-import { theme } from "../theme"
-import { RelativeTime } from "./elements/relativeTime"
-import type { RootObject, Thumbnail } from "../dataTypes"
-import { Button, cardStyles, cardTransition } from "./elements/atoms"
-import { icons } from "./icons"
-import { parseRss } from "../lib/parseRss"
+import {
+  For,
+  Show,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
+import { Masonry } from "./grids/masonry";
+import { styled } from "solid-styled-components";
+import { theme } from "../theme";
+import { RelativeTime } from "./elements/relativeTime";
+import type { RootObject, Thumbnail } from "../dataTypes";
+import { Button, cardStyles, cardTransition } from "./elements/atoms";
+import { icons } from "./icons";
+import { parseRss } from "../lib/parseRss";
 
-const feedURL = "https://fosstodon.org/@xypnox.rss"
-
+const feedURL = "https://fosstodon.org/@xypnox.rss";
 
 const TootWrapper = styled("div")`
   display: flex;
@@ -25,7 +30,7 @@ const TootWrapper = styled("div")`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-size: 1.25em;
+    font-size: 1em;
     padding: ${theme.font.size.md};
   }
 
@@ -68,40 +73,41 @@ const TootWrapper = styled("div")`
     font-size: ${theme.font.size.sm};
     flex-grow: 1 !important;
   }
-`
+`;
 
 const parseFeed = async () => {
-  return await parseRss(feedURL) as RootObject;
-}
+  return (await parseRss(feedURL)) as RootObject;
+};
 
 interface TootFeedProps {
-  max?: number
-  title?: string
-  description?: string
+  max?: number;
+  title?: string;
+  description?: string;
 }
 
 export const TootFeed = (props: TootFeedProps) => {
-  const repaint = createSignal(0)
-  const [lastFetched, setLastFetched] = createSignal(Date.now())
+  const repaint = createSignal(0);
+  const [lastFetched, setLastFetched] = createSignal(Date.now());
   const [loadCount, setLoadCount] = createSignal({
     count: 0,
-    total: 0
-  })
+    total: 0,
+  });
 
-  const increaseCount = () => setLoadCount(s => ({ ...s, count: s.count + 1 }))
+  const increaseCount = () =>
+    setLoadCount((s) => ({ ...s, count: s.count + 1 }));
   const [feed, { refetch }] = createResource(async () => {
     try {
       // console.log("Fetching feed");
-      const feedData = await parseFeed()
-      if (props.max) feedData.items = feedData.items.slice(0, props.max)
+      const feedData = await parseFeed();
+      if (props.max) feedData.items = feedData.items.slice(0, props.max);
       // Setting last fetched time
-      setLastFetched(Date.now())
-      return feedData
+      setLastFetched(Date.now());
+      return feedData;
     } catch (error) {
       console.error(error);
-      throw error
+      throw error;
     }
-  })
+  });
   // createEffect(() => {
   //   console.log("last fetched time", lastFetched());
   // })
@@ -112,26 +118,26 @@ export const TootFeed = (props: TootFeedProps) => {
       const mediaCount = feed()!.items.reduce((acc, item) => {
         if (item.media && item.media.thumbnail) {
           if (Array.isArray(item.media.thumbnail)) {
-            return acc + item.media.thumbnail.length
+            return acc + item.media.thumbnail.length;
           }
-          return acc + 1
+          return acc + 1;
         }
-        return acc
-      }, 0)
+        return acc;
+      }, 0);
 
       setLoadCount({
         count: 0,
         total: mediaCount,
-      })
+      });
     }
-  })
+  });
 
   createEffect(() => {
     // Repaint when all images are loaded
     if (loadCount().count !== 0 && loadCount().total <= loadCount().count) {
-      repaint[1](1)
+      repaint[1](1);
     }
-  })
+  });
 
   return (
     <div>
@@ -146,12 +152,18 @@ export const TootFeed = (props: TootFeedProps) => {
           <div class="toot-content">
             <div class="title">
               <h2>
-                <a href={'/tootfeed/'}>{
-                  props.title ? props.title : "TootFeed"
-                }</a>
+                <a href={"/tootfeed/"}>
+                  {props.title ? props.title : "TootFeed"}
+                </a>
               </h2>
             </div>
-            <p> {props.description ? props.description : "A replica of my toots @ "} <a href={feedURL.replace('.rss', '')}>Fosstodon</a></p>
+            <p>
+              {" "}
+              {props.description
+                ? props.description
+                : "A replica of my toots @ "}{" "}
+              <a href={feedURL.replace(".rss", "")}>Fosstodon</a>
+            </p>
             <Button class="small" onClick={() => refetch()}>
               <Show when={lastFetched() !== 0}>
                 <iconify-icon icon={icons.refresh} />
@@ -170,7 +182,7 @@ export const TootFeed = (props: TootFeedProps) => {
           <For each={feed()!.items} fallback={<div>Loading...</div>}>
             {(toot) => (
               <TootWrapper>
-                <div class="toot-content" >
+                <div class="toot-content">
                   <div innerHTML={toot.description} />
                   <div class="meta">
                     <a class="link" href={toot.link}>
@@ -182,15 +194,26 @@ export const TootFeed = (props: TootFeedProps) => {
                   <Show when={Array.isArray(toot.media!.thumbnail)}>
                     <For each={toot.media!.thumbnail as Thumbnail[]}>
                       {(im) => (
-                        <Thumb lazy={props.max !== undefined} onLoad={() => increaseCount()} media={im} />
+                        <Thumb
+                          lazy={props.max !== undefined}
+                          onLoad={() => increaseCount()}
+                          media={im}
+                        />
                       )}
                     </For>
                   </Show>
-                  <Show when={toot.media!.thumbnail && !Array.isArray(toot.media!.thumbnail)}>
+                  <Show
+                    when={
+                      toot.media!.thumbnail &&
+                      !Array.isArray(toot.media!.thumbnail)
+                    }
+                  >
                     {
-                      (<Thumb
+                      <Thumb
                         lazy={props.max !== undefined}
-                        onLoad={() => increaseCount()} media={toot.media!.thumbnail as Thumbnail} />)
+                        onLoad={() => increaseCount()}
+                        media={toot.media!.thumbnail as Thumbnail}
+                      />
                     }
                   </Show>
                 </Show>
@@ -200,10 +223,18 @@ export const TootFeed = (props: TootFeedProps) => {
         </Show>
       </Masonry>
     </div>
-  )
-}
+  );
+};
 
-const Thumb = (props: { lazy: boolean, media: Thumbnail, onLoad: () => void }) => <img src={props.media.url} alt={props.media["media:description"].$text}
-  onLoad={props.onLoad}
-  loading={props.lazy ? "lazy" : "eager"}
-/>
+const Thumb = (props: {
+  lazy: boolean;
+  media: Thumbnail;
+  onLoad: () => void;
+}) => (
+  <img
+    src={props.media.url}
+    alt={props.media["media:description"].$text}
+    onLoad={props.onLoad}
+    loading={props.lazy ? "lazy" : "eager"}
+  />
+);
