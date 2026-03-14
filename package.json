@@ -44,7 +44,7 @@
     "solid-js": "^1.9.3",
     "solid-styled-components": "^0.28.5",
     "tinycolor2": "^1.6.0",
-    "undici": "^6.21.0",
+    "undici": "^6.24.0",
     "unplugin-icons": "^0.19.3"
   },
   "devDependencies": {
